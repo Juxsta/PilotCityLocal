@@ -15,6 +15,46 @@
 
     <title>Insert Title Here</title>
 
+          <!--Firebase UI Setup-->   
+          <script src="https://www.gstatic.com/firebasejs/5.5.7/firebase.js"></script>
+          <script>
+            // Initialize Firebase
+            var config = {
+              apiKey: "AIzaSyBKKxWc5PQI7TX3z32sIFpZJwQ_62DV0ls",
+              authDomain: "test-database-5c3f8.firebaseapp.com",
+              databaseURL: "https://test-database-5c3f8.firebaseio.com",
+              projectId: "test-database-5c3f8",
+              storageBucket: "test-database-5c3f8.appspot.com",
+              messagingSenderId: "206893838009"
+            };
+            firebase.initializeApp(config);
+          </script>
+          <!--Firebase UI initialization-->
+           <script src="https://cdn.firebase.com/libs/firebaseui/3.4.1/firebaseui.js"></script>
+           <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.4.1/firebaseui.css" />
+           <script type="text/javascript">
+             // FirebaseUI config.
+             var uiConfig = {
+               signInSuccessUrl: '<url-to-redirect-to-on-success>',
+               signInOptions: [
+                 // Leave the lines as is for the providers you want to offer your users.
+                 firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+                 firebase.auth.EmailAuthProvider.PROVIDER_ID
+               ],
+               // tosUrl and privacyPolicyUrl accept either url string or a callback
+               // function.
+               // Terms of service url/callback.
+               tosUrl: '<your-tos-url>',
+               // Privacy policy url/callback.
+               privacyPolicyUrl: function() {
+                 window.location.assign('<your-privacy-policy-url>');
+               }
+             };
+             // Initialize the FirebaseUI Widget using Firebase.
+             var ui = new firebaseui.auth.AuthUI(firebase.auth());
+             // The start method will wait until the DOM is loaded.
+             ui.start('#firebaseui-auth-container', uiConfig);
+           </script>
 
   </head>
 
@@ -61,6 +101,7 @@
               </div>
           </div>
       </div>
+      <div id="firebaseui-auth-container"></div>
   </body>
 
     <!-- Bootstrap core JavaScript -->
