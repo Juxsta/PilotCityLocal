@@ -1,0 +1,86 @@
+{
+    "Users" : {
+        "User1":{
+            "UserID" : "00000",
+            "FirstName" : "Derick",
+            "LastName" : "Lee",
+            "Email" : "dericklee@pilotcity.com",
+            "PhoneNumber" : "(510) 676-5861",
+            "isTeacher" : false,
+            "isEmployer" : true,
+            "isStudent" : false
+        },
+        "User2":{
+            "UserID" : "00001",
+            "FirstName" : "Andrew",
+            "LastName" : "Doolittle",
+            "Email" : "adoolittle@slzusd.org",
+            "PhoneNumber" : "5103010296",
+            "isTeacher" : true,
+            "isEmployer" : false,
+            "isStudent" : false
+        },
+        "User3":{
+            "UserID" : "00002",
+            "FirstName" : "Tommy",
+            "LastName" : "Chan",
+            "Email" : "hkg669@gmail.com",
+            "PhoneNumber" : "5103090637",
+            "isTeacher" : false,
+            "isEmployer" : false,
+            "isStudent" : true      
+        }
+    },
+    "Employers" :{
+        "User1" :{
+            "UserID" : "00000",
+            "PositionName" : "Chief Architect",
+            "CompanyName" : "PilotCity",
+            "Company Address" :{
+                "Street Address" : "101 Estudillo Avenue",
+                "City" : "San Leandro",
+                "State" : "California",
+                "ZipCode" : "94578"
+            },
+            "Department Name" : "Software Development",
+            "Department Size" : 20,
+            "Industry" : "Education"   
+        }
+    },
+    "Teachers" :{
+        "User2":{
+            "UserID" : "00001",
+            "School Name" : "Arroyo High School",
+            "School District" : "San Lorenzo Unified",
+            "School Address" : 
+            {
+                "Street Address" : "15701 Lorenzo Ave",
+                "City" : "San Lorenzo",
+                "State" : "California",
+                "ZipCode" : "94580"
+            }
+        }
+    },
+    "Students" :{
+        "User3" :{
+            "UserID" : "00002",
+            "School Name" : "Arroyo High School",
+            "School District" : "San Lorenzo Unified",
+            "Grade Level" : 12
+        }
+    },
+    "Classes" :{
+        "Class1":{
+            "ClassID": "c00000",
+            "TeacherID": "00001",
+            "Course Name" : "AP Computer Science",
+            "Period" : 2,
+            "Grade" : "mixed",
+            "Students" : 25,
+            "Semester" : "Spring",
+            "Start Time":{
+                "hour" : 
+            }
+        }
+    }
+}
