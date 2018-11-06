@@ -1,86 +1,195 @@
 {
-    "Users" : {
-        "User1":{
-            "UserID" : "00000",
-            "FirstName" : "Derick",
-            "LastName" : "Lee",
-            "Email" : "dericklee@pilotcity.com",
-            "PhoneNumber" : "(510) 676-5861",
-            "isTeacher" : false,
-            "isEmployer" : true,
-            "isStudent" : false
-        },
-        "User2":{
-            "UserID" : "00001",
-            "FirstName" : "Andrew",
-            "LastName" : "Doolittle",
-            "Email" : "adoolittle@slzusd.org",
-            "PhoneNumber" : "5103010296",
-            "isTeacher" : true,
-            "isEmployer" : false,
-            "isStudent" : false
-        },
-        "User3":{
-            "UserID" : "00002",
-            "FirstName" : "Tommy",
-            "LastName" : "Chan",
-            "Email" : "hkg669@gmail.com",
-            "PhoneNumber" : "5103090637",
-            "isTeacher" : false,
-            "isEmployer" : false,
-            "isStudent" : true      
-        }
-    },
-    "Employers" :{
-        "User1" :{
-            "UserID" : "00000",
-            "PositionName" : "Chief Architect",
-            "CompanyName" : "PilotCity",
-            "Company Address" :{
-                "Street Address" : "101 Estudillo Avenue",
-                "City" : "San Leandro",
-                "State" : "California",
-                "ZipCode" : "94578"
-            },
-            "Department Name" : "Software Development",
-            "Department Size" : 20,
-            "Industry" : "Education"   
-        }
-    },
-    "Teachers" :{
-        "User2":{
-            "UserID" : "00001",
-            "School Name" : "Arroyo High School",
-            "School District" : "San Lorenzo Unified",
-            "School Address" : 
-            {
-                "Street Address" : "15701 Lorenzo Ave",
-                "City" : "San Lorenzo",
-                "State" : "California",
-                "ZipCode" : "94580"
-            }
-        }
-    },
-    "Students" :{
-        "User3" :{
-            "UserID" : "00002",
-            "School Name" : "Arroyo High School",
-            "School District" : "San Lorenzo Unified",
-            "Grade Level" : 12
-        }
-    },
-    "Classes" :{
-        "Class1":{
+    "Classes": {
+        "Class1": {
             "ClassID": "c00000",
+            "Course Name": "AP Computer Science",
+            "Grade": [9,11],
+            "Semester": "Spring",
+            "School Year" :{
+                "Start" : 2018,
+                "End" : 2019
+            },
+            "Schedule":{
+                "Monday": {
+                    "Start Time" :{
+                        "hour" : 10,
+                        "minute" : 10 
+                    },
+                    "End Time" :{
+                        "hour" : 11,
+                        "minute" :10
+                    }
+                },
+                "Tuesday": "null",
+                "Wednesday" :{
+                    "Start Time" :{
+                        "hour" : 9,
+                        "minute" : 10
+                    },
+                    "End Time" :{
+                        "hour" : 10,
+                        "minute" : 10
+                    }
+                },
+                "Thursday" : "null",
+                "Friday" :{
+                    "Start Time":{
+                        "hour": 10,
+                        "minute": 11
+                    },
+                    "End Time":{
+                        "hour":11,
+                        "minute":10
+                    }
+                },
+                "Saturday" : "null",
+                "Sunday" : "null"
+            },
+            "Number of Students":{
+                "Min" : 20,
+                "Max" : 25
+            },
             "TeacherID": "00001",
-            "Course Name" : "AP Computer Science",
-            "Period" : 2,
-            "Grade" : "mixed",
-            "Students" : 25,
-            "Semester" : "Spring",
-            "Start Time":{
-                "hour" : 
-            }
+            "isActive": true
+        }
+    },
+    "Employers": {
+        "User1": {
+            "Company Addresses": {
+                "Address1" :{
+                    "City": "Palo Alto",
+                    "State": "California",
+                    "Street Address": "435 Portage Avenune",
+                    "ZipCode": "94306",
+                    "Country": "USA",
+                    "Type" : "Primary"
+                },
+                "Address2" :{
+                    "City":"Shenzen",
+                    "State" : "Guangdong",
+                    "Street Address" : "18 Gaoxin South 4th Avenue",
+                    "ZipCode" : "51805",
+                    "Country" : "China",
+                    "Type" : "HQ"
+                }
+                
+            },
+            "CompanyName": "DJI",
+            "Department Name": "Enterprise",
+            "Department Size":{
+                "Min" : 30,
+                "Max" : 50
+            },
+            "Sector": "Industry",
+            "Position": "Program Manager",
+            "UserID": "00000",
+            "Industry Keywords" : [
+                "Drones",
+                "Robotics",
+                "Data Science",
+                "Internet of Things"
+            ],
+            "Solutions":{
+                "Solution1":{
+                    "Keywords": [
+                        "Drones",
+                        ""
+                    ],
+                    "Type" : "Product"
+                },
+                "Solution2":{
+                    "Keywords": [
+                        "Custom Drones",
+                        "Photography",
+                        "Aerospace Research"
+                    ],
+                    "Type" : "Service"
+                }
+            },
+            "ROI" :[
+                "Enterprise Sales",
+                "Building Community",
+                "Training Talent"
+            ],
+            "Strategies" :[
+                "Engaging Classrooms",
+                "Developing use cases",
+                "Partnering with companies"
+            ],
+            "Project Challenge" : "PlaceHolder - Design a smart city solution to control traffic flow and utilize the DJI Drones for monitoring of the designed system."
+        }
+    },
+    "Students": {
+        "User3": {
+            "Birthdate": {
+                "Day": 10,
+                "Month": 12,
+                "Year" : 2002
+            },
+            "Ethnicity": "Asian",
+            "Free Lunch": true,
+            "Supergender": "Transgender Female",
+            "Grade Level": 12,
+            "Family Language" :[
+                "Mandarin",
+                "Cantoneese",
+                "English"
+            ],
+            "School District": "San Lorenzo Unified School District",
+            "School Name": "Arroyo High School",
+            "Social Media": {
+                "Snapchat" :"@coolgal22",
+                "Facebook" : "@coolgal22",
+                "Twitter" : "@coolgal22",
+                "LinkedIn" : "Tommmyboy02"
+            },
+            "UserID": "00002"
+        }
+    },
+    "Teachers": {
+        "User2": {
+            "School Address": {
+                "City": "San Lorenzo",
+                "State": "California",
+                "Street Address": "15701 Lorenzo Ave",
+                "ZipCode": "94580"
+            },
+            "School District": "San Lorenzo Unified School District",
+            "School Name": "Arroyo High School",
+            "UserID": "00001",
+            "Room Number" : "101A"
+        }
+    },
+    "Users": {
+        "User1": {
+            "Email": "brandon.montellato@dji.com",
+            "First Name": "Brandon",
+            "Last Name": "Montellato",
+            "Mobile Number": "5105555861",
+            "User ID": "00000",
+            "isEmployer": true,
+            "isStudent": false,
+            "isTeacher": false
+        },
+        "User2": {
+            "Email": "adoolittle@slzusd.org",
+            "First Name": "Andrew",
+            "Last Name": "Doolittle",
+            "Mobile Number": "5103010296",
+            "User ID": "00001",
+            "isEmployer": false,
+            "isStudent": false,
+            "isTeacher": true
+        },
+        "User3": {
+            "Email": "hkg669@gmail.com",
+            "First Name": "Tommy",
+            "Last Name": "Chan",
+            "Mobile Number": "5103090637",
+            "User ID": "00002",
+            "isEmployer": false,
+            "isStudent": true,
+            "isTeacher": false
         }
     }
 }
