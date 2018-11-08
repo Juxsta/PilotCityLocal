@@ -14,8 +14,7 @@ Stylesheet for Pilot City App
 
 body{
 
-	font-family: 'Raleway';
-	background-color: #404041;
+	font-family: 'Raleway'
 }
 
 #landing-page{
@@ -31,10 +30,8 @@ margin-left: auto;
 
 .display-3{
 
-	width:84%;
-	margin-top:10%;
-	font-size:44px;
-	text-align:left;
+	width:80%;
+	text-align:center;
 	margin-left:10%;
 	color:#f0f0f0;
 }
@@ -46,10 +43,8 @@ margin-left: auto;
 
 .landing-buttons-container{
 
-
-	margin-top:4%;
-	text-align: left;
-	margin-left:9%;
+	margin-top:10%;
+	text-align: center;
 
 }
 
@@ -62,19 +57,11 @@ margin-left: auto;
 	border-radius:25px;
 	display:inline;
 	border-color:transparent;
-	padding-left:40px;
-	padding-right:40px;
+	padding:14px;
 
 }
 .teacher-btn{
 
-	background-color:#eca0be;
-}
-.teacher-btn:hover{
-
-	border-color:#fff;
-	border-style:solid;
-	border-width: 3px;
 	background-color:#eca0be;
 }
 .employer-btn{

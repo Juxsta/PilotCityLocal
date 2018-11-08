@@ -32,34 +32,11 @@
     <!-- Our application root element -->
     <div id="app">
 
-      <b-navbar toggleable="lg" type="dark" variant="dark">
-
-      <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
-
-      <b-navbar-brand href="#"><img class="nav-pclogo-img" src="img/logo.png"></b-navbar-brand>
-
-        <b-collapse is-nav id="nav_collapse">
-
-    
-
-          <!-- Right aligned nav items -->
-          <b-navbar-nav class="ml-auto">
-
-            <b-navbar-nav  >
-              <b-nav-item href="#">Sign Up</b-nav-item>
-              <b-nav-item href="#" >Login</b-nav-item>
-              <b-nav-item href="#"><img class="nav-settings-img" src="img/settings.png"></b-nav-item>
-
-            </b-navbar-nav>
-
-          </b-navbar-nav>
-
-        </b-collapse>
-    </b-navbar>
+      <pc-nav-bar></pc-nav-bar>
 
       <b-container id="landing-page">
         <b-jumbotron  id="landing-jumbo"
-                      header="Connecting classrooms to the big bad world.."
+                      header="Connecting classrooms to the big bad world."
                       fluid
                       container-fluid
                       style="background-image: url('img/header.jpg'); background-size: cover; height: 100%"
@@ -67,8 +44,8 @@
         >
           <div class="spacer"></div>
           <div class="landing-buttons-container">
-            <b-btn class=" landing-btn teacher-btn rounded-30" variant="primary" href="https://bootstrap-vue.js.org/">For teachers</b-btn>
-            <b-btn class="landing-btn employer-btn rounded-30" variant="secondary" href="https://bootstrap-vue.js.org/">For employers</b-btn>
+            <b-btn class=" landing-btn teacher-btn rounded-30" variant="primary" href="https://bootstrap-vue.js.org/">For Teachers</b-btn>
+            <b-btn class="landing-btn employer-btn rounded-30" variant="secondary" href="https://bootstrap-vue.js.org/">For Employers</b-btn>
           </div>
         </b-jumbotron>
 
@@ -77,16 +54,8 @@
     </div>
 
     <!-- Start running your app -->
-    <script>
-      window.app = new Vue({
-        el: "#app",
-        data: {
-          name: ''
-        },
-        computed: {
-           
-        }
-      })
+    <script type="text/javascript" src="js/index.js">
+     
     </script>
 
   </body>
