@@ -12,12 +12,24 @@
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.5.7/firebase.js"></script>
     <script src="js/index.js"></script>
 
     <title>Insert Title Here</title>
 
           <!--Firebase UI Setup-->   
-          <script src="https://www.gstatic.com/firebasejs/5.5.7/firebase.js"></script>
+          <script>
+            // Initialize Firebase
+            var config = {
+              apiKey: "AIzaSyBKKxWc5PQI7TX3z32sIFpZJwQ_62DV0ls",
+              authDomain: "test-database-5c3f8.firebaseapp.com",
+              databaseURL: "https://test-database-5c3f8.firebaseio.com",
+              projectId: "test-database-5c3f8",
+              storageBucket: "test-database-5c3f8.appspot.com",
+              messagingSenderId: "206893838009"
+            };
+            firebase.initializeApp(config);
+          </script>
           <!--Firebase UI initialization-->
            <script src="https://cdn.firebase.com/libs/firebaseui/3.4.1/firebaseui.js"></script>
            <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.4.1/firebaseui.css" />
