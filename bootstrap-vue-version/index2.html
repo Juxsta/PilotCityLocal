@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+    <title>Hi there</title>
+
+    <!-- Required Stylesheets -->
+    <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap/dist/css/bootstrap.min.css"/>
+    <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css"/>
+
+    <!-- Required scripts -->
+    <script src="https://unpkg.com/vue"></script>
+    <script src="https://unpkg.com/babel-polyfill@latest/dist/polyfill.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.js"></script>
+
+
+    <!--Custom Stylesheets-->
+
+    <link type="text/css" rel="stylesheet" href="css/custom.css"/>
+
+    <!--Fonts -->
+
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Raleway:700" rel="stylesheet"> 
+  </head>
+
+  <body>
+    <!-- Our application root element -->
+    <div id="app">
+
+      <b-navbar toggleable="lg" type="dark" variant="dark">
+
+      <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
+
+      <b-navbar-brand href="#"><img class="nav-pclogo-img" src="img/logo.png"></b-navbar-brand>
+
+        <b-collapse is-nav id="nav_collapse">
+
+    
+
+          <!-- Right aligned nav items -->
+          <b-navbar-nav class="ml-auto">
+
+            <b-navbar-nav  >
+              <b-nav-item href="#">Sign Up</b-nav-item>
+              <b-nav-item href="#" >Login</b-nav-item>
+              <b-nav-item href="#"><img class="nav-settings-img" src="img/settings.png"></b-nav-item>
+
+            </b-navbar-nav>
+
+          </b-navbar-nav>
+
+        </b-collapse>
+    </b-navbar>
+
+      <b-container id="landing-page">
+        <b-jumbotron  id="landing-jumbo"
+                      header="Connecting classrooms to the big bad world.."
+                      fluid
+                      container-fluid
+                      style="background-image: url('img/header.jpg'); background-size: cover; height: 100%"
+                      
+        >
+          <div class="spacer"></div>
+          <div class="landing-buttons-container">
+            <b-btn class=" landing-btn teacher-btn rounded-30" variant="primary" href="https://bootstrap-vue.js.org/">For teachers</b-btn>
+            <b-btn class="landing-btn employer-btn rounded-30" variant="secondary" href="https://bootstrap-vue.js.org/">For employers</b-btn>
+          </div>
+        </b-jumbotron>
+
+         
+      </b-container>
+    </div>
+
+    <!-- Start running your app -->
+    <script>
+      window.app = new Vue({
+        el: "#app",
+        data: {
+          name: ''
+        },
+        computed: {
+           
+        }
+      })
+    </script>
+
+  </body>
+</html>
