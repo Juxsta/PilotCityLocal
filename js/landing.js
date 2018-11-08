@@ -1,4 +1,4 @@
-  // Set the configuration for your app
+    // Set the configuration for your app
   // TODO: Replace with your project's config object
   // Initialize Firebase
   var config = {
@@ -20,3 +20,12 @@
 	  profile_picture : imageUrl
 	});
   }
+
+  console.log("a")
+  var app = new Vue({
+    el: '#app',
+    data: {
+      message: 'Hello Vue!'
+    }
+  })
+username = "no";
