@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <!--Link to CSS external file-->
+    <link rel="stylesheet" type="text/css" href="login.css">
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.5.7/firebase.js"></script>
+    <script src="js/landing.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <title>Insert Title Here</title>
+
+          <!--Firebase UI Setup-->   
+          <script>
+            // Initialize Firebase
+            var config = {
+              apiKey: "AIzaSyBKKxWc5PQI7TX3z32sIFpZJwQ_62DV0ls",
+              authDomain: "test-database-5c3f8.firebaseapp.com",
+              databaseURL: "https://test-database-5c3f8.firebaseio.com",
+              projectId: "test-database-5c3f8",
+              storageBucket: "test-database-5c3f8.appspot.com",
+              messagingSenderId: "206893838009"
+            };
+            firebase.initializeApp(config);
+           </script>
+
+  </head>
+
+  <body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+      <div class="container">
+       
+    
+        
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!--log in bootstrap form-->
+    <body>
+        <div id="login">
+            <div class="container">
+                <div id="login-row" class="row justify-content-center align-items-center">
+                    <div id="login-column" class="col-md-6">
+                        <div id="login-box" class="col-md-12">
+                            <form id="login-form" class="form" action="" method="post">
+                                <h3 class="text-center text-info">Login</h3>
+                                <div class="form-group">
+                                    <input type="text" name="username" id="username" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" name="password" id="password" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <input type="submit" name="submit" class="btn btn-info btn-md" value="submit">
+                                </div>
+                                <div id="register-link" class="text-right">
+                                
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="app">        
+            <p>Message is: {{ message }}</p>
+        </div>
+  </body>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<script src="js/index.js"></script>
+    </body>
+
+</html>
