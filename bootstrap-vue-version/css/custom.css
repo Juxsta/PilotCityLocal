@@ -10,6 +10,26 @@ Stylesheet for Pilot City App
 ***********************************/
 
 
+
+
+
+/*************** Buttons and UI ********************/
+
+
+.btn{
+
+	padding-left:25px;
+	padding-right:25px;
+	border-radius: 25px;
+
+}
+
+.form-control{
+
+	border-radius:25px;
+}
+
+
 /*******Landing Page**************/
 
 body{
@@ -104,5 +124,36 @@ margin-left: auto;
 .nav-settings-img{
 	height:24px;
    	width:24px;
+
+}
+
+
+
+
+
+/************** Modals**********************/
+
+.modal-content{
+
+	background-color:transparent;
+}
+
+.modal-body{
+border-top-left-radius: 28px;
+border-top-right-radius: 28px;
+
+}
+
+.modal-footer{
+
+	border-top: 0px solid #e9ecef;
+
+	border-bottom-right-radius: 28px;
+	border-bottom-left-radius: 28px;
+
+}
+.modal-footer > :not(:last-child){
+
+	display: none;
 
 }

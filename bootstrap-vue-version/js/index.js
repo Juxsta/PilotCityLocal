@@ -18,7 +18,7 @@ Vue.component('pc-nav-bar', {
 			          	<b-navbar-nav class="ml-auto">
 
 				            <b-navbar-nav  >
-					              <b-nav-item href="#">Sign Up</b-nav-item>
+					              <b-nav-item v-b-modal.modal1 href="#">Sign Up</b-nav-item>
 					              <b-nav-item href="#" >Login</b-nav-item>
 					              <b-nav-item href="#"><img class="nav-settings-img" src="img/settings.png"></b-nav-item>
 

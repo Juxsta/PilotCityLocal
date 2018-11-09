@@ -32,43 +32,18 @@
     <!-- Our application root element -->
     <div id="app">
 
-<<<<<<< HEAD
+ 
       <pc-nav-bar></pc-nav-bar>
 
-=======
-      <b-navbar toggleable="lg" type="dark" variant="dark">
-
-      <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
-
-      <b-navbar-brand href="#"><img class="nav-pclogo-img" src="img/logo.png"></b-navbar-brand>
-
-        <b-collapse is-nav id="nav_collapse">
-
-    
-
-          <!-- Right aligned nav items -->
-          <b-navbar-nav class="ml-auto">
-
-            <b-navbar-nav  >
-              <b-nav-item href="#">Sign Up</b-nav-item>
-              <b-nav-item href="#" >Login</b-nav-item>
-              <b-nav-item href="#"><img class="nav-settings-img" src="img/settings.png"></b-nav-item>
-
-            </b-navbar-nav>
-
-          </b-navbar-nav>
-
-        </b-collapse>
-    </b-navbar>
->>>>>>> 7af7331f4aaeac687ad3681711887e1612d125ab
+ 
       <b-container id="landing-page">
         <b-jumbotron  id="landing-jumbo"
                       header="Connecting classrooms to the big bad world."
                       fluid
                       container-fluid
-                      style="background-image: url('img/header.jpg'); background-size: cover; height: 100%"
-                      
-        >
+                      style="background-image: url('img/header.jpg'); background-size: cover; height: 100%">
+
+
           <div class="spacer"></div>
           <div class="landing-buttons-container">
             <b-btn class=" landing-btn teacher-btn rounded-30" variant="primary" href="https://bootstrap-vue.js.org/">For Teachers</b-btn>
@@ -76,9 +51,41 @@
           </div>
         </b-jumbotron>
 
+
+
+        <b-modal centered id="modal1" 
+                  body-bg-variant="dark"
+                  footer-bg-variant="dark"                  
+                  hide-header="true"
+                  :body-text-variant="light"
+
+
+         >
+            <p></p>
+           <div>
+              
+              <b-form-group horizontal
+                            :label-cols="2"
+                            label="Email"
+                            label-for="email-input">
+                <b-form-input id="email-input"></b-form-input>
+              </b-form-group>
+              <b-form-group horizontal
+                            :label-cols="2"
+                            
+                            label="Password"
+                            label-for="password-input">
+                <b-form-input id="password-input"></b-form-input>
+              </b-form-group>
+          </div>
+
+
+        </b-modal>
+
          
       </b-container>
-    </div>
+
+    </div> <!--app-->
 
     <!-- Start running your app -->
     <script type="text/javascript" src="js/index.js">
