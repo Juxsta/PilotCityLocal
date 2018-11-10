@@ -3,6 +3,7 @@
 * {
     margin:0px;
     padding:0px;
+    box-sizing: border-box;
 }
 
 .input-title-pink {
@@ -14,7 +15,7 @@
     padding-bottom:18px;
 }
 
-.form-input {
+.input-field {
     
     background-color: #dbdcde;
     width: 1000px;
@@ -28,9 +29,23 @@
     
 }
  
-.form-input::placeholder {
+.input-field::placeholder {
     color: white;
     font-family: Raleway-Italic;
     opacity: 
 }
+
+.input-field-add i{
+    color: #eca0be;
     
+}
+    
+.input-field-add{
+    text-align: center;
+    padding-top:20px;
+    border: dashed 1px #dbdcde;
+    width: 1000px;
+    height: 60px;
+    border-radius: 50px;
+    
+}

@@ -1,0 +1,61 @@
+.button-circle-select {
+    width:410px;
+    height:410px;
+    border-radius: 50%;
+    border: 5px solid #dbdcde;
+        
+
+}
+
+.button-circle-title {
+    font-size: 50px;
+    font-family: Raleway;
+    color: white;
+    text-align: center;
+    padding-top:157px;
+
+}
+
+.button-circle {
+    background-color:#3c9ccc;
+    width:381px;
+    height:381px;
+    border-radius: 50%;
+
+}
+
+.button-exit {
+    transform:rotate(45deg);
+    width:5px;
+    height:30px;
+    background-color:#dbdcde;
+    margin:auto;
+    
+}
+
+.button2-exit {
+    transform:rotate(-90deg);
+    width:5px;
+    height:30px;
+    background-color:#dbdcde;
+    margin:auto;
+
+}
+
+
+.button-regular-select {
+    width:275px;
+    height:121px;
+    border-radius: 50px;
+    border: 5px solid #dbdcde;
+
+}
+
+.button-square-select {
+    width:410px;
+    height:410px;
+    border-radius: 50px;
+    border: 5px solid #dbdcde;
+        
+
+}
