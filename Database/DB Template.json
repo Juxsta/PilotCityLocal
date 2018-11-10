@@ -3,7 +3,7 @@
         "Class1": {
             "ClassID": "c00000",
             "Course Name": "AP Computer Science",
-            "Grade": [9,11],
+            "Grade": [9,10,11,12],
             "Semester": "Spring",
             "School Year" :{
                 "Start" : 2018,
@@ -93,7 +93,9 @@
                 "Solution1":{
                     "Keywords": [
                         "Drones",
-                        ""
+                        "DJI Mavic 2",
+                        "DJI Tello",
+                        "DJI Spark"
                     ],
                     "Type" : "Product"
                 },
@@ -111,7 +113,7 @@
                 "Building Community",
                 "Training Talent"
             ],
-            "Strategies" :[
+            "Strategies and Initiatives" :[
                 "Engaging Classrooms",
                 "Developing use cases",
                 "Partnering with companies"
@@ -127,7 +129,7 @@
                 "Year" : 2002
             },
             "Ethnicity": "Asian",
-            "Free Lunch": true,
+            "Free Lunch or Reduced Lunch": true,
             "Supergender": "Transgender Female",
             "Grade Level": 12,
             "Family Language" :[
