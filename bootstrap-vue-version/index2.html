@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 
-    <title>Hi there</title>
+    <title>Pilot City</title>
 
     <!-- Required Stylesheets -->
     <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap/dist/css/bootstrap.min.css"/>
@@ -26,6 +26,12 @@
 
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
     <link href="https://fonts.googleapis.com/css?family=Raleway:700" rel="stylesheet"> 
+
+    <!--Load Firebase  and local config file-->
+      <script src="https://www.gstatic.com/firebasejs/5.5.7/firebase.js"></script>
+     <script type="text/javascript" src="js/firebase_config.js"></script>
+
+
   </head>
 
   <body>
@@ -36,7 +42,7 @@
       <pc-nav-bar></pc-nav-bar>
 
  
-      <b-container id="landing-page">
+      <b-container id="landing-page" class="supreme-container">
         <b-jumbotron  id="landing-jumbo"
                       header="Connecting classrooms to the big bad world."
                       fluid
@@ -53,15 +59,26 @@
 
 
 
-        <b-modal centered id="modal1" 
+        
+
+         
+      </b-container>
+
+      <b-modal centered id="modal1" 
                   body-bg-variant="dark"
                   footer-bg-variant="dark"                  
                   hide-header="true"
+                  hide-footer="true"
                   :body-text-variant="light"
 
 
          >
-            <p></p>
+            <p style="text-align: center">
+              
+              <img class="modal-header-img" src="img/3_Hand.png">
+
+
+            </p>
            <div>
               
               <b-form-group horizontal
@@ -77,13 +94,13 @@
                             label-for="password-input">
                 <b-form-input id="password-input"></b-form-input>
               </b-form-group>
+                <div class="form-btn-container">
+                  <b-button class="submit-form-btn" type="submit" variant="primary">Sign-Up</b-button>
+                </div>
           </div>
 
 
         </b-modal>
-
-         
-      </b-container>
 
     </div> <!--app-->
 

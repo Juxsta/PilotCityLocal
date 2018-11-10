@@ -12,7 +12,6 @@ Stylesheet for Pilot City App
 
 
 
-
 /*************** Buttons and UI ********************/
 
 
@@ -27,6 +26,19 @@ Stylesheet for Pilot City App
 .form-control{
 
 	border-radius:25px;
+}
+
+.form-btn-container{
+
+	display: flex;
+	align-items: center;
+ 	justify-content: center;
+
+}
+.submit-form-btn{
+
+	text-align: center;
+ 
 }
 
 
@@ -136,11 +148,14 @@ margin-left: auto;
 .modal-content{
 
 	background-color:transparent;
+	border: 0px solid rgba(0,0,0,.2);
 }
 
 .modal-body{
 border-top-left-radius: 28px;
 border-top-right-radius: 28px;
+border-bottom-right-radius: 28px;
+border-bottom-left-radius: 28px;
 
 }
 
@@ -156,4 +171,18 @@ border-top-right-radius: 28px;
 
 	display: none;
 
+}
+
+body.modal-open .supreme-container{
+    -webkit-filter: blur(8px);
+    -moz-filter: blur(8px);
+    -o-filter: blur(8px);
+    -ms-filter: blur(8px);
+    filter: blur(8px);
+}
+.modal-header-img{
+
+	width:80px;
+	height:auto;
+	text-align: center;
 }
