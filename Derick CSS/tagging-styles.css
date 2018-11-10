@@ -1,0 +1,36 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway');
+
+* {
+    margin:0px;
+    padding:0px;
+}
+
+.tag {
+    background-color:#6eba7f;
+    height:60px;
+    border-radius: 50px;
+    font-family: Raleway-ExtraBold;
+    color: white;
+    text-align: left;
+    font-size:25px;
+    display: inline-block;
+
+
+}
+
+.tag span{
+    display: inline-block;
+    padding-right:20px;
+    padding-top:13;
+    letter-spacing:1.25px;
+
+}
+
+.tag i{
+    display: inline-block;
+    font-size: 15px;
+    padding-right: 12px;
+    padding-left: 20px;
+
+}
+
