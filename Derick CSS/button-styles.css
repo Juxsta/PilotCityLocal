@@ -1,3 +1,10 @@
+* {
+    margin:0px;
+    padding:0px;
+    box-sizing: border-box;
+}
+
+
 .button-circle-select {
     width:410px;
     height:410px;
@@ -51,6 +58,36 @@
 
 }
 
+.button-regular {
+    background-color:#6eba7f;
+    width:250px;
+    height:96px;
+    border-radius: 50px;
+    font-size: 40px;
+    font-family: Raleway;
+    color: white;
+    text-align: center;
+    padding:23px
+
+}
+
+.button-regular h1{
+    font-size: 40px;
+    font-family: Raleway;
+    color: white;
+    text-align: center;
+
+}
+
+.button-regular {
+    background-color:#6eba7f;
+    width:250px;
+    height:96px;
+    border-radius: 50px;
+
+}
+
+
 .button-square-select {
     width:410px;
     height:410px;
@@ -58,4 +95,68 @@
     border: 5px solid #dbdcde;
         
 
+}
+
+.button-login-hover {
+    width:195px;
+    height:73px;
+    border-radius: 37.5px;
+    border: 1.5px solid #ffffff;
+    
+}
+
+.button-login-hover h1{
+    font-size: 30px;
+    font-family: Raleway;
+    color: #ffffff;
+    text-align: center;
+    padding-top:15;
+    
+}
+
+.button-login-nohover {
+    width:195px;
+    height:73px;
+    
+}
+
+.button-login-nohover h1{
+    font-size: 30px;
+    font-family: Raleway;
+    color: #ffffff;
+    text-align: center;
+    padding-top:15;
+    
+}
+
+.button-signup-hover {
+    width:195px;
+    height:73px;
+    border-radius: 37.5px;
+    border: 1.5px solid #ffffff;
+    
+}
+
+.button-signup-hover h1{
+    font-size: 30px;
+    font-family: Raleway;
+    color: #ffffff;
+    text-align: center;
+    padding-top:15;
+    
+}
+
+.button-signup-nohover {
+    width:195px;
+    height:73px;
+    
+}
+
+.button-signup-nohover h1{
+    font-size: 30px;
+    font-family: Raleway;
+    color: #ffffff;
+    text-align: center;
+    padding-top:15;
+    
 }
