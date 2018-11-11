@@ -3,20 +3,22 @@
 	<nav class="navbar navbar-expand-lg navbar-light">
   		<img src="@/assets/pilotCitylogo.png" alt="Pilot City Logo">
 		  <div class="navbar-text ml-auto">
-			  <router-link to="">
-				  <span class="btn btn-primary btn-lg active Raleway active">Log In</span>
-			  </router-link>
-			  <router-link to="">
-				  <span class="btn btn-primary btn-lg active Raleway active">Sign-up</span>
-			  </router-link>
+			<router-link to="">
+				<span class="btn btn-primary btn-lg active Raleway active">Log In</span>
+			</router-link>
+				<Signup />
 		  </div>
 	</nav>
 </div>
 </template>
 
 <script>
+import Signup from '@/components/Signup'
 export default {
   name: 'Navbar',
+  components: {
+	  Signup
+  },
   data () {
     return {
 
@@ -45,8 +47,8 @@ export default {
 }
 
 .Raleway {
-	font-family: Raleway;
-	font-weight: 800
+	font-family: 'Raleway';
+	font-weight: 700;
 }
 
 .navbar .btn {
