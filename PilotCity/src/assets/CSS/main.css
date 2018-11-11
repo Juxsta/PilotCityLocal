@@ -1,0 +1,160 @@
+.button-circle-select {
+    width:410px;
+    height:410px;
+    border-radius: 50%;
+    border: 5px solid #dbdcde;
+        
+
+}
+
+.button-circle-title {
+    font-size: 50px;
+    font-family: Raleway;
+    color: white;
+    text-align: center;
+    padding-top:157px;
+
+}
+
+.button-circle {
+    background-color:#3c9ccc;
+    width:381px;
+    height:381px;
+    border-radius: 50%;
+
+}
+
+.button-exit {
+    transform:rotate(45deg);
+    width:5px;
+    height:30px;
+    background-color:#dbdcde;
+    margin:auto;
+    
+}
+
+.button2-exit {
+    transform:rotate(-90deg);
+    width:5px;
+    height:30px;
+    background-color:#dbdcde;
+    margin:auto;
+
+}
+
+
+.button-regular-select {
+    width:275px;
+    height:121px;
+    border-radius: 50px;
+    border: 5px solid #dbdcde;
+
+}
+
+.button-square-select {
+    width:410px;
+    height:410px;
+    border-radius: 50px;
+    border: 5px solid #dbdcde;
+}
+
+@import url('https://fonts.googleapis.com/css?family=Raleway');
+
+* {
+    margin:0px;
+    padding:0px;
+    box-sizing: border-box;
+}
+
+.input-title-pink {
+
+    font-family: Raleway-ExtraBold;
+    color: #eca0be;
+    padding-left:35px;
+    font-size: 40px;
+    padding-bottom:18px;
+}
+
+.input-field {
+    
+    background-color: #dbdcde;
+    width: 1000px;
+    height:96px;
+    border-radius: 50px;
+    border:0px;
+    padding-left:35px;
+    font-size:40px;
+    font-family: Raleway-Italic;
+    color: white;   
+    
+}
+ 
+.input-field::placeholder {
+    color: white;
+    font-family: Raleway-Italic;
+    opacity: 
+}
+
+.input-field-add i{
+    color: #eca0be;
+    
+}
+    
+.input-field-add{
+    text-align: center;
+    padding-top:20px;
+    border: dashed 1px #dbdcde;
+    width: 1000px;
+    height: 60px;
+    border-radius: 50px;
+    
+}
+@import url('https://fonts.googleapis.com/css?family=Raleway');
+
+* {
+    margin:0px;
+    padding:0px;
+        box-sizing: border-box;
+}
+
+.tag {
+    background-color:#6eba7f;
+    height:60px;
+    border-radius: 50px;
+    font-family: Raleway-ExtraBold;
+    color: white;
+    text-align: left;
+    font-size:25px;
+    display: inline-block;
+
+
+}
+
+.tag span{
+    display: inline-block;
+    padding-right:20px;
+    padding-top:13;
+    letter-spacing:1.25px;
+
+}
+
+.tag i{
+    display: inline-block;
+    font-size: 15px;
+    padding-right: 12px;
+    padding-left: 20px;
+
+}
+
+* {
+    margin:0px;
+    padding:0px;
+        box-sizing: border-box;
+}
+​
+.navbar {
+    
+    background-color: #404041;
+    height: 129px;
+    
+}
