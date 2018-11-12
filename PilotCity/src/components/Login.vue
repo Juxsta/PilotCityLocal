@@ -1,17 +1,17 @@
 <template>
     <div>
         <!-- Button trigger modal -->
-        <button type="button" class="navbar-btn btn-primary btn-lg active Raleway active" data-toggle="modal" data-target="#exampleModalCenter1">
+        <button type="button" id="btn-login" class="navbar-btn btn-primary btn-lg active Raleway float-right active" data-toggle="modal" data-target="#login-modal">
         Login
         </button>
 
         <!-- Modal -->
-        <div class="modal faded" id="exampleModalCenter1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document" >
             <div class="modal-content pc-light-gray">
             <div class="modal-body">
                 <div class="d-flex justify-content-center">
-                    <img src='@/assets/2_heart.png' alt="Heart Logo" id='Heartlogo' >
+                    <img src='@/assets/3_Hand.png' alt="Heart Logo" id='Heartlogo' >
                 </div>
                 <form>
                 <div class="col-auto form-margin">
@@ -22,7 +22,7 @@
                             <i class="material-icons">account_circle</i>
                         </div>
                         </div>
-                        <input type="text" class="form-control form-rounded padding form-active form-active" id="inlineFormInputGroup" placeholder="Username">
+                        <input type="email" class="form-control form-rounded padding form-active form-active" id="login-input-username" placeholder="Username" v-model="login_input_username">
                     </div>
                 </div>
                 <div class="col-auto form-margin">
@@ -33,11 +33,12 @@
                             <i class="large material-icons">lock</i>
                             </div>
                         </div>
-                        <input type="password" class="form-control form-rounded padding form-active" id="inlineFormInputGroup" placeholder="Password">
+                        <input type="password" class="form-control form-rounded padding form-active" id="login-input-password" placeholder="Password" v-model="login_input_password">
                     </div>
+                      <small class="text-danger pl-3" v-if="errormsg">{{errormsg}}</small>
                 </div>
                 <div class="d-flex justify-content-center">
-                    <button type="submit" class="btn btn-primary button-regular pc-blue">Login</button>
+                    <button type="submit" @click.prevent="login" class="btn btn-primary button-regular pc-blue">Login</button>
                 </div>
                 </form>
             </div>
@@ -48,15 +49,32 @@
 </template>
 
 <script>
+import firebase from '@/firebase/init'
+
 export default {
     name: 'Login',
     data() {
         return{
-
+            login_input_username: "",
+            login_input_password: "",
+            errormsg: ""
+        }
+    },
+    methods:{
+        login: function(){
+            var self = this;
+            firebase.auth().signInWithEmailAndPassword(this.login_input_username, this.login_input_password).then(()=> {
+                self.login_input_username = "";
+                self.login_input_password = "";
+                $('#login-modal').modal('hide')
+            }).catch(err => {
+                self.errormsg = err.message; 
+            })
         }
     }
 }
 </script>
+
 <style>
 @import url('https://fonts.googleapis.com/css?family=Raleway');
 .Raleway {
@@ -67,14 +85,12 @@ export default {
 .navbar-btn {
 	border-radius: 50px;
 	background-color: #404041 !important;
-    border: solid 2px #404041 !important;
+	border: solid 2px #404041 ;
 	padding-left : 40px;
 	padding-right: 40px;
     margin: auto 20px;
-}
-
-.active:hover {
-	border: solid 2px #ffffff !important;
+    cursor:pointer !important;
+    transition: border 0.5s;
 }
 
 .modal-content  {
@@ -125,5 +141,21 @@ export default {
 .pc-light-gray{
     background-color: #58595b
 }
-</style>
 
+#login-modal{
+    transition: all 0.7s;
+}
+
+.form-active:focus{
+    background-color:#414042;
+    caret-color:#939598;
+
+}
+.form-active{
+    color: #939598 !important;
+}
+
+.form-active:focus{
+    color: #939598 !important;
+}
+</style>
