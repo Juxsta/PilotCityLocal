@@ -17,6 +17,7 @@ export default {
 </script>
 <style>
     #title{
+        text-transform: capitalize;
         position: absolute;
         font-family: Raleway;
         font-weight: 600;
@@ -24,6 +25,7 @@ export default {
         top:250px;
         left: 100px;
         font-size: 60px;
+
     }
     #index-btn-employers{
         font-family: Raleway;
@@ -65,10 +67,10 @@ export default {
         border: solid 2px white;
     }
     #canvas{
-        height:100%;
+        height:calc(100% - 86px);
         width: 100%;
-        position:absolute;
-        background-image: url('../assets/header.jpg') no-repeat center scroll;
+        position:absolute !important;
+        background: url('../assets/header.jpg') no-repeat center scroll;
         background-size:100% 100%;
     }
 </style>

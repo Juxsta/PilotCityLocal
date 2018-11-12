@@ -139,7 +139,7 @@ export default {
     background-color: #6eba7f;
 }
 .pc-light-gray{
-    background-color: #58595b
+    background-color: rgba(88, 89, 91, 0.8) !important;
 }
 
 #login-modal{
@@ -149,9 +149,10 @@ export default {
 .form-active:focus{
     background-color:#414042;
     caret-color:#939598;
-
 }
 .form-active{
+    padding: 10px !important;
+    font-size: 20px;
     color: #939598 !important;
 }
 
