@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- Button trigger modal -->
-        <button type="button" class="navbar-btn btn-primary btn-lg active Raleway float-right active" data-toggle="modal" data-target="#exampleModalCenter1">
+        <button type="button" class="navbar-btn btn-primary btn-lg active Raleway active" data-toggle="modal" data-target="#exampleModalCenter1">
         Login
         </button>
 
