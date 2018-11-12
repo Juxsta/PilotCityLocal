@@ -61,7 +61,7 @@ export default {
 @import url('https://fonts.googleapis.com/css?family=Raleway');
 .Raleway {
 	font-family: 'Raleway';
-	font-weight: 700;
+	font-weight:800;
 }
 
 .navbar-btn {
@@ -116,9 +116,12 @@ export default {
     margin:15px auto;
 }
 .pc-blue {
-    background-color:#3C93CD;
+    background-color:#3C9CCC;
 }
 
+.pc-green {
+    background-color: #6eba7f;
+}
 .pc-light-gray{
     background-color: #58595b
 }
