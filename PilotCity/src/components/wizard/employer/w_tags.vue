@@ -1,7 +1,7 @@
 <template>
     <div id="w_tags" class="container">
-        <h3>Descrbe your industry here with keywords</h3>
-        <div id="panel_tagspanel">
+        <h3 class="font-weight-light"> Descrbe your industry here with keywords</h3>
+        <div class="panel_tagspanel">
                 <span class="badge badge-pill badge-primary">Primary</span>
                 <span class="badge badge-pill badge-primary">Primary</span>
                 <hr />
@@ -24,7 +24,7 @@ export default {
 </script>
 
 <style>
-#panel_tagspanel{
+.panel_tagspanel{
     border-radius:10px;
     padding: 10px;
     background-color: rgba(235, 235, 235, 0.904);
