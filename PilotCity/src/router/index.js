@@ -22,6 +22,16 @@ export default new Router({
         path:'/classpicker',
         name:'ClassPicker',
         component: ClassPicker,
+      },
+      {
+        path:'/forteacher',
+        name:'Forteacher',
+        component: 'Forteacher'
+      },
+      {
+        path:'foremployer',
+        name:'Foremployer',
+        component: 'Foremployer'
       }
     ]
 
