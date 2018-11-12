@@ -16,3 +16,20 @@ export default {
 }
 </script>
 
+<style>
+
+.navbar-btn {
+	border-radius: 50px;
+	background-color: #404041 !important;
+	border: solid 2px #404041 !important;
+	padding-left : 40px;
+	padding-right: 40px;
+  margin: auto 20px;
+}
+#logout:hover{
+  transition: border 1s;
+	border: solid 2px #ffffff !important;
+}
+</style>
+
+
