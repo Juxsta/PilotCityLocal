@@ -26,7 +26,7 @@ export default {
   },
   data () {
     return {
-			authUser: null,
+		authUser: null,
     }
   },
   methods: {
