@@ -1,3 +1,3 @@
-npm install eslint
-npm install vue-cli
-npm install firebase
+npm install eslint --save
+npm install vue-cli --save
+npm install firebase --save
