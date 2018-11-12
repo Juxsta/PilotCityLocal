@@ -13,8 +13,6 @@ export default {
 }
 </script>
 <style>
-.navbar {
-    background-color: #404041
-}
+
 </style>
 

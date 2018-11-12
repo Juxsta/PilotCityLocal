@@ -68,6 +68,14 @@ export default {
 }
 
 
+#PLogo {
+	padding: 20px 0 20px 0 !important;
+	height: 120px !important;
+	width: 80px !important;
+}
+.navbar {
+    background-color: #404041
+}
 </style>
 
 
