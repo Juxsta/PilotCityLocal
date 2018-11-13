@@ -1,5 +1,5 @@
 <template>
-    <button type="button" @click="increment" class="btn btn-secondary btn-lg" id="the_best_next_button" disabled>Next</button>
+    <button type="button" @click="grabDataFromForm" class="btn btn-secondary btn-lg" id="the_best_next_button" disabled>Next</button>
 </template>
 
 <script>
@@ -8,14 +8,35 @@ export default {
     name: "Button_next",
     data(){
         return{
-            counter: 0,
+            role: null,
+            step: 1,
         }
     },
     methods:{
+        grabDataFromForm: function(){
+            switch(this.step){
+                case 1:
+                    if (this.role == 'teacher')
+                        bus.$emit('grab_story_teacher');
+                break ;
+                case 2:
+                    if (this.role  == 'teacher')
+                        bus.$emit('grab_story_teacher_address');
+                break ;                
+                case 3:
+                break ;
+            }
+        },
         increment: function(){
-            this.counter++;
-            bus.$emit('next', this.counter);
+            bus.$emit('next', this.step++);
         }
+    },
+    created(){
+        var self = this;
+        bus.$on('pickedRole', function(role){
+            self.role = role;
+        });
+        bus.$on('validated', ()=> { self.increment() });
     }
 }
 </script>

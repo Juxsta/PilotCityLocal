@@ -1,8 +1,12 @@
 <template>
-    <div class= "container-fluid" id="canvas">     
+    <div class= "container-fluid" id="canvas">
+        <div class="d-flex flex-row">
         <h2 id = "title">Connecting classrooms to the big bad world. </h2>
-        <button type="button" class="btn btn-primary" id="index-btn-employers"> For Employers </button>
-        <button type="button" class="btn btn-primary" id="index-btn-teachers" > For Teachers </button>
+        </div> 
+        <div class="d-flex flex-row">
+            <button type="button" class="btn btn-primary" id="index-btn-employers"> For Employers </button>
+            <button type="button" class="btn btn-primary" id="index-btn-teachers" > For Teachers </button>
+        </div>
     </div>
 </template>
 <script>

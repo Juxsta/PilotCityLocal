@@ -9,7 +9,7 @@
                 <p class="teacher-story">My name is</p>
             </div>
             <div class="p-2 align-self-center">
-                <input type="text" placeholder="First Name" class="badge-pill pc-button" v-model="first_name">
+                <input type="text" placeholder="First Name" class="badge-pill pc-button" v-model="first_name"  @keyup.enter="skip">
             </div>
             <div class="p-2 align-self-start">
                 <input type="text" placeholder="Last Name" class="badge-pill pc-button" v-model="last_name"> 
@@ -34,7 +34,7 @@
                 <p class="teacher-story">My phone number is</p>
             </div>
             <div class="p-2 align-self-start">
-                    <input type="text" placeholder="Mobile Number" class="badge-pill pc-button" v-model="phone">
+                    <input type="number" placeholder="Mobile Number" class="badge-pill pc-button" v-model="phone">
             </div>
         </div>
         </h4>
@@ -42,6 +42,9 @@
 </template>
 
 <script>
+import { bus } from '../../../main'
+import { Prompter } from '../../../main'
+
 export default {
     name:"w_story",
     data() {
@@ -52,6 +55,32 @@ export default {
             school_district:null,
             phone:null
         }
+    },
+    methods:{
+        emitStory: function(){
+            var obj = {};
+            obj['teacher_story'] = {
+                first_name: this.first_name,
+                last_name: this.last_name,
+                school_name: this.school_name,
+                school_district: this.school_district,
+                phone: this.phone
+            }
+            bus.$emit('teacher_story_finished', obj);
+            bus.$emit('validated'); 
+        }, /** delete this skip when in production */
+        skip: function(){
+            bus.$emit('validated');
+        } 
+    },
+    created(){
+        var self = this;
+        bus.$on('grab_story_teacher', function(){
+            if (self.first_name && self.last_name && self.school_name && self.school_district && self.phone)
+                self.emitStory();
+            else
+                Prompter().failed("missing field(s)!");
+        });
     }
 }
 </script>
@@ -93,5 +122,9 @@ export default {
     color:#eca0be;
     margin-bottom:50px;
     margin-top:70px;
+}
+
+input:focus{
+    outline: none !important;
 }
 </style>

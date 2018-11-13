@@ -1,6 +1,6 @@
 <template>
     <div>
-        <w_skills />
+        <w_teacher_address />
     </div>
 </template>
 <script>
@@ -9,7 +9,7 @@ import w_teacher_address from '@/components/wizard/teacher/w_teacher_address'
 import w_industry from '@/components/wizard/teacher/w_industry'
 import w_story from '@/components/wizard/teacher/w_story'
 export default {
-    name: 'Testing',
+    name: 'Etesting',
     data (){
         return {
             
