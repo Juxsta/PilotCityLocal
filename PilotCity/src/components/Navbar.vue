@@ -1,6 +1,6 @@
 <template>
 <div>
-	<nav class="navbar navbar-expand-lg navbar-light">
+	<nav class="navbar navbar-expand-lg navbar-light Raleway">
   		<img id="logo-pilotcity" src="@/assets/pilotCitylogo.png" alt="Pilot City Logo">
 			<div class="btn-group ml-auto" role="group">
 				<Login id="component-login" />
@@ -54,7 +54,6 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
 
-@import url('https://fonts.googleapis.com/css?family=Raleway');
 #logo-pilotcity{
 	cursor: pointer;
 	height: 50px;
@@ -65,7 +64,7 @@ export default {
 }
 .Raleway {
 	font-family: "Raleway";
-	font-weight: 700;
+	font-weight: 800;
 }
 
 #PLogo {

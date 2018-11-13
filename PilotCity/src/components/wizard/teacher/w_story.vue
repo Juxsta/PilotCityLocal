@@ -77,6 +77,9 @@ export default {
 
 <style>
 .pc-button {
+        font-family: "Raleway";
+        font-weight:100;
+        font-style: Italic;
         background-color: #eca0be;
         color: white;
         border-radius: 50px;
@@ -94,6 +97,7 @@ export default {
     color:white !important;
 }
 .teacher-story{
+    font-family: "Raleway";
     font-size: 25px;
     color: #c6c8ca;
     margin-top:10px;
@@ -101,9 +105,13 @@ export default {
 
 .story-title {
     text-align: center;
+    font-family: "Raleway-ExtraBold";
+    font-style: Italic;
+    font-weight:800;
     font-size:30px;
     color:#eca0be;
-    margin-bottom:30px;
+    margin-bottom:50px;
+    margin-top:70px;
 }
 
 input:focus{

@@ -166,7 +166,11 @@ export default {
     width:150px;
     border-radius: 50px;
     font-size: 18px;
+<<<<<<< HEAD
+    font-family: 'Raleway';
+=======
     font-family: "Raleway";
+>>>>>>> bf21b33fb2be2d65b92085b535cea9e5c8e81a22
     color: white;
     text-align: center;
     margin:15px auto;

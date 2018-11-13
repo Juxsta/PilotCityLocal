@@ -88,21 +88,13 @@ export default {
 	background-color: #404041 !important;
 	border: solid 1px #404041;
     font-size: 15px;
-    font-family: Raleway-Bold;
+    font-family: "Raleway-Bold";
     cursor:pointer !important;
     transition: border 0.5s;
     padding-left : 40px;
 	padding-right: 40px;
     margin: auto 20px;
     text-align: center;
-}
-
-.btn-primary {
-
-}
-
-.btn-lg {
-
 }
 
 .modal-content  {
@@ -152,7 +144,7 @@ export default {
     font-weight:800;
     border-radius: 50px;
     font-size: 20px;
-    font-family: Raleway;
+    font-family: 'Raleway';
     color: white;
     text-align: center;
     margin:15px auto;
@@ -177,7 +169,7 @@ export default {
     padding: 10px !important;
     font-size: 15px;
     font-weight:100;
-    font-family: raleway-Italic;
+    font-family: 'Raleway';
     color: #939598 !important;
 }
 

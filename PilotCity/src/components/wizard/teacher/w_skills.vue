@@ -12,9 +12,12 @@
                         @keyup.enter.prevent="input_addtoIDB(i_keyword,selected_skeywords)" v-model="i_keyword">
                     </div>
                     <hr />
-                <span class="badge badge-pill badge-primary" v-for="(keyword,index) in selected_skeywords" :key="keyword + index" :class="colors[index%7]">
+                <span class="badge badge-pill badge-primary" v-for="(keyword,index) in selected_skeywords" :key="index" :class="colors[index%7]">
                     <div class="d-flex">
-                        <i class="material-icons" @click="rm_SKeyword(keyword)">clear</i>
+                        <a href="" @click.prevent>
+                            <i class="material-icons" @click="rm_SKeyword(keyword)">clear</i>
+                        </a>
+                        
                         <div class="align-self-center">
                             <b class="Raleway">{{keyword}}</b>
                         </div>

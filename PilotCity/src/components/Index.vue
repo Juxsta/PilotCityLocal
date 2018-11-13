@@ -18,20 +18,21 @@ export default {
 <style>
     #title{
         position: absolute;
-        font-family: Raleway-Bold;
+        font-family: "Raleway";
+        font-weight: 800;
         color: white;
         top:250px;
         left: 100px;
-        font-size: 50px;
-        padding-left:0px;
+        font-size: 55px;
 
     }
     #index-btn-employers{
-        font-family: Raleway-Bold;
+        font-family: "Raleway";
         font-size: 20px;
-        background-color: #ae90b0;
+        background-color: #eca0be;
         color: white;
-        border-radius: 37.5px;
+        font-weight: 800;
+        border-radius: 50px;
         height: 45px;
         width: 250px;
         text-align: center;
@@ -45,12 +46,13 @@ export default {
         border: solid 1px white;
     }
     #index-btn-teachers{
-        font-family: Raleway-Bold;
+        font-family: "Raleway";
         font-size: 20px;
-        background-color: #eca0be;
+        font-weight: 800;
+        background-color: #ae90b0;
         stroke: #ae90b0;
         color: white;
-        border-radius: 37.5px;
+        border-radius: 50px;
         height: 45px;
         width: 250px;
         text-align: center;
@@ -58,7 +60,6 @@ export default {
         top: 350px;
         left: 100px;
         border-color: transparent;
-        float:left;
     }
     #index-btn-teachers:hover{
         border: solid 1px white;
@@ -70,23 +71,5 @@ export default {
         background: url('../assets/header.jpg') no-repeat center scroll;
         background-size:100% 100%;
     }
-    .pc-purple {
-    background-color: #ae90b0;
-}
-
-.pc-pink {
-    background-color: #eca0be;
-}
-.pc-green {
-    background-color: #6eba7f
-}
-.pc-blue {
-    background-color: #3c9ccc
-}
-.pc-orange {
-    background-color: #f79960
-}
-.pc-yellow {
-    background-color: #fdd25a
-}
+    
 </style>
