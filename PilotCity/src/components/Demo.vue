@@ -1,6 +1,7 @@
 <template id="demo">
     <div class="mt-3">
         <ClassPicker id="class_picker" class="animated "/>
+        <w_story id="w_story" class="animated fadeInRight"/>
         <w_address  id="w_address" class="animated fadeInRight"/>
         <w_sector id="w_sector" class="animated fadeInRight"/>
         <w_question id="w_question"  class="animated fadeInRight"/>
@@ -31,8 +32,9 @@ export default {
         return{
             authUser: null,
             role: null,
-            e_w_wizards: ['w_address', 'w_sector', 'w_question'],
-            t_w_wizards: ['w_address', 'w_sector', 'w_question'],
+            e_w_wizards: ['w_story', 'w_address', 'w_sector', 'w_question'],
+            t_w_wizards: ['w_story', 'w_address', 'w_sector', 'w_question'],
+            data_arr: []
         }
     },
     components: {
@@ -80,22 +82,20 @@ export default {
                 else if (self.role == 'teacher')
                     $('#' + self.t_w_wizards[0]).show();
             }, 300);
-            
+        })
+        bus.$on('story_finished', function(obj){
+            data_arr.push(obj)
         })
     }
 }
 </script>
 
 <style>
-#w_address{
+#w_address, 
+#w_question, #w_story, #w_sector{
     display: none;
 }
-#w_question{
-    display: none;
-}
-#w_sector{
-    display: none;
-}
+
 ::-webkit-scrollbar {
     width: 0px;  /* remove scrollbar space */
     background: transparent;  /* optional: just make scrollbar invisible */

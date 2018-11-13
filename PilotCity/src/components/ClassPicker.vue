@@ -71,6 +71,8 @@ export default {
     font-weight: 800;
 }
 .class-picker-btn:active{
-    outline-color: rgb(222, 223, 224) !important;
+    transition: all 0.5s;
+    box-shadow: 0px 0px 20px rgba(0,0,0, 0.6)
 }
+
 </style>

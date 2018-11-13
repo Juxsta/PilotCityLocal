@@ -42,6 +42,7 @@
 </template>
 
 <script>
+import { bus } from '../../../main'
 export default {
     name:"w_story",
     data() {
@@ -52,6 +53,24 @@ export default {
             school_district:null,
             phone:null
         }
+    },
+    method:{
+        emitStory: function(){
+            var obj = {};
+            obj['teacher_story'] = {
+                first_name: this.first_name,
+                last_name: this.last_name,
+                school_name: this.school_name,
+                school_district: this.school_district,
+                phone: this.phone
+            }
+            bus.$emit('story_finished', obj);
+        }
+    },
+    created(){
+        bus.$on('grab_story_teacher', function(){
+            
+        });
     }
 }
 </script>
@@ -93,5 +112,9 @@ export default {
     color:#eca0be;
     margin-bottom:50px;
     margin-top:70px;
+}
+
+input:focus{
+    outline: none !important;
 }
 </style>

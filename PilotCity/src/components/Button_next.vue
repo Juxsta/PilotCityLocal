@@ -8,14 +8,33 @@ export default {
     name: "Button_next",
     data(){
         return{
-            counter: 0,
+            role: null,
+            step: 1,
         }
     },
     methods:{
+        grabDataFromForm: function(){
+            switch(this.step){
+                case 1:
+                    if (role == 'teacher')
+                        bus.$emit('grab_story_teacher');
+                break ;
+                case 2:
+                    if (role == 'teacher')
+                        bus.$emit('grab_story_address');
+                break ;                
+                case 3:
+                break ;
+            }
+        },
         increment: function(){
-            this.counter++;
-            bus.$emit('next', this.counter);
+            bus.$emit('next', this.step++);
         }
+    },
+    created(){
+        bus.$on('pickedRole', function(role){
+            this.role = role;
+        });
     }
 }
 </script>
