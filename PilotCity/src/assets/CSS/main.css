@@ -9,7 +9,7 @@
 
 .button-circle-title {
     font-size: 50px;
-    font-family: Raleway;
+    font-family: "Raleway";
     color: white;
     text-align: center;
     padding-top:157px;
@@ -68,7 +68,7 @@
 
 .input-title-pink {
 
-    font-family: Raleway-ExtraBold;
+    font-family: "Raleway"-ExtraBold;
     color: #eca0be;
     padding-left:35px;
     font-size: 40px;
@@ -84,14 +84,14 @@
     border:0px;
     padding-left:35px;
     font-size:40px;
-    font-family: Raleway-Italic;
+    font-family: "Raleway"-Italic;
     color: white;   
     
 }
  
 .input-field::placeholder {
     color: white;
-    font-family: Raleway-Italic;
+    font-family: "Raleway"-Italic;
 }
 
 .input-field-add i{
@@ -120,7 +120,7 @@
     background-color:#6eba7f;
     height:60px;
     border-radius: 50px;
-    font-family: Raleway-ExtraBold;
+    font-family: "Raleway"-ExtraBold;
     color: white;
     text-align: left;
     font-size:25px;
