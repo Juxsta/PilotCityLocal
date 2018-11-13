@@ -1,6 +1,6 @@
 <template id="demo">
     <div class="mt-3">
-        <w_story />
+        <Index.vue />
     </div>
 </template>
 
