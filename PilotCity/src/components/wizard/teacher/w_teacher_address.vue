@@ -2,8 +2,8 @@
    <div class="container mt-5 pt-5">
         <form class="mt-5"> 
             <div class="form-group">
-                <label for="inputAddress">Employer Address</label>
-                <input type="text" class="form-control" id="inputAddress" placeholder="435 Portage Ave," v-model="address.street">
+                <label for="inputAddress">School Address</label>
+                <input type="text" class="form-control" id="inputAddress" placeholder="435 Portage Ave" v-model="address.street">
             </div>
             <div class="form-row" >
                 <div class="form-group col-md-6">
@@ -16,12 +16,14 @@
                 </div>
                 <div class="form-group col-md-2">
                     <label for="inputZip">Zip</label>
-                    <input type="text" class="form-control" id="inputZip">
+                    <input type="text" class="form-control" id="inputZip" placeholder="55555">
                 </div>
                 <div class="form-group col-md-2">
-                    <label for="inputType">Type</label>
-                    <input type="text" class="form-control" id="inputType" placeholder="Primary/HQ" v-model="address.type">
+                    <label for="inputType">Room #</label>
+                    <input type="text" class="form-control" id="inputType" placeholder="101A" v-model="address.room">
                 </div>
+            </div>
+            <div class="form-row">
             </div>
         </form>
    </div>
@@ -38,7 +40,7 @@ export default {
                 city: null,
                 state: null,
                 zip: null,
-                type: null,
+                room: null,
             }
         }
     },
