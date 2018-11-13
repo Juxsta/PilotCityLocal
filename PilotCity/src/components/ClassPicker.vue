@@ -3,17 +3,10 @@
         <div class="d-flex justify-content-center">
             <h1 class="Raleway class-picker-label">Who are you?</h1>
         </div>
-<<<<<<< HEAD
-        <div class="d-flex justify-content-center">
-                <button class="btn button-square class-picker-btn .offset-border">Teacher</button>
-                <button class="btn button-square class-picker-btn">Employer</button>
-                <button class="btn button-square class-picker-btn">Student</button>
-=======
         <div class="d-flex justify-content-center mt-5">
-                <button class="btn button-square class-picker-btn .offset-border color-pink" @click="pickRole(0)">Teacher</button>
+                <button class="btn button-square class-picker-btn color-pink" @click="pickRole(0)">Teacher</button>
                 <button class="btn button-square class-picker-btn color-purple" @click="pickRole(1)">Employer</button>
                 <button class="btn button-square class-picker-btn" @click="pickRole(2)">Student</button>
->>>>>>> 2d75407d38f8b6bdc7901365809eb3e75715a157
         </div>
     </div>
 </template>
@@ -57,10 +50,6 @@ export default {
     border-radius: 50px;
 }
 
-.offset-border:active {
-    outline:5px solid #dbdcde !important;
-    outline-offset: 30px !important;
-}
 .class-picker-btn {
     margin: auto 20px;
     color: white;
@@ -80,5 +69,8 @@ export default {
     color: rgb(222, 223, 224);
     font-style: italic;
     font-weight: 800;
+}
+.class-picker-btn:active{
+    outline-color: rgb(222, 223, 224) !important;
 }
 </style>

@@ -4,8 +4,8 @@
         <w_address  id="w_address" class="animated fadeInRight"/>
         <w_sector id="w_sector" class="animated fadeInRight"/>
         <w_question id="w_question"  class="animated fadeInRight"/>
-        <Button_next /> -->
-        <w_sector />
+        <Button_next /> 
+        <!-- <w_sector /> -->
     </div>
 </template>
 
@@ -50,14 +50,17 @@ export default {
     created(){
         var self = this;
         bus.$on('next', function(count){
-            var len; 
             if (self.role == 'employer'){
-                $('#' + self.e_w_wizards[(count - 1) % self.e_w_wizards.length]).hide();
-                $('#' + self.e_w_wizards[count % self.e_w_wizards.length]).show();
+                if (count < self.e_w_wizards.length){
+                    $('#' + self.e_w_wizards[(count - 1)]).hide();
+                    $('#' + self.e_w_wizards[count]).show();
+                }
             }
             else if (self.role == 'teacher') {
-                $('#' + self.t_w_wizards[(count - 1) % self.t_w_wizards.length]).hide();
-                $('#' + self.t_w_wizards[count % self.t_w_wizards.length]).show();
+                if (count < self.t_w_wizards.length){
+                    $('#' + self.t_w_wizards[(count - 1)]).hide();
+                    $('#' + self.t_w_wizards[count]).show();
+                }
             }
         });
         bus.$on('userSignedIn', function(user){
@@ -73,7 +76,7 @@ export default {
                     $('#' + self.e_w_wizards[0]).show();
                 else if (self.role == 'teacher')
                     $('#' + self.t_w_wizards[0]).show();
-            }, 500);
+            }, 300);
             
         })
     }
