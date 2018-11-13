@@ -63,6 +63,7 @@ export default {
             self.authUser = user;
         })
         bus.$on('pickedRole', function(role){
+            document.getElementById('the_best_next_button').disabled = false;
             self.role = role;
             $("#class_picker").addClass('fadeOutLeft');
             setTimeout(function(){
