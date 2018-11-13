@@ -5,15 +5,16 @@
                 <div class="input-group mb-2">
                         <div class="input-group-prepend">
                             <div class="input-group-text">
-                                <h3 class="font-weight-light">Industries</h3>
+                                <h3 class="font-weight-light">Skills</h3>
                             </div>
                         </div>
-                        <input type="text" class="form-control" placeholder="What industries would your classrooms be excited about?" @keyup.enter.prevent="input_addtoIDB(i_keyword,selected_ikeywords)" v-model="i_keyword">
+                        <input type="text" class="form-control" placeholder="What tools, technologies, and skills are you currrently teaching?" 
+                        @keyup.enter.prevent="input_addtoIDB(i_keyword,selected_skeywords)" v-model="i_keyword">
                     </div>
                     <hr />
-                <span class="badge badge-pill badge-primary" v-for="(keyword,index) in selected_ikeywords" :key="keyword + index" :class="colors[index%7]">
+                <span class="badge badge-pill badge-primary" v-for="(keyword,index) in selected_skeywords" :key="keyword + index" :class="colors[index%7]">
                     <div class="d-flex">
-                        <i class="material-icons" @click="rm_IKeyword(keyword)">clear</i>
+                        <i class="material-icons" @click="rm_SKeyword(keyword)">clear</i>
                         <div class="align-self-center">
                             <b class="Raleway">{{keyword}}</b>
                         </div>
@@ -21,8 +22,8 @@
                 </span>
                 <hr />
                 <span class="badge badge-pill badge-primary" v-for="(value,i) in industry_keywords" :key="value + i" :class="colors[i%7]">
-                    <div class="d-flex" v-if="notFound(value,selected_ikeywords)">
-                        <i class="material-icons" @click="add_IKeywords(value)">add</i>
+                    <div class="d-flex" v-if="notFound(value,selected_skeywords)">
+                        <i class="material-icons" @click="add_SKeywords(value)">add</i>
                         <div class="align-self-center">
                             <b class="Raleway">{{value}}</b>
                         </div>
@@ -35,7 +36,7 @@
 
 <script>
 export default {
-    name: "w_industry",
+    name: "w_skills",
     data () {
         return {
             i_keyword: null,
@@ -44,20 +45,20 @@ export default {
                 'Drones','Robotics','Data Science','Internet of Things','Sustainability','Space',
                 'Artificial Inteligence','Automotive','Bioprinting','Data','Drones','Gaming','Healthcare','Lifestyle'
                 ],
-            selected_ikeywords:[]
+            selected_skeywords:[]
         }
     },
     methods:{
         notFound(item,array) {
             return array.indexOf(item)==-1?1:0
         },
-        add_IKeywords(item) {
-            this.selected_ikeywords.push(item)
+        add_SKeywords(item) {
+            this.selected_skeywords.push(item)
         },
-        rm_IKeyword(item){
-            this.selected_ikeywords.splice(this.selected_ikeywords.indexOf(item),1)
+        rm_SKeyword(item){
+            this.selected_skeywords.splice(this.selected_skeywords.indexOf(item),1)
         },
-        add_IKtoDB(item) {
+        add_SKtoDB(item) {
             this.industry_keywords.push(item)
         },
         input_addtoIDB(item,array) {
