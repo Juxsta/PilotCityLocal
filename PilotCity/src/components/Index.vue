@@ -5,7 +5,7 @@
         </div> 
         <div class="d-flex flex-row">
             <button type="button" class="btn btn-primary" id="index-btn-employers"> <router-link to="/demo"> For Employers </router-link> </button>
-            <button type="button" class="btn btn-primary" id="index-btn-teachers" > For Teachers </button>
+            <button type="button" class="btn btn-primary" id="index-btn-teachers" > <router-link to="/demo"> For Teachers </router-link> </button>
         </div>
     </div>
 </template>
