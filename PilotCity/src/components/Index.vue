@@ -17,76 +17,61 @@ export default {
 </script>
 <style>
     #title{
+        text-transform: capitalize;
         position: absolute;
-        font-family: Raleway-Bold;
+        font-family: "Raleway";
+        font-weight: 900;
         color: white;
         top:250px;
         left: 100px;
-        font-size: 50px;
-        padding-left:0px;
+        font-size: 60px;
 
     }
     #index-btn-employers{
-        font-family: Raleway-Bold;
-        font-size: 20px;
-        background-color: #ae90b0;
+        font-family: "Raleway";
+        font-size: 23px;
+        background-color: #eca0be;
         color: white;
-        border-radius: 37.5px;
-        height: 45px;
-        width: 250px;
+        font-weight: 700;
+        border-radius: 20px;
+        height: 50px;
+        width: 270px;
         text-align: center;
         position: absolute;
-        top: 350px;
-        left: 375px;
+        top: 400px;
+        left: 400px;
+        padding: 10px;
         border-color: transparent;
     }
     
     #index-btn-employers:hover{
-        border: solid 1px white;
+        border: solid 2px white;
     }
     #index-btn-teachers{
-        font-family: Raleway-Bold;
-        font-size: 20px;
-        background-color: #eca0be;
+        font-family: "Raleway";
+        font-size: 23px;
+        font-weight: 700;
+        background-color: #ae90b0;
         stroke: #ae90b0;
         color: white;
-        border-radius: 37.5px;
-        height: 45px;
-        width: 250px;
+        border-radius: 20px;
+        height: 50px;
+        width: 270px;
         text-align: center;
         position: absolute;
-        top: 350px;
+        top: 400px;
         left: 100px;
         border-color: transparent;
-        float:left;
     }
     #index-btn-teachers:hover{
-        border: solid 1px white;
+        border: solid 2px white;
     }
     #canvas{
-        height:calc(100% - 65px);
+        height:calc(100% - 86px);
         width: 100%;
         position:absolute !important;
         background: url('../assets/header.jpg') no-repeat center scroll;
         background-size:100% 100%;
     }
-    .pc-purple {
-    background-color: #ae90b0;
-}
-
-.pc-pink {
-    background-color: #eca0be;
-}
-.pc-green {
-    background-color: #6eba7f
-}
-.pc-blue {
-    background-color: #3c9ccc
-}
-.pc-orange {
-    background-color: #f79960
-}
-.pc-yellow {
-    background-color: #fdd25a
-}
+    
 </style>

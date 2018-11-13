@@ -97,14 +97,6 @@ export default {
     text-align: center;
 }
 
-.btn-primary {
-
-}
-
-.btn-lg {
-
-}
-
 .modal-content  {
     -webkit-border-radius: 30px !important;
     -moz-border-radius: 30px !important;
