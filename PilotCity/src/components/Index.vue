@@ -17,57 +17,55 @@ export default {
 </script>
 <style>
     #title{
-        text-transform: capitalize;
         position: absolute;
         font-family: "Raleway";
-        font-weight: 900;
+        font-weight: 800;
         color: white;
         top:250px;
         left: 100px;
-        font-size: 60px;
+        font-size: 55px;
 
     }
     #index-btn-employers{
         font-family: "Raleway";
-        font-size: 23px;
+        font-size: 20px;
         background-color: #eca0be;
         color: white;
-        font-weight: 700;
-        border-radius: 20px;
-        height: 50px;
-        width: 270px;
+        font-weight: 800;
+        border-radius: 50px;
+        height: 45px;
+        width: 250px;
         text-align: center;
         position: absolute;
-        top: 400px;
-        left: 400px;
-        padding: 10px;
+        top: 350px;
+        left: 375px;
         border-color: transparent;
     }
     
     #index-btn-employers:hover{
-        border: solid 2px white;
+        border: solid 1px white;
     }
     #index-btn-teachers{
         font-family: "Raleway";
-        font-size: 23px;
-        font-weight: 700;
+        font-size: 20px;
+        font-weight: 800;
         background-color: #ae90b0;
         stroke: #ae90b0;
         color: white;
-        border-radius: 20px;
-        height: 50px;
-        width: 270px;
+        border-radius: 50px;
+        height: 45px;
+        width: 250px;
         text-align: center;
         position: absolute;
-        top: 400px;
+        top: 350px;
         left: 100px;
         border-color: transparent;
     }
     #index-btn-teachers:hover{
-        border: solid 2px white;
+        border: solid 1px white;
     }
     #canvas{
-        height:calc(100% - 86px);
+        height:calc(100% - 65px);
         width: 100%;
         position:absolute !important;
         background: url('../assets/header.jpg') no-repeat center scroll;

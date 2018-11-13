@@ -54,7 +54,6 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
 
-@import url('https://fonts.googleapis.com/css?family=Raleway');
 #logo-pilotcity{
 	cursor: pointer;
 	height: 50px;
@@ -65,7 +64,7 @@ export default {
 }
 .Raleway {
 	font-family: "Raleway";
-	font-weight: 700;
+	font-weight: 800;
 }
 
 #PLogo {

@@ -79,8 +79,6 @@ export default {
 }
 .teacher-story{
     font-family: "Raleway";
-    font-weight:700;
-    font-style: Italic;
     font-size: 25px;
     color: #c6c8ca;
     margin-top:10px;
@@ -88,9 +86,9 @@ export default {
 
 .story-title {
     text-align: center;
-    font-family: "Raleway";
-    font-weight:800;
+    font-family: "Raleway-ExtraBold";
     font-style: Italic;
+    font-weight:800;
     font-size:30px;
     color:#eca0be;
     margin-bottom:50px;
