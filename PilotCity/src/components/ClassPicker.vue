@@ -4,7 +4,7 @@
             <p class="Raleway">Who are you?</p>
         </div>
         <div class="d-flex justify-content-center">
-                <button class="btn button-square class-picker-btn .offset-border" @click>Teacher</button>
+                <button class="btn button-square class-picker-btn .offset-border">Teacher</button>
                 <button class="btn button-square class-picker-btn">Employer</button>
                 <button class="btn button-square class-picker-btn">Student</button>
         </div>

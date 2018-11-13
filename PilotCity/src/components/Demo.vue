@@ -1,9 +1,10 @@
 <template id="demo">
     <div class="mt-3">
-        <w_address  id="w_address" class="animated fadeInRight"/>
+<!--         <w_address  id="w_address" class="animated fadeInRight"/>
         <w_sector id="w_sector" class="animated fadeInRight"/>
         <w_question id="w_question"  class="animated fadeInRight"/>
-        <Button_next />
+        <Button_next /> -->
+        <w_sector />
     </div>
 </template>
 
