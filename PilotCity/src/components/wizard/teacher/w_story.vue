@@ -64,7 +64,7 @@ export default {
         border-radius: 50px;
         font-size:25px;
         height: 50px;
-        width: 225px;
+        width: 250px;
         text-align: center;
         padding-left: 30px;
         padding-right:30px;
@@ -80,7 +80,6 @@ export default {
     font-size: 25px;
     color: #c6c8ca;
     margin-top:10px;
-
 }
 
 .story-title {

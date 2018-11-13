@@ -64,7 +64,7 @@ export default {
 	display: none;
 }
 .Raleway {
-	font-family: 'Raleway';
+	font-family: "Raleway";
 	font-weight: 700;
 }
 

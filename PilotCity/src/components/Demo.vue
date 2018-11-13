@@ -1,6 +1,10 @@
 <template id="demo">
     <div class="mt-3">
+<<<<<<< HEAD
         <w_skills />
+=======
+        <ClassPicker />
+>>>>>>> bf21b33fb2be2d65b92085b535cea9e5c8e81a22
     </div>
 </template>
 
