@@ -18,7 +18,6 @@ import w_address from '@/components/wizard/employer/w_address'
 import w_sector from '@/components/wizard/employer/w_sector'
 import w_tags from '@/components/wizard/employer/w_tags'
 import w_story from '@/components/wizard/teacher/w_story'
-import w_classinfo1 from '@/components/wizard/teacher/w_classinfo1'
 import w_descrbe_product_n_service from '@/components/wizard/employer/w_descrbe_product_n_service'
 import w_department from '@/components/wizard/employer/w_department'
 import w_bottom_line from '@/components/wizard/employer/w_bottom_line'
@@ -46,7 +45,6 @@ export default {
         w_sector,
         w_tags,
         w_story,
-        w_classinfo1,
         w_descrbe_product_n_service,
         w_department,
         w_bottom_line,
