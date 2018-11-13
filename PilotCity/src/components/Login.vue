@@ -50,6 +50,7 @@
 
 <script>
 import firebase from '@/firebase/init'
+import { bus } from '../main'
 
 export default {
     name: 'Login',
@@ -63,9 +64,10 @@ export default {
     methods:{
         login: function(){
             var self = this;
-            firebase.auth().signInWithEmailAndPassword(this.login_input_username, this.login_input_password).then(()=> {
+            firebase.auth().signInWithEmailAndPassword(this.login_input_username, this.login_input_password).then((user)=> {
                 self.login_input_username = "";
                 self.login_input_password = "";
+                bus.$emit('userSignedIn', user);
                 $('#login-modal').modal('hide')
             }).catch(err => {
                 self.errormsg = err.message; 

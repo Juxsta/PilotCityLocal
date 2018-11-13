@@ -50,6 +50,7 @@
 
 <script>
 import firebase from '@/firebase/init'
+import { bus } from '../main'
 
 export default {
     name: 'Signup',
@@ -67,6 +68,7 @@ export default {
                 firebase.auth().createUserWithEmailAndPassword(self.signup_input_username, self.signup_input_password).then( user => {
                     self.signup_input_username = ""
                     self.signup_input_password = ""
+                    bus.$emit('userSignedIn', user);
                     $('#signup-modal').modal('hide')
                 }).catch(function(error) {
                     self.errorMessage = error.message;
