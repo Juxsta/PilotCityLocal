@@ -37,7 +37,7 @@
                       <small class="text-danger pl-3" v-if="errormsg">{{errormsg}}</small>
                 </div>
                 <div class="d-flex justify-content-center">
-                    <button type="submit" @click.prevent="login" class="btn btn-primary button-regular pc-green">Login</button>
+                    <button type="submit" @click.prevent="login" class="btn btn-primary button-regular pc-green model-btn-login">Login</button>
                 </div>
                 </form>
             </div>
@@ -67,7 +67,8 @@ export default {
                 self.login_input_username = "";
                 self.login_input_password = "";
                 bus.$emit('userSignedIn', user);
-                $('#login-modal').modal('hide')
+                $('#login-modal').modal('hide');
+
             }).catch(err => {
                 self.errormsg = err.message; 
             })
@@ -183,4 +184,13 @@ export default {
     border-color:#939597;
 }
 
+.model-btn-login{
+    height: 50px !important;
+    width: 200px !important;
+    border-color: #6eba7f;
+}
+.model-btn-login:hover, .model-btn-login:focus{
+    background-color: #6eba7f !important;
+    border-color: white !important;
+}
 </style>

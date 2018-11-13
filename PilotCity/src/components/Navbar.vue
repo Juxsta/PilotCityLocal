@@ -42,10 +42,13 @@ export default {
 				$("#component-login").hide();
 				$("#component-signup").hide();
 				$("#component-logout").show();
+				self.$router.push('/demo');
+				
 			} else {
 				$("#component-login").show();
 				$("#component-signup").show();
 				$("#component-logout").hide();
+				self.$router.push('/');
 			}
 		});
 	}

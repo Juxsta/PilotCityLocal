@@ -38,7 +38,7 @@
                       <small class="text-danger pl-3" v-if="errorMessage">{{errorMessage}}</small>
                 </div>
                 <div class="d-flex justify-content-center">
-                    <button type="submit" @click.prevent="signup" class="btn btn-primary button-regular pc-blue">Sign-up</button>
+                    <button type="submit" @click.prevent="signup" class="btn btn-primary button-regular pc-blue model-btn-signup">Sign-up</button>
                 </div>
                 </form>
             </div>
@@ -198,6 +198,16 @@ export default {
 
 .form-active:focus{
     color: #939598 !important;
+}
+
+.model-btn-signup{
+    height: 50px !important;
+    width: 200px !important;
+    border-color: #3c9ccc;
+}
+.model-btn-signup:hover, .model-btn-signup:focus{
+    background-color: #3c9ccc !important;
+    border-color: white !important;
 }
 
 </style>

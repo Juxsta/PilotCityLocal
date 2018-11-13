@@ -26,6 +26,8 @@ import w_question from '@/components/wizard/employer/w_question'
 import Button_next from '@/components/Button_next'
 import w_industry from '@/components/wizard/teacher/w_industry'
 import w_skills from '@/components/wizard/teacher/w_skills'
+import firebase from '@/firebase/init'
+
 export default {
     name: "Demo",
     data(){
@@ -34,7 +36,8 @@ export default {
             role: null,
             e_w_wizards: ['#w_story', '#w_address', '#w_sector', '#w_question'],
             t_w_wizards: ['#w_story', '#w_teacher_address', '#w_industry'],
-            data_arr: []
+            data_arr: [],
+            db_doc: {}
         }
     },
     components: {
@@ -75,6 +78,18 @@ export default {
     },
     created(){
         var self = this;
+        const db = firebase.firestore();
+        var userRef;
+		firebase.auth().onAuthStateChanged(function(user) {
+            userRef = db.collection("users").doc(user.uid);
+            userRef.get().then(function(doc) {
+                if (doc.exists) {
+                    self.db_doc = doc.data();
+                } else {
+                    userRef.set({});
+                }
+            });
+        });
         bus.$on('move', function(obj){
             if (self.role == 'employer')
                 self.movePage(obj.dirct, obj.step, self.e_w_wizards);
