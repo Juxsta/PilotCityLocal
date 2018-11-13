@@ -1,10 +1,7 @@
 <template id="demo">
     <div class="mt-3">
-<<<<<<< HEAD
-        <w_story />
-=======
-        <w_industry/>
->>>>>>> 459c600926924cbb1bad97e03d49feb3a3ed6064
+        <class-picker />
+
     </div>
 </template>
 
