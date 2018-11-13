@@ -4,6 +4,7 @@
             <w_story id="w_story" class="animated fadeIn"/>
             <w_teacher_address   id="w_teacher_address" class="animated fadeIn"/>   
             <w_industry id="w_industry" class="animated fadeIn"/>
+            <w_class id="w_class" class="animated fadeIn" />
         <Button_next />
     </div>
 </template>
@@ -25,7 +26,10 @@ import w_question from '@/components/wizard/employer/w_question'
 import Button_next from '@/components/Button_next'
 import w_industry from '@/components/wizard/teacher/w_industry'
 import w_skills from '@/components/wizard/teacher/w_skills'
+import w_class from '@/components/wizard/teacher/w_class'
+
 import firebase from '@/firebase/init'
+
 
 export default {
     name: "Demo",
@@ -34,7 +38,7 @@ export default {
             authUser: null,
             role: null,
             e_w_wizards: ['#w_story', '#w_address', '#w_sector', '#w_question'],
-            t_w_wizards: ['#w_story', '#w_teacher_address', '#w_industry'],
+            t_w_wizards: ['#w_story', '#w_teacher_address', '#w_industry', '#w_class' ],
             data_arr: [],
             db_doc: {}
         }
@@ -52,7 +56,8 @@ export default {
         Button_next,
         w_industry,
         w_skills,
-        w_teacher_address
+        w_teacher_address,
+        w_class
     },
     methods:{
         movePage: function(dirct, step, arr){
@@ -120,7 +125,7 @@ export default {
 
 <style>
 #w_address, 
-#w_question, #w_story, #w_sector, #w_teacher_address, #w_tags, #w_industry {
+#w_question, #w_story, #w_sector, #w_teacher_address, #w_tags, #w_industry, #w_class{
     display: none;
 }
 

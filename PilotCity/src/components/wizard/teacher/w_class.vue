@@ -1,5 +1,6 @@
 <template>
-    <div class="container-fluid justify-content-center mt-5" >
+    <div class="container container-fluid justify-content-center mt-5" >
+        <!-- 
         <form v-for="(value,index) in Periods" :key="index">
             <div class="form-row">
                 <div class="form-group col-md-1">
@@ -35,27 +36,19 @@
                         Dropdown button
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <div class="checkbox">
-                            <label>
+                        <div class="checkbox dropdown-item">
                                 <input type="checkbox" value='9' v-model="Periods[index].Grade">9
-                            </label>
                         </div>
-                        <div class="checkbox">
-                            <label>
+                        <div class="checkbox dropdown-item">
                                 <input type="checkbox" value='10' v-model="Periods[index].Grade">10
-                            </label>
                         </div>
-                        <div class="checkbox">
-                            <label>
+                        <div class="checkbox dropdown-item">
                                 <input type="checkbox" value='11' v-model="Periods[index].Grade">11
-                            </label>
                         </div>
-                        <div class="checkbox">
-                            <label>
+                        <div class="checkbox dropdown-item">
                                 <input type="checkbox" value='12' v-model="Periods[index].Grade">12
-                            </label>
                         </div>
-                </div>
+                 </div>
                 </div>
                 <div class="form-group col-md-2 ml-2">
                     <label for="inputperiod"># Students</label>
@@ -70,7 +63,7 @@
                     </select>
                 </div>
             </div>
-        </form>
+        </form> -->
         <form>
             <div class="form-row">
                 <div class="form-group col-md-1">
@@ -102,29 +95,21 @@
                 </div>
                 <div class="form-group col-md-2 dropdown">
                     <label>Grade</label>
-                    <button class="btn btn-secondary dropdown-toggle align-items-end" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Dropdown button
+                    <button id="dropdown-class" class="btn btn-secondary dropdown-toggle align-items-end" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Select Class
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" value="9" v-model="Class.Grade">9
-                            </label>
+                        <div class="checkbox dropdown-item checkbox-container">
+                            <input type="checkbox" value="9" v-model="Class.Grade"><label class="checkbox-label">9</label>
                         </div>
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" value="10" v-model="Class.Grade">10
-                            </label>
+                        <div class="checkbox dropdown-item checkbox-container">
+                            <input type="checkbox" value="10" v-model="Class.Grade"><label class="checkbox-label">10</label>
                         </div>
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" value="11" v-model="Class.Grade">11
-                            </label>
+                        <div class="checkbox dropdown-item checkbox-container">
+                            <input type="checkbox" value="11" v-model="Class.Grade"><label class="checkbox-label">11</label>
                         </div>
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" value="12" v-model="Class.Grade">12
-                            </label>
+                        <div class="checkbox dropdown-item checkbox-container">
+                            <input type="checkbox" value="12" v-model="Class.Grade"><label class="checkbox-label">12</label>
                         </div>
                 </div>
                 </div>
@@ -142,10 +127,10 @@
                 </div>
             </div>
         </form>
-        <button type="button" class="btn btn-primary btn-lg btn-block" @click="pushPeriod()">
+        <button id="btn-class-add" type="button" class="btn btn-primary btn-lg btn-block" @click="pushPeriod()">
             <i class="material-icons font-weight-bold"><h2>add</h2></i>
         </button>
-    <button class="btn-lg" @click="view(Class)"></button>
+        <button class="btn-lg" @click="view(Class)"></button>
     </div>
 </template>
 
@@ -208,6 +193,58 @@ export default {
 }
 </script>
 
-<style>
 
+<style scoped>
+label {
+    color: #eca0be;
+    font-weight: bold;
+}
+input, input:focus, select, select:focus{
+    border-radius: 50px;
+    font-size: 20px;
+    font-style: Italic;
+    font-family: "Raleway";
+    background-color: rgb(222, 223, 224);
+    color: white;
+    outline: none !important;
+    font-weight:100;
+    height: 50px;
+}
+#dropdown-class{
+    border-radius: 10px;
+    font-size: 20px;
+    font-style: Italic;
+    font-family: "Raleway";
+    background-color: rgb(222, 223, 224);
+    color: white;
+    outline: none !important;
+    font-weight:100;
+    height: 50px;
+    border-color: rgb(222, 223, 224);
+}
+input::placeholder { color:white }
+
+ .dropdown-item{
+    cursor: pointer;
+ }
+
+ input[type="checkbox"]{
+    height: 25px;
+ }
+ .checkbox-label{
+    padding-left: 10px;
+ }
+ #btn-class-add{
+    border: dotted 1px #eca0be;
+    background: white;
+    color: #eca0be;
+    border-radius: 50px;
+ }
+#btn-class-add:focus{
+    border: dotted 1px #eca0be;
+    background:#eca0be;
+    color: white;
+    border-radius: 50px;
+}
 </style>
+ 
