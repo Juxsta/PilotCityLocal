@@ -77,7 +77,7 @@
                     <label>Period</label>
                     <select class="custom-select"  v-model="Class.Period">
                         <option selected>Select Period</option>
-                        <option value="7">P0</option>
+                        <option value="0">P0</option>
                         <option value="1">P1</option>
                         <option value="2">P2</option>
                         <option value="3">P3</option>
@@ -108,22 +108,22 @@
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox" value='9' v-model="Class.Grade">9
+                                <input type="checkbox" value="9" v-model="Class.Grade">9
                             </label>
                         </div>
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox" value='10' v-model="Class.Grade">10
+                                <input type="checkbox" value="10" v-model="Class.Grade">10
                             </label>
                         </div>
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox" value='11' v-model="Class.Grade">11
+                                <input type="checkbox" value="11" v-model="Class.Grade">11
                             </label>
                         </div>
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox" value='12' v-model="Class.Grade">12
+                                <input type="checkbox" value="12" v-model="Class.Grade">12
                             </label>
                         </div>
                 </div>
@@ -145,6 +145,7 @@
         <button type="button" class="btn btn-primary btn-lg btn-block" @click="pushPeriod()">
             <i class="material-icons font-weight-bold"><h2>add</h2></i>
         </button>
+    <button class="btn-lg" @click="view(Class)"></button>
     </div>
 </template>
 
@@ -167,45 +168,42 @@ export default {
         }
     },
     methods: {
-        variableSelect(event,value) {
-            console.log(event.target.value)
+        variableSelect(event,Obj) {
                 switch(event.target.value){
-                case 0: 
-                    value.min=0
-                    value.max=10
+                case '0': 
+                    this.Obj.min=0
+                    this.Obj.max=10
                     break
                 case '1': 
-                    value.min=11
-                    value.max=15
-                    console.log(this.Class.Students)
+                    this.Obj.min=11
+                    this.Obj.max=15
                     break
-                case 2: 
-                    values.min=16
-                    value.max=20
+                case '2': 
+                    this.Objs.min=16
+                    this.Obj.max=20
                     break
-                case 3: 
-                    value.min=21
-                    value.max=25
+                case '3': 
+                    this.Obj.min=21
+                    this.Obj.max=25
                     break
-                case 4: 
-                    value.min=26
-                    value.max=30
+                case '4': 
+                    this.Obj.min=26
+                    this.Obj.max=30
                     break
-                case 5:
-                    value.min=30
-                    value.max=null  
+                case '5':
+                    this.Obj.min=30
+                    this.Obj.max=null  
                     break   
                 }
         },
         pushPeriod() {
             this.Periods.push(this.Class)
-            console.log(this.Class)
-            for(var x in this.Class)
-            {
-                this.Class[x]=null
-            }
-            console.log(this.Class)
-        }
+
+        },
+        view(Obj) {
+            for (const prop in Obj) 
+                console.log(prop)
+        }  
     }
 }
 </script>
