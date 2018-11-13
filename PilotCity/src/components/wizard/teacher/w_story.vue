@@ -42,6 +42,7 @@
 </template>
 
 <script>
+import { bus } from '../../../main'
 export default {
     name:"w_story",
     data() {
@@ -52,13 +53,30 @@ export default {
             school_district:null,
             phone:null
         }
+    },
+    method:{
+        emitStory: function(){
+            var obj = {};
+            obj['teacher_story'] = {
+                first_name: this.first_name,
+                last_name: this.last_name,
+                school_name: this.school_name,
+                school_district: this.school_district,
+                phone: this.phone
+            }
+            bus.$emit('story_finished', obj);
+        }
+    },
+    created(){
+        bus.$on('grab_story_teacher', function(){
+            
+        });
     }
 }
 </script>
 
 <style>
 .pc-button {
-        font-family: "Raleway-ExtraLightItalic";
         background-color: #eca0be;
         color: white;
         border-radius: 50px;
@@ -76,7 +94,6 @@ export default {
     color:white !important;
 }
 .teacher-story{
-    font-family: "Raleway-BoldItalic";
     font-size: 25px;
     color: #c6c8ca;
     margin-top:10px;
@@ -84,9 +101,12 @@ export default {
 
 .story-title {
     text-align: center;
-    font-family: "Raleway-BoldItalic";
     font-size:30px;
     color:#eca0be;
     margin-bottom:30px;
+}
+
+input:focus{
+    outline: none !important;
 }
 </style>
