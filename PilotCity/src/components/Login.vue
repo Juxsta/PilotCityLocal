@@ -152,7 +152,7 @@ export default {
     font-weight:800;
     border-radius: 50px;
     font-size: 20px;
-    font-family: Raleway;
+    font-family: 'Raleway';
     color: white;
     text-align: center;
     margin:15px auto;
@@ -177,7 +177,7 @@ export default {
     padding: 10px !important;
     font-size: 15px;
     font-weight:100;
-    font-family: raleway-Italic;
+    font-family: 'Raleway-Italic';
     color: #939598 !important;
 }
 

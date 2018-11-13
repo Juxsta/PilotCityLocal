@@ -1,6 +1,6 @@
 <template id="demo">
     <div class="mt-3">
-        <w_bottom_line />
+        <w_skills />
     </div>
 </template>
 
