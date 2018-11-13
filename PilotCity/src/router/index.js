@@ -41,5 +41,4 @@ export default new Router({
         component: Demo
       }
     ]
-
 })

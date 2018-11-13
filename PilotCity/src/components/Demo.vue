@@ -1,6 +1,11 @@
 <template id="demo">
     <div class="mt-3">
+<<<<<<< HEAD
 <!--         <w_address  id="w_address" class="animated fadeInRight"/>
+=======
+        <ClassPicker id="class_picker" class="animated "/>
+        <w_address  id="w_address" class="animated fadeInRight"/>
+>>>>>>> 2d75407d38f8b6bdc7901365809eb3e75715a157
         <w_sector id="w_sector" class="animated fadeInRight"/>
         <w_question id="w_question"  class="animated fadeInRight"/>
         <Button_next /> -->
@@ -10,6 +15,8 @@
 
 <script>
 import { bus } from '../main'
+
+import ClassPicker from '@/components/ClassPicker'
 
 import w_address from '@/components/wizard/employer/w_address'
 import w_sector from '@/components/wizard/employer/w_sector'
@@ -25,10 +32,14 @@ export default {
     name: "Demo",
     data(){
         return{
-            w_wizards: ['w_address', 'w_sector', 'w_question'],
+            authUser: null,
+            role: null,
+            e_w_wizards: ['w_address', 'w_sector', 'w_question'],
+            t_w_wizards: ['w_address', 'w_sector', 'w_question'],
         }
     },
     components: {
+        ClassPicker,
         w_address,
         w_sector,
         w_tags,
@@ -38,20 +49,44 @@ export default {
         w_department,
         w_bottom_line,
         w_question,
-        Button_next 
+        Button_next
     },
     created(){
         var self = this;
         bus.$on('next', function(count){
-            $('#' + self.w_wizards[(count - 1) % self.w_wizards.length]).hide();
-            $('#' + self.w_wizards[count % self.w_wizards.length]).show();
+            var len; 
+            if (self.role == 'employer'){
+                $('#' + self.e_w_wizards[(count - 1) % self.e_w_wizards.length]).hide();
+                $('#' + self.e_w_wizards[count % self.e_w_wizards.length]).show();
+            }
+            else if (self.role == 'teacher') {
+                $('#' + self.t_w_wizards[(count - 1) % self.t_w_wizards.length]).hide();
+                $('#' + self.t_w_wizards[count % self.t_w_wizards.length]).show();
+            }
         });
+        bus.$on('userSignedIn', function(user){
+            self.authUser = user;
+        })
+        bus.$on('pickedRole', function(role){
+            self.role = role;
+            $("#class_picker").addClass('fadeOutLeft');
+            setTimeout(function(){
+                $('#class_picker').hide();
+                if (self.role == 'employer')
+                    $('#' + self.e_w_wizards[0]).show();
+                else if (self.role == 'teacher')
+                    $('#' + self.t_w_wizards[0]).show();
+            }, 500);
+            
+        })
     }
 }
 </script>
 
 <style>
-
+#w_address{
+    display: none;
+}
 #w_question{
     display: none;
 }
