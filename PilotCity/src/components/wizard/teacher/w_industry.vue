@@ -1,6 +1,6 @@
 <template>
-    <div id="w_industry" class="mt-5 d-flex justify-content-center">
-        <form>
+    <div class="mt-5 ">
+        <form class="d-flex justify-content-center" >
             <div class="pc-panel-tagspanel" >
                 <div class="input-group mb-2">
                         <div class="input-group-prepend">
@@ -82,7 +82,6 @@ export default {
 }
 </script>
 <style scoped>
->
 .pc-tag {
     margin: 5px;
     font-size: 12px;

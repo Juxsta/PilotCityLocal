@@ -54,6 +54,7 @@ export default {
 
 <style>
 #the_best_next_button{
+    width: 150px;
     position: fixed;
     bottom: 10vh;
     right: 10vw; 
@@ -64,6 +65,7 @@ export default {
 }   
 
 #the_best_prev_button{
+    width: 150px;
     position: fixed;
     bottom: 10vh;
     left: 10vw; 

@@ -1,11 +1,9 @@
 <template id="demo">
     <div class="mt-3">
         <ClassPicker id="class_picker" class="animated fadeIn"/>
-        <w_story id="w_story" class="animated fadeIn"/>
-        <w_teacher_address   id="w_teacher_address" class="animated fadeIn"/>
-        <w_sector id="w_sector" class="animated fadeIn"/>
-        <w_question id="w_question"  class="animated fadeIn"/>
-        <w_tags id="w_tags" class="animated fadeIn"/>
+            <w_story id="w_story" class="animated fadeIn"/>
+            <w_teacher_address   id="w_teacher_address" class="animated fadeIn"/>   
+            <w_industry id="w_industry" class="animated fadeIn"/>
         <Button_next />
     </div>
 </template>
@@ -35,7 +33,7 @@ export default {
             authUser: null,
             role: null,
             e_w_wizards: ['#w_story', '#w_address', '#w_sector', '#w_question'],
-            t_w_wizards: ['#w_story', '#w_teacher_address', '#w_tags'],
+            t_w_wizards: ['#w_story', '#w_teacher_address', '#w_industry'],
             data_arr: []
         }
     },
@@ -109,7 +107,7 @@ export default {
 
 <style>
 #w_address, 
-#w_question, #w_story, #w_sector, #w_teacher_address, #w_tags{
+#w_question, #w_story, #w_sector, #w_teacher_address, #w_tags, #w_industry {
     display: none;
 }
 
