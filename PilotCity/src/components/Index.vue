@@ -34,7 +34,7 @@ export default {
         font-family: "Raleway";
         font-size: 20px;
         background-color: #eca0be;
-        color: white;
+        color: #ffffff;
         font-weight: 700;
         border-radius: 50px;
         height: 45px;
@@ -55,7 +55,7 @@ export default {
         font-weight: 700;
         background-color: #ae90b0;
         stroke: #ae90b0;
-        color: white;
+        color: #ffffff;
         border-radius: 50px;
         height: 45px;
         width: 250px;
