@@ -11,18 +11,22 @@
                         <input type="text" class="form-control" placeholder="What industries would your classrooms be excited about?" @keyup.enter.prevent="input_addtoIDB(i_keyword,selected_ikeywords)" v-model="i_keyword">
                     </div>
                     <hr />
-                <span class="badge badge-pill badge-primary" v-for="(keyword,index) in selected_ikeywords" :key="keyword + index" :class="colors[index%7]">
+                <span class="badge badge-pill badge-primary pc-tag" v-for="(keyword,index) in selected_ikeywords" :key="keyword + index" :class="colors[index%7]">
                     <div class="d-flex">
-                        <i class="material-icons" @click="rm_IKeyword(keyword)">clear</i>
+                        <a href="" @click.prevent>
+                            <i class="material-icons icon-clear" @click="rm_IKeyword(keyword)">clear</i>
+                        </a>
                         <div class="align-self-center">
                             <b class="Raleway">{{keyword}}</b>
                         </div>
                     </div>
                 </span>
                 <hr />
-                <span class="badge badge-pill badge-primary" v-for="(value,i) in industry_keywords" :key="value + i" :class="colors[i%7]">
+                <span class="badge badge-pill badge-primary pc-tag" v-for="(value,i) in industry_keywords" :key="value + i" :class="colors[i%7]">
                     <div class="d-flex" v-if="notFound(value,selected_ikeywords)">
-                        <i class="material-icons" @click="add_IKeywords(value)">add</i>
+                        <a href="" @click.prevent>
+                            <i class="material-icons icon-add" @click="add_IKeywords(value)">add</i>
+                        </a>
                         <div class="align-self-center">
                             <b class="Raleway">{{value}}</b>
                         </div>
@@ -71,10 +75,28 @@ export default {
 }
 </script>
 <style>
+.pc-tag {
+    margin: 5px;
+    font-family:"Raleway-ExtraBold";
+    font-size: 12px;
+    padding-right:20px;
+}
+
+.icon-clear {
+    font-size:15px;
+    color:white;
+    padding: 5px;
+}
+
+.icon-add {
+    font-size:15px;
+    padding:5px;
+    color:white;
+}
+
 .pc-purple {
     background-color: #ae90b0;
 }
-
 .pc-pink {
     background-color: #eca0be;
 }
@@ -90,4 +112,6 @@ export default {
 .pc-yellow {
     background-color: #fdd25a
 }
+
+
 </style>
