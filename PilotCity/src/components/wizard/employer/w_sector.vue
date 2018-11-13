@@ -1,6 +1,6 @@
 <template>
     <div class="container-fluid">
-        <div class="d-flex justify-content-center">
+        <div class="d-flex justify-content-center" id="Sector-Prompt">
             <h2> What sector are you coming from?</h2>
         </div>
         <div class="d-flex justify-content-center align-items-end">
@@ -41,5 +41,9 @@ export default {
 }
 .pc-yellow {
     background-color: #fdd25a
+}
+#Sector-Prompt {
+    margin: 50px 0px 50px 0;
+    font-family: 'Raleway';
 }
 </style>

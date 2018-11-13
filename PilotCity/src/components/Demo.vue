@@ -1,15 +1,6 @@
 <template id="demo">
     <div class="mt-3">
-<<<<<<< HEAD
-<!--         <w_address  id="w_address" class="animated fadeInRight"/>
-=======
-        <ClassPicker id="class_picker" class="animated "/>
-        <w_address  id="w_address" class="animated fadeInRight"/>
->>>>>>> 2d75407d38f8b6bdc7901365809eb3e75715a157
-        <w_sector id="w_sector" class="animated fadeInRight"/>
-        <w_question id="w_question"  class="animated fadeInRight"/>
-        <Button_next /> -->
-        <w_sector />
+        <w_story />
     </div>
 </template>
 
