@@ -1,51 +1,34 @@
 <template>
    <div class="container ">
         <form class="mt-5"> 
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                <label for="inputEmail4">Email</label>
-                <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
-                </div>
-                <div class="form-group col-md-6">
-                <label for="inputPassword4">Password</label>
-                <input type="password" class="form-control" id="inputPassword4" placeholder="Password">
-                </div>
-            </div>
             <div class="form-group">
-                <label for="inputAddress">Address</label>
-                <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
-            </div>
-            <div class="form-group">
-                <label for="inputAddress2">Address 2</label>
-                <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
+                <label for="inputAddress">Employer Address</label>
+                <input type="text" class="form-control" id="inputAddress" placeholder="435 Portage Ave,">
             </div>
             <div class="form-row">
                 <div class="form-group col-md-6">
                 <label for="inputCity">City</label>
-                <input type="text" class="form-control" id="inputCity">
+                <input type="text" class="form-control" id="inputCity" placeholder="Palo Alto">
                 </div>
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-2">
                 <label for="inputState">State</label>
-                <select id="inputState" class="form-control">
-                    <option selected>Choose...</option>
-                    <option>...</option>
-                </select>
+                <input type="text" class="form-control" id="inputState" placeholder="CA">
                 </div>
                 <div class="form-group col-md-2">
                 <label for="inputZip">Zip</label>
                 <input type="text" class="form-control" id="inputZip">
                 </div>
-            </div>
-            <div class="form-group">
-                <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="gridCheck">
-                <label class="form-check-label" for="gridCheck">
-                    Check me out
-                </label>
+                <div class="form-group col-md-2">
+                <label for="inputType">Type</label>
+                <input type="text" class="form-control" id="inputType" placeholder="Primary/HQ">
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary">Sign in</button>
         </form>
+        <span>
+            <button type ="button" class="btn btn-primary btn-block">
+                <i class="material-icons">add</i>
+            </button>
+        </span>
    </div>
 </template>
 
