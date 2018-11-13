@@ -1,6 +1,14 @@
 <template id="demo">
     <div class="mt-3">
+<<<<<<< HEAD
         <w_skills />
+=======
+        <ClassPicker id="class_picker" class="animated "/>
+        <w_address  id="w_address" class="animated fadeInRight"/>
+        <w_sector id="w_sector" class="animated fadeInRight"/>
+        <w_question id="w_question"  class="animated fadeInRight"/>
+        <Button_next /> 
+>>>>>>> 8d7b94cbb10a51e7c71a4ba9883406d333d6a2b0
     </div>
 </template>
 

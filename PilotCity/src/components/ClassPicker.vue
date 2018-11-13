@@ -1,7 +1,7 @@
 <template>
-    <div class="container-fluid">
+    <div class="container-fluid mt-5">
         <div class="d-flex justify-content-center">
-            <p class="Raleway">Who are you?</p>
+            <h1 class="Raleway class-picker-label">Who are you?</h1>
         </div>
         <div class="d-flex justify-content-center mt-5">
                 <button class="btn button-square class-picker-btn color-pink" @click="pickRole(0)">Teacher</button>
@@ -12,14 +12,25 @@
 </template>
 
 <script>
+import { bus } from '../main'
 export default {
-    name:'Classpicker',
-    data() {
-        return {
-
+    name:'ClassPicker',
+    methods:{
+        pickRole: function(role){
+            switch(role)
+            {
+                case 0:
+                    bus.$emit('pickedRole', 'teacher');
+                    break ;
+                case 1:
+                    bus.$emit('pickedRole', 'employer');
+                    break ;
+                case 2:
+                    bus.$emit('pickedRole', 'student');
+                    break ;
+            }
         }
-    },
-
+    }
 }
 </script>
 
@@ -41,6 +52,23 @@ export default {
 
 .class-picker-btn {
     margin: auto 20px;
+    color: white;
+    font-size: 30px;
+    font-weight: 700;
+}
+
+.color-pink{
+    background-color: rgb(226, 165, 190);
+}
+
+.color-purple{
+    background-color: rgb(169, 145, 174);
+}
+
+.class-picker-label{
+    color: rgb(222, 223, 224);
+    font-style: italic;
+    font-weight: 800;
 }
 .class-picker-btn:active{
     outline-color: rgb(222, 223, 224) !important;
