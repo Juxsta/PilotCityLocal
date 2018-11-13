@@ -1,5 +1,5 @@
 <template>
-    <div id="w_sector" class="container">
+    <div  class="container">
         <h2>What sector are you comming from?</h2>
         <div class="btn-group btn-group-lg" role="group">
             <button type="button" class="btn btn-secondary">industry</button>
