@@ -2,7 +2,7 @@
     <div class="mt-3">
         <ClassPicker id="class_picker" class="animated "/>
         <w_story id="w_story" class="animated fadeInRight"/>
-        <w_address  id="w_address" class="animated fadeInRight"/>
+        <w_teacher_address   id="w_teacher_address" class="animated fadeInRight"/>
         <w_sector id="w_sector" class="animated fadeInRight"/>
         <w_question id="w_question"  class="animated fadeInRight"/>
         <Button_next /> 
@@ -14,6 +14,7 @@ import { bus } from '../main'
 
 import ClassPicker from '@/components/ClassPicker'
 
+import w_teacher_address from '@/components/wizard/teacher/w_teacher_address'
 import w_address from '@/components/wizard/employer/w_address'
 import w_sector from '@/components/wizard/employer/w_sector'
 import w_tags from '@/components/wizard/employer/w_tags'
@@ -33,7 +34,7 @@ export default {
             authUser: null,
             role: null,
             e_w_wizards: ['w_story', 'w_address', 'w_sector', 'w_question'],
-            t_w_wizards: ['w_story', 'w_address', 'w_sector', 'w_question'],
+            t_w_wizards: ['w_story', 'w_teacher_address'],
             data_arr: []
         }
     },
@@ -50,7 +51,8 @@ export default {
         w_question,
         Button_next,
         w_industry,
-        w_skills
+        w_skills,
+        w_teacher_address
     },
     created(){
         var self = this;
@@ -83,8 +85,11 @@ export default {
                     $('#' + self.t_w_wizards[0]).show();
             }, 300);
         })
-        bus.$on('story_finished', function(obj){
-            data_arr.push(obj)
+        bus.$on('teacher_story_finished', function(obj){
+            self.data_arr.push(obj)
+        })
+        bus.$on('teacher_address_finished', function(obj){
+            self.data_arr.push(obj)
         })
     }
 }
@@ -92,7 +97,7 @@ export default {
 
 <style>
 #w_address, 
-#w_question, #w_story, #w_sector{
+#w_question, #w_story, #w_sector, #w_teacher_address{
     display: none;
 }
 

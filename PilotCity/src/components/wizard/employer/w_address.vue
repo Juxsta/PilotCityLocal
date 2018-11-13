@@ -3,7 +3,7 @@
         <form class="mt-3" v-for="address in addresses" :key="address.id"> 
             <div class="form-group">
                 <label for="inputAddress">Employer Address</label>
-                <input type="text" class="form-control" id="inputAddress" placeholder="435 Portage Ave," v-model="address.street">
+                <input type="text" class="form-control" id="inputAddress" placeholder="435 Portage Ave," v-model="address.street" @keyup.ctrl="skip">
             </div>
             <div class="form-row" >
                 <div class="form-group col-md-6">
