@@ -1,6 +1,6 @@
 <template>
-   <div class="container ">
-        <form class="mt-3"> 
+   <div class="container mt-5 pt-5">
+        <form class="mt-5"> 
             <div class="form-group">
                 <label for="inputAddress">Employer Address</label>
                 <input type="text" class="form-control" id="inputAddress" placeholder="435 Portage Ave," v-model="address.street">
@@ -24,38 +24,22 @@
                 </div>
             </div>
         </form>
-        <span>
-            <button type ="button" class="btn btn-primary btn-block btn-address-purple" @click="addAddress">
-                <i class="material-icons">add</i>
-            </button>
-        </span>
    </div>
 </template>
 
 <script>
-/*
-   address: {
+
+export default {
+    name: "w_teacher_address",
+    data(){
+        return{
+            address: {
                 street: null,
                 city: null,
                 state: null,
                 zip: null,
                 type: null,
-                arr: [0],
-            },
-*/
-export default {
-    name: "w_teacher_address",
-    data(){
-        return{
-            addresses:[
-            {
-                id: 0,
-                street: "",
-                city: "",
-                state: "",
-                zip: "",
-                type: "",
-            }]
+            }
         }
     },
     methods:{
