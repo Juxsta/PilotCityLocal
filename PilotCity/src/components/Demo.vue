@@ -1,7 +1,7 @@
 <template id="demo">
     <div class="mt-3">
-        <class-picker />
-
+        <w
+        _bottom_line />
     </div>
 </template>
 
@@ -21,6 +21,7 @@ import w_bottom_line from '@/components/wizard/employer/w_bottom_line'
 import w_question from '@/components/wizard/employer/w_question'
 import Button_next from '@/components/Button_next'
 import w_industry from '@/components/wizard/teacher/w_industry'
+import w_skills from '@/components/wizard/teacher/w_skills'
 export default {
     name: "Demo",
     data(){
@@ -43,7 +44,8 @@ export default {
         w_bottom_line,
         w_question,
         Button_next,
-        w_industry
+        w_industry,
+        w_skills
     },
     created(){
         var self = this;
