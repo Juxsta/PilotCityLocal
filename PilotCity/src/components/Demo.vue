@@ -1,7 +1,6 @@
 <template id="demo">
     <div class="mt-3">
-        <w
-        _bottom_line />
+        <ClassPicker />
     </div>
 </template>
 
