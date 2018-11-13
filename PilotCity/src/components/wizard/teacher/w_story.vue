@@ -57,27 +57,28 @@ export default {
         }
     },
     methods:{
-        emitStory: function(){
-            var obj = {};
-            obj['teacher_story'] = {
-                first_name: this.first_name,
-                last_name: this.last_name,
-                school_name: this.school_name,
-                school_district: this.school_district,
-                phone: this.phone
-            }
-            bus.$emit('teacher_story_finished', obj);
-            bus.$emit('validated'); 
-        }, /** delete this skip when in production */
+      /** delete this skip when in production */
         skip: function(){
             bus.$emit('validated');
         } 
     },
     created(){
         var self = this;
-        bus.$on('grab_story_teacher', function(){
-            if (self.first_name && self.last_name && self.school_name && self.school_district && self.phone)
-                self.emitStory();
+        bus.$on('grab_data', function(obj){
+            if (obj.step != 'story_teacher')
+                return ;
+            if (self.first_name && self.last_name && self.school_name && self.school_district && self.phone){
+                var obj = {};
+                obj['teacher_story'] = {
+                    first_name: self.first_name,
+                    last_name: self.last_name,
+                    school_name: self.school_name,
+                    school_district: self.school_district,
+                    phone: self.phone
+                }
+                bus.$emit('form_completed', obj);
+                bus.$emit('validated'); 
+            }
             else
                 Prompter().failed("missing field(s)!");
         });

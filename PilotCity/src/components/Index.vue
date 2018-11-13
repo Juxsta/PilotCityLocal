@@ -4,8 +4,8 @@
         <h2 id = "title">Connecting classrooms to the big bad world. </h2>
         </div> 
         <div class="d-flex flex-row">
-            <button type="button" class="btn btn-primary" id="index-btn-employers"> For Employers </button>
-            <button type="button" class="btn btn-primary" id="index-btn-teachers" > For Teachers </button>
+            <button type="button" class="btn btn-primary" id="index-btn-employers"> <router-link to="/demo"> For Employers </router-link> </button>
+            <button type="button" class="btn btn-primary" id="index-btn-teachers" > <router-link to="/demo"> For Teachers </router-link> </button>
         </div>
     </div>
 </template>
@@ -75,5 +75,5 @@ export default {
         background: url('../assets/header.jpg') no-repeat center scroll;
         background-size:100% 100%;
     }
-    
+  
 </style>

@@ -1,7 +1,9 @@
 <template>
 <div>
 	<nav class="navbar navbar-expand-lg navbar-light Raleway">
-  		<img id="logo-pilotcity" src="@/assets/pilotCitylogo.png" alt="Pilot City Logo">
+  			<router-link to="/">
+				<img id="logo-pilotcity" src="@/assets/pilotCitylogo.png" alt="Pilot City Logo">
+		  	</router-link> 
 			<div class="btn-group ml-auto" role="group">
 				<Login id="component-login" />
 				<Signup id="component-signup" />

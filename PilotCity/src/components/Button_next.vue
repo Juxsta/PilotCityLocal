@@ -1,5 +1,8 @@
 <template>
-    <button type="button" @click="grabDataFromForm" class="btn btn-secondary btn-lg" id="the_best_next_button" disabled>Next</button>
+    <div>
+    <button type="button"  @click="goforward" class="btn btn-secondary btn-lg" id="the_best_next_button" disabled>Next</button>
+    <button type="button" @click="goback" class="btn btn-secondary btn-lg" id="the_best_prev_button" disabled>Back</button>
+    </div>
 </template>
 
 <script>
@@ -9,7 +12,7 @@ export default {
     data(){
         return{
             role: null,
-            step: 1,
+            step: 0,
         }
     },
     methods:{
@@ -17,23 +20,31 @@ export default {
             switch(this.step){
                 case 1:
                     if (this.role == 'teacher')
-                        bus.$emit('grab_story_teacher');
+                        bus.$emit('grab_data', { step: 'story_teacher'});
                 break ;
                 case 2:
                     if (this.role  == 'teacher')
-                        bus.$emit('grab_story_teacher_address');
-                break ;                
+                        bus.$emit('grab_data', { step: 'story_teacher_address'});
+                break ;
                 case 3:
                 break ;
             }
         },
         increment: function(){
-            bus.$emit('next', this.step++);
+            bus.$emit('move', {dirct: 'right', step: this.step++});
+        },
+        goforward: function(){
+            this.grabDataFromForm();
+        },
+        goback: function(){
+            if (this.step > 1){}
+                bus.$emit('move', {dirct: 'left', step: --this.step});
         }
     },
     created(){
         var self = this;
         bus.$on('pickedRole', function(role){
+            self.step++;
             self.role = role;
         });
         bus.$on('validated', ()=> { self.increment() });
@@ -46,6 +57,16 @@ export default {
     position: fixed;
     bottom: 10vh;
     right: 10vw; 
+    font-weight: bold;
+    border-radius: 20px;
+    background-color: rgb(220, 221, 222);
+    border-color: rgb(220, 221, 222);
+}   
+
+#the_best_prev_button{
+    position: fixed;
+    bottom: 10vh;
+    left: 10vw; 
     font-weight: bold;
     border-radius: 20px;
     background-color: rgb(220, 221, 222);

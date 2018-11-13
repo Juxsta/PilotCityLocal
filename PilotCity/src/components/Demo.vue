@@ -1,11 +1,11 @@
 <template id="demo">
     <div class="mt-3">
-        <ClassPicker id="class_picker" class="animated "/>
-        <w_story id="w_story" class="animated fadeInRight"/>
-        <w_teacher_address   id="w_teacher_address" class="animated fadeInRight"/>
-        <w_sector id="w_sector" class="animated fadeInRight"/>
-        <w_question id="w_question"  class="animated fadeInRight"/>
-        <Button_next /> 
+        <ClassPicker id="class_picker" class="animated fadeIn"/>
+        <w_story id="w_story" class="animated fadeIn"/>
+        <w_teacher_address   id="w_teacher_address" class="animated fadeIn"/>
+        <w_sector id="w_sector" class="animated fadeIn"/>
+        <w_question id="w_question"  class="animated fadeIn"/>
+        <Button_next />
     </div>
 </template>
 
@@ -54,20 +54,33 @@ export default {
         w_skills,
         w_teacher_address
     },
-    created(){
-        var self = this;
-        bus.$on('next', function(count){
-            if (self.role == 'employer'){
-                if (count < self.e_w_wizards.length){
-                    $('#' + self.e_w_wizards[(count - 1)]).hide();
-                    $('#' + self.e_w_wizards[count]).show();
+    methods:{
+        movePage: function(dirct, step, arr){
+            if (step < arr.length){
+                if (dirct == 'right') {
+                    $('#' + arr[(step - 1)]).hide();
+                    $('#' + arr[step]).show();
+                } else {
+                    this.data_arr.pop();
+                    $('#' + arr[(step - 1)]).show();
+                    $('#' + arr[step]).hide();
                 }
             }
+            if (step == 0){
+                document.getElementById('the_best_prev_button').disabled = true;
+                document.getElementById('the_best_next_button').disabled = true;
+                $("#class_picker").removeClass('fadeOut');
+                $('#class_picker').show();
+            }
+        }
+    },
+    created(){
+        var self = this;
+        bus.$on('move', function(obj){
+            if (self.role == 'employer')
+                self.movePage(obj.dirct, obj.step, self.e_w_wizards);
             else if (self.role == 'teacher') {
-                if (count < self.t_w_wizards.length){
-                    $('#' + self.t_w_wizards[(count - 1)]).hide();
-                    $('#' + self.t_w_wizards[count]).show();
-                }
+                self.movePage(obj.dirct, obj.step, self.t_w_wizards);
             }
         });
         bus.$on('userSignedIn', function(user){
@@ -75,8 +88,9 @@ export default {
         })
         bus.$on('pickedRole', function(role){
             document.getElementById('the_best_next_button').disabled = false;
+            document.getElementById('the_best_prev_button').disabled = false;
             self.role = role;
-            $("#class_picker").addClass('fadeOutLeft');
+            $("#class_picker").addClass('fadeOut');
             setTimeout(function(){
                 $('#class_picker').hide();
                 if (self.role == 'employer')
@@ -85,12 +99,9 @@ export default {
                     $('#' + self.t_w_wizards[0]).show();
             }, 300);
         })
-        bus.$on('teacher_story_finished', function(obj){
-            self.data_arr.push(obj)
-        })
-        bus.$on('teacher_address_finished', function(obj){
-            self.data_arr.push(obj)
-        })
+        bus.$on('form_completed', obj => {
+            self.data_arr.push(obj);
+        });
     }
 }
 </script>
