@@ -1,7 +1,7 @@
 <template>
     <div>
     <button type="button"  @click="goforward" class="btn btn-secondary btn-lg" id="the_best_next_button" disabled>Next</button>
-    <button type="button" @click="goback" class="btn btn-secondary btn-lg" id="the_best_prev_button" disabled>prev</button>
+    <button type="button" @click="goback" class="btn btn-secondary btn-lg" id="the_best_prev_button" disabled>Back</button>
     </div>
 </template>
 
