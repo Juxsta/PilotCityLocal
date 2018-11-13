@@ -5,6 +5,7 @@
         <w_teacher_address   id="w_teacher_address" class="animated fadeIn"/>
         <w_sector id="w_sector" class="animated fadeIn"/>
         <w_question id="w_question"  class="animated fadeIn"/>
+        <w_tags id="w_tags" class="animated fadeIn"/>
         <Button_next />
     </div>
 </template>
@@ -33,8 +34,8 @@ export default {
         return{
             authUser: null,
             role: null,
-            e_w_wizards: ['w_story', 'w_address', 'w_sector', 'w_question'],
-            t_w_wizards: ['w_story', 'w_teacher_address'],
+            e_w_wizards: ['#w_story', '#w_address', '#w_sector', '#w_question'],
+            t_w_wizards: ['#w_story', '#w_teacher_address', '#w_tags'],
             data_arr: []
         }
     },
@@ -58,12 +59,12 @@ export default {
         movePage: function(dirct, step, arr){
             if (step < arr.length){
                 if (dirct == 'right') {
-                    $('#' + arr[(step - 1)]).hide();
-                    $('#' + arr[step]).show();
+                    $(arr[(step - 1)]).hide();
+                    $(arr[step]).show();
                 } else {
                     this.data_arr.pop();
-                    $('#' + arr[(step - 1)]).show();
-                    $('#' + arr[step]).hide();
+                    $(arr[(step - 1)]).show();
+                    $(arr[step]).hide();
                 }
             }
             if (step == 0){
@@ -94,9 +95,9 @@ export default {
             setTimeout(function(){
                 $('#class_picker').hide();
                 if (self.role == 'employer')
-                    $('#' + self.e_w_wizards[0]).show();
+                    $(self.e_w_wizards[0]).show();
                 else if (self.role == 'teacher')
-                    $('#' + self.t_w_wizards[0]).show();
+                    $(self.t_w_wizards[0]).show();
             }, 300);
         })
         bus.$on('form_completed', obj => {
@@ -108,7 +109,7 @@ export default {
 
 <style>
 #w_address, 
-#w_question, #w_story, #w_sector, #w_teacher_address{
+#w_question, #w_story, #w_sector, #w_teacher_address, #w_tags{
     display: none;
 }
 
