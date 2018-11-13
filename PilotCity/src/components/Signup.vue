@@ -96,7 +96,7 @@ export default {
 	border: solid 1px #ffffff;
     font-size: 15px;
     background-color: #404041;
-    font-family: Raleway-Bold;
+    font-family: "Raleway-Bold";
     cursor:pointer !important;
     transition: border 0.5s;
     padding-left : 40px;
@@ -166,7 +166,7 @@ export default {
     width:150px;
     border-radius: 50px;
     font-size: 18px;
-    font-family: Raleway;
+    font-family: "Raleway";
     color: white;
     text-align: center;
     margin:15px auto;
