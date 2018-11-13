@@ -3,10 +3,17 @@
         <div class="d-flex justify-content-center">
             <p class="Raleway">Who are you?</p>
         </div>
+<<<<<<< HEAD
         <div class="d-flex justify-content-center">
                 <button class="btn button-square class-picker-btn .offset-border">Teacher</button>
                 <button class="btn button-square class-picker-btn">Employer</button>
                 <button class="btn button-square class-picker-btn">Student</button>
+=======
+        <div class="d-flex justify-content-center mt-5">
+                <button class="btn button-square class-picker-btn color-pink" @click="pickRole(0)">Teacher</button>
+                <button class="btn button-square class-picker-btn color-purple" @click="pickRole(1)">Employer</button>
+                <button class="btn button-square class-picker-btn" @click="pickRole(2)">Student</button>
+>>>>>>> eeee01c039f94fd93a88c9ad4c6775407442a02e
         </div>
     </div>
 </template>
@@ -39,11 +46,10 @@ export default {
     border-radius: 50px;
 }
 
-.offset-border:active {
-    outline:5px solid #dbdcde !important;
-    outline-offset: 30px !important;
-}
 .class-picker-btn {
     margin: auto 20px;
+}
+.class-picker-btn:active{
+    outline-color: rgb(222, 223, 224) !important;
 }
 </style>

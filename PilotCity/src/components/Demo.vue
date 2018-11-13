@@ -1,6 +1,15 @@
 <template id="demo">
     <div class="mt-3">
+<<<<<<< HEAD
         <w_story />
+=======
+        <ClassPicker id="class_picker" class="animated "/>
+        <w_address  id="w_address" class="animated fadeInRight"/>
+        <w_sector id="w_sector" class="animated fadeInRight"/>
+        <w_question id="w_question"  class="animated fadeInRight"/>
+        <Button_next /> 
+        <!-- <w_sector /> -->
+>>>>>>> eeee01c039f94fd93a88c9ad4c6775407442a02e
     </div>
 </template>
 
@@ -45,20 +54,24 @@ export default {
     created(){
         var self = this;
         bus.$on('next', function(count){
-            var len; 
             if (self.role == 'employer'){
-                $('#' + self.e_w_wizards[(count - 1) % self.e_w_wizards.length]).hide();
-                $('#' + self.e_w_wizards[count % self.e_w_wizards.length]).show();
+                if (count < self.e_w_wizards.length){
+                    $('#' + self.e_w_wizards[(count - 1)]).hide();
+                    $('#' + self.e_w_wizards[count]).show();
+                }
             }
             else if (self.role == 'teacher') {
-                $('#' + self.t_w_wizards[(count - 1) % self.t_w_wizards.length]).hide();
-                $('#' + self.t_w_wizards[count % self.t_w_wizards.length]).show();
+                if (count < self.t_w_wizards.length){
+                    $('#' + self.t_w_wizards[(count - 1)]).hide();
+                    $('#' + self.t_w_wizards[count]).show();
+                }
             }
         });
         bus.$on('userSignedIn', function(user){
             self.authUser = user;
         })
         bus.$on('pickedRole', function(role){
+            document.getElementById('the_best_next_button').disabled = false;
             self.role = role;
             $("#class_picker").addClass('fadeOutLeft');
             setTimeout(function(){
@@ -67,7 +80,7 @@ export default {
                     $('#' + self.e_w_wizards[0]).show();
                 else if (self.role == 'teacher')
                     $('#' + self.t_w_wizards[0]).show();
-            }, 500);
+            }, 300);
             
         })
     }
