@@ -75,7 +75,7 @@ export default {
 	width: 80px !important;
 }
 .navbar {
-    background-color: #404041
+    background-color: #404041;
 }
 </style>
 

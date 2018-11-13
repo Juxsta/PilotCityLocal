@@ -72,8 +72,8 @@ export default {
         height:calc(100% - 65px);
         width: 100%;
         position:absolute !important;
-        background: url('../assets/header.jpg') no-repeat center scroll;
-        background-size:100% 100%;
+        background: url('../assets/header.jpg') no-repeat;
+        background-size:cover;
     }
   
 </style>
