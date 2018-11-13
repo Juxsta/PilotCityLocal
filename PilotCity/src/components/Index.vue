@@ -1,12 +1,15 @@
 <template>
     <div class= "container-fluid" id="canvas">
-        <div class="d-flex flex-row">
-        <h2 id = "title">Connecting classrooms to the big bad world. </h2>
+        <div class= "row h-100 justify-content-center align-items-center">
+            <div class="class d-flex col-12 mt-5">
+                <h2 id = "title">Connecting classrooms to the big bad world. </h2>
+            </div>
+            <div class="class d-flex flex-row mb-auto mr-auto">
+                <button type="button" class="btn btn-primary mr-4" id="index-btn-employers"> <router-link to="/demo"> For Employers </router-link> </button>
+                <button type="button" class="btn btn-primary" id="index-btn-teachers" > <router-link to="/demo"> For Teachers </router-link> </button>
+            </div>
         </div> 
-        <div class="d-flex flex-row">
-            <button type="button" class="btn btn-primary" id="index-btn-employers"> <router-link to="/demo"> For Employers </router-link> </button>
-            <button type="button" class="btn btn-primary" id="index-btn-teachers" > <router-link to="/demo"> For Teachers </router-link> </button>
-        </div>
+</div>
     </div>
 </template>
 <script>
@@ -21,12 +24,9 @@ export default {
 </script>
 <style>
     #title{
-        position: absolute;
         font-family: "Raleway";
         font-weight: 700;
         color: white;
-        top:250px;
-        left: 100px;
         font-size: 55px;
 
     }
@@ -40,7 +40,6 @@ export default {
         height: 45px;
         width: 250px;
         text-align: center;
-        position: absolute;
         top: 350px;
         left: 375px;
         border-color: transparent;
@@ -60,7 +59,6 @@ export default {
         height: 45px;
         width: 250px;
         text-align: center;
-        position: absolute;
         top: 350px;
         left: 100px;
         border-color: transparent;
