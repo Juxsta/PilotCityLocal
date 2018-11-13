@@ -96,8 +96,8 @@ export default {
 	border: solid 1px #ffffff;
     font-size: 15px;
     background-color: #404041;
-    font-family: 'Raleway';
-    font-weight: 800;
+    font-family: "Raleway";
+    font-weight: 600;
     cursor:pointer !important;
     transition: border 0.5s;
     padding-left : 40px;
@@ -167,11 +167,12 @@ export default {
     width:150px;
     border-radius: 50px;
     font-size: 18px;
-    font-family: "Raleway";
+    font-family: 'Raleway';
     color: white;
     text-align: center;
-    margin:15px auto;
+    margin:15px;
 }
+
 .pc-blue {
     background-color:#3C93CD;
 }
@@ -198,5 +199,6 @@ export default {
 .form-active:focus{
     color: #939598 !important;
 }
+
 </style>
 

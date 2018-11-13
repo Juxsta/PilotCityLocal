@@ -62,9 +62,11 @@ export default {
                 obj['teacher_address'] = self.address;
                 bus.$emit('form_completed', obj);
                 bus.$emit('validated'); 
-            }
-            else
+            } else { 
+                console.log(self.address)
                 Prompter().failed("missing field(s)!");
+            }
+                
         });
     }
 }

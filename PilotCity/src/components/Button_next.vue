@@ -1,7 +1,7 @@
 <template>
     <div>
     <button type="button"  @click="goforward" class="btn btn-secondary btn-lg" id="the_best_next_button" disabled>Next</button>
-    <button type="button" @click="goback" class="btn btn-secondary btn-lg" id="the_best_prev_button" disabled>Back</button>
+    <button type="button" @click="goback" class="btn btn-secondary btn-lg" id="the_best_prev_button" >Back</button>
     </div>
 </template>
 
@@ -27,6 +27,8 @@ export default {
                         bus.$emit('grab_data', { step: 'story_teacher_address'});
                 break ;
                 case 3:
+                    if (this.role  == 'teacher')
+                        bus.$emit('grab_data', { step: 'teacher_industry'});
                 break ;
             }
         },
@@ -54,21 +56,24 @@ export default {
 
 <style>
 #the_best_next_button{
+    width: 150px;
     position: fixed;
     bottom: 10vh;
     right: 10vw; 
     font-weight: bold;
-    border-radius: 20px;
+    border-radius: 50px;
     background-color: rgb(220, 221, 222);
     border-color: rgb(220, 221, 222);
 }   
 
 #the_best_prev_button{
+    display: none;
+    width: 150px;
     position: fixed;
     bottom: 10vh;
     left: 10vw; 
     font-weight: bold;
-    border-radius: 20px;
+    border-radius: 50px;
     background-color: rgb(220, 221, 222);
     border-color: rgb(220, 221, 222);
 }

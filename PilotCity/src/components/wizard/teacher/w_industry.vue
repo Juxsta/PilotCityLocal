@@ -1,6 +1,6 @@
 <template>
-    <div id="w_industry" class="mt-5 d-flex justify-content-center">
-        <form>
+    <div class="mt-5 ">
+        <form class="d-flex justify-content-center" >
             <div class="pc-panel-tagspanel" >
                 <div class="input-group mb-2">
                         <div class="input-group-prepend">
@@ -43,6 +43,9 @@
 </template>
 
 <script>
+
+import { bus } from '../../../main'
+import { Prompter } from '../../../main'
 export default {
     name: "w_industry",
     data () {
@@ -78,11 +81,26 @@ export default {
     },
     computed: {
 
+    },created(){
+        var self = this;
+        bus.$on('grab_data', obj =>{ 
+            if (obj.step != 'teacher_industry')
+                return ;
+            if (self.selected_ikeywords.length ){
+                var obj = {};
+                obj['teacher_industry'] = self.selected_ikeywords;
+                bus.$emit('form_completed', obj);
+                bus.$emit('validated'); 
+            } else { 
+                console.log(self.address)
+                Prompter().failed("missing field(s)!");
+            }
+                
+        });
     }
 }
 </script>
 <style scoped>
->
 .pc-tag {
     margin: 5px;
     font-size: 12px;
