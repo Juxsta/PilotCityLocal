@@ -87,6 +87,7 @@ export default {
     font-family: "Raleway-BoldItalic";
     font-size:30px;
     color:#eca0be;
-    margin-bottom:30px;
+    margin-bottom:50px;
+    margin-top:70px;
 }
 </style>
