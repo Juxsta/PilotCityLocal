@@ -7,6 +7,7 @@ import Foremployer from '@/components/ClassPicker'
 import Forteacher from '@/components/ClassPicker'
 import Demo from '@/components/Demo'
 import Testing from '@/components/Testing'
+import Etesting from '@/components/Etesting'
 Vue.use(Router)
 
 export default new Router({
@@ -45,6 +46,11 @@ export default new Router({
         path:'/testing',
         name:'Testing',
         component: Testing
+      },
+      {
+        path:'/etesting',
+        name:'Etesting',
+        component: Etesting
       }
     ]
 })
