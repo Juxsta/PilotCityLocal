@@ -66,7 +66,7 @@ export default {
                 }
             }
             if (step == 0){
-                document.getElementById('the_best_prev_button').disabled = true;
+                document.getElementById('the_best_prev_button').style.display = "none";
                 document.getElementById('the_best_next_button').disabled = true;
                 $("#class_picker").removeClass('fadeOut');
                 $('#class_picker').show();
@@ -87,7 +87,7 @@ export default {
         })
         bus.$on('pickedRole', function(role){
             document.getElementById('the_best_next_button').disabled = false;
-            document.getElementById('the_best_prev_button').disabled = false;
+            document.getElementById('the_best_prev_button').style.display = "block";
             self.role = role;
             $("#class_picker").addClass('fadeOut');
             setTimeout(function(){
