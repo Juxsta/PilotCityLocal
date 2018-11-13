@@ -17,57 +17,54 @@ export default {
 </script>
 <style>
     #title{
-        text-transform: capitalize;
         position: absolute;
-        font-family: Raleway;
-        font-weight: 600;
+        font-family: Raleway-Bold;
         color: white;
         top:250px;
         left: 100px;
-        font-size: 60px;
+        font-size: 50px;
+        padding-left:0px;
 
     }
     #index-btn-employers{
-        font-family: Raleway;
-        font-size: 23px;
-        background-color: #eca0be;
+        font-family: Raleway-Bold;
+        font-size: 20px;
+        background-color: #ae90b0;
         color: white;
-        font-weight: 700;
-        border-radius: 20px;
-        height: 50px;
-        width: 270px;
+        border-radius: 37.5px;
+        height: 45px;
+        width: 250px;
         text-align: center;
         position: absolute;
-        top: 400px;
-        left: 400px;
-        padding: 10px;
+        top: 350px;
+        left: 375px;
         border-color: transparent;
     }
     
     #index-btn-employers:hover{
-        border: solid 2px white;
+        border: solid 1px white;
     }
     #index-btn-teachers{
-        font-family: Raleway;
-        font-size: 23px;
-        font-weight: 700;
-        background-color: #ae90b0;
+        font-family: Raleway-Bold;
+        font-size: 20px;
+        background-color: #eca0be;
         stroke: #ae90b0;
         color: white;
-        border-radius: 20px;
-        height: 50px;
-        width: 270px;
+        border-radius: 37.5px;
+        height: 45px;
+        width: 250px;
         text-align: center;
         position: absolute;
-        top: 400px;
+        top: 350px;
         left: 100px;
         border-color: transparent;
+        float:left;
     }
     #index-btn-teachers:hover{
-        border: solid 2px white;
+        border: solid 1px white;
     }
     #canvas{
-        height:calc(100% - 86px);
+        height:calc(100% - 65px);
         width: 100%;
         position:absolute !important;
         background: url('../assets/header.jpg') no-repeat center scroll;

@@ -1,8 +1,8 @@
 <template>
     <div>
         <!-- Button trigger modal -->
-        <button  type="button" class="btn navbar-btn btn-primary btn-lg active Raleway float-right active" data-toggle="modal" data-target="#signup-modal">
-        Signup
+        <button  type="button" class="btn btn-primary btn-lg active Raleway float-right active" data-toggle="modal" data-target="#signup-modal" id=SignupBtn>
+        Sign-up
         </button>
 
         <!-- Modal -->
@@ -11,26 +11,26 @@
             <div class="modal-content pc-light-gray">
             <div class="modal-body">
                 <div class="d-flex justify-content-center">
-                    <img src='@/assets/2_Heart.png' alt="Heart Logo" id='Heartlogo' >
+                    <img src='@/assets/3_Hand.png' alt="Hand Logo" id='Handlogo' >
                 </div>
                 <form>
                 <div class="col-auto form-margin">
-                    <label class="sr-only" for="inlineFormInputGroup">Username</label>
+
                     <div class="input-group mb-2 padding">
                         <div class="input-group-prepend">
-                        <div class="input-group-text icon-gray">
-                            <i class="material-icons">account_circle</i>
+                        <div class="input-group-text icon-blue">
+                            <i class="material-icons" id="account_circle_signup">account_circle</i>
                         </div>
                         </div>
-                        <input type="email" class="form-control form-rounded padding form-active form-active" id="signup-input-username"  placeholder="Username" v-model="signup_input_username">
+                        <input type="email" class="form-control form-rounded padding form-active form-active" id="signup-input-username"  placeholder="Email" v-model="signup_input_username">
                     </div>
                 </div>
                 <div class="col-auto form-margin">
                     <label class="sr-only" for="inlineFormInputGroup">Password</label>
                     <div class="input-group mb-2 padding">
                         <div class="input-group-prepend">
-                            <div class="input-group-text icon-gray">
-                            <i class="large material-icons">lock</i>
+                            <div class="input-group-text icon-blue">
+                            <i class="large material-icons" id="lock_signup">lock</i>
                             </div>
                         </div>
                         <input type="password" class="form-control form-rounded padding form-active" id="signup-input-password" placeholder="Password" v-model="signup_input_password">
@@ -38,7 +38,7 @@
                       <small class="text-danger pl-3" v-if="errorMessage">{{errorMessage}}</small>
                 </div>
                 <div class="d-flex justify-content-center">
-                    <button type="submit" @click.prevent="signup" class="btn btn-primary button-regular pc-blue">Signup</button>
+                    <button type="submit" @click.prevent="signup" class="btn btn-primary button-regular pc-blue">Sign-up</button>
                 </div>
                 </form>
             </div>
@@ -83,23 +83,43 @@ export default {
 .navbar-btn {
 	border-radius: 50px;
 	background-color: #404041 !important;
-	border: solid 2px #404041 !important;
-	padding-left : 40px;
-    padding-right: 40px;
+	border: solid 1px #404041 !important;
+	padding-left : 30px !important;
+    padding-right: 30px !important;
     transition: border 0.5s;
+    margin: auto 5px !important;
+
+}
+
+#SignupBtn {
+    border-radius: 100px;
+	border: solid 1px #ffffff;
+    font-size: 15px;
+    background-color: #404041;
+    font-family: Raleway-Bold;
+    cursor:pointer !important;
+    transition: border 0.5s;
+    padding-left : 40px;
+	padding-right: 40px;
     margin: auto 20px;
+    text-align: center;
+}
+
+#SignupBtn:hover {
+	background-color: #939597;
+    
 }
 
 .navbar-btn:hover{
     transition: border 1s;
-	border: solid 2px #ffffff !important;
+	background: #939597 !important;
 }
 #btn-login .active {
     transition: border 0.5s;
 }
 #btn-login  .active:hover {
   transition: border 1s;
-	border: solid 2px #ffffff !important;
+	border: solid 1px #ffffff !important;
 }
 #btn-login:focus, #btn-signup:focus{
     outline: none;
@@ -110,13 +130,11 @@ export default {
     -moz-border-radius: 30px !important;
     border-radius: 30px !important; 
 }
-#Heartlogo{
-    padding-bottom: 20px;
+
+#Handlogo{
+    padding: 20px;
     height: 100px;
-    width: 80px;
-}
-.padding{
-    padding: 15px;
+    width: 120px;
 }
 .form-rounded {
     border-radius: 50px;
@@ -127,17 +145,27 @@ export default {
 .form-active:focus-within {
     color: #000000 !important;
 }
-.icon-gray{
-    background-color: #939598;
+
+.icon-blue{
+    background-color: #3c9ccc;
 }
+
+#account_circle_signup {
+    color:white;
+}
+
+#lock_signup {
+    color:white;
+}
+
 
 .form-margin {
     margin: 2px 0 2px 0;
 }
 .button-regular {
-    width:200px;
+    width:150px;
     border-radius: 50px;
-    font-size: 20px;
+    font-size: 18px;
     font-family: Raleway;
     color: white;
     text-align: center;
@@ -148,7 +176,7 @@ export default {
 }
 
 .pc-light-gray{
-    background-color: #58595b
+    background-color: #58595b;
 }
 #btn-login{
 	cursor:pointer !important;
@@ -160,7 +188,6 @@ export default {
 
 .form-active:focus{
     background-color:#414042;
-    caret-color:#939598;
 
 }
 .form-active{

@@ -11,26 +11,25 @@
             <div class="modal-content pc-light-gray">
             <div class="modal-body">
                 <div class="d-flex justify-content-center">
-                    <img src='@/assets/3_Hand.png' alt="Heart Logo" id='Heartlogo' >
+                    <img src='@/assets/2_Heart.png' alt="Heart Logo" id='Heartlogo' >
                 </div>
                 <form>
                 <div class="col-auto form-margin">
-                    <label class="sr-only" for="inlineFormInputGroup">Username</label>
                     <div class="input-group mb-2 padding">
                         <div class="input-group-prepend">
-                        <div class="input-group-text icon-gray">
-                            <i class="material-icons">account_circle</i>
+                        <div class="input-group-text icon-green">
+                            <i class="material-icons" id="account_circle_login">account_circle</i>
                         </div>
                         </div>
-                        <input type="email" class="form-control form-rounded padding form-active form-active" id="login-input-username" placeholder="Username" v-model="login_input_username">
+                        <input type="email" class="form-control form-rounded padding form-active form-active" id="login-input-username" placeholder="Email" v-model="login_input_username">
                     </div>
                 </div>
                 <div class="col-auto form-margin">
                     <label class="sr-only" for="inlineFormInputGroup">Password</label>
                     <div class="input-group mb-2 padding">
                         <div class="input-group-prepend">
-                            <div class="input-group-text icon-gray">
-                            <i class="large material-icons">lock</i>
+                            <div class="input-group-text icon-green">
+                            <i class="large material-icons" id="lock_login">lock</i>
                             </div>
                         </div>
                         <input type="password" class="form-control form-rounded padding form-active" id="login-input-password" placeholder="Password" v-model="login_input_password">
@@ -38,7 +37,7 @@
                       <small class="text-danger pl-3" v-if="errormsg">{{errormsg}}</small>
                 </div>
                 <div class="d-flex justify-content-center">
-                    <button type="submit" @click.prevent="login" class="btn btn-primary button-regular pc-blue">Login</button>
+                    <button type="submit" @click.prevent="login" class="btn btn-primary button-regular pc-green">Login</button>
                 </div>
                 </form>
             </div>
@@ -85,14 +84,25 @@ export default {
 }
 
 .navbar-btn {
-	border-radius: 50px;
+	border-radius: 100px;
 	background-color: #404041 !important;
-	border: solid 2px #404041 ;
-	padding-left : 40px;
-	padding-right: 40px;
-    margin: auto 20px;
+	border: solid 1px #404041;
+    font-size: 15px;
+    font-family: Raleway-Bold;
     cursor:pointer !important;
     transition: border 0.5s;
+    padding-left : 40px;
+	padding-right: 40px;
+    margin: auto 20px;
+    text-align: center;
+}
+
+.btn-primary {
+
+}
+
+.btn-lg {
+
 }
 
 .modal-content  {
@@ -112,20 +122,34 @@ export default {
     border-radius: 50px;
     background-color: #414042;
     color: #ffffff !important;
+    border-color:#939597;
 
 }
 .form-active:focus-within {
     color: #000000 !important;
 }
-.icon-gray{
-    background-color: #939598;
+.icon-blue{
+    background-color: #3c9ccc;
+}
+
+.icon-green{
+    background-color: #6eba7f;
+}
+
+#account_circle_login {
+    color:white;
+}
+
+#lock_login {
+    color:white;
 }
 
 .form-margin {
     margin: 2px 0 2px 0;
 }
 .button-regular {
-    width:200px;
+    width:300px;
+    font-weight:800;
     border-radius: 50px;
     font-size: 20px;
     font-family: Raleway;
@@ -133,15 +157,13 @@ export default {
     text-align: center;
     margin:15px auto;
 }
-.pc-blue {
-    background-color:#3C9CCC;
-}
 
 .pc-green {
     background-color: #6eba7f;
+    color: white;
 }
 .pc-light-gray{
-    background-color: rgba(88, 89, 91, 0.8) !important;
+    background-color: rgba(65, 64, 66, .95) !important;
 }
 
 #login-modal{
@@ -150,15 +172,22 @@ export default {
 
 .form-active:focus{
     background-color:#414042;
-    caret-color:#939598;
 }
 .form-active{
     padding: 10px !important;
-    font-size: 20px;
+    font-size: 15px;
+    font-weight:100;
+    font-family: raleway-Italic;
     color: #939598 !important;
 }
 
 .form-active:focus{
     color: #939598 !important;
 }
+
+.input-group-text {
+    border-radius:50px;
+    border-color:#939597;
+}
+
 </style>

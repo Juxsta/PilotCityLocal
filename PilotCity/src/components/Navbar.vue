@@ -57,7 +57,8 @@ export default {
 @import url('https://fonts.googleapis.com/css?family=Raleway');
 #logo-pilotcity{
 	cursor: pointer;
-	height: 70px;
+	height: 50px;
+	margin-left:20px;
 }
 #component-logout{
 	display: none;
@@ -66,7 +67,6 @@ export default {
 	font-family: 'Raleway';
 	font-weight: 700;
 }
-
 
 #PLogo {
 	padding: 20px 0 20px 0 !important;
