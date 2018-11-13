@@ -1,17 +1,18 @@
 <template>
-    <div id="w_industry" class="container mt-5">
+    <div id="w_industry" class="mt-5 d-flex justify-content-center">
         <form>
-            <div class="panel_tagspanel" >
+            <div class="pc-panel-tagspanel" >
                 <div class="input-group mb-2">
                         <div class="input-group-prepend">
-                            <div class="input-group-text">
-                                <h3 class="font-weight-light">Industries</h3>
+                            <div class="pc-input-group-text">
+                                <h3 class="pc-keyword-title">Industries</h3>
                             </div>
                         </div>
-                        <input type="text" class="form-control" placeholder="What industries would your classrooms be excited about?" @keyup.enter.prevent="input_addtoIDB(i_keyword,selected_ikeywords)" v-model="i_keyword">
+                        <input type="text" class="pc-input-box" placeholder="What industries would your classrooms be excited about?" @keyup.enter.prevent="input_addtoIDB(i_keyword,selected_ikeywords)" v-model="i_keyword">
                     </div>
-                    <hr />
-                <span class="badge badge-pill badge-primary pc-tag" v-for="(keyword,index) in selected_ikeywords" :key="keyword + index" :class="colors[index%7]">
+        <hr class="frame-line-break" />
+            <div class="ml-3">
+                <span class="badge badge-pill badge-primary tag-capitalize pr-3 ml-1 mr-1 mb-1 mt-1" v-for="(keyword,index) in selected_ikeywords" :key="keyword + index" :class="colors[index%7]">
                     <div class="d-flex">
                         <a href="" @click.prevent>
                             <i class="material-icons icon-clear" @click="rm_IKeyword(keyword)">clear</i>
@@ -21,8 +22,11 @@
                         </div>
                     </div>
                 </span>
-                <hr />
-                <span class="badge badge-pill badge-primary pc-tag" v-for="(value,i) in industry_keywords" :key="value + i" :class="colors[i%7]">
+            </div>
+
+        <hr class="frame-line-break" />
+            <div class="ml-3">
+                <span class="badge badge-pill badge-primary ml-1 mb-1 mt-1 mr-1 pr-3" v-for="(value,i) in industry_keywords" :key="value + i" :class="colors[i%7]">
                     <div class="d-flex" v-if="notFound(value,selected_ikeywords)">
                         <a href="" @click.prevent>
                             <i class="material-icons icon-add" @click="add_IKeywords(value)">add</i>
@@ -32,6 +36,7 @@
                         </div>
                     </div>
                 </span>
+            </div>
            </div>
         </form>
     </div>
@@ -65,7 +70,9 @@ export default {
             this.industry_keywords.push(item)
         },
         input_addtoIDB(item,array) {
+            if(this.notFound(item,this.selected_ikeywords)) {
             array.push(item)
+            }
             this.i_keyword=null
         }
     },
@@ -74,24 +81,72 @@ export default {
     }
 }
 </script>
-<style>
+<style scoped>
+>
 .pc-tag {
     margin: 5px;
-    font-family:"Raleway-ExtraBold";
     font-size: 12px;
     padding-right:20px;
-}
+    padding-left:0px;
 
+}
+.tag-capitalize {
+    text-transform: capitalize;
+}
 .icon-clear {
     font-size:15px;
     color:white;
     padding: 5px;
+    font-weight:100;
 }
 
 .icon-add {
     font-size:15px;
     padding:5px;
     color:white;
+}
+
+.Raleway {
+    font-weight:700;
+    letter-spacing: 1px;
+
+}
+
+.pc-panel-tagspanel {
+    border: dashed 1px #dbdcde;
+    border-radius:50px;
+    width: 1000px;
+    padding-top:20px;
+    padding-bottom:20px;
+}
+
+.pc-keyword-title {
+    font-family: Raleway;
+    font-size:20px;
+    font-weight: 700;
+    color:#939597;
+    padding-top:9px;
+    margin-left:30px;
+    width:100px;
+}
+
+.pc-input-box {
+    border:solid 0px #ffffff;
+    font-family: "Raleway";
+    color:#dbdcde;
+    font-style: italic;
+    font-size:20px;
+    padding-left:30px;
+    width:750px;
+}
+
+.pc-input-box::placeholder{
+    color:#dbdcde;
+    font-weight:300;
+}
+
+.frame-line-break {
+    border-style: dashed;
 }
 
 .pc-purple {
@@ -112,6 +167,8 @@ export default {
 .pc-yellow {
     background-color: #fdd25a
 }
-
+.pc-red {
+    background-color: #ea6763
+}
 
 </style>

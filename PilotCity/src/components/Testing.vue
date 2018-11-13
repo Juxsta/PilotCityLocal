@@ -1,7 +1,6 @@
 <template>
     <div>
-        <w_teacher_address />
-        <w_story />
+        <w_skills />
     </div>
 </template>
 <script>
