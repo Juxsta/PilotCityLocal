@@ -77,6 +77,7 @@ export default {
 </script>
 
 <style>
+@import url('https://fonts.googleapis.com/css?family=Raleway');
 .Raleway {
 	font-family: 'Raleway';
 	font-weight:800;
@@ -87,12 +88,8 @@ export default {
 	background-color: #404041 !important;
 	border: solid 1px #404041;
     font-size: 15px;
-<<<<<<< HEAD
     font-family: "Raleway";
     font-weight: 700;
-=======
-    font-family: 'Raleway';
->>>>>>> e4046444a71d4d0918a5ac842de58d00bcc79173
     cursor:pointer !important;
     transition: border 0.5s;
     padding-left : 40px;
