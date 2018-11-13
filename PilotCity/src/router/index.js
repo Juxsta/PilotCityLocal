@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import Index from '@/components/Index'
 import Signup from '@/components/Signup'
 import ClassPicker from '@/components/ClassPicker'
-
+import Demo from '@/components/Demo'
 Vue.use(Router)
 
 export default new Router({
@@ -22,7 +22,11 @@ export default new Router({
         path:'/classpicker',
         name:'ClassPicker',
         component: ClassPicker,
+      },
+      {
+        path: '/demo',
+        name: 'demo',
+        component: Demo
       }
     ]
-
 })
