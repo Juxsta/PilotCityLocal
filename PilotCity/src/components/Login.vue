@@ -148,7 +148,7 @@ export default {
     font-family: 'Raleway';
     color: white;
     text-align: center;
-    margin:15px auto;
+    margin:15px;
 }
 
 .pc-green {
