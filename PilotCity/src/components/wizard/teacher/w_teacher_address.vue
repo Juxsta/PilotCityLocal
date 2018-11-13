@@ -16,7 +16,7 @@
                 </div>
                 <div class="form-group col-md-2">
                     <label for="inputZip">Zip</label>
-                    <input type="text" class="form-control" id="inputZip" placeholder="55555"  v-model="address.zip">
+                    <input type="number" class="form-control" id="inputZip" placeholder="55555"  v-model="address.zip">
                 </div>
                 <div class="form-group col-md-2">
                     <label for="inputType">Room #</label>
@@ -47,21 +47,22 @@ export default {
         }
     },
     methods:{
-        emitAddress: function(){
-            var obj = {};
-            obj['teacher_address'] = this.address;
-            bus.$emit('teacher_address_finished', obj);
-            bus.$emit('validated'); 
-        }, /** delete this skip when in production */
+       /** delete this skip when in production */
         skip: function(){
             bus.$emit('validated');
         } 
     },
     created(){
         var self = this;
-        bus.$on('grab_story_teacher_address', ()=>{
-            if (self.address.street && self.address.city && self.address.state && self.address.zip && self.address.room )
-                self.emitAddress();
+        bus.$on('grab_data', obj =>{ 
+            if (obj.step != 'story_teacher_address')
+                return ;
+            if (self.address.street && self.address.city && self.address.state && self.address.zip && self.address.room ){
+                var obj = {};
+                obj['teacher_address'] = self.address;
+                bus.$emit('form_completed', obj);
+                bus.$emit('validated'); 
+            }
             else
                 Prompter().failed("missing field(s)!");
         });
@@ -87,5 +88,23 @@ export default {
 .btn-address-purple:focus{
     outline: none !important;
 }
+</style>
+
+<style scoped>
+label {
+    color: #eca0be;
+    font-weight: bold;
+}
+input, input:focus{
+    border-radius: 50px;
+    font-size: 20px;
+    font-style: Italic;
+    font-family: "Raleway";
+    background-color: rgb(222, 223, 224);
+    color: white;
+    outline: none !important;
+    font-weight:100;
+}
+input::placeholder { color:white }
 </style>
  

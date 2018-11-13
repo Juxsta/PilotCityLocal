@@ -66,7 +66,7 @@ export default {
                 school_district: this.school_district,
                 phone: this.phone
             }
-            bus.$emit('teacher_story_finished', obj);
+            bus.$emit('form_completed', obj);
             bus.$emit('validated'); 
         }, /** delete this skip when in production */
         skip: function(){
@@ -75,7 +75,9 @@ export default {
     },
     created(){
         var self = this;
-        bus.$on('grab_story_teacher', function(){
+        bus.$on('grab_data', function(obj){
+             if (obj.step != 'story_teacher')
+                return ;
             if (self.first_name && self.last_name && self.school_name && self.school_district && self.phone)
                 self.emitStory();
             else
