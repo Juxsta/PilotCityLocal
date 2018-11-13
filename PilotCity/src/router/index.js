@@ -3,7 +3,9 @@ import Router from 'vue-router'
 import Index from '@/components/Index'
 import Signup from '@/components/Signup'
 import ClassPicker from '@/components/ClassPicker'
-
+import Foremployer from '@/components/ClassPicker'
+import Forteacher from '@/components/ClassPicker'
+import Demo from '@/components/Demo'
 Vue.use(Router)
 
 export default new Router({
@@ -26,12 +28,17 @@ export default new Router({
       {
         path:'/forteacher',
         name:'Forteacher',
-        component: 'Forteacher'
+        component: Forteacher
       },
       {
-        path:'foremployer',
+        path:'/foremployer',
         name:'Foremployer',
-        component: 'Foremployer'
+        component: Foremployer
+      },
+      {
+        path:'/demo',
+        name:'Demo',
+        component: Demo
       }
     ]
 

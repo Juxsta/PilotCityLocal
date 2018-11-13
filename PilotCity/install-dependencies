@@ -1,3 +1,5 @@
+npm install
 npm install eslint --save
 npm install vue-cli --save
 npm install firebase --save
+npm install webpack --save
