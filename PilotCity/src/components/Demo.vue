@@ -22,6 +22,7 @@ export default {
     name: "Demo",
     data(){
         return{
+            authUser: null,
             w_wizards: ['w_address', 'w_sector', 'w_question'],
         }
     },
