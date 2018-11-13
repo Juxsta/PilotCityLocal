@@ -19,7 +19,7 @@ export default {
     #title{
         position: absolute;
         font-family: "Raleway";
-        font-weight: 800;
+        font-weight: 700;
         color: white;
         top:250px;
         left: 100px;
@@ -31,7 +31,7 @@ export default {
         font-size: 20px;
         background-color: #eca0be;
         color: white;
-        font-weight: 800;
+        font-weight: 700;
         border-radius: 50px;
         height: 45px;
         width: 250px;
@@ -48,7 +48,7 @@ export default {
     #index-btn-teachers{
         font-family: "Raleway";
         font-size: 20px;
-        font-weight: 800;
+        font-weight: 700;
         background-color: #ae90b0;
         stroke: #ae90b0;
         color: white;

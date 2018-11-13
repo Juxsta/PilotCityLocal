@@ -88,7 +88,8 @@ export default {
 	background-color: #404041 !important;
 	border: solid 1px #404041;
     font-size: 15px;
-    font-family: "Raleway-Bold";
+    font-family: "Raleway";
+    font-weight: 700;
     cursor:pointer !important;
     transition: border 0.5s;
     padding-left : 40px;
@@ -141,7 +142,7 @@ export default {
 }
 .button-regular {
     width:300px;
-    font-weight:800;
+    font-weight:700;
     border-radius: 50px;
     font-size: 20px;
     font-family: 'Raleway';
