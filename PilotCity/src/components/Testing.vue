@@ -5,7 +5,7 @@
 import w_skills from '@/components/wizard/teacher/w_skills'
 export default {
     name: 'Testing',
-    data: {
+    data (){
         return {
             
         }
