@@ -1,5 +1,5 @@
 <template>
-        <div id="w_question" class="container">
+        <div  class="container">
             <form>
                 <h3 class="font-weight-light"> Enter Quesion </h3>
                 <input type="text" class="form-control mb-3" placeholder="State your challenge in the form of quesion here">
