@@ -1,15 +1,6 @@
 <template id="demo">
     <div class="mt-3">
-<<<<<<< HEAD
-        <w_story />
-=======
-        <ClassPicker id="class_picker" class="animated "/>
-        <w_address  id="w_address" class="animated fadeInRight"/>
-        <w_sector id="w_sector" class="animated fadeInRight"/>
-        <w_question id="w_question"  class="animated fadeInRight"/>
-        <Button_next /> 
-        <!-- <w_sector /> -->
->>>>>>> eeee01c039f94fd93a88c9ad4c6775407442a02e
+        <w_industry/>
     </div>
 </template>
 
@@ -28,6 +19,7 @@ import w_department from '@/components/wizard/employer/w_department'
 import w_bottom_line from '@/components/wizard/employer/w_bottom_line'
 import w_question from '@/components/wizard/employer/w_question'
 import Button_next from '@/components/Button_next'
+import w_industry from '@/components/wizard/teacher/w_industry'
 export default {
     name: "Demo",
     data(){
@@ -49,7 +41,8 @@ export default {
         w_department,
         w_bottom_line,
         w_question,
-        Button_next
+        Button_next,
+        w_industry
     },
     created(){
         var self = this;

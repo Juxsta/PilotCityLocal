@@ -10,6 +10,7 @@
                         </div>
                         <input type="text" class="form-control" placeholder="Example:Client Acquisition" @keyup.enter.prevent="input_addtoblDB(B_keyword,selected_Bkeywords)" v-model="B_keyword">
                     </div>
+                    <hr />
                 <span class="badge badge-pill badge-primary" v-for="(keyword,index) in selected_Bkeywords" :key="keyword + index" :class="colors[index%7]">
                     <div class="d-flex">
                         <i class="material-icons" @click="rm_Bkeyword(keyword)">clear</i>

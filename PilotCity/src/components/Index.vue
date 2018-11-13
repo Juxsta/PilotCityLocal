@@ -73,4 +73,23 @@ export default {
         background: url('../assets/header.jpg') no-repeat center scroll;
         background-size:100% 100%;
     }
+    .pc-purple {
+    background-color: #ae90b0;
+}
+
+.pc-pink {
+    background-color: #eca0be;
+}
+.pc-green {
+    background-color: #6eba7f
+}
+.pc-blue {
+    background-color: #3c9ccc
+}
+.pc-orange {
+    background-color: #f79960
+}
+.pc-yellow {
+    background-color: #fdd25a
+}
 </style>

@@ -6,10 +6,10 @@
                 <p>My name is</p>
             </div>
             <div class="p-2 align-self-center">
-                <input type="text" placeholder="First Name" class="badge-pill" v-model="first_name">
+                <input type="text" placeholder="First Name" class="badge-pill pc-button" v-model="first_name">
             </div>
             <div class="p-2 align-self-start">
-                <input type="text" placeholder="Last Name" class="badge-pill" v-model="last_name"> 
+                <input type="text" placeholder="Last Name" class="badge-pill pc-button" v-model="last_name"> 
             </div>
         </div>
         <div class="d-flex flex-row justify-content-center mr-5" >
@@ -17,7 +17,7 @@
                 <p>and I am a teacher at</p>
             </div>
             <div class="p-2 align-self-start">
-                <input type="text" placeholder="School Name" class="badge-pill" v-model="school_name">
+                <input type="text" placeholder="School Name" class="badge-pill pc-button" v-model="school_name">
             </div>
             <div class="p-2 align-self-center">
                 <p>of the </p>
@@ -25,13 +25,13 @@
         </div>
         <div class="d-flex flex-row justify-content-center">
             <div class="p-2 align-self-start">
-                <input type="text" placeholder="School District Name" class="badge-pill" v-model="school_district">
+                <input type="text" placeholder="School District Name" class="badge-pill pc-button" v-model="school_district">
             </div>
             <div class="p-2 align-self-center">
                 <p>My phone number is</p>
             </div>
             <div class="p-2 align-self-start">
-                    <input type="text" placeholder="Mobile Number" class="badge-pill" v-model="phone">
+                    <input type="text" placeholder="Mobile Number" class="badge-pill pc-button" v-model="phone">
             </div>
         </div>
         </h4>
@@ -54,5 +54,18 @@ export default {
 </script>
 
 <style>
-
+.pc-button {
+        font-family: Raleway;
+        background-color: #eca0be;
+        color: white;
+        border-radius: 20px;
+        height: 50px;
+        width: 270px;
+        text-align: center;
+        padding: 10px;
+        border-color: transparent;
+}
+.pc-button::placeholder {
+    color:white !important;
+}
 </style>
