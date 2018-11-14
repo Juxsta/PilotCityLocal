@@ -61,6 +61,7 @@ export default {
                 return ;
             }
             if (this.step == 6){
+                this.grabDataFromForm();
                 $('#thankyou-modal').modal('show');
                 bus.$emit('submit');
                 return ;

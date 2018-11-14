@@ -120,6 +120,7 @@ export default {
             self.role = role;
         })
         bus.$on('form_completed', obj => {
+            console.log( self.data_arr)
             self.data_arr.push(obj);
         });
         bus.$on('submit', ()=> {
