@@ -8,7 +8,7 @@
             <div class="p-2 align-self-center">
                 <p class="teacher-story">My name is</p>
             </div>
-            <div class="p-2 align-self-center">
+            <div class="p-2 align-self-start">
                 <input type="text" placeholder="First Name" class="badge-pill pc-button" v-model="first_name"  @keyup.enter="skip">
             </div>
             <div class="p-2 align-self-start">
@@ -94,7 +94,7 @@ export default {
         background-color: #eca0be;
         color: white;
         border-radius: 50px;
-        font-size:25px;
+        font-size:20px;
         height: 50px;
         width: 250px;
         text-align: center;
@@ -105,20 +105,30 @@ export default {
         border-color: transparent;
 }
 .pc-button::placeholder {
-    color:white !important;
+    color:white;
+    font-weight:500i;
+    font-size:20px;
+    text-align: center;
+
+}
+
+.pc-button::placeholder:focus {
+    color:#eca0be !important;
+
 }
 .teacher-story{
     font-family: "Raleway";
+    font-style:Italic;
     font-size: 25px;
-    color: #c6c8ca;
+    color: #dbdcde;
     margin-top:10px;
 }
 
 .story-title {
     text-align: center;
-    font-family: "Raleway-ExtraBold";
+    font-family: "Raleway";
     font-style: Italic;
-    font-weight:800;
+    font-weight:700;
     font-size:30px;
     color:#eca0be;
     margin-bottom:50px;
@@ -128,4 +138,5 @@ export default {
 input:focus{
     outline: none !important;
 }
+
 </style>

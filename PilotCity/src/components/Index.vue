@@ -9,7 +9,7 @@
                 <button type="button" class="btn btn-primary" id="index-btn-teachers" > <router-link to="/demo"> For Teachers </router-link> </button>
             </div>
         </div> 
-    </div>
+</div>
 </template>
 <script>
 export default {
