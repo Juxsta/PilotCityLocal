@@ -24,7 +24,7 @@
             <label>Semester</label>
             <select class="custom-select" >
                 <option selected>Select</option>
-                <option value="0">Yearlong</option>
+                <option value="0">Full Year</option>
                 <option value="1">Fall</option>
                 <option value="2">Spring</option>
             </select>
