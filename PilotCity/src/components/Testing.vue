@@ -1,6 +1,6 @@
 <template>
     <div>
-        <w_industry />
+        <w_class />
     </div>
 </template>
 <script>
