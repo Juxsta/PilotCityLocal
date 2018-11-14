@@ -6,6 +6,7 @@
             <w_industry id="w_industry" class="animated fadeIn"/>
             <w_class id="w_class" class="animated fadeIn" />
             <w_skills id="w_skills" class="animated fadeIn" />
+            <w_ptype id="w_ptype" class="animated fadeIn" />
         <Button_next />
     </div>
 </template>

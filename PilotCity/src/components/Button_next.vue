@@ -28,12 +28,17 @@ export default {
                 break ;
                 case 3:
                     if (this.role  == 'teacher')
-                        bus.$emit('grab_data', { step: 'teacher_industry'});
+                        bus.$emit('grab_data', { step: 'teacher_class'});
                 break ;
                 case 4:
                     if (this.role  == 'teacher')
-                        bus.$emit('grab_data', { step: 'teacher_class'});
+                        bus.$emit('grab_data', { step: 'teacher_ptype'});
+                break ;
                 case 5:
+                    if (this.role  == 'teacher')
+                        bus.$emit('grab_data', { step: 'teacher_industry'});
+                break ;
+                case 6:
                     if (this.role  == 'teacher')
                         bus.$emit('grab_data', { step: 'teacher_skills'});
                 break ;
@@ -41,13 +46,22 @@ export default {
         },
         increment: function(){
             bus.$emit('move', {dirct: 'right', step: this.step++});
+            if (this.step == 6)
+                document.getElementById("the_best_next_button").innerHTML = 'Finish';
+            
         },
         goforward: function(){
+            if (this.step == 6){
+                alert("you finished!")
+                return ;
+            }
             this.grabDataFromForm();
+            setTimeout(() => {}, 1500);
         },
         goback: function(){
             if (this.step > 1){}
                 bus.$emit('move', {dirct: 'left', step: --this.step});
+            document.getElementById("the_best_next_button").innerHTML = 'Next'
         }
     },
     created(){
