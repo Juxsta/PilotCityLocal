@@ -6,10 +6,10 @@
                 <div class="input-group mb-2">
                         <div class="input-group-prepend">
                             <div class="pc-input-group-text">
-                                <h3 class="pc-keyword-title">Skills</h3>
+                                <h3 class="pc-keyword-title" @click="skip">Skills</h3>
                             </div>
                         </div>
-                        <input type="text" class="pc-input-box" placeholder="What tools, technologies, and skills are you currently teaching?" @keyup.enter.prevent="input_addtoIDB(s_keyword,selected_skeywords)" v-model="s_keyword">
+                        <input type="text" class="pc-input-box" placeholder="What tools, technologies, and skills are you currently teaching?" @keypress.enter.prevent="input_addtoIDB(s_keyword,selected_skeywords)" v-model="s_keyword">
                 </div>
         <hr class="frame-line-break" />
             <div class="ml-3">
@@ -77,7 +77,10 @@ export default {
             array.push(item)
             }
             this.s_keyword=null
-        }
+        },
+        skip: function(){
+            bus.$emit('validated');
+        } 
     },
     computed: {
 

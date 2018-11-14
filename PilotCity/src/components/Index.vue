@@ -12,6 +12,7 @@
 </div>
 </template>
 <script>
+import w_tymod from '@/components/wizard/teacher/w_tymod'
 export default {
     name: "Index",
     data() {
