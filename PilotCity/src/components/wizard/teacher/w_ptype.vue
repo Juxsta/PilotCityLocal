@@ -1,7 +1,7 @@
 <template>
-    <div class="container container-fluid ml-auto " >
+    <div class="container container-fluid justify-content-center ml-auto" >
 <form class="mt-5">
-    <div class="form-row mt-auto justify" v-for="period in Periods" :key="period.uid">
+    <div class="form-row mt-auto" v-for="period in Periods" :key="period.uid">
             <i class="material-icons font-weight-bold mr-2" id="delete_class" :class="{first_trash:Periods.indexOf(period)==0}" @click="rmThisClass(period.uid)">clear</i>
         <div class="form-group col-1">
             <label v-if="Periods.indexOf(period)==0" @click="skip">Period</label>
@@ -283,19 +283,10 @@ input::placeholder {
     padding-left:20px;
 }
 
+.custom-select {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3E%3Cpath fill='white' d='M2 0L0 2h4zm0 5L0 3h4z'/%3E%3C/svg%3E")
+}
+
 
 </style>
  
-export default {
-    name:'w_ptype',
-    data: {
-        return: {
-            
-        }
-    }
-}
-</script>
-
-<style>
-
-</style>
