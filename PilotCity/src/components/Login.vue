@@ -36,13 +36,15 @@
                     </div>
                     <div>
                         <i class="far fa-dizzy mr-auto" style="cursor:pointer" @click="forgotPassword"></i>
-                        <small class="text-danger pl-3" v-if="errormsg">{{errormsg}}</small>
-                        <small class="text-success pl-3" v-if="resetmsg">{{resetmsg}}</small>
                     </div>
 
                 </div>
                 <div class="d-flex justify-content-center">
-                    <button type="submit" @click.prevent="login" class="btn btn-primary button-regular pc-green model-btn-login">Login</button>
+                    <button type="submit" @click.prevent="login" class="btn btn-primary button-regular pc-green model-btn-login">Login</button>    
+                </div>
+                <div class="d-flex justify-content-center">
+                        <small class="text-danger ml-auto mr-auto" v-if="errormsg">{{errormsg}}</small>
+                        <small class="text-success ml-auto mr-auto" v-if="resetmsg">{{resetmsg}}</small>
                 </div>
                 </form>
             </div>
