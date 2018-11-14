@@ -6,6 +6,7 @@
             <w_industry id="w_industry" class="animated fadeIn"/>
             <w_class id="w_class" class="animated fadeIn" />
             <w_skills id="w_skills" class="animated fadeIn" />
+            <w_ptype id="w_ptype" class="animated fadeIn" />
         <Button_next />
     </div>
 </template>
@@ -39,11 +40,7 @@ export default {
             authUser: null,
             role: null,
             e_w_wizards: ['#w_story', '#w_address', '#w_sector', '#w_question'],
-<<<<<<< HEAD
-            t_w_wizards: ['#w_story', '#w_teacher_address', '#w_industry', '#w_skills', '#w_class'],
-=======
             t_w_wizards: ['#w_story', '#w_teacher_address', '#w_class', '#w_ptype', '#w_industry', '#w_skills'],
->>>>>>> 64f9152199ff1932035a8846187cc53a2373606b
             data_arr: [],
             db_doc: {}
         }

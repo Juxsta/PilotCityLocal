@@ -77,7 +77,8 @@ export default {
                     phone: self.phone
                 }
                 bus.$emit('form_completed', obj);
-                bus.$emit('validated'); 
+                bus.$emit('validated');
+                return ;
             }
             else
                 Prompter().failed("missing field(s)!", "story");

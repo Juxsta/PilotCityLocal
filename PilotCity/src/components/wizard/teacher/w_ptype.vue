@@ -5,7 +5,7 @@
             <i class="material-icons font-weight-bold mr-2" id="delete_class" :class="{first_trash:Periods.indexOf(period)==0}" @click="rmThisClass(period.uid)">clear</i>
         <div class="form-group col-1">
             <label v-if="Periods.indexOf(period)==0">Period</label>
-            <select class="custom-select"  v-model="period.Period">
+            <select class="custom-select"  v-model="period.period">
                 <option selected>Select Period</option>
                 <option v-if="pool[0].status" val="0">P0</option> 
                 <option v-if="pool[1].status" val="1">P1</option> 
@@ -66,6 +66,8 @@
 <script>
 
 import { bus } from '../../../main'
+
+import { Prompter } from '../../../main'
 export default {
     name:'w_class',
     data () {
@@ -146,12 +148,6 @@ export default {
         },
         popVal: function(val,event) {
             this.pool[val] = false
-            /*
-            this.pval = this.pval.filter((pval) => {
-                return pval != val
-            });
-            this.selectpval.push(parseInt(val,10))*/
-
         },
         selected: function(val) {
             return this.pval.indexOf(val) > -1 || this.selectpval.indexOf(val) > -1 
@@ -161,16 +157,27 @@ export default {
     created(){
         var self = this;
         bus.$on('grab_data', obj =>{ 
-            if (obj.step != 'teacher_class')
+            if (obj.step != 'teacher_ptype')
                 return ;
-            if (self.Periods.length ){
-                var obj = {};
-                obj['teacher_class'] = self.Periods;
-                bus.$emit('form_completed', obj);
-                bus.$emit('validated'); 
-            } else {
-                Prompter().failed("missing field(s)!");
+            var pass = true;
+            for (var i = 0; i < self.Periods.length; i++){
+                for (var _attr in self.Periods[i]){
+                    if (self.Periods[i][_attr] == null) {
+                        pass = false;
+                        break ;
+                    }
+                }
+                if (pass === false)
+                    break ;
             }
+            if (pass === false){
+                Prompter().failed("missing field(s)!");
+                return ;
+            }
+            var obj = {};
+            obj['teacher_ptype'] = self.Periods;
+            bus.$emit('form_completed', obj);
+            bus.$emit('validated'); 
         })
     }
 }
