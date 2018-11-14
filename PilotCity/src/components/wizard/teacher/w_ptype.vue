@@ -1,9 +1,9 @@
 <template>
-    <div class="container container-fluid justify-content-center mt-5" >
+    <div class="container container-fluid ml-auto " >
 <form class="mt-5">
-    <div class="form-row mt-auto" v-for="period in Periods" :key="period.uid">
+    <div class="form-row mt-auto justify" v-for="period in Periods" :key="period.uid">
             <i class="material-icons font-weight-bold mr-2" id="delete_class" :class="{first_trash:Periods.indexOf(period)==0}" @click="rmThisClass(period.uid)">clear</i>
-        <div class="form-group col-md-1">
+        <div class="form-group col-1">
             <label v-if="Periods.indexOf(period)==0">Period</label>
             <select class="custom-select"  v-model="period.Period">
                 <option selected>Select Period</option>
@@ -17,57 +17,46 @@
                 <option v-if="pool[7].status" val="7">P7</option> 
             </select>
         </div>
-        <div class="form-group col-md-3">
-            <label v-if="Periods.indexOf(period)==0">Course Name</label>
-            <input type="text" class="form-control"  placeholder="Enter Course Name" v-model="period.Coursename">
-        </div>
-        <div class="form-group col-md-2">
-            <label v-if="Periods.indexOf(period)==0">Semester</label>
-            <select class="custom-select" v-model="period.Semester" >
-                <option selected>Select</option>
-                <option value="0">Full Year</option>
-                <option value="1">Fall</option>
-                <option value="2">Spring</option>
-            </select>
-        </div>
         <div class="form-group col-md-3 dropdown">
-            <label v-if="Periods.indexOf(period)==0">Grade</label>
+            <label v-if="Periods.indexOf(period)==0">Days</label>
             <div>
                 <button class="btn btn-secondary dropdown-toggle align-items-end btn-block dropdown-class select-class-placeholder" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span :id="period.uid">Select</span>
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <div class="checkbox dropdown-item checkbox-container" >
-                        <input type="checkbox" value="9" v-model="period.Grade" @change="checkbox_changed($event, period.uid, period.Grade)"><label class="checkbox-label">Grade 9</label>
+                        <input type="checkbox" value="M" v-model="period.days" @change="checkbox_changed($event, period.uid, period.days)"><label class="checkbox-label">Monday</label>
                     </div>
                     <div class="checkbox dropdown-item checkbox-container">
-                        <input type="checkbox" value="10" v-model="period.Grade" @change="checkbox_changed($event, period.uid, period.Grade)"><label class="checkbox-label">Grade 10</label>
+                        <input type="checkbox" value="T" v-model="period.days" @change="checkbox_changed($event, period.uid, period.days)"><label class="checkbox-label">Tuesday</label>
                     </div>
                     <div class="checkbox dropdown-item checkbox-container">
-                        <input type="checkbox" value="11" v-model="period.Grade" @change="checkbox_changed($event, period.uid, period.Grade)"><label class="checkbox-label">Grade 11</label>
+                        <input type="checkbox" value="W" v-model="period.days" @change="checkbox_changed($event, period.uid, period.days)"><label class="checkbox-label">Wednesday</label>
                     </div>
                     <div class="checkbox dropdown-item checkbox-container">
-                        <input type="checkbox" value="12" v-model="period.Grade" @change="checkbox_changed($event, period.uid, period.Grade)"><label class="checkbox-label">Grade 12</label>
+                        <input type="checkbox" value="Th" v-model="period.days" @change="checkbox_changed($event, period.uid, period.days)"><label class="checkbox-label">Thursday</label>
+                    </div>
+                    <div class="checkbox dropdown-item checkbox-container">
+                        <input type="checkbox" value="F" v-model="period.days" @change="checkbox_changed($event, period.uid, period.days)"><label class="checkbox-label">Friday</label>
                     </div>
                 </div>
 
             </div>
         </div>
-        <div class="form-group col-md-2 ml-2">
-            <label for="inputperiod" v-if="Periods.indexOf(period)==0"># of Students</label>
-            <select class="custom-select" id="inlineFormCustomSelectPref" @change="variableSelect($event,period.Students)" >
-                <option selected value=''>Select</option>
-                <option value="0">1-10</option>
-                <option value="1">11-15</option>
-                <option value="2">16-20</option>
-                <option value="3">21-25</option>
-                <option value="4">26-30</option>
-                <option value="5">30+</option>
-            </select>
+        <div class="form-group col-2">
+            <label v-if="Periods.indexOf(period)==0">Start Time</label>
+            <input type="time" class="form-control"   v-model="period.start_time">
+        </div>
+        <div class="form-group col-2 dropdown">
+            <label v-if="Periods.indexOf(period)==0">End Time</label>
+            <input type="time" class="form-control"   v-model="period.end_time">
+            <div>
+
+            </div>
         </div>
     </div>
 </form>
-        <button id="btn-class-add" type="button" class="btn btn-primary btn-lg btn-block ml-4" @click="pushPeriod()">
+        <button id="btn-class-add" type="button" class="btn btn-primary btn-lg btn-block ml-4 col-8" @click="pushPeriod()">
             <i class="material-icons font-weight-bold add-button">add</i>
         </button>
         <!-- <button class="btn-lg" @click="view(Class)"></button> -->
@@ -83,14 +72,10 @@ export default {
         return {
             Periods:[ {
                 uid: (new Date()).getTime(),
-                Period: null,
-                Coursename: null,
-                Semester : null,
-                Grade: [],
-                Students: {
-                    min: null,
-                    max: null
-                }
+                period: null,
+                days: [],
+                start_time: null,
+                end_time:null
             } ],
             pval: [0,1,2,3,4,5,6,7],
             selectpval: [],
@@ -140,14 +125,10 @@ export default {
         pushPeriod() {
             this.Periods.push( {
                 uid: this.Periods.length,
-                Period: null,
-                Coursename: null,
-                Semester : null,
-                Grade: [],
-                Students: {
-                    min: null,
-                    max: null
-                }
+                period: null,
+                days: [],
+                start_time: null,
+                end_time:null
             });
         },
         view(Obj) {
@@ -292,3 +273,16 @@ input::placeholder {
 
 </style>
  
+export default {
+    name:'w_ptype',
+    data: {
+        return: {
+            
+        }
+    }
+}
+</script>
+
+<style>
+
+</style>

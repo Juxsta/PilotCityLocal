@@ -28,7 +28,7 @@ import Button_next from '@/components/Button_next'
 import w_industry from '@/components/wizard/teacher/w_industry'
 import w_skills from '@/components/wizard/teacher/w_skills'
 import w_class from '@/components/wizard/teacher/w_class'
-
+import w_ptype from '@/components/wizard/teacher/w_ptype'
 import firebase from '@/firebase/init'
 
 
@@ -39,7 +39,11 @@ export default {
             authUser: null,
             role: null,
             e_w_wizards: ['#w_story', '#w_address', '#w_sector', '#w_question'],
+<<<<<<< HEAD
             t_w_wizards: ['#w_story', '#w_teacher_address', '#w_industry', '#w_skills', '#w_class'],
+=======
+            t_w_wizards: ['#w_story', '#w_teacher_address', '#w_class', '#w_ptype', '#w_industry', '#w_skills'],
+>>>>>>> 64f9152199ff1932035a8846187cc53a2373606b
             data_arr: [],
             db_doc: {}
         }
@@ -58,7 +62,8 @@ export default {
         w_industry,
         w_skills,
         w_teacher_address,
-        w_class
+        w_class,
+        w_ptype
     },
     methods:{
         movePage: function(dirct, step, arr){
@@ -132,7 +137,7 @@ export default {
 
 <style>
 #w_address, 
-#w_question, #w_story, #w_teacher_address, #w_tags, #w_industry, #w_class, #w_skills{
+#w_question, #w_story, #w_teacher_address, #w_tags, #w_industry, #w_class, #w_skills, #w_ptype{
     display: none;
 }
 

@@ -112,6 +112,7 @@ export default {
     padding-bottom: 20px;
     height: 100px;
     width: 80px;
+    margin-top:25px;
 }
 .padding{
     padding: 15px;
@@ -192,6 +193,9 @@ export default {
     height: 45px !important;
     width: 175px !important;
     border-color: #6eba7f;
+    background-color: #6eba7f !important;
+    margin-bottom:25px !important;
+    margin-top:20px !important;
 }
 .model-btn-login:hover, .model-btn-login:focus{
     background-color: #6eba7f !important;
