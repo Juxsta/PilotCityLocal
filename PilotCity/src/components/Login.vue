@@ -185,8 +185,8 @@ export default {
 }
 
 .model-btn-login{
-    height: 50px !important;
-    width: 200px !important;
+    height: 45px !important;
+    width: 175px !important;
     border-color: #6eba7f;
 }
 .model-btn-login:hover, .model-btn-login:focus{
