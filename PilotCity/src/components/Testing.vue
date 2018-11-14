@@ -1,6 +1,6 @@
 <template>
     <div>
-        <w_story />
+        <w_industry />
     </div>
 </template>
 <script>
