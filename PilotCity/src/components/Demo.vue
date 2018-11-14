@@ -133,7 +133,7 @@ export default {
 
 <style>
 #w_address, 
-#w_question, #w_story, #w_teacher_address, #w_tags, #w_industry, #w_class, #w_skills #w_ptype{
+#w_question, #w_story, #w_teacher_address, #w_tags, #w_industry, #w_class, #w_skills, #w_ptype{
     display: none;
 }
 
