@@ -1,5 +1,5 @@
 <template>
-       <button @click="logout" id="logout" type="button" class="navbar-btn btn-primary btn-lg active Raleway float-right " style="cursor:pointer">
+       <button @click="logout" id="logout-button" type="button" class="navbar-btn btn-primary btn-lg active Raleway float-right " style="cursor:pointer">
             Logout
         </button>
 </template>
@@ -28,8 +28,14 @@ export default {
 }
 #logout:hover{
   transition: border 1s;
-	border: solid 1px #ffffff !important;
+	border: solid 3px #ffffff !important;
 }
+
+#logout-button {
+	border: solid 1px #ffffff;
+    }
+
+
 </style>
 
 

@@ -66,6 +66,8 @@ export default {
 }
 #component-logout{
 	display: none;
+	border: solid 1px #ffffff;
+
 }
 .Raleway {
 	font-family: "Raleway";

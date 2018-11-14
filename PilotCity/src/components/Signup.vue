@@ -140,6 +140,7 @@ export default {
     padding: 20px;
     height: 100px;
     width: 120px;
+    margin-top:15px;
 }
 .form-rounded {
     border-radius: 50px;
@@ -175,8 +176,6 @@ export default {
     color: white;
     text-align: center;
     margin:15px;
-        width:500px;
-        height:500px;
 }
 
 .pc-blue {
@@ -207,13 +206,16 @@ export default {
 }
 
 .model-btn-signup{
-    height: 50px !important;
-    width: 200px !important;
+    height: 45px !important;
+    width: 175px !important;
     border-color: #3c9ccc;
+    background-color: #3c9ccc !important;
+    margin-bottom:25px !important;
+    margin-top:20px !important;
 }
 .model-btn-signup:hover, .model-btn-signup:focus{
-    background-color: #3c9ccc !important;
-    border-color: white !important;
+    background-color: #3c9ccc;
+    border-color: white;
 }
 
 </style>
