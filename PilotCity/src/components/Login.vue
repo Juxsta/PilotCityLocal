@@ -34,7 +34,10 @@
                         </div>
                         <input type="password" class="form-control form-rounded padding form-active" id="login-input-password" placeholder="Password" v-model="login_input_password">
                     </div>
+                        <i class="far fa-dizzy mr-auto" style="cursor:pointer" @click="forgotPassword"></i>
                       <small class="text-danger pl-3" v-if="errormsg">{{errormsg}}</small>
+                      <small class="text-success pl-3" v-if="resetmsg">{{resetmsg}}</small>
+                      
                 </div>
                 <div class="d-flex justify-content-center">
                     <button type="submit" @click.prevent="login" class="btn btn-primary button-regular pc-green model-btn-login">Login</button>
@@ -57,7 +60,8 @@ export default {
         return{
             login_input_username: "",
             login_input_password: "",
-            errormsg: ""
+            errormsg: "",
+            resetmsg:""
         }
     },
     methods:{
@@ -75,6 +79,16 @@ export default {
                 $('#login-modal').modal('hide');
             }).catch(err => {
                 self.errormsg = err.message; 
+                this.resetmsg=""
+            })
+        },
+        forgotPassword: function() {
+            firebase.auth().sendPasswordResetEmail(this.login_input_username).then( () =>
+            {
+                this.errormsg=""
+                this.resetmsg="Password reset email sent!"
+            }).catch(()=>{
+                this.errormsg="An error occurered, please try again"
             })
         }
     }
