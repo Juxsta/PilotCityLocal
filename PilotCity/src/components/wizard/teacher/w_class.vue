@@ -17,7 +17,7 @@
             </select>
         </div>
         <div class="form-group col-md-3">
-            <label>Coursename</label>
+            <label>Course Name</label>
             <input type="text" class="form-control"  placeholder="Computer Science AP" v-model="period.Course">
         </div>
         <div class="form-group col-md-2">
@@ -53,7 +53,7 @@
             </div>
         </div>
         <div class="form-group col-md-2 ml-2">
-            <label for="inputperiod"># Students</label>
+            <label for="inputperiod"># of Students</label>
             <select class="custom-select" id="inlineFormCustomSelectPref" @change="variableSelect($event,period.Students)" >
                 <option selected value=''>Select #Students</option>
                 <option value="0">1-10</option>
@@ -164,9 +164,12 @@ export default {
 
 
 <style scoped>
+
 label {
     color: #eca0be;
     font-weight: bold;
+    font-size:12px;
+    margin-left:15px;
 }
 input, input:focus, select, select:focus{
     border-radius: 50px;
