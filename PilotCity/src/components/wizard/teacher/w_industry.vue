@@ -89,11 +89,9 @@ export default {
             if (self.selected_ikeywords.length >= 1){
                 var obj = {};
                 obj['teacher_industry'] = self.selected_ikeywords;
-                console.log('a' + self.selected_ikeywords)
                 bus.$emit('form_completed', obj);
                 bus.$emit('validated'); 
             } else { 
-                console.log(self.selected_ikeywords)
                 Prompter().failed("missing field(s)!", "industry");
             }
         });
