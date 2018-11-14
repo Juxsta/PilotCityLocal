@@ -51,6 +51,15 @@ export default {
             
         },
         goforward: function(){
+            document.getElementById('the_best_prev_button').style.display = "block";
+            $('#class_picker').addClass('fadeOut');
+            setTimeout(() => {
+                $('#class_picker').hide();
+            }, 100);
+            if (this.step == 0){
+                bus.$emit('move', {dirct: 'right', step: this.step++});
+                return ;
+            }
             if (this.step == 6){
                 alert("you finished!")
                 return ;
@@ -67,7 +76,7 @@ export default {
     created(){
         var self = this;
         bus.$on('pickedRole', function(role){
-            self.step++;
+            document.getElementById('the_best_next_button').disabled = false;
             self.role = role;
         });
         bus.$on('validated', ()=> { self.increment() });
