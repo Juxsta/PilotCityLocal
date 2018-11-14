@@ -33,6 +33,7 @@ export default {
     methods:{
         out: function(){
             firebase.auth().signOut();
+            location.reload();
         }
     }
 }

@@ -157,7 +157,7 @@ export default {
         },
         pushPeriod() {
             this.Periods.push( {
-                uid: this.Periods.length,
+                uid: (new Date()).getTime(),
                 Period: null,
                 Coursename: null,
                 Semester : null,
