@@ -5,7 +5,7 @@
                 <h2 id = "title">Connecting classrooms to the big bad world. </h2>
             </div>
             <div class="class d-flex flex-row mb-auto mr-auto ml-5">
-                <button type="button" class="btn btn-primary mr-4" id="index-btn-employers">For Teachers</button>
+                <button type="button" class="btn btn-primary mr-4" id="index-btn-employers"> <router-link to="/demo"> For Teachers </router-link> </button>
                 <button type="button" class="btn btn-primary" id="index-btn-teachers" > <router-link to="/demo"> For Employers </router-link> </button>
             </div>
         </div> 

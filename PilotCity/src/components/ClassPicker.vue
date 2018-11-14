@@ -24,12 +24,12 @@ export default {
                     bus.$emit('pickedRole', 'teacher');
                     break ;
                 case 1:
-                    Prompter().info(" ", "Employer wizard to come soon.")
+                    Prompter().info(" ", "Employer to come soon.")
                     return ;
                     bus.$emit('pickedRole', 'employer');
                     break ;
                 case 2:
-                    Prompter().info(" ", "Student wizard to come soon.")
+                    Prompter().info(" ", "Student to come soon.")
                     return ;
                     bus.$emit('pickedRole', 'student');
                     break ;
