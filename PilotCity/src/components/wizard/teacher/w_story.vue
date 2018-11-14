@@ -80,7 +80,7 @@ export default {
                 bus.$emit('validated'); 
             }
             else
-                Prompter().failed("missing field(s)!");
+                Prompter().failed("missing field(s)!", "story");
         });
     }
 }

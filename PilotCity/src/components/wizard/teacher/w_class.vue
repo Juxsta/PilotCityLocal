@@ -135,10 +135,6 @@ export default {
                 }
             });
         },
-        view(Obj) {
-            for (const prop in Obj) 
-                console.log(prop)
-        },
         checkbox_changed: function(e, id, arr){
             document.getElementById(id).innerText = 'Selected: ' + arr;
 
@@ -155,7 +151,7 @@ export default {
                 bus.$emit('form_completed', obj);
                 bus.$emit('validated'); 
             } else {
-                Prompter().failed("missing field(s)!");
+                Prompter().failed("missing field(s)!", "class");
             }
         });
     }
