@@ -1,6 +1,6 @@
 <template>
     <div>
-        <w_teacher_address />
+        <w_story />
     </div>
 </template>
 <script>

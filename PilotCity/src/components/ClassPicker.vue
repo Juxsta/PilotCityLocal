@@ -68,7 +68,8 @@ export default {
 .class-picker-label{
     color: rgb(222, 223, 224);
     font-style: italic;
-    font-weight: 800;
+    font-weight: 700;
+    font-size: 30px;
 }
 .class-picker-btn:active{
     transition: all 0.5s;

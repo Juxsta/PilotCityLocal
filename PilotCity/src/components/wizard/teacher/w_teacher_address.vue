@@ -19,7 +19,7 @@
                     <input type="number" class="form-control" id="inputZip" placeholder="94577"  v-model="address.zip">
                 </div>
                 <div class="form-group col-md-2">
-                    <label for="inputType">Classroom #</label>
+                    <label for="inputType">Room #</label>
                     <input type="text" class="form-control" id="inputType" placeholder="101A" v-model="address.room">
                 </div>
             </div>
