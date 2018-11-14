@@ -89,7 +89,7 @@ export default {
         bus.$on('grab_data', obj =>{ 
             if (obj.step != 'teacher_skills')
                 return ;
-            if (self.selected_ikeywords.length >= 1){
+            if (self.selected_skeywords.length >= 1){
                 var obj = {};
                 obj['teacher_skills'] = self.selected_ikeywords;
                 bus.$emit('form_completed', obj);
