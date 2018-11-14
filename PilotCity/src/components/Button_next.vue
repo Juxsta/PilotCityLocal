@@ -61,7 +61,8 @@ export default {
                 return ;
             }
             if (this.step == 6){
-                $('#thankyou-modal').modal('show')
+                $('#thankyou-modal').modal('show');
+                bus.$emit('submit');
                 return ;
             }
             this.grabDataFromForm();

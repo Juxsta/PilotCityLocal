@@ -9,7 +9,7 @@
                 <p class="teacher-story">My name is</p>
             </div>
             <div class="p-2 align-self-start">
-                <input type="text" placeholder="First Name" class="badge-pill pc-button" v-model="first_name"  @keyup.enter="skip">
+                <input type="text" placeholder="First Name" class="badge-pill pc-button" v-model="first_name" >
             </div>
             <div class="p-2 align-self-start">
                 <input type="text" placeholder="Last Name" class="badge-pill pc-button" v-model="last_name"> 

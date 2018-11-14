@@ -4,8 +4,8 @@
     <div class="form-row mt-auto" v-for="period in Periods" :key="period.uid">
             <i class="material-icons font-weight-bold mr-2" id="delete_class" :class="{first_trash:Periods.indexOf(period)==0}" @click="rmThisClass(period.uid)">clear</i>
         <div class="form-group col-md-1">
-            <label v-if="Periods.indexOf(period)==0" @click="skip">Period</label>
-            <select class="custom-select"  v-model="period.Period">
+            <label v-if="Periods.indexOf(period)==0">Period</label>
+            <select class="custom-select"  v-model="period.Period" >
                 <option selected>Select Period</option>
                 <option value="0">P0</option> 
                 <option value="1">P1</option> 
@@ -98,10 +98,35 @@ export default {
             selectpval: [],
         }
     },
-    methods: {
-        skip: function(){
-            bus.$emit('validated');
-        } ,
+    created(){
+        var self = this;
+        bus.$on('grab_data', obj =>{ 
+            if (obj.step != 'teacher_class')
+                return ;
+            var pass = true;
+            for (var i = 0; i < self.Periods.length; i++){
+                for (var _attr in self.Periods[i]){
+                    if (self.Periods[i][_attr] == null) {
+                        pass = false;
+                        break ;
+                    }
+                }
+                if (pass === false)
+                    break ;
+            }
+            if (pass === false){
+                Prompter().failed("missing field(s)!");
+                return ;
+            }
+            if (pass){
+                var obj = {};
+                obj['teacher_class'] = self.Periods;
+                bus.$emit('form_completed', obj);
+                bus.$emit('validated'); 
+            }
+        })
+    },
+     methods: {
         variableSelect(event, Obj) {
                 switch(event.target.value){
                 case '0': 
@@ -162,35 +187,6 @@ export default {
         selected: function(val) {
             return this.pval.indexOf(val) > -1 || this.selectpval.indexOf(val) > -1 
         }
-    },
-    created(){
-        var self = this;
-        bus.$on('grab_data', obj =>{ 
-            console.log("a")
-            if (obj.step != 'teacher_class')
-                return ;
-            var pass = true;
-            for (var i = 0; i < self.Periods.length; i++){
-                for (var _attr in self.Periods[i]){
-                    if (self.Periods[i][_attr] == null) {
-                        pass = false;
-                        break ;
-                    }
-                }
-                if (pass === false)
-                    break ;
-            }
-            if (pass === false){
-                Prompter().failed("missing field(s)!");
-                return ;
-            }
-            if (pass){
-                var obj = {};
-                obj['teacher_class'] = self.Periods;
-                bus.$emit('form_completed', obj);
-                bus.$emit('validated'); 
-            }
-        })
     }
 }
 </script>
