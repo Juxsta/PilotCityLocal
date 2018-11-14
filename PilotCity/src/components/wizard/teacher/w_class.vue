@@ -64,69 +64,72 @@
                 </div>
             </div>
         </form> -->
-        <form>
-            <div class="form-row">
-                <div class="form-group col-md-1">
-                    <label>Period</label>
-                    <select class="custom-select"  v-model="Class.Period">
-                        <option selected>Select Period</option>
-                        <option value="0">P0</option>
-                        <option value="1">P1</option>
-                        <option value="2">P2</option>
-                        <option value="3">P3</option>
-                        <option value="4">P4</option>
-                        <option value="5">P5</option>
-                        <option value="6">P6</option>
-                        <option value="7">P7</option>
-                    </select>
+<form>
+    <div class="form-row" v-for="period in Periods" :key="period.uid">
+        <div class="form-group col-md-1">
+            <label>Period</label>
+            <select class="custom-select"  v-model="period.Period">
+                <option selected>Select Period</option>
+                <option value="0">P0</option>
+                <option value="1">P1</option>
+                <option value="2">P2</option>
+                <option value="3">P3</option>
+                <option value="4">P4</option>
+                <option value="5">P5</option>
+                <option value="6">P6</option>
+                <option value="7">P7</option>
+            </select>
+        </div>
+        <div class="form-group col-md-3">
+            <label>Coursename</label>
+            <input type="text" class="form-control"  placeholder="Computer Science AP" v-model="period.Course">
+        </div>
+        <div class="form-group col-md-2">
+            <label>Semester</label>
+            <select class="custom-select" >
+                <option selected>Select Semester</option>
+                <option value="1">Yearlong</option>
+                <option value="1">Fall</option>
+                <option value="2">Spring</option>
+            </select>
+        </div>
+        <div class="form-group col-md-3 dropdown">
+            <label>Grade</label>
+            <div>
+                <button class="btn btn-secondary dropdown-toggle align-items-end btn-block dropdown-class" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span :id="period.uid">Select Class</span>
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="display:block; width: 96%">
+                    <div class="checkbox dropdown-item checkbox-container" >
+                        <input type="checkbox" value="9" v-model="period.Grade" @change="checkbox_changed($event, period.uid, period.Grade)"><label class="checkbox-label">Grade 9</label>
+                    </div>
+                    <div class="checkbox dropdown-item checkbox-container">
+                        <input type="checkbox" value="10" v-model="period.Grade" @change="checkbox_changed($event, period.uid, period.Grade)"><label class="checkbox-label">Grade 10</label>
+                    </div>
+                    <div class="checkbox dropdown-item checkbox-container">
+                        <input type="checkbox" value="11" v-model="period.Grade" @change="checkbox_changed($event, period.uid, period.Grade)"><label class="checkbox-label">Grade 11</label>
+                    </div>
+                    <div class="checkbox dropdown-item checkbox-container">
+                        <input type="checkbox" value="12" v-model="period.Grade" @change="checkbox_changed($event, period.uid, period.Grade)"><label class="checkbox-label">Grade 12</label>
+                    </div>
                 </div>
-                <div class="form-group col-md-4">
-                    <label>Coursename</label>
-                    <input type="text" class="form-control"  placeholder="Computer Science AP" v-model="Class.Course">
-                </div>
-                <div class="form-group col-md-2">
-                    <label>Semester</label>
-                    <select class="custom-select" >
-                        <option selected>Select Semester</option>
-                        <option value="1">Yearlong</option>
-                        <option value="1">Fall</option>
-                        <option value="2">Spring</option>
-                    </select>
-                </div>
-                <div class="form-group col-md-2 dropdown">
-                    <label>Grade</label>
-                    <button id="dropdown-class" class="btn btn-secondary dropdown-toggle align-items-end" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Select Class
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <div class="checkbox dropdown-item checkbox-container">
-                            <input type="checkbox" value="9" v-model="Class.Grade"><label class="checkbox-label">9</label>
-                        </div>
-                        <div class="checkbox dropdown-item checkbox-container">
-                            <input type="checkbox" value="10" v-model="Class.Grade"><label class="checkbox-label">10</label>
-                        </div>
-                        <div class="checkbox dropdown-item checkbox-container">
-                            <input type="checkbox" value="11" v-model="Class.Grade"><label class="checkbox-label">11</label>
-                        </div>
-                        <div class="checkbox dropdown-item checkbox-container">
-                            <input type="checkbox" value="12" v-model="Class.Grade"><label class="checkbox-label">12</label>
-                        </div>
-                </div>
-                </div>
-                <div class="form-group col-md-2 ml-2">
-                    <label for="inputperiod"># Students</label>
-                    <select class="custom-select" id="inlineFormCustomSelectPref" @change="variableSelect($event,Class.Students)" >
-                        <option selected value=''>Select #Students</option>
-                        <option value="0">1-10</option>
-                        <option value="1">11-15</option>
-                        <option value="2">16-20</option>
-                        <option value="3">21-25</option>
-                        <option value="4">26-30</option>
-                        <option value="5">30+</option>
-                    </select>
-                </div>
+
             </div>
-        </form>
+        </div>
+        <div class="form-group col-md-2 ml-2">
+            <label for="inputperiod"># Students</label>
+            <select class="custom-select" id="inlineFormCustomSelectPref" @change="variableSelect($event,Class.Students)" >
+                <option selected value=''>Select #Students</option>
+                <option value="0">1-10</option>
+                <option value="1">11-15</option>
+                <option value="2">16-20</option>
+                <option value="3">21-25</option>
+                <option value="4">26-30</option>
+                <option value="5">30+</option>
+            </select>
+        </div>
+    </div>
+</form>
         <button id="btn-class-add" type="button" class="btn btn-primary btn-lg btn-block" @click="pushPeriod()">
             <i class="material-icons font-weight-bold"><h2>add</h2></i>
         </button>
@@ -135,12 +138,13 @@
 </template>
 
 <script>
+
 export default {
     name:'w_class',
     data () {
         return {
-            Periods:[],
-            Class: {
+            Periods:[ {
+                uid: 0,
                 Period: null,
                 Coursename: null,
                 Semester : null,
@@ -149,7 +153,7 @@ export default {
                     min: null,
                     max: null
                 }
-            }
+            } ],
         }
     },
     methods: {
@@ -182,13 +186,26 @@ export default {
                 }
         },
         pushPeriod() {
-            this.Periods.push(this.Class)
-
+            this.Periods.push( {
+                uid: this.Periods.length,
+                Period: null,
+                Coursename: null,
+                Semester : null,
+                Grade: [],
+                Students: {
+                    min: null,
+                    max: null
+                }
+            });
         },
         view(Obj) {
             for (const prop in Obj) 
                 console.log(prop)
-        }  
+        },
+        checkbox_changed: function(e, id, arr){
+            document.getElementById(id).innerText = 'Selected: ' + arr;
+
+        }
     }
 }
 </script>
@@ -209,19 +226,25 @@ input, input:focus, select, select:focus{
     outline: none !important;
     font-weight:100;
     height: 50px;
+    box-shadow: none !important;
 }
-#dropdown-class{
+
+.dropdown-class, .dropdown-class:focus{
     border-radius: 10px;
     font-size: 20px;
     font-style: Italic;
     font-family: "Raleway";
-    background-color: rgb(222, 223, 224);
+    background-color: rgb(222, 223, 224) !important;
     color: white;
     outline: none !important;
     font-weight:100;
     height: 50px;
-    border-color: rgb(222, 223, 224);
+    border-color: #ced4da !important;
+    box-shadow: none !important;
 }
+ input:focus, select:focus, .dropdown-class:focus{
+    border-color: #eca0be !important;
+ }
 input::placeholder { color:white }
 
  .dropdown-item{
@@ -246,5 +269,6 @@ input::placeholder { color:white }
     color: white;
     border-radius: 50px;
 }
+
 </style>
  
