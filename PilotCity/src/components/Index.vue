@@ -4,7 +4,7 @@
             <div class="class d-flex col-12 mt-5">
                 <h2 id = "title">Connecting classrooms to the big bad world. </h2>
             </div>
-            <div class="class d-flex flex-row mb-auto mr-auto">
+            <div class="class d-flex flex-row mb-auto mr-auto ml-5">
                 <button type="button" class="btn btn-primary mr-4" id="index-btn-employers"> <router-link to="/demo"> For Employers </router-link> </button>
                 <button type="button" class="btn btn-primary" id="index-btn-teachers" > <router-link to="/demo"> For Teachers </router-link> </button>
             </div>
@@ -27,7 +27,7 @@ export default {
         font-family: "Raleway";
         font-weight: 700;
         color: white;
-        font-size: 55px;
+        font-size: 8vh;
 
     }
     #index-btn-employers{
