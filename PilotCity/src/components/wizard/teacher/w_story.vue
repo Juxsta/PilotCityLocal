@@ -80,7 +80,7 @@ export default {
                 bus.$emit('validated'); 
             }
             else
-                Prompter().failed("missing field(s)!", "story");
+                Prompter().failed("missing field(s)!");
         });
     }
 }
@@ -137,6 +137,10 @@ export default {
 
 input:focus{
     outline: none !important;
+}
+
+.badge-pill {
+    text-transform: capitalize;
 }
 
 </style>
