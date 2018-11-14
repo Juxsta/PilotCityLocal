@@ -19,7 +19,7 @@
         </div>
         <div class="form-group col-md-3">
             <label v-if="Periods.indexOf(period)==0">Course Name</label>
-            <input type="text" class="form-control"  placeholder="Enter Course Name" v-model="period.Coursename">
+            <input type="text" class="form-control"  placeholder="Enter Course Name" @keypress.enter.prevent v-model="period.Coursename">
         </div>
         <div class="form-group col-md-2">
             <label v-if="Periods.indexOf(period)==0">Semester</label>
