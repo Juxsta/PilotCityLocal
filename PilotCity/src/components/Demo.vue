@@ -94,6 +94,7 @@ export default {
                 self.$router.push('/');
             if (firebase.auth().currentUser && !firebase.auth().currentUser.emailVerified)
                 self.$router.push('/');
+            self.authUser = user;
             if (user && user.uid){
                 userRef = db.collection("users").doc(user.uid);
                 userRef.get().then(function(doc) {
@@ -120,6 +121,15 @@ export default {
         })
         bus.$on('form_completed', obj => {
             self.data_arr.push(obj);
+        });
+        bus.$on('submit', ()=> {
+            userRef = db.collection("users").doc(self.authUser.uid);
+            userRef.get().then(function(doc) {
+                console.log(self.data_arr)
+                userRef.set(
+                    {form: self.data_arr}
+                );
+            });
         });
     }
 }

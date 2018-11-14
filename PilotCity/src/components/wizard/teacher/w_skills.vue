@@ -91,7 +91,7 @@ export default {
                 return ;
             if (self.selected_skeywords.length >= 1){
                 var obj = {};
-                obj['teacher_skills'] = self.selected_ikeywords;
+                obj['teacher_skills'] = self.selected_skeywords;
                 bus.$emit('form_completed', obj);
                 bus.$emit('validated'); 
             } else { 

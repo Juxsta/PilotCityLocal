@@ -11,7 +11,7 @@
                 </div>
                     <h2 class="ml-auto mr-auto text-title-notify">We will notify you when your match results are available.</h2>
                 <div class="ml-auto mr-auto">
-                    <button class="btn btn-lg button-over-out">Over and out</button>
+                    <button class="btn btn-lg button-over-out" @click="out">Over and out</button>
                 </div>
             </div>
             </div>
@@ -31,7 +31,9 @@ export default {
         }
     },
     methods:{
- 
+        out: function(){
+            firebase.auth().signOut();
+        }
     }
 }
 </script>
