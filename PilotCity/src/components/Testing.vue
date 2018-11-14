@@ -1,6 +1,6 @@
 <template>
     <div>
-        <w_class />
+        <w_teacher_address />
     </div>
 </template>
 <script>

@@ -2,10 +2,10 @@
     <div class="container container-fluid justify-content-center mt-5" >
 <form class="mt-5">
     <div class="form-row mt-3" v-for="period in Periods" :key="period.uid">
-        <i class="material-icons">delete</i>
+        <i class="material-icons mt-auto mb-auto mr-3" id="icon_class" @change="popVal()">delete </i>
         <div class="form-group col-md-1">
             <label>Period</label>
-            <select class="custom-select"  v-model="period.Period" @change="popVal()">
+            <select class="custom-select"  v-model="period.Period">
                 <option selected>Select Period</option>
                 <option value="0" >P0</option>
                 <option value="1">P1</option>
@@ -19,13 +19,13 @@
         </div>
         <div class="form-group col-md-3">
             <label>Course Name</label>
-            <input type="text" class="form-control"  placeholder="Computer Science AP" v-model="period.Course">
+            <input type="text" class="form-control"  placeholder="Enter Course Name" v-model="period.Course">
         </div>
         <div class="form-group col-md-2">
             <label>Semester</label>
             <select class="custom-select" >
-                <option selected>Select Semester</option>
-                <option value="1">Yearlong</option>
+                <option selected>Select</option>
+                <option value="0">Full Year</option>
                 <option value="1">Fall</option>
                 <option value="2">Spring</option>
             </select>
@@ -33,8 +33,8 @@
         <div class="form-group col-md-3 dropdown">
             <label>Grade</label>
             <div>
-                <button class="btn btn-secondary dropdown-toggle align-items-end btn-block dropdown-class" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span :id="period.uid">Select Class</span>
+                <button class="btn btn-secondary dropdown-toggle align-items-end btn-block dropdown-class select-class-placeholder" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span :id="period.uid">Select</span>
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <div class="checkbox dropdown-item checkbox-container" >
@@ -56,7 +56,7 @@
         <div class="form-group col-md-2 ml-2">
             <label for="inputperiod"># of Students</label>
             <select class="custom-select" id="inlineFormCustomSelectPref" @change="variableSelect($event,period.Students)" >
-                <option selected value=''>Select #Students</option>
+                <option selected value=''>Select</option>
                 <option value="0">1-10</option>
                 <option value="1">11-15</option>
                 <option value="2">16-20</option>
@@ -68,7 +68,7 @@
     </div>
 </form>
         <button id="btn-class-add" type="button" class="btn btn-primary btn-lg btn-block" @click="pushPeriod()">
-            <i class="material-icons font-weight-bold"><h2>add</h2></i>
+            <i class="material-icons font-weight-bold add-button">add</i>
         </button>
         <!-- <button class="btn-lg" @click="view(Class)"></button> -->
     </div>
@@ -173,12 +173,13 @@ export default {
 label {
     color: #eca0be;
     font-weight: bold;
-    font-size:12px;
+    font-size:15px;
     margin-left:15px;
 }
 input, input:focus, select, select:focus{
     border-radius: 50px;
-    font-size: 20px;
+    font-size: 18px;
+    padding-left:20px;
     font-style: Italic;
     font-family: "Raleway";
     background-color: rgb(222, 223, 224);
@@ -186,12 +187,13 @@ input, input:focus, select, select:focus{
     outline: none !important;
     font-weight:100;
     height: 50px;
+    border-color: #dbdcde;
     box-shadow: none !important;
 }
 
 .dropdown-class, .dropdown-class:focus{
     border-radius: 50px;
-    font-size: 20px;
+    font-size: 18px;
     font-style: Italic;
     font-family: "Raleway";
     background-color: rgb(222, 223, 224) !important;
@@ -199,13 +201,16 @@ input, input:focus, select, select:focus{
     outline: none !important;
     font-weight:100;
     height: 50px;
-    border-color: #ced4da !important;
+    border-color: #dbdcde;
     box-shadow: none !important;
 }
  input:focus, select:focus, .dropdown-class:focus{
-    border-color: #eca0be !important;
+    border-color: #c6c8ca !important;
  }
-input::placeholder { color:white }
+input::placeholder { 
+    color:white;
+
+    }
 
  .dropdown-item{
     cursor: pointer;
@@ -218,20 +223,35 @@ input::placeholder { color:white }
     padding-left: 10px;
  }
  #btn-class-add{
-    border: dotted 1px #eca0be;
+    border: dashed 1px #dbdcde;
     background: white;
     color: #eca0be;
     border-radius: 50px;
+    height:50px;
+    width:1025px;
  }
+
   #btn-class-add:hover{
-    border: solid 1px;
+    border: solid 1px #dbdcde;
   }
 #btn-class-add:focus{
-    border: dotted 1px #eca0be;
-    background:#eca0be;
+    border: dashed 1px #dbdcde;
+    background:white;
     color: white;
     border-radius: 50px;
 }
+
+.add-button{
+    margin-top:4px;
+    color: #eca0be;
+}
+
+.select-class-placeholder {
+    font-size:18px;
+    text-align:left;
+    padding-left:20px;
+}
+
 
 </style>
  
