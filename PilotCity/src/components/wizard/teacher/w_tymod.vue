@@ -1,10 +1,5 @@
 <template>
     <div class="container-fluid m-auto justify-content-center">
-        <!-- Button trigger modal -->
-        <button type="button" id="btn-login" class="navbar-btn btn-primary btn-lg active Raleway float-right active" data-toggle="modal" data-target="#thankyou-modal">
-        MODAL
-        </button>
-
         <!-- Modal -->
         <div class="modal fade" id="thankyou-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document" >

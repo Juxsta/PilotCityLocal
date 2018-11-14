@@ -5,7 +5,7 @@
             <i class="material-icons font-weight-bold mr-2" id="delete_class" :class="{first_trash:Periods.indexOf(period)==0}" @click="rmThisClass(period.uid)">clear</i>
         <div class="form-group col-1">
             <label v-if="Periods.indexOf(period)==0" @click="skip">Period</label>
-            <select class="custom-select"  v-model="period.Period">
+            <select class="custom-select"  v-model="period.period">
                 <option selected>Select Period</option>
                 <option v-if="pool[0].status" val="0">P0</option> 
                 <option v-if="pool[1].status" val="1">P1</option> 
@@ -174,13 +174,16 @@ export default {
                     break ;
             }
             if (pass === false){
+                console.log(self.Periods)
                 Prompter().failed("missing field(s)!");
                 return ;
             }
-            var obj = {};
-            obj['teacher_ptype'] = self.Periods;
-            bus.$emit('form_completed', obj);
-            bus.$emit('validated'); 
+            if (pass){
+                var obj = {};
+                obj['teacher_ptype'] = self.Periods;
+                bus.$emit('form_completed', obj);
+                bus.$emit('validated'); 
+            }
         })
     }
 }

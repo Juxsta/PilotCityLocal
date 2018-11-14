@@ -7,6 +7,7 @@
             <w_class id="w_class" class="animated fadeIn" />
             <w_skills id="w_skills" class="animated fadeIn" />
             <w_ptype id="w_ptype" class="animated fadeIn" />
+            <w_tymod />
         <Button_next />
     </div>
 </template>
@@ -30,6 +31,7 @@ import w_industry from '@/components/wizard/teacher/w_industry'
 import w_skills from '@/components/wizard/teacher/w_skills'
 import w_class from '@/components/wizard/teacher/w_class'
 import w_ptype from '@/components/wizard/teacher/w_ptype'
+import w_tymod from '@/components/wizard/teacher/w_tymod'
 import firebase from '@/firebase/init'
 
 
@@ -60,7 +62,8 @@ export default {
         w_skills,
         w_teacher_address,
         w_class,
-        w_ptype
+        w_ptype,
+        w_tymod
     },
     methods:{
         movePage: function(dirct, step, arr){

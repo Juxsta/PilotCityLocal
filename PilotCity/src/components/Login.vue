@@ -26,7 +26,7 @@
                 </div>
                 <div class="col-auto form-margin">
                     <label class="sr-only" for="inlineFormInputGroup">Password</label>
-                    <div class="input-group mb-2 padding">
+                    <div class="input-group padding">
                         <div class="input-group-prepend">
                             <div class="input-group-text icon-green">
                             <i class="large material-icons" id="lock_login">lock</i>
@@ -34,10 +34,12 @@
                         </div>
                         <input type="password" class="form-control form-rounded padding form-active" id="login-input-password" placeholder="Password" v-model="login_input_password">
                     </div>
+                    <div>
                         <i class="far fa-dizzy mr-auto" style="cursor:pointer" @click="forgotPassword"></i>
-                      <small class="text-danger pl-3" v-if="errormsg">{{errormsg}}</small>
-                      <small class="text-success pl-3" v-if="resetmsg">{{resetmsg}}</small>
-                      
+                        <small class="text-danger pl-3" v-if="errormsg">{{errormsg}}</small>
+                        <small class="text-success pl-3" v-if="resetmsg">{{resetmsg}}</small>
+                    </div>
+
                 </div>
                 <div class="d-flex justify-content-center">
                     <button type="submit" @click.prevent="login" class="btn btn-primary button-regular pc-green model-btn-login">Login</button>
@@ -86,9 +88,9 @@ export default {
             firebase.auth().sendPasswordResetEmail(this.login_input_username).then( () =>
             {
                 this.errormsg=""
-                this.resetmsg="Password reset email sent!"
+                this.resetmsg="Password reset email sent."
             }).catch(()=>{
-                this.errormsg="An error occurered, please try again"
+                this.errormsg="Enter your email."
             })
         }
     }
@@ -215,4 +217,24 @@ export default {
     background-color: #6eba7f !important;
     border-color: white !important;
 }
+
+.fa-dizzy {
+    color:#939597;
+    font-size: 15px;
+    text-align: center;
+    margin-top:0px;
+    padding-left: 375px;
+    padding-right:100px;
+}
+
+.text-danger {
+    font-family:raleway;
+
+}
+
+.text-success {
+    font-family:raleway; 
+}
+
+
 </style>
