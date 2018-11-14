@@ -1,6 +1,6 @@
 <template>
     <div>
-        <w_ptype />
+        <w_skills/>
     </div>
 </template>
 <script>

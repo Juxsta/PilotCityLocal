@@ -4,8 +4,8 @@
     <div class="form-row mt-auto justify" v-for="period in Periods" :key="period.uid">
             <i class="material-icons font-weight-bold mr-2" id="delete_class" :class="{first_trash:Periods.indexOf(period)==0}" @click="rmThisClass(period.uid)">clear</i>
         <div class="form-group col-1">
-            <label v-if="Periods.indexOf(period)==0">Period</label>
-            <select class="custom-select"  v-model="period.period">
+            <label v-if="Periods.indexOf(period)==0" @click="skip">Period</label>
+            <select class="custom-select"  v-model="period.Period">
                 <option selected>Select Period</option>
                 <option v-if="pool[0].status" val="0">P0</option> 
                 <option v-if="pool[1].status" val="1">P1</option> 
@@ -96,6 +96,9 @@ export default {
     computed:{
     },
     methods: {
+        skip: function(){
+            bus.$emit('validated');
+        },
         variableSelect(event, Obj) {
                 switch(event.target.value){
                 case '0': 
