@@ -13,6 +13,7 @@
 
 <script>
 import { bus } from '../main'
+import { Prompter } from '../main'
 export default {
     name:'ClassPicker',
     methods:{
@@ -23,9 +24,13 @@ export default {
                     bus.$emit('pickedRole', 'teacher');
                     break ;
                 case 1:
+                    Prompter().info(" ", "Employer wizard to come soon.")
+                    return ;
                     bus.$emit('pickedRole', 'employer');
                     break ;
                 case 2:
+                    Prompter().info(" ", "Student wizard to come soon.")
+                    return ;
                     bus.$emit('pickedRole', 'student');
                     break ;
             }

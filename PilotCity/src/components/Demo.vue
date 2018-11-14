@@ -74,7 +74,7 @@ export default {
                     $(arr[step]).hide();
                 }
             }
-            if (step == 0){
+            if (step == 0 && dirct == 'left'){
                 document.getElementById('the_best_prev_button').style.display = "none";
                 document.getElementById('the_best_next_button').disabled = true;
                 $("#class_picker").removeClass('fadeOut');
@@ -113,17 +113,7 @@ export default {
             self.authUser = user;
         })
         bus.$on('pickedRole', function(role){
-            document.getElementById('the_best_next_button').disabled = false;
-            document.getElementById('the_best_prev_button').style.display = "block";
             self.role = role;
-            $("#class_picker").addClass('fadeOut');
-            setTimeout(function(){
-                $('#class_picker').hide();
-                if (self.role == 'employer')
-                    $(self.e_w_wizards[0]).show();
-                else if (self.role == 'teacher')
-                    $(self.t_w_wizards[0]).show();
-            }, 300);
         })
         bus.$on('form_completed', obj => {
             self.data_arr.push(obj);
