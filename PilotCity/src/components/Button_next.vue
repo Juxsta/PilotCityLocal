@@ -30,6 +30,10 @@ export default {
                     if (this.role  == 'teacher')
                         bus.$emit('grab_data', { step: 'teacher_industry'});
                 break ;
+                case 4:
+                    if (this.role  == 'teacher')
+                        bus.$emit('grab_data', { step: 'teacher_class'});
+                break ;
             }
         },
         increment: function(){
