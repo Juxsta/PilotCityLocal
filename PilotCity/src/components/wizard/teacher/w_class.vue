@@ -2,11 +2,12 @@
     <div class="container container-fluid justify-content-center mt-5" >
 <form class="mt-5">
     <div class="form-row mt-3" v-for="period in Periods" :key="period.uid">
+        <i class="material-icons">delete</i>
         <div class="form-group col-md-1">
             <label>Period</label>
-            <select class="custom-select"  v-model="period.Period">
+            <select class="custom-select"  v-model="period.Period" @change="popVal()">
                 <option selected>Select Period</option>
-                <option value="0">P0</option>
+                <option value="0" >P0</option>
                 <option value="1">P1</option>
                 <option value="2">P2</option>
                 <option value="3">P3</option>
@@ -91,6 +92,7 @@ export default {
                     max: null
                 }
             } ],
+            pval: [0,1,2,3,4,5,6,7]
         }
     },
     methods: {
@@ -141,7 +143,10 @@ export default {
         },
         checkbox_changed: function(e, id, arr){
             document.getElementById(id).innerText = 'Selected: ' + arr;
-
+        },
+        inPeriods(val) {
+            let period
+            
         }
     },
     created(){
