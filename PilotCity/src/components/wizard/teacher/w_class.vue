@@ -64,11 +64,15 @@
                 <option value="4">26-30</option>
                 <option value="5">30+</option>
             </select>
+
         </div>
     </div>
 </form>
         <button id="btn-class-add" type="button" class="btn btn-primary btn-lg btn-block" @click="pushPeriod()">
             <i class="material-icons font-weight-bold add-button">add</i>
+        </button>
+        <button id="btn-class-add" type="button" class="btn btn-primary btn-lg btn-block" @click="popPeriod()">
+            <i class="fas fa-times"></i>
         </button>
         <!-- <button class="btn-lg" @click="view(Class)"></button> -->
     </div>
@@ -137,9 +141,8 @@ export default {
                 }
             });
         },
-        view(Obj) {
-            for (const prop in Obj) 
-                console.log(prop)
+        popPeriod(){
+            this.Periods.pop();
         },
         checkbox_changed: function(e, id, arr){
             document.getElementById(id).innerText = 'Selected: ' + arr;
@@ -160,7 +163,7 @@ export default {
                 bus.$emit('form_completed', obj);
                 bus.$emit('validated'); 
             } else {
-                Prompter().failed("missing field(s)!");
+                Prompter().failed("missing field(s)!", "class");
             }
         });
     }

@@ -33,6 +33,9 @@ export default {
                 case 4:
                     if (this.role  == 'teacher')
                         bus.$emit('grab_data', { step: 'teacher_class'});
+                case 5:
+                    if (this.role  == 'teacher')
+                        bus.$emit('grab_data', { step: 'teacher_skills'});
                 break ;
             }
         },
