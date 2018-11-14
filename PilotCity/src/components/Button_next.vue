@@ -60,12 +60,7 @@ export default {
                 bus.$emit('move', {dirct: 'right', step: this.step++});
                 return ;
             }
-            if (this.step == 6){
-                this.grabDataFromForm();
-                $('#thankyou-modal').modal('show');
-                bus.$emit('submit');
-                return ;
-            }
+           
             this.grabDataFromForm();
             setTimeout(() => {}, 1500);
         },
@@ -81,7 +76,15 @@ export default {
             document.getElementById('the_best_next_button').disabled = false;
             self.role = role;
         });
-        bus.$on('validated', ()=> { self.increment() });
+        bus.$on('validated', ()=> { 
+            if (this.step == 6){
+                $('#thankyou-modal').modal('show');
+                bus.$emit('submit');
+                return ;
+            }    
+            
+        
+        self.increment() });
     }
 }
 </script>
