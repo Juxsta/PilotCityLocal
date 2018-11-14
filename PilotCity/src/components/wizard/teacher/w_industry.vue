@@ -8,7 +8,7 @@
                                 <h3 class="pc-keyword-title">Industries</h3>
                             </div>
                         </div>
-                        <input type="text" class="pc-input-box" placeholder="What industries would your classrooms be excited about?" @keyup.enter.prevent="input_addtoIDB(i_keyword,selected_ikeywords)" v-model="i_keyword">
+                        <input type="text" class="pc-input-box" placeholder="What industries would your classrooms be excited about?" @keypress.enter.prevent="input_addtoIDB(i_keyword,selected_ikeywords)" v-model="i_keyword">
                     </div>
         <hr class="frame-line-break" />
             <div class="ml-3">

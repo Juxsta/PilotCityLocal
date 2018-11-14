@@ -39,7 +39,7 @@ export default {
             authUser: null,
             role: null,
             e_w_wizards: ['#w_story', '#w_address', '#w_sector', '#w_question'],
-            t_w_wizards: ['#w_story', '#w_teacher_address', '#w_class', '#w_ptype', '#w_industry', '#w_skills'],
+            t_w_wizards: ['#w_story', '#w_teacher_address', '#w_class', '#w_ptype', '#w_skills', '#w_industry'],
             data_arr: [],
             db_doc: {}
         }
