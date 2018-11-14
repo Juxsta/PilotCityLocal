@@ -36,11 +36,11 @@ export default {
                 break ;
                 case 5:
                     if (this.role  == 'teacher')
-                        bus.$emit('grab_data', { step: 'teacher_industry'});
+                        bus.$emit('grab_data', { step: 'teacher_skills'});
                 break ;
                 case 6:
                     if (this.role  == 'teacher')
-                        bus.$emit('grab_data', { step: 'teacher_skills'});
+                        bus.$emit('grab_data', { step: 'teacher_industry'});
                 break ;
             }
         },
@@ -61,7 +61,7 @@ export default {
                 return ;
             }
             if (this.step == 6){
-                alert("you finished!")
+                $('#thankyou-modal').modal('show')
                 return ;
             }
             this.grabDataFromForm();
