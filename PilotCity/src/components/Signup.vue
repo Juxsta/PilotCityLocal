@@ -171,6 +171,8 @@ export default {
     color: white;
     text-align: center;
     margin:15px;
+        width:500px;
+        height:500px;
 }
 
 .pc-blue {
@@ -201,8 +203,8 @@ export default {
 }
 
 .model-btn-signup{
-    height: 45px !important;
-    width: 175px !important;
+    height: 50px !important;
+    width: 200px !important;
     border-color: #3c9ccc;
 }
 .model-btn-signup:hover, .model-btn-signup:focus{
