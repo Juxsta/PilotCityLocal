@@ -5,6 +5,7 @@
             <w_teacher_address   id="w_teacher_address" class="animated fadeIn"/>   
             <w_industry id="w_industry" class="animated fadeIn"/>
             <w_class id="w_class" class="animated fadeIn" />
+            <w_skills id="w_skills" class="animated fadeIn" />
         <Button_next />
     </div>
 </template>
@@ -38,7 +39,7 @@ export default {
             authUser: null,
             role: null,
             e_w_wizards: ['#w_story', '#w_address', '#w_sector', '#w_question'],
-            t_w_wizards: ['#w_story', '#w_teacher_address', '#w_industry', '#w_class' ],
+            t_w_wizards: ['#w_story', '#w_teacher_address', '#w_industry', '#w_class', '#w_skills'],
             data_arr: [],
             db_doc: {}
         }
@@ -84,14 +85,20 @@ export default {
         const db = firebase.firestore();
         var userRef;
 		firebase.auth().onAuthStateChanged(function(user) {
-            userRef = db.collection("users").doc(user.uid);
-            userRef.get().then(function(doc) {
-                if (doc.exists) {
-                    self.db_doc = doc.data();
-                } else {
-                    userRef.set({});
-                }
-            });
+            if (!firebase.auth().currentUser)
+                self.$router.push('/');
+            if (firebase.auth().currentUser && !firebase.auth().currentUser.emailVerified)
+                self.$router.push('/');
+            if (user && user.uid){
+                userRef = db.collection("users").doc(user.uid);
+                userRef.get().then(function(doc) {
+                    if (doc.exists) {
+                        self.db_doc = doc.data();
+                    } else {
+                        userRef.set({});
+                    }
+                });
+            }  
         });
         bus.$on('move', function(obj){
             if (self.role == 'employer')
@@ -125,7 +132,7 @@ export default {
 
 <style>
 #w_address, 
-#w_question, #w_story, #w_sector, #w_teacher_address, #w_tags, #w_industry, #w_class{
+#w_question, #w_story, #w_teacher_address, #w_tags, #w_industry, #w_class, #w_skills{
     display: none;
 }
 

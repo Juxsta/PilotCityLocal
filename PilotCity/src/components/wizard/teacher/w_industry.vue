@@ -86,16 +86,14 @@ export default {
         bus.$on('grab_data', obj =>{ 
             if (obj.step != 'teacher_industry')
                 return ;
-            if (self.selected_ikeywords.length ){
+            if (self.selected_ikeywords.length >= 1){
                 var obj = {};
                 obj['teacher_industry'] = self.selected_ikeywords;
                 bus.$emit('form_completed', obj);
                 bus.$emit('validated'); 
             } else { 
-                console.log(self.address)
-                Prompter().failed("missing field(s)!");
+                Prompter().failed("missing field(s)!", "industry");
             }
-                
         });
     }
 }

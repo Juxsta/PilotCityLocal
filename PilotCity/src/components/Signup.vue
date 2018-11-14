@@ -51,6 +51,7 @@
 <script>
 import firebase from '@/firebase/init'
 import { bus } from '../main'
+import { Prompter } from '../main'
 
 export default {
     name: 'Signup',
@@ -69,7 +70,10 @@ export default {
                     self.signup_input_username = ""
                     self.signup_input_password = ""
                     bus.$emit('userSignedIn', user);
-                    $('#signup-modal').modal('hide')
+                    $('#signup-modal').modal('hide');
+                    firebase.auth().currentUser.sendEmailVerification().then(function() {
+                        Prompter().success('____', 'Email sent');
+                    });
                 }).catch(function(error) {
                     self.errorMessage = error.message;
                 });
