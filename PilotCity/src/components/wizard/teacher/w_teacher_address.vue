@@ -3,7 +3,7 @@
         <form class="mt-5"> 
             <div class="form-group">
                 <label for="inputAddress">School Address</label>
-                <input type="text" class="form-control" id="inputAddress" placeholder="2250 Bancroft Avenue" v-model="address.street"  @keyup.enter="skip">
+                <input type="text" class="form-control" id="inputAddress" placeholder="2250 Bancroft Avenue" v-model="address.street" >
             </div>
             <div class="form-row" >
                 <div class="form-group col-md-6">
