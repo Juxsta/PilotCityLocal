@@ -62,7 +62,7 @@ export default {
 #logo-pilotcity{
 	cursor: pointer;
 	height: 50px;
-	margin-left:20px;
+	margin-left:35px;
 }
 #component-logout{
 	display: none;

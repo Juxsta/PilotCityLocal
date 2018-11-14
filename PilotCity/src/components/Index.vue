@@ -1,12 +1,12 @@
 <template>
-    <div class= "container-fluid" id="canvas">
-        <div class= "row h-100 justify-content-center align-items-center">
+    <div class= "container-fluid " id="canvas">
+        <div class= "justify-content-left align-items-center">
             <div class="class d-flex col-12 mt-5">
                 <h2 id = "title">Connecting classrooms to the big bad world. </h2>
             </div>
             <div class="class d-flex flex-row mb-auto mr-auto ml-5">
-                <button type="button" class="btn btn-primary mr-4" id="index-btn-employers"> <router-link to="/demo"> For Employers </router-link> </button>
-                <button type="button" class="btn btn-primary" id="index-btn-teachers" > <router-link to="/demo"> For Teachers </router-link> </button>
+                <button type="button" class="btn btn-primary mr-4" id="index-btn-employers"> <router-link to="/demo"> For Teachers </router-link> </button>
+                <button type="button" class="btn btn-primary" id="index-btn-teachers" > <router-link to="/demo"> For Employers </router-link> </button>
             </div>
         </div> 
 </div>
@@ -26,8 +26,10 @@ export default {
         font-family: "Raleway";
         font-weight: 700;
         color: white;
-        font-size: 8vh;
-
+        font-size: 7vh;
+        margin-left:30px;
+        margin-top:190px;
+        margin-bottom:40px;
     }
     #index-btn-employers{
         font-family: "Raleway";
@@ -39,9 +41,9 @@ export default {
         height: 45px;
         width: 250px;
         text-align: center;
-        top: 350px;
-        left: 375px;
         border-color: transparent;
+        padding-left:30px;
+        padding-right:30px;
     }
     
     #index-btn-employers:hover{
@@ -57,9 +59,9 @@ export default {
         border-radius: 50px;
         height: 45px;
         width: 250px;
+        padding-left:30px;
+        padding-right:30px;
         text-align: center;
-        top: 350px;
-        left: 100px;
         border-color: transparent;
     }
     #index-btn-teachers:hover{
@@ -68,7 +70,7 @@ export default {
     #canvas{
         height:calc(100% - 65px);
         width: 100%;
-        position:absolute !important;
+        position: absolute !important;
         background: url('../assets/header.jpg') no-repeat;
         background-size:cover;
     }
