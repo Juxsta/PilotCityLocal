@@ -28,16 +28,7 @@
 </template>
 
 <script>
-/*
-   address: {
-                street: null,
-                city: null,
-                state: null,
-                zip: null,
-                type: null,
-                arr: [0],
-            },
-*/
+
 export default {
     name: "w-address",
     data(){
