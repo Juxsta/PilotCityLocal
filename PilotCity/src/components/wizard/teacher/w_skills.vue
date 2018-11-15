@@ -1,15 +1,16 @@
 <template>
-    <div id="w_industry" class="mt-5 d-flex justify-content-center">
+   <div>
+        <div id="w_industry" class="mt-5 d-flex justify-content-center">
         <form>
             <div class="pc-panel-tagspanel" >
                 <div class="input-group mb-2">
                         <div class="input-group-prepend">
                             <div class="pc-input-group-text">
-                                <h3 class="pc-keyword-title">Skills</h3>
+                                <h3 class="pc-keyword-title" @click="skip">Skills</h3>
                             </div>
                         </div>
-                        <input type="text" class="pc-input-box" placeholder="What tools, technologies, and skills are you currently teaching?" @keyup.enter.prevent="input_addtoIDB(s_keyword,selected_skeywords)" v-model="s_keyword">
-                    </div>
+                        <input type="text" class="pc-input-box" placeholder="What tools, technologies, and skills are you currently teaching?" @keypress.enter.prevent="input_addtoIDB(s_keyword,selected_skeywords)" v-model="s_keyword">
+                </div>
         <hr class="frame-line-break" />
             <div class="ml-3">
                 <span class="badge badge-pill badge-primary tag-capitalize pr-3 ml-1 mr-1 mb-1 mt-1" v-for="(keyword,index) in selected_skeywords" :key="keyword + index" :class="colors[index%7]">
@@ -40,9 +41,14 @@
            </div>
         </form>
     </div>
+   </div>
 </template>
 
 <script>
+
+import { bus } from '../../../main'
+
+import { Prompter } from '../../../main'
 export default {
     name: "w_industry",
     data () {
@@ -73,10 +79,27 @@ export default {
             array.push(item)
             }
             this.s_keyword=null
-        }
+        },
+        skip: function(){
+            bus.$emit('validated');
+        } 
     },
     computed: {
 
+    },created(){
+        var self = this;
+        bus.$on('grab_data', obj =>{ 
+            if (obj.step != 'teacher_skills')
+                return ;
+            if (self.selected_skeywords.length >= 1){
+                var obj = {};
+                obj['teacher_skills'] = self.selected_skeywords;
+                bus.$emit('form_completed', obj);
+                bus.$emit('validated'); 
+            } else { 
+                Prompter().failed("missing field(s)!", "Hey there!");
+            }
+        });
     }
 }
 </script>

@@ -26,7 +26,7 @@
                 </div>
                 <div class="col-auto form-margin">
                     <label class="sr-only" for="inlineFormInputGroup">Password</label>
-                    <div class="input-group mb-2 padding">
+                    <div class="input-group padding">
                         <div class="input-group-prepend">
                             <div class="input-group-text icon-green">
                             <i class="large material-icons" id="lock_login">lock</i>
@@ -34,10 +34,17 @@
                         </div>
                         <input type="password" class="form-control form-rounded padding form-active" id="login-input-password" placeholder="Password" v-model="login_input_password">
                     </div>
-                      <small class="text-danger pl-3" v-if="errormsg">{{errormsg}}</small>
+                    <div>
+                        <i class="far fa-dizzy mr-auto" style="cursor:pointer" @click="forgotPassword"></i>
+                    </div>
+
                 </div>
                 <div class="d-flex justify-content-center">
-                    <button type="submit" @click.prevent="login" class="btn btn-primary button-regular pc-green model-btn-login">Login</button>
+                    <button type="submit" @click.prevent="login" class="btn btn-primary button-regular pc-green model-btn-login">Login</button>    
+                </div>
+                <div class="d-flex justify-content-center">
+                        <small class="text-danger ml-auto mr-auto" v-if="errormsg">{{errormsg}}</small>
+                        <small class="text-success ml-auto mr-auto" v-if="resetmsg">{{resetmsg}}</small>
                 </div>
                 </form>
             </div>
@@ -57,20 +64,35 @@ export default {
         return{
             login_input_username: "",
             login_input_password: "",
-            errormsg: ""
+            errormsg: "",
+            resetmsg:""
         }
     },
     methods:{
         login: function(){
             var self = this;
             firebase.auth().signInWithEmailAndPassword(this.login_input_username, this.login_input_password).then((user)=> {
+                if (firebase.auth().currentUser && !firebase.auth().currentUser.emailVerified){
+                    self.errormsg = "You have not verified your email account."
+                    firebase.auth().signOut()
+                    return ;
+                }
                 self.login_input_username = "";
                 self.login_input_password = "";
                 bus.$emit('userSignedIn', user);
                 $('#login-modal').modal('hide');
-
             }).catch(err => {
                 self.errormsg = err.message; 
+                this.resetmsg=""
+            })
+        },
+        forgotPassword: function() {
+            firebase.auth().sendPasswordResetEmail(this.login_input_username).then( () =>
+            {
+                this.errormsg=""
+                this.resetmsg="Password reset email sent."
+            }).catch(()=>{
+                this.errormsg="Enter your email."
             })
         }
     }
@@ -108,6 +130,7 @@ export default {
     padding-bottom: 20px;
     height: 100px;
     width: 80px;
+    margin-top:25px;
 }
 .padding{
     padding: 15px;
@@ -188,9 +211,32 @@ export default {
     height: 45px !important;
     width: 175px !important;
     border-color: #6eba7f;
+    background-color: #6eba7f !important;
+    margin-bottom:25px !important;
+    margin-top:20px !important;
 }
 .model-btn-login:hover, .model-btn-login:focus{
     background-color: #6eba7f !important;
     border-color: white !important;
 }
+
+.fa-dizzy {
+    color:#939597;
+    font-size: 15px;
+    text-align: center;
+    margin-top:0px;
+    padding-left: 375px;
+    padding-right:100px;
+}
+
+.text-danger {
+    font-family:raleway;
+
+}
+
+.text-success {
+    font-family:raleway; 
+}
+
+
 </style>

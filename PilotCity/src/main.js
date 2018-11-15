@@ -16,7 +16,7 @@ export const Prompter = () => {
               title: title || "Failed!",
               text: msg,
               icon: "error",
-              button: "ok",
+              button: "Okay",
           });
       },
       success : (msg, title, callback) => {
@@ -24,9 +24,17 @@ export const Prompter = () => {
               title: title || "Successed!",
               text: msg,
               icon: "success",
-              button: "ok",
+              button: "Okay",
           }).then(callback);
       },
+      info : (msg, title, callback) => {
+        swal({
+            title: title || "Successed!",
+            text: msg,
+            icon: "info",
+            button: "Okay",
+        }).then(callback);
+    }
   });
 }
 

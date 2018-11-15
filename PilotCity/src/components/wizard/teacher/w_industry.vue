@@ -8,7 +8,7 @@
                                 <h3 class="pc-keyword-title">Industries</h3>
                             </div>
                         </div>
-                        <input type="text" class="pc-input-box" placeholder="What industries would your classrooms be excited about?" @keyup.enter.prevent="input_addtoIDB(i_keyword,selected_ikeywords)" v-model="i_keyword">
+                        <input type="text" class="pc-input-box" placeholder="What industries would your classrooms be excited about?" @keypress.enter.prevent="input_addtoIDB(i_keyword,selected_ikeywords)" v-model="i_keyword">
                     </div>
         <hr class="frame-line-break" />
             <div class="ml-3">
@@ -86,16 +86,14 @@ export default {
         bus.$on('grab_data', obj =>{ 
             if (obj.step != 'teacher_industry')
                 return ;
-            if (self.selected_ikeywords.length ){
+            if (self.selected_ikeywords.length >= 1){
                 var obj = {};
                 obj['teacher_industry'] = self.selected_ikeywords;
                 bus.$emit('form_completed', obj);
                 bus.$emit('validated'); 
             } else { 
-                console.log(self.address)
-                Prompter().failed("missing field(s)!");
+                Prompter().failed("missing field(s)!", "industry");
             }
-                
         });
     }
 }

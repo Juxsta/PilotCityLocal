@@ -51,6 +51,7 @@
 <script>
 import firebase from '@/firebase/init'
 import { bus } from '../main'
+import { Prompter } from '../main'
 
 export default {
     name: 'Signup',
@@ -69,7 +70,10 @@ export default {
                     self.signup_input_username = ""
                     self.signup_input_password = ""
                     bus.$emit('userSignedIn', user);
-                    $('#signup-modal').modal('hide')
+                    $('#signup-modal').modal('hide');
+                    firebase.auth().currentUser.sendEmailVerification().then(function() {
+                        Prompter().success('____', 'Email sent');
+                    });
                 }).catch(function(error) {
                     self.errorMessage = error.message;
                 });
@@ -136,6 +140,7 @@ export default {
     padding: 20px;
     height: 100px;
     width: 120px;
+    margin-top:15px;
 }
 .form-rounded {
     border-radius: 50px;
@@ -204,10 +209,13 @@ export default {
     height: 45px !important;
     width: 175px !important;
     border-color: #3c9ccc;
+    background-color: #3c9ccc !important;
+    margin-bottom:25px !important;
+    margin-top:20px !important;
 }
 .model-btn-signup:hover, .model-btn-signup:focus{
-    background-color: #3c9ccc !important;
-    border-color: white !important;
+    background-color: #3c9ccc;
+    border-color: white;
 }
 
 </style>

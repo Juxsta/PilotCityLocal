@@ -5,6 +5,9 @@
             <w_teacher_address   id="w_teacher_address" class="animated fadeIn"/>   
             <w_industry id="w_industry" class="animated fadeIn"/>
             <w_class id="w_class" class="animated fadeIn" />
+            <w_skills id="w_skills" class="animated fadeIn" />
+            <w_ptype id="w_ptype" class="animated fadeIn" />
+            <w_tymod />
         <Button_next />
     </div>
 </template>
@@ -27,7 +30,8 @@ import Button_next from '@/components/Button_next'
 import w_industry from '@/components/wizard/teacher/w_industry'
 import w_skills from '@/components/wizard/teacher/w_skills'
 import w_class from '@/components/wizard/teacher/w_class'
-
+import w_ptype from '@/components/wizard/teacher/w_ptype'
+import w_tymod from '@/components/wizard/teacher/w_tymod'
 import firebase from '@/firebase/init'
 
 
@@ -38,7 +42,7 @@ export default {
             authUser: null,
             role: null,
             e_w_wizards: ['#w_story', '#w_address', '#w_sector', '#w_question'],
-            t_w_wizards: ['#w_story', '#w_teacher_address', '#w_industry', '#w_class' ],
+            t_w_wizards: ['#w_story', '#w_teacher_address', '#w_class', '#w_ptype', '#w_skills', '#w_industry'],
             data_arr: [],
             db_doc: {}
         }
@@ -57,7 +61,9 @@ export default {
         w_industry,
         w_skills,
         w_teacher_address,
-        w_class
+        w_class,
+        w_ptype,
+        w_tymod
     },
     methods:{
         movePage: function(dirct, step, arr){
@@ -71,7 +77,7 @@ export default {
                     $(arr[step]).hide();
                 }
             }
-            if (step == 0){
+            if (step == 0 && dirct == 'left'){
                 document.getElementById('the_best_prev_button').style.display = "none";
                 document.getElementById('the_best_next_button').disabled = true;
                 $("#class_picker").removeClass('fadeOut');
@@ -84,14 +90,21 @@ export default {
         const db = firebase.firestore();
         var userRef;
 		firebase.auth().onAuthStateChanged(function(user) {
-            userRef = db.collection("users").doc(user.uid);
-            userRef.get().then(function(doc) {
-                if (doc.exists) {
-                    self.db_doc = doc.data();
-                } else {
-                    userRef.set({});
-                }
-            });
+            if (!firebase.auth().currentUser)
+                self.$router.push('/');
+            if (firebase.auth().currentUser && !firebase.auth().currentUser.emailVerified)
+                self.$router.push('/');
+            self.authUser = user;
+            if (user && user.uid){
+                userRef = db.collection("users").doc(user.uid);
+                userRef.get().then(function(doc) {
+                    if (doc.exists) {
+                        self.db_doc = doc.data();
+                    } else {
+                        userRef.set({});
+                    }
+                });
+            }  
         });
         bus.$on('move', function(obj){
             if (self.role == 'employer')
@@ -104,20 +117,20 @@ export default {
             self.authUser = user;
         })
         bus.$on('pickedRole', function(role){
-            document.getElementById('the_best_next_button').disabled = false;
-            document.getElementById('the_best_prev_button').style.display = "block";
             self.role = role;
-            $("#class_picker").addClass('fadeOut');
-            setTimeout(function(){
-                $('#class_picker').hide();
-                if (self.role == 'employer')
-                    $(self.e_w_wizards[0]).show();
-                else if (self.role == 'teacher')
-                    $(self.t_w_wizards[0]).show();
-            }, 300);
         })
         bus.$on('form_completed', obj => {
+            console.log( self.data_arr)
             self.data_arr.push(obj);
+        });
+        bus.$on('submit', ()=> {
+            userRef = db.collection("users").doc(self.authUser.uid);
+            userRef.get().then(function(doc) {
+                console.log(self.data_arr)
+                userRef.set(
+                    {form: self.data_arr}
+                );
+            });
         });
     }
 }
@@ -125,7 +138,7 @@ export default {
 
 <style>
 #w_address, 
-#w_question, #w_story, #w_sector, #w_teacher_address, #w_tags, #w_industry, #w_class{
+#w_question, #w_story, #w_teacher_address, #w_tags, #w_industry, #w_class, #w_skills, #w_ptype{
     display: none;
 }
 

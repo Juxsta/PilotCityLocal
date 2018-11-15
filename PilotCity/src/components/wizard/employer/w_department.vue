@@ -33,7 +33,7 @@ export default {
     data () {
         return {
             department: {
-                uid: new Date
+                uid: new Date,
                 name: null,
                 team_size: null,
                 team_member: null

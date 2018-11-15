@@ -13,6 +13,7 @@
 
 <script>
 import { bus } from '../main'
+import { Prompter } from '../main'
 export default {
     name:'ClassPicker',
     methods:{
@@ -23,9 +24,13 @@ export default {
                     bus.$emit('pickedRole', 'teacher');
                     break ;
                 case 1:
+                    Prompter().info(" ", "Employer to come soon.")
+                    return ;
                     bus.$emit('pickedRole', 'employer');
                     break ;
                 case 2:
+                    Prompter().info(" ", "Student to come soon.")
+                    return ;
                     bus.$emit('pickedRole', 'student');
                     break ;
             }
@@ -68,11 +73,13 @@ export default {
 .class-picker-label{
     color: rgb(222, 223, 224);
     font-style: italic;
-    font-weight: 800;
+    font-weight: 700;
+    font-size: 30px;
 }
 .class-picker-btn:active{
     transition: all 0.5s;
-    box-shadow: 0px 0px 20px rgba(0,0,0, 0.6)
+    border-color: rgb(222, 223, 224) !important;
+    outline: none !important;
 }
 
 </style>

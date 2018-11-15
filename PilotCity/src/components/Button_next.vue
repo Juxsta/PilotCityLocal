@@ -28,32 +28,63 @@ export default {
                 break ;
                 case 3:
                     if (this.role  == 'teacher')
-                        bus.$emit('grab_data', { step: 'teacher_industry'});
+                        bus.$emit('grab_data', { step: 'teacher_class'});
                 break ;
                 case 4:
                     if (this.role  == 'teacher')
-                        bus.$emit('grab_data', { step: 'teacher_class'});
+                        bus.$emit('grab_data', { step: 'teacher_ptype'});
+                break ;
+                case 5:
+                    if (this.role  == 'teacher')
+                        bus.$emit('grab_data', { step: 'teacher_skills'});
+                break ;
+                case 6:
+                    if (this.role  == 'teacher')
+                        bus.$emit('grab_data', { step: 'teacher_industry'});
                 break ;
             }
         },
         increment: function(){
             bus.$emit('move', {dirct: 'right', step: this.step++});
+            if (this.step == 6)
+                document.getElementById("the_best_next_button").innerHTML = 'Finish';
+            
         },
         goforward: function(){
+            document.getElementById('the_best_prev_button').style.display = "block";
+            $('#class_picker').addClass('fadeOut');
+            setTimeout(() => {
+                $('#class_picker').hide();
+            }, 100);
+            if (this.step == 0){
+                bus.$emit('move', {dirct: 'right', step: this.step++});
+                return ;
+            }
+           
             this.grabDataFromForm();
+            setTimeout(() => {}, 1500);
         },
         goback: function(){
             if (this.step > 1){}
                 bus.$emit('move', {dirct: 'left', step: --this.step});
+            document.getElementById("the_best_next_button").innerHTML = 'Next'
         }
     },
     created(){
         var self = this;
         bus.$on('pickedRole', function(role){
-            self.step++;
+            document.getElementById('the_best_next_button').disabled = false;
             self.role = role;
         });
-        bus.$on('validated', ()=> { self.increment() });
+        bus.$on('validated', ()=> { 
+            if (this.step == 6){
+                $('#thankyou-modal').modal('show');
+                bus.$emit('submit');
+                return ;
+            }    
+            
+        
+        self.increment() });
     }
 }
 </script>

@@ -1,73 +1,62 @@
 <template>
-    <div class="container container-fluid justify-content-center mt-5" >
+    <div class="container container-fluid justify-content-center ml-auto" >
 <form class="mt-5">
     <div class="form-row mt-auto" v-for="period in Periods" :key="period.uid">
             <i class="material-icons font-weight-bold mr-2" id="delete_class" :class="{first_trash:Periods.indexOf(period)==0}" @click="rmThisClass(period.uid)">clear</i>
-        <div class="form-group col-md-1">
-            <label v-if="Periods.indexOf(period)==0">Period</label>
-            <select class="custom-select"  v-model="period.Period" >
+        <div class="form-group col-1">
+            <label v-if="Periods.indexOf(period)==0" >Period</label>
+            <select class="custom-select"  v-model="period.period">
                 <option selected>Select Period</option>
-                <option value="0">P0</option> 
-                <option value="1">P1</option> 
-                <option value="2">P2</option> 
-                <option value="3">P3</option> 
-                <option value="4">P4</option> 
-                <option value="5">P5</option> 
-                <option value="6">P6</option> 
-                <option value="7">P7</option> 
-            </select>
-        </div>
-        <div class="form-group col-md-3">
-            <label v-if="Periods.indexOf(period)==0">Course Name</label>
-            <input type="text" class="form-control"  placeholder="Enter Course Name" @keypress.enter.prevent v-model="period.Coursename">
-        </div>
-        <div class="form-group col-md-2">
-            <label v-if="Periods.indexOf(period)==0">Semester</label>
-            <select class="custom-select" v-model="period.Semester" >
-                <option selected>Select</option>
-                <option value="0">Full Year</option>
-                <option value="1">Fall</option>
-                <option value="2">Spring</option>
+                <option v-if="pool[0].status" val="0">P0</option> 
+                <option v-if="pool[1].status" val="1">P1</option> 
+                <option v-if="pool[2].status" val="2">P2</option> 
+                <option v-if="pool[3].status" val="3">P3</option> 
+                <option v-if="pool[4].status" val="4">P4</option> 
+                <option v-if="pool[5].status" val="5">P5</option> 
+                <option v-if="pool[6].status" val="6">P6</option> 
+                <option v-if="pool[7].status" val="7">P7</option> 
             </select>
         </div>
         <div class="form-group col-md-3 dropdown">
-            <label v-if="Periods.indexOf(period)==0">Grade</label>
+            <label v-if="Periods.indexOf(period)==0">Days</label>
             <div>
                 <button class="btn btn-secondary dropdown-toggle align-items-end btn-block dropdown-class select-class-placeholder" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span :id="period.uid">Select</span>
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <div class="checkbox dropdown-item checkbox-container" >
-                        <input type="checkbox" value="9" v-model="period.Grade" @change="checkbox_changed($event, period.uid, period.Grade)"><label class="checkbox-label">Grade 9</label>
+                        <input type="checkbox" value="M" v-model="period.days" @change="checkbox_changed($event, period.uid, period.days)"><label class="checkbox-label">Monday</label>
                     </div>
                     <div class="checkbox dropdown-item checkbox-container">
-                        <input type="checkbox" value="10" v-model="period.Grade" @change="checkbox_changed($event, period.uid, period.Grade)"><label class="checkbox-label">Grade 10</label>
+                        <input type="checkbox" value="T" v-model="period.days" @change="checkbox_changed($event, period.uid, period.days)"><label class="checkbox-label">Tuesday</label>
                     </div>
                     <div class="checkbox dropdown-item checkbox-container">
-                        <input type="checkbox" value="11" v-model="period.Grade" @change="checkbox_changed($event, period.uid, period.Grade)"><label class="checkbox-label">Grade 11</label>
+                        <input type="checkbox" value="W" v-model="period.days" @change="checkbox_changed($event, period.uid, period.days)"><label class="checkbox-label">Wednesday</label>
                     </div>
                     <div class="checkbox dropdown-item checkbox-container">
-                        <input type="checkbox" value="12" v-model="period.Grade" @change="checkbox_changed($event, period.uid, period.Grade)"><label class="checkbox-label">Grade 12</label>
+                        <input type="checkbox" value="Th" v-model="period.days" @change="checkbox_changed($event, period.uid, period.days)"><label class="checkbox-label">Thursday</label>
+                    </div>
+                    <div class="checkbox dropdown-item checkbox-container">
+                        <input type="checkbox" value="F" v-model="period.days" @change="checkbox_changed($event, period.uid, period.days)"><label class="checkbox-label">Friday</label>
                     </div>
                 </div>
 
             </div>
         </div>
-        <div class="form-group col-md-2 ml-2">
-            <label for="inputperiod" v-if="Periods.indexOf(period)==0"># of Students</label>
-            <select class="custom-select" id="inlineFormCustomSelectPref" @change="variableSelect($event,period.Students)" >
-                <option selected value=''>Select</option>
-                <option value="0">1-10</option>
-                <option value="1">11-15</option>
-                <option value="2">16-20</option>
-                <option value="3">21-25</option>
-                <option value="4">26-30</option>
-                <option value="5">30+</option>
-            </select>
+        <div class="form-group col-2">
+            <label v-if="Periods.indexOf(period)==0">Start Time</label>
+            <input type="time" class="form-control"   v-model="period.start_time">
+        </div>
+        <div class="form-group col-2 dropdown">
+            <label v-if="Periods.indexOf(period)==0">End Time</label>
+            <input type="time" class="form-control"   v-model="period.end_time">
+            <div>
+
+            </div>
         </div>
     </div>
 </form>
-        <button id="btn-class-add" type="button" class="btn btn-primary btn-lg btn-block ml-4" @click="pushPeriod()">
+        <button id="btn-class-add" type="button" class="btn btn-primary btn-lg btn-block ml-4 col-8" @click="pushPeriod()">
             <i class="material-icons font-weight-bold add-button">add</i>
         </button>
         <!-- <button class="btn-lg" @click="view(Class)"></button> -->
@@ -77,6 +66,7 @@
 <script>
 
 import { bus } from '../../../main'
+
 import { Prompter } from '../../../main'
 export default {
     name:'w_class',
@@ -84,49 +74,31 @@ export default {
         return {
             Periods:[ {
                 uid: (new Date()).getTime(),
-                Period: null,
-                Coursename: null,
-                Semester : null,
-                Grade: [],
-                Students: {
-                    min: null,
-                    max: null
-                }
+                period: null,
+                days: [],
+                start_time: null,
+                end_time:null
             } ],
-            pval: [],
-            pool:[],
+            pval: [0,1,2,3,4,5,6,7],
             selectpval: [],
+            pool: [
+                {status:true},
+                {status:true},
+                {status:true}, 
+                {status:true},
+                {status:true},
+                {status:true},
+                {status:true},
+                {status:true}
+            ]
         }
     },
-    created(){
-        var self = this;
-        bus.$on('grab_data', obj =>{ 
-            if (obj.step != 'teacher_class')
-                return ;
-            var pass = true;
-            for (var i = 0; i < self.Periods.length; i++){
-                for (var _attr in self.Periods[i]){
-                    if (self.Periods[i][_attr] == null) {
-                        pass = false;
-                        break ;
-                    }
-                }
-                if (pass === false)
-                    break ;
-            }
-            if (pass === false){
-                Prompter().failed("missing field(s)!");
-                return ;
-            }
-            if (pass){
-                var obj = {};
-                obj['teacher_class'] = self.Periods;
-                bus.$emit('form_completed', obj);
-                bus.$emit('validated'); 
-            }
-        })
+    computed:{
     },
-     methods: {
+    methods: {
+        skip: function(){
+            bus.$emit('validated');
+        },
         variableSelect(event, Obj) {
                 switch(event.target.value){
                 case '0': 
@@ -158,14 +130,10 @@ export default {
         pushPeriod() {
             this.Periods.push( {
                 uid: (new Date()).getTime(),
-                Period: null,
-                Coursename: null,
-                Semester : null,
-                Grade: [],
-                Students: {
-                    min: null,
-                    max: null
-                }
+                period: null,
+                days: [],
+                start_time: null,
+                end_time:null
             });
         },
         view(Obj) {
@@ -187,6 +155,36 @@ export default {
         selected: function(val) {
             return this.pval.indexOf(val) > -1 || this.selectpval.indexOf(val) > -1 
         }
+        
+    },
+    created(){
+        var self = this;
+        bus.$on('grab_data', obj =>{ 
+            if (obj.step != 'teacher_ptype')
+                return ;
+            var pass = true;
+            for (var i = 0; i < self.Periods.length; i++){
+                for (var _attr in self.Periods[i]){
+                    if (self.Periods[i][_attr] == null) {
+                        pass = false;
+                        break ;
+                    }
+                }
+                if (pass === false)
+                    break ;
+            }
+            if (pass === false){
+                console.log(self.Periods)
+                Prompter().failed("missing field(s)!");
+                return ;
+            }
+            if (pass){
+                var obj = {};
+                obj['teacher_ptype'] = self.Periods;
+                bus.$emit('form_completed', obj);
+                bus.$emit('validated'); 
+            }
+        })
     }
 }
 </script>
@@ -284,9 +282,11 @@ input::placeholder {
     text-align:left;
     padding-left:20px;
 }
+
 .custom-select {
     background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3E%3Cpath fill='white' d='M2 0L0 2h4zm0 5L0 3h4z'/%3E%3C/svg%3E")
 }
+
 
 </style>
  

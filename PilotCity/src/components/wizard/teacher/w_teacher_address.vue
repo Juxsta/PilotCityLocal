@@ -3,12 +3,12 @@
         <form class="mt-5"> 
             <div class="form-group">
                 <label for="inputAddress">School Address</label>
-                <input type="text" class="form-control" id="inputAddress" placeholder="435 Portage Ave" v-model="address.street"  @keyup.enter="skip">
+                <input type="text" class="form-control" id="inputAddress" placeholder="2250 Bancroft Avenue" v-model="address.street" >
             </div>
             <div class="form-row" >
                 <div class="form-group col-md-6">
                     <label for="inputCity">City</label>
-                    <input type="text" class="form-control" id="inputCity" placeholder="Palo Alto" v-model="address.city">
+                    <input type="text" class="form-control" id="inputCity" placeholder="San Leandro" v-model="address.city">
                 </div>
                 <div class="form-group col-md-2">
                     <label for="inputState">State</label>
@@ -16,7 +16,7 @@
                 </div>
                 <div class="form-group col-md-2">
                     <label for="inputZip">Zip</label>
-                    <input type="number" class="form-control" id="inputZip" placeholder="55555"  v-model="address.zip">
+                    <input type="number" class="form-control" id="inputZip" placeholder="94577"  v-model="address.zip">
                 </div>
                 <div class="form-group col-md-2">
                     <label for="inputType">Room #</label>
@@ -96,17 +96,32 @@ export default {
 label {
     color: #eca0be;
     font-weight: bold;
+    font-size:15px;
+    margin-left:15px;
 }
+
 input, input:focus{
     border-radius: 50px;
-    font-size: 20px;
-    font-style: Italic;
+    font-size: 18px;
+    padding-left:20px;
+    font-weight:100;
     font-family: "Raleway";
     background-color: rgb(222, 223, 224);
     color: white;
     outline: none !important;
-    font-weight:100;
+    height: 50px;
+    border-color: #dbdcde;
+    box-shadow: none !important;
 }
-input::placeholder { color:white }
+input::placeholder { 
+    font-weight:100;
+    color: white;
+    font-style:italic;
+
+}
+
+ input:focus, select:focus, .dropdown-class:focus{
+    border-color: #c6c8ca !important;
+ }
 </style>
  

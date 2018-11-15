@@ -11,6 +11,7 @@ import w_story from '@/components/wizard/teacher/w_story'
 import w_class from '@/components/wizard/teacher/w_class'
 import w_address from '@/components/wizard/employer/w_address'
 import w_department from '@/components/wizard/employer/w_department'
+import w_ptype from '@/components/wizard/teacher/w_ptype'
 export default {
     name: 'Etesting',
     data (){
@@ -26,7 +27,8 @@ export default {
         w_story,
         w_class,
         w_address,
-        w_department
+        w_department,
+        w_ptype,
     }
 }
 </script>

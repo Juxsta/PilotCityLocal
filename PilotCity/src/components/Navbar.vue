@@ -39,16 +39,16 @@ export default {
 		firebase.auth().onAuthStateChanged(function(user) {
 			if (user) {
 				self.authUser = user;
-				$("#component-login").hide();
-				$("#component-signup").hide();
-				$("#component-logout").show();
-				self.$router.push('/demo');
-				
+				if (firebase.auth().currentUser && firebase.auth().currentUser.emailVerified){
+					$("#component-login").hide();
+					$("#component-signup").hide();
+					$("#component-logout").show();
+					self.$router.push('/demo');
+				}
 			} else {
 				$("#component-login").show();
 				$("#component-signup").show();
 				$("#component-logout").hide();
-				self.$router.push('/');
 			}
 		});
 	}
@@ -66,6 +66,8 @@ export default {
 }
 #component-logout{
 	display: none;
+	border: solid 1px #ffffff;
+
 }
 .Raleway {
 	font-family: "Raleway";
