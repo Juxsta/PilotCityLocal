@@ -1,5 +1,5 @@
 <template>
-    <div class="mt-5 ">
+    <div class="mt-4">
         <form class="d-flex justify-content-center" >
             <div class="pc-panel-tagspanel" >
                 <div class="input-group mb-2">
@@ -196,7 +196,6 @@ export default {
     color:#dbdcde;
     font-style: italic;
     font-size:20px;
-    padding-left:30px;
     width:750px;
 }
 
@@ -210,7 +209,7 @@ export default {
 }
 
 .space-between-tagging {
-    margin:30px;
+    margin:3px;
 }
 
 .pc-purple {
