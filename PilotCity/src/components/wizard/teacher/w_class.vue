@@ -115,7 +115,7 @@ export default {
                     break ;
             }
             if (pass === false){
-                Prompter().failed("missing field(s)!");
+                Prompter().failed("You're missing a few things","Hey there,");
                 return ;
             }
             if (pass){

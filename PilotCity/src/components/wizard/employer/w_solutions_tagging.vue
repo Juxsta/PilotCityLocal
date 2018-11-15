@@ -5,10 +5,53 @@
                 <div class="input-group mb-2">
                         <div class="input-group-prepend">
                             <div class="pc-input-group-text">
-                                <h3 class="pc-keyword-title">Industries</h3>
+                                <h3 class="pc-keyword-title">Product</h3>
                             </div>
                         </div>
-                        <input type="text" class="pc-input-box" placeholder="Type here to enter keywords that describe your industry" @keypress.enter.prevent="input_addtoIDB(i_keyword,selected_ikeywords)" v-model="i_keyword">
+                        <input type="text" class="pc-input-box" placeholder="Enter keywords here to describe your product" @keypress.enter.prevent="input_addtoIDB(i_keyword,selected_ikeywords)" v-model="i_keyword">
+                    </div>
+        <hr class="frame-line-break" />
+            <div class="ml-3">
+                <span class="badge badge-pill badge-primary tag-capitalize pr-3 ml-1 mr-1 mb-1 mt-1" v-for="(keyword,index) in selected_ikeywords" :key="keyword + index" :class="colors[index%7]">
+                    <div class="d-flex">
+                        <a href="" @click.prevent>
+                            <i class="material-icons icon-clear" @click="rm_IKeyword(keyword)">clear</i>
+                        </a>
+                        <div class="align-self-center">
+                            <b class="Raleway">{{keyword}}</b>
+                        </div>
+                    </div>
+                </span>
+            </div>
+
+        <hr class="frame-line-break" />
+            <div class="ml-3">
+                <span class="badge badge-pill badge-primary ml-1 mb-1 mt-1 mr-1 pr-3" v-for="(value,i) in industry_keywords" :key="value + i" :class="colors[i%7]">
+                    <div class="d-flex" v-if="notFound(value,selected_ikeywords)">
+                        <a href="" @click.prevent>
+                            <i class="material-icons icon-add" @click="add_IKeywords(value)">add</i>
+                        </a>
+                        <div class="align-self-center">
+                            <b class="Raleway">{{value}}</b>
+                        </div>
+                    </div>
+                </span>
+            </div>
+           </div>
+        </form>
+
+    <div class="space-between-tagging">
+        </div>''
+
+                <form class="d-flex justify-content-center" >
+            <div class="pc-panel-tagspanel" >
+                <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                            <div class="pc-input-group-text">
+                                <h3 class="pc-keyword-title">Service</h3>
+                            </div>
+                        </div>
+                        <input type="text" class="pc-input-box" placeholder="Enter keywords here to describe your service" @keypress.enter.prevent="input_addtoIDB(i_keyword,selected_ikeywords)" v-model="i_keyword">
                     </div>
         <hr class="frame-line-break" />
             <div class="ml-3">
@@ -40,6 +83,7 @@
            </div>
         </form>
     </div>
+    
 </template>
 
 <script>
@@ -47,7 +91,7 @@
 import { bus } from '../../../main'
 import { Prompter } from '../../../main'
 export default {
-    name: "w_industry",
+    name: "w_solutions_tagging",
     data () {
         return {
             i_keyword: null,
@@ -163,6 +207,10 @@ export default {
 
 .frame-line-break {
     border-style: dashed;
+}
+
+.space-between-tagging {
+    margin:30px;
 }
 
 .pc-purple {

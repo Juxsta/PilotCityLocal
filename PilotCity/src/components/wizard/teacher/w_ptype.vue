@@ -175,7 +175,7 @@ export default {
             }
             if (pass === false){
                 console.log(self.Periods)
-                Prompter().failed("missing field(s)!");
+                Prompter().failed("You're missing a few things","Hey there,");
                 return ;
             }
             if (pass){

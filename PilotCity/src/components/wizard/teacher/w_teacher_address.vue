@@ -64,7 +64,7 @@ export default {
                 bus.$emit('validated'); 
             } else { 
                 console.log(self.address)
-                Prompter().failed("missing field(s)!");
+                Prompter().failed("You're missing a few things","Hey there,");
             }
                 
         });
@@ -79,7 +79,6 @@ export default {
     border-color: #ae90b0;
     color: #ae90b0;
 }
-
 
 .btn-address-purple:hover, 
 .btn-address-purple:active{

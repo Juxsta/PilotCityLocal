@@ -1,13 +1,13 @@
 <template>
-    <div class="container-fluid">
+    <div class="container-fluid mt-5">
         <div class="d-flex justify-content-center" id="Sector-Prompt">
-            <h2> What sector are you coming from?</h2>
+            <h1 class="Raleway class-picker-label">What sector are you coming from?</h1>
         </div>
         <div class="d-flex justify-content-center align-items-end">
-                <button class="btn btn-circle pc-green">Teacher</button>
-                <button class="btn btn-circle pc-blue">Employer</button>
-                <button class="btn btn-circle pc-orange">Student</button>
-                <button class="btn btn-circle pc-yellow">Student</button>
+                <button class="btn btn-circle pc-green">Industry</button>
+                <button class="btn btn-circle pc-blue">Government</button>
+                <button class="btn btn-circle pc-orange">Education</button>
+                <button class="btn btn-circle pc-yellow">Community</button>
         </div>
     </div>
 </template>
@@ -46,4 +46,25 @@ export default {
     margin: 50px 0px 50px 0;
     font-family: 'Raleway';
 }
+
+.class-picker-label{
+    color: rgb(222, 223, 224);
+    font-style: italic;
+    font-weight: 700;
+    font-size: 30px;
+}
+
+.class-picker-label{
+    color: rgb(222, 223, 224);
+    font-style: italic;
+    font-weight: 700;
+    font-size: 30px;
+}
+
+.class-picker-btn:active {
+    transition: all 0.5s;
+    border-color: rgb(222, 223, 224) !important;
+    outline: none !important;
+}
+
 </style>

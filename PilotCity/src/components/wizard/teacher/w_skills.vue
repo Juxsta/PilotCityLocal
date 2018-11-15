@@ -97,7 +97,7 @@ export default {
                 bus.$emit('form_completed', obj);
                 bus.$emit('validated'); 
             } else { 
-                Prompter().failed("missing field(s)!", "Hey there!");
+                Prompter().failed("You're missing a few things","Hey there,");
             }
         });
     }

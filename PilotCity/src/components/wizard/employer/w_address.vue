@@ -1,5 +1,5 @@
 <template>
-   <div class="container ">
+   <div class="container mt-5 pt-5">
         <form class="mt-3" v-for="address in addresses" :key="address.id"> 
             <div class="form-group">
                 <label for="inputAddress">Employer Address</label>
@@ -16,7 +16,7 @@
                 </div>
                 <div class="form-group col-md-2">
                     <label for="inputZip">Zip</label>
-                    <input type="text" class="form-control" id="inputZip">
+                    <input type="text" class="form-control" id="inputZip" placeholder="94577">
                 </div>
                 <div class="form-group col-md-2">
                     <label for="inputType">Type</label>
@@ -24,11 +24,6 @@
                 </div>
             </div>
         </form>
-        <span>
-            <button type ="button" class="btn btn-primary btn-block btn-address-purple" @click="addAddress">
-                <i class="material-icons">add</i>
-            </button>
-        </span>
    </div>
 </template>
 
@@ -72,8 +67,9 @@ export default {
     background-color: white;
     border-color: #ae90b0;
     color: #ae90b0;
+    border-radius:50px;
+    height: 50px;
 }
-
 
 .btn-address-purple:hover, 
 .btn-address-purple:active{
@@ -85,4 +81,38 @@ export default {
     outline: none !important;
 }
 </style>
+
+<style scoped>
+label {
+    color: #ae90b0;
+    font-weight: bold;
+    font-size:15px;
+    margin-left:15px;
+}
+
+input, input:focus{
+    border-radius: 50px;
+    font-size: 18px;
+    padding-left:20px;
+    font-weight:100;
+    font-family: "Raleway";
+    background-color: rgb(222, 223, 224);
+    color: white;
+    outline: none !important;
+    height: 50px;
+    border-color: #dbdcde;
+    box-shadow: none !important;
+}
+input::placeholder { 
+    font-weight:100;
+    color: white;
+    font-style:italic;
+
+}
+
+ input:focus, select:focus, .dropdown-class:focus{
+    border-color: #c6c8ca !important;
+ }
+</style>
+ 
  

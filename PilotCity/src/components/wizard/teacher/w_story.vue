@@ -81,7 +81,7 @@ export default {
                 return ;
             }
             else
-                Prompter().failed("missing field(s)!");
+                Prompter().failed("You're missing a few things","Hey there,");
         });
     }
 }
