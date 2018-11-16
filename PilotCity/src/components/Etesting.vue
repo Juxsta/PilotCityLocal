@@ -1,6 +1,6 @@
 <template>
     <div>
-        <w_department />
+        <w_bottom_line />
     </div>
 </template>
 <script>
@@ -12,6 +12,9 @@ import w_class from '@/components/wizard/teacher/w_class'
 import w_address from '@/components/wizard/employer/w_address'
 import w_department from '@/components/wizard/employer/w_department'
 import w_ptype from '@/components/wizard/teacher/w_ptype'
+import w_solutions_tagging from '@/components/wizard/employer/w_solutions_tagging'
+import w_tags from '@/components/wizard/employer/w_tags'
+import w_bottom_line from '@/components/wizard/employer/w_bottom_line'
 export default {
     name: 'Etesting',
     data (){
@@ -29,6 +32,9 @@ export default {
         w_address,
         w_department,
         w_ptype,
+        w_solutions_tagging,
+        w_tags,
+        w_bottom_line
     }
 }
 </script>
