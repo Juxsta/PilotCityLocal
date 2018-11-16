@@ -5,8 +5,8 @@
                 <h2 id = "title">Connecting classrooms to the big bad world. </h2>
             </div>
             <div class="class d-flex flex-row mb-auto mr-auto ml-5">
-                <button type="button" class="btn btn-primary mr-4" id="index-btn-employers" @click="open_modal">  For Teachers </button>
-                <button type="button" class="btn btn-primary" id="index-btn-teachers" @click="open_modal">  For Employers </button>
+                <button type="button" class="btn btn-primary mr-4" id="index-btn-teachers" @click="open_modal">  For Teachers </button>
+                <button type="button" class="btn btn-primary" id="index-btn-employers" @click="open_modal">  For Employers </button>
             </div>
         </div> 
 </div>
@@ -37,7 +37,7 @@ export default {
         margin-top:190px;
         margin-bottom:40px;
     }
-    #index-btn-employers{
+    #index-btn-teachers{
         font-family: "Raleway";
         font-size: 20px;
         background-color: #eca0be;
@@ -55,7 +55,7 @@ export default {
     #index-btn-employers:hover{
         border: solid 1px white;
     }
-    #index-btn-teachers{
+#index-btn-employers {
         font-family: "Raleway";
         font-size: 20px;
         font-weight: 700;

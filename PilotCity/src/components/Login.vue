@@ -115,8 +115,6 @@ export default {
     font-weight: 700;
     cursor:pointer !important;
     transition: border 0.5s;
-    padding-left : 40px;
-	padding-right: 40px;
     margin: auto 20px;
     text-align: center;
 }
@@ -193,7 +191,7 @@ export default {
 .form-active{
     padding: 10px !important;
     font-size: 15px;
-    font-weight:100;
+    font-weight:300;
     font-family: 'Raleway';
     color: #939598 !important;
 }
@@ -205,6 +203,16 @@ export default {
 .input-group-text {
     border-radius:50px;
     border-color:#939597;
+
+}
+#btn-login {
+    width: 138px;
+    background-color: #4d4d4f !important;
+
+}
+
+#btn-login:hover{
+    background-color: #939597 !important;
 }
 
 .model-btn-login{
@@ -236,6 +244,15 @@ export default {
 
 .text-success {
     font-family:raleway; 
+}
+
+#login-input-username{
+    font-weight: 500;
+
+}
+
+#login-input-password{
+    font-weight: 500;
 }
 
 

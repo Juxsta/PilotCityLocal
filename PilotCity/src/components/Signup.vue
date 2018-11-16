@@ -106,7 +106,8 @@ export default {
     transition: border 0.5s;
     padding-left : 40px;
 	padding-right: 40px;
-    margin: auto 20px;
+    margin-left:10px;
+    margin-right:50px;
     text-align: center;
 }
 
@@ -216,6 +217,14 @@ export default {
 .model-btn-signup:hover, .model-btn-signup:focus{
     background-color: #3c9ccc;
     border-color: white;
+}
+
+#signup-input-username{
+    font-weight: 500;
+}
+
+#signup-input-password{
+    font-weight: 500;
 }
 
 </style>
