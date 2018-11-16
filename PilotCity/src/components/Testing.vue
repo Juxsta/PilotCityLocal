@@ -1,6 +1,6 @@
 <template>
     <div>
-        <w_question />
+        <w_bottom_line />
     </div>
 </template>
 <script>

@@ -2,7 +2,7 @@
     <div class="component">
         <form class=" justify-content-center" >
             <div class="pc-panel-tagspanel" >
-                <div class="d-flex flex-row mb-2">
+                <div class="d-flex flex-row">
                         <div class="input-group-text">
                                 <h3 class="pc-keyword-title">{{name}}</h3>
                         </div>
@@ -90,8 +90,11 @@ export default {
 </script>
 <style scoped>
 
+.frame-line-break {
+    margin-top:1px;
+}
 .input-group-text {
-    background-color: #ffffff;
+    background-color:transparent;
     border-color: #ffffff;
 }
 
@@ -128,7 +131,6 @@ export default {
     border: dashed 1px #dbdcde;
     border-radius:50px;
     width: 1000px;
-    padding-top:20px;
     padding-bottom:20px;
 }
 
@@ -150,6 +152,7 @@ export default {
     font-size:20px;
     padding-left:30px;
     width:750px;
+    background: transparent;
 }
 
 .pc-input-box::placeholder{
