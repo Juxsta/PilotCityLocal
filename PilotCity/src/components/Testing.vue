@@ -1,6 +1,10 @@
 <template>
     <div>
+<<<<<<< HEAD
         <w_flock />
+=======
+        <w_question />
+>>>>>>> bed6ce68abdcfaa21416b6552ff6ce6ac3a7c0d2
     </div>
 </template>
 <script>
@@ -18,6 +22,7 @@ import w_question from '@/components/wizard/employer/w_question'
 import w_tags from '@/components/wizard/employer/w_tags'
 import w_solutions_picker from '@/components/wizard/employer/w_solutions_picker'
 import w_department from '@/components/wizard/employer/w_department'
+import w_employer_story from '@/components/wizard/employer/w_employer_story'
 
 
 
@@ -44,6 +49,7 @@ export default {
         w_tags,
         w_solutions_picker,
         w_department,
+        w_employer_story,
     }
 }
 </script>

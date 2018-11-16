@@ -1,9 +1,9 @@
 <template>
-    <div class="container">
+    <div class="container d-flex flex-col justify-content-center">
         <industry_tag
-        name="Industries"
+        name="Industry"
         :keywords=industry_keywords
-        placeholder ="Industry here"
+        placeholder ="Enter keywords here to describe your industry"
         ></industry_tag>
     </div>
 </template>
@@ -17,7 +17,6 @@ export default {
     name: "w_tags",
     data () {
         return {
-            name: "Industry",
             industry_keywords: [
                 'Drones','Robotics','Data Science','Internet of Things','Sustainability','Space',
                 'Artificial Inteligence','Automotive','Bioprinting','Data','Drones','Gaming','Healthcare','Lifestyle'
@@ -30,5 +29,9 @@ export default {
 }
 </script>
 <style scoped>
+
+.container {
+    margin-top:50px;
+}
 
 </style>

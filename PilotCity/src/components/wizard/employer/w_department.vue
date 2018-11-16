@@ -207,8 +207,6 @@ input, input:focus, select, select:focus{
 
 
 
-
-
 .first_trash {
     padding-top:31px;
 }
