@@ -1,6 +1,6 @@
 <template>
     <div>
-        <w_department />
+        <w_flock />
     </div>
 </template>
 <script>
@@ -18,6 +18,7 @@ import w_question from '@/components/wizard/employer/w_question'
 import w_tags from '@/components/wizard/employer/w_tags'
 import w_solutions_picker from '@/components/wizard/employer/w_solutions_picker'
 import w_department from '@/components/wizard/employer/w_department'
+
 
 
 export default {
