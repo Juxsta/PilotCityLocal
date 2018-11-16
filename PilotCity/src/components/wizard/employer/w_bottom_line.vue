@@ -6,12 +6,13 @@
         placeholder ="Example: Client Acquistion"
         ></employer_industry_tag>
     </div>
+    
 </template>
 
 <script>
 import tagging from "@/components/wizard/tools/tagging.vue"
 export default {
-    name: "w_bottom_line",
+    name: "w_solutions_tagging",
     data () {
         return {
             bottom_line_keywords: ['Client Acquisition', 'Use Cases','Building Community','Training Talent',
@@ -24,7 +25,6 @@ export default {
     }
 }
 </script>
-
-<style>
+<style scoped>
 
 </style>
