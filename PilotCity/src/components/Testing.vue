@@ -1,6 +1,6 @@
 <template>
     <div>
-        <w_employer_story />
+        <w_question />
     </div>
 </template>
 <script>

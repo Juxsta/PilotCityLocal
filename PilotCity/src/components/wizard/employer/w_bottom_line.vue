@@ -1,9 +1,9 @@
 <template>
-    <div class="container mt-5">
+    <div class="container d-flex flex-col justify-content-center">
         <employer_industry_tag
         name="Whats your bottom line?"
         :keywords=bottom_line_keywords
-        placeholder ="Example: Client Acquistion"
+        placeholder ="Enter keywords here to describe your bottom line"
         ></employer_industry_tag>
     </div>
     

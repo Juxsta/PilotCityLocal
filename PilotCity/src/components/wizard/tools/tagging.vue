@@ -89,6 +89,12 @@ export default {
 }
 </script>
 <style scoped>
+
+.input-group-text {
+    background-color: #ffffff;
+    border-color: #ffffff;
+}
+
 .pc-tag {
     margin: 5px;
     font-size: 12px;
