@@ -1,6 +1,6 @@
 <template>
     <div>
-        <w_bottom_line />
+        <w_flock />
     </div>
 </template>
 <script>

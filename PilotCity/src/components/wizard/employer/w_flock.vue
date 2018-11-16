@@ -17,7 +17,7 @@ export default {
     name:"w_flock",
     data () {
         return {
-            flock_keywords: [x]
+            flock_keywords: ['Identifying Use Cases' , 'Developing Case Studies' , 'Community Engagement' , 'Automation' , 'Sales' , 'Training Talent' , 'Implementing Technology' , 'Technology Adoption' , 'Partnerships' , 'Public Relations' , 'Social Media Marketing' , 'Entrepreneurial Culture' , 'Women Empowerment' , 'Diversity & Inclusion']
         }
     },
     components: {

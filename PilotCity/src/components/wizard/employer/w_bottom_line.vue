@@ -19,11 +19,8 @@ export default {
     name: "w_bottom_line",
     data () {
         return {
-            bottom_line_keywords: ['Client Acquisition', 'Use Cases','Building Community','Training Talent',
-            'Sales','Marketing','Public Relations','Operational Optimization','Automation',
-            'Research & Development','Innovation','Talent Generation','Client Engagement'],
-            roi_keywords: [],
-            strategies_initiatives_keywords: ['stuff']
+            bottom_line_keywords: ['Client Aquisition', 'Use Cases', 'Community Building', 'Training Talent', 'Sales', 'Marketing', 'Public Relations', 'Operations', 'Optimization', 'Innovation', 'Automation','Research & Development', 'Talent Generation', 'Citizen Engagement'],
+            strategies_initiatives_keywords: ['Social Media' , 'Recruitment' , 'Conferences' , 'University Partnerships' , 'Advertisement' , 'Collecting Data' , 'Automation' , 'Crowdfunding' , 'Grants' , 'Events' , 'Trial & Error']
         }
     },
     components: {
