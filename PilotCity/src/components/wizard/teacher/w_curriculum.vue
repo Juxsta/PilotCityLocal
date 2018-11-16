@@ -36,10 +36,13 @@ export default{
 
     }, 
     methods:{
+    	 notFound(item,array) {
+            return array.indexOf(item)==-1?1:0
+        },
 
     	addCurriculum(item, array){
     		if(this.notFound(item,this.curriculumAdded)) {
-    			
+
     		 	this.array.push(item)
     		}
     		 this.curriculum = null
