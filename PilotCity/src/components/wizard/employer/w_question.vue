@@ -50,7 +50,7 @@
 import { bus } from '../../../main'
 import { Prompter } from '../../../main'
 export default {
-    name: "w_industry",
+    name: "w_question",
     data () {
         return {
             i_keyword: null,

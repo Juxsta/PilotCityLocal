@@ -1,6 +1,6 @@
 <template>
     <div>
-        <w_solutions_tagging />
+        <w_bottom_line />
     </div>
 </template>
 <script>
