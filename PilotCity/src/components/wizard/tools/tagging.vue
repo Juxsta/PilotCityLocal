@@ -9,7 +9,7 @@
                         <input type="text" class="pc-input-box" :placeholder="placeholder" @keypress.enter.prevent="input_addtoIDB(keyword,selected_keywords)" v-model="keyword">
                     </div>
         <hr class="frame-line-break" />
-            <div class="ml-3">
+            <div class="ml-3 mb-3">
                 <span class="badge badge-pill badge-primary tag-capitalize pr-3 ml-1 mr-1 mb-1 mt-1" v-for="(keyword,index) in selected_keywords" :key="keyword + index" :class="colors[index%7]">
                     <div class="d-flex">
                         <a href="" @click.prevent>
@@ -140,8 +140,8 @@ export default {
     font-weight: 700;
     color:#939597;
     padding-top:9px;
-    margin-left:15px;
-    margin-right:15px;
+    margin-left:20px;
+    margin-right:20px;
 }
 
 .pc-input-box {
@@ -150,7 +150,6 @@ export default {
     color:#dbdcde;
     font-style: italic;
     font-size:20px;
-    padding-left:30px;
     width:750px;
     background: transparent;
 }

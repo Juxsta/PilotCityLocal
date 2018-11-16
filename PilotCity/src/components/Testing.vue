@@ -1,6 +1,6 @@
 <template>
     <div>
-        <w_bottom_line />
+        <w_solutions_tagging />
     </div>
 </template>
 <script>
@@ -19,6 +19,8 @@ import w_tags from '@/components/wizard/employer/w_tags'
 import w_solutions_picker from '@/components/wizard/employer/w_solutions_picker'
 import w_department from '@/components/wizard/employer/w_department'
 import w_employer_story from '@/components/wizard/employer/w_employer_story'
+import w_flock from '@/components/wizard/employer/w_flock'
+
 
 
 export default {
@@ -40,7 +42,7 @@ export default {
         w_sector,
         w_bottom_line,
         w_solutions_tagging,
-        w_question,
+        w_flock,
         w_tags,
         w_solutions_picker,
         w_department,
