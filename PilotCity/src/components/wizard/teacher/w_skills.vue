@@ -9,7 +9,7 @@
                                 <h3 class="pc-keyword-title" @click="skip">Skills</h3>
                             </div>
                         </div>
-                        <input type="text" class="pc-input-box" placeholder="What tools, technologies, and skills are you currently teaching?" @keypress.enter.prevent="input_addtoIDB(s_keyword,selected_skeywords)" v-model="s_keyword">
+                        <input type="text" class="pc-input-box" placeholder="Enter keywords here describing the skills, tools, and technologies you teach" @keypress.enter.prevent="input_addtoIDB(s_keyword,selected_skeywords)" v-model="s_keyword">
                 </div>
         <hr class="frame-line-break" />
             <div class="ml-3">
@@ -118,7 +118,7 @@ export default {
     font-size:15px;
     color:white;
     padding: 5px;
-    font-weight:100;
+    font-weight:300;
 }
 
 .icon-add {
@@ -158,7 +158,7 @@ export default {
     font-style: italic;
     font-size:20px;
     padding-left:0px;
-    width:750px;
+    width:850px;
 }
 
 .pc-input-box::placeholder{

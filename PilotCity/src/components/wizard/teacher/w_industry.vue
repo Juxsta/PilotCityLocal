@@ -8,7 +8,7 @@
                                 <h3 class="pc-keyword-title">Industries</h3>
                             </div>
                         </div>
-                        <input type="text" class="pc-input-box" placeholder="What industries would your classrooms be excited about?" @keypress.enter.prevent="input_addtoIDB(i_keyword,selected_ikeywords)" v-model="i_keyword">
+                        <input type="text" class="pc-input-box" placeholder="Enter keywords here describing the industries relevant to your classroom" @keypress.enter.prevent="input_addtoIDB(i_keyword,selected_ikeywords)" v-model="i_keyword">
                     </div>
         <hr class="frame-line-break" />
             <div class="ml-3">
@@ -113,7 +113,7 @@ export default {
     font-size:15px;
     color:white;
     padding: 5px;
-    font-weight:100;
+    font-weight:300;
 }
 
 .icon-add {
@@ -153,7 +153,7 @@ export default {
     font-style: italic;
     font-size:20px;
     padding-left:30px;
-    width:750px;
+    width:850px;
 }
 
 .pc-input-box::placeholder{

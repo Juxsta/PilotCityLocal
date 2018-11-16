@@ -122,7 +122,7 @@ export default {
     background-color: rgb(222, 223, 224);
     color: white;
     outline: none !important;
-    font-weight:100;
+    font-weight:300;
     height: 50px;
     border-color: #dbdcde;
     box-shadow: none !important;
@@ -156,7 +156,7 @@ export default {
     background-color: rgb(222, 223, 224);
     color: white;
     outline: none !important;
-    font-weight:100;
+    font-weight:300;
     height: 50px;
     border-color: #dbdcde;
     box-shadow: none !important;
@@ -176,7 +176,7 @@ input, input:focus, select, select:focus{
     font-family: "Raleway";
     color: white;
     outline: none !important;
-    font-weight:100;
+    font-weight:300;
     height: 50px;
     border-color: #dbdcde;
     box-shadow: none !important;
@@ -225,7 +225,7 @@ label {
     background-color: rgb(222, 223, 224) !important;
     color: white;
     outline: none !important;
-    font-weight:100;
+    font-weight:300;
     height: 50px;
     border-color: #dbdcde;
     box-shadow: none !important;
@@ -255,6 +255,10 @@ input::placeholder {
     font-size:18px;
     text-align:left;
     padding-left:20px;
+}
+
+.dropdown-placeholder{
+    font-weight:300;
 }
 
 

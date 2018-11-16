@@ -3,7 +3,7 @@
         <form class="mt-3" v-for="address in addresses" :key="address.id"> 
             <div class="form-group">
                 <label for="inputAddress">Employer Address</label>
-                <input type="text" class="form-control" id="inputAddress" placeholder="435 Portage Ave," v-model="address.street" @keyup.ctrl="skip">
+                <input type="text" class="form-control" id="inputAddress" placeholder="435 Portage Avenue" v-model="address.street" @keyup.ctrl="skip">
             </div>
             <div class="form-row" >
                 <div class="form-group col-md-6">
@@ -85,7 +85,8 @@ input, input:focus{
     border-radius: 50px;
     font-size: 18px;
     padding-left:20px;
-    font-weight:100;
+    font-weight:300;
+    font-style:italic;
     font-family: "Raleway";
     background-color: rgb(222, 223, 224);
     color: white;
@@ -95,7 +96,7 @@ input, input:focus{
     box-shadow: none !important;
 }
 input::placeholder { 
-    font-weight:100;
+    font-weight:300;
     color: white;
     font-style:italic;
 

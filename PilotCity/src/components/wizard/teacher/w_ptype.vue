@@ -1,53 +1,53 @@
 <template>
-    <div class="container container-fluid justify-content-center ml-auto" >
-<form class="mt-5">
-    <div class="form-row mt-auto" v-for="period in Periods" :key="period.uid">
-            <i class="material-icons font-weight-bold mr-2" id="delete_class" :class="{first_trash:Periods.indexOf(period)==0}" @click="rmThisClass(period.uid)">clear</i>
-        <div class="form-group col-1">
-            <label v-if="Periods.indexOf(period)==0" >Period</label>
-            <select class="custom-select"  v-model="period.period">
-                <option selected>Select Period</option>
-                <option v-if="pool[0].status" val="0">P0</option> 
-                <option v-if="pool[1].status" val="1">P1</option> 
-                <option v-if="pool[2].status" val="2">P2</option> 
-                <option v-if="pool[3].status" val="3">P3</option> 
-                <option v-if="pool[4].status" val="4">P4</option> 
-                <option v-if="pool[5].status" val="5">P5</option> 
-                <option v-if="pool[6].status" val="6">P6</option> 
-                <option v-if="pool[7].status" val="7">P7</option> 
-            </select>
-        </div>
-        <div class="form-group col-md-3 dropdown">
-            <label v-if="Periods.indexOf(period)==0">Days</label>
+    <div class="container container-fluid justify-content-center mr-auto ml-auto" >
+        <form class="mt-5">
+            <div class="form-row mt-auto" v-for="period in Periods" :key="period.uid">
+                <i class="material-icons font-weight-bold mr-2" id="delete_class" :class="{first_trash:Periods.indexOf(period)==0}" @click="rmThisClass(period.uid)">clear</i>
+            <div class="form-group-period">
+                <label v-if="Periods.indexOf(period)==0" >Period</label>
+                <select class="custom-select"  v-model="period.period">
+                    <option selected>Select Period</option>
+                    <option v-if="pool[0].status" val="0">P0</option> 
+                    <option v-if="pool[1].status" val="1">P1</option> 
+                    <option v-if="pool[2].status" val="2">P2</option> 
+                    <option v-if="pool[3].status" val="3">P3</option> 
+                    <option v-if="pool[4].status" val="4">P4</option> 
+                    <option v-if="pool[5].status" val="5">P5</option> 
+                    <option v-if="pool[6].status" val="6">P6</option> 
+                    <option v-if="pool[7].status" val="7">P7</option> 
+                </select>
+            </div>
+            <div class="form-group-days">
+                <label v-if="Periods.indexOf(period)==0">Days</label>
             <div>
                 <button class="btn btn-secondary dropdown-toggle align-items-end btn-block dropdown-class select-class-placeholder" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span :id="period.uid">Select</span>
                 </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <div class="checkbox dropdown-item checkbox-container" >
+                <div class="dropdown-menu mr-auto ml-auto" aria-labelledby="dropdownMenuButton">
+                    <div class="checkbox dropdown-item checkbox-container mr-auto ml-auto" >
                         <input type="checkbox" value="M" v-model="period.days" @change="checkbox_changed($event, period.uid, period.days)"><label class="checkbox-label">Monday</label>
                     </div>
-                    <div class="checkbox dropdown-item checkbox-container">
+                    <div class="checkbox dropdown-item checkbox-container mr-auto ml-auto">
                         <input type="checkbox" value="T" v-model="period.days" @change="checkbox_changed($event, period.uid, period.days)"><label class="checkbox-label">Tuesday</label>
                     </div>
-                    <div class="checkbox dropdown-item checkbox-container">
+                    <div class="checkbox dropdown-item checkbox-container mr-auto ml-auto">
                         <input type="checkbox" value="W" v-model="period.days" @change="checkbox_changed($event, period.uid, period.days)"><label class="checkbox-label">Wednesday</label>
                     </div>
-                    <div class="checkbox dropdown-item checkbox-container">
+                    <div class="checkbox dropdown-item checkbox-container mr-auto ml-auto">
                         <input type="checkbox" value="Th" v-model="period.days" @change="checkbox_changed($event, period.uid, period.days)"><label class="checkbox-label">Thursday</label>
                     </div>
-                    <div class="checkbox dropdown-item checkbox-container">
+                    <div class="checkbox dropdown-item checkbox-container mr-auto ml-auto">
                         <input type="checkbox" value="F" v-model="period.days" @change="checkbox_changed($event, period.uid, period.days)"><label class="checkbox-label">Friday</label>
                     </div>
                 </div>
 
             </div>
         </div>
-        <div class="form-group col-2">
+        <div class="form-group-starttime">
             <label v-if="Periods.indexOf(period)==0">Start Time</label>
             <input type="time" class="form-control"   v-model="period.start_time">
         </div>
-        <div class="form-group col-2 dropdown">
+        <div class="form-group-endtime dropdown">
             <label v-if="Periods.indexOf(period)==0">End Time</label>
             <input type="time" class="form-control"   v-model="period.end_time">
             <div>
@@ -56,7 +56,7 @@
         </div>
     </div>
 </form>
-        <button id="btn-class-add" type="button" class="btn btn-primary btn-lg btn-block ml-4 col-8" @click="pushPeriod()">
+        <button id="btn-class-add" type="button" class="btn btn-primary btn-lg btn-block" @click="pushPeriod()">
             <i class="material-icons font-weight-bold add-button">add</i>
         </button>
         <!-- <button class="btn-lg" @click="view(Class)"></button> -->
@@ -195,8 +195,9 @@ export default {
 #delete_class {
     cursor: pointer;
     color: lightgray;
-    margin-top: 15px;
+    margin-top: 22px;
     font-size: 100%;
+    margin-left:42px;
 }
 .first_trash {
     padding-top:31px;
@@ -216,7 +217,7 @@ input, input:focus, select, select:focus{
     background-color: rgb(222, 223, 224);
     color: white;
     outline: none !important;
-    font-weight:100;
+    font-weight:300;
     height: 50px;
     border-color: #dbdcde;
     box-shadow: none !important;
@@ -230,7 +231,7 @@ input, input:focus, select, select:focus{
     background-color: rgb(222, 223, 224) !important;
     color: white;
     outline: none !important;
-    font-weight:100;
+    font-weight:300;
     height: 50px;
     border-color: #dbdcde;
     box-shadow: none !important;
@@ -259,7 +260,10 @@ input::placeholder {
     color: #eca0be;
     border-radius: 50px;
     height:50px;
-    width:1025px;
+    width:682px;
+    margin-left:220px;
+    margin-top:10px;
+
  }
 
   #btn-class-add:hover{
@@ -287,6 +291,30 @@ input::placeholder {
     background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3E%3Cpath fill='white' d='M2 0L0 2h4zm0 5L0 3h4z'/%3E%3C/svg%3E")
 }
 
+.form-row {
+    margin-left:150px;
+    margin-right:125px;
+}
+
+.form-group-period {
+    width:100px;
+    margin:5px;
+}
+
+.form-group-days {
+    width:250px;
+    margin:5px;
+}
+
+.form-group-starttime {
+    width:150px;
+    margin:5px;
+}
+
+.form-group-endtime {
+    width:150px;
+    margin:5px;
+}
+
 
 </style>
- 

@@ -93,23 +93,51 @@ export default {
 #the_best_next_button{
     width: 150px;
     position: fixed;
-    bottom: 10vh;
-    right: 10vw; 
+    bottom: 5vh;
+    right: 5vw; 
+    font-weight: bold;
+    font-color: rgb(222, 223, 224);
+    border-radius: 50px;
+    background-color:rgb(220, 221, 222);
+    border-color:rgb(220, 221, 222);
+}   
+
+#the_best_next_button:hover {
+    width: 150px;
+    position: fixed;
+    bottom: 5vh;
+    right: 5vw; 
     font-weight: bold;
     border-radius: 50px;
-    background-color: rgb(220, 221, 222);
-    border-color: rgb(220, 221, 222);
-}   
+    font-color: rgb(222, 223, 224);
+    background-color:#404041;
+    border-color:#404041;
+} 
 
 #the_best_prev_button{
     display: none;
     width: 150px;
     position: fixed;
-    bottom: 10vh;
-    left: 10vw; 
+    bottom: 5vh;
+    left: 5vw; 
     font-weight: bold;
+    font-color: rgb(222, 223, 224);
     border-radius: 50px;
-    background-color: rgb(220, 221, 222);
-    border-color: rgb(220, 221, 222);
+    background-color:rgb(220, 221, 222);
+    border-color:rgb(220, 221, 222);
+}
+
+#the_best_prev_button:hover{
+    display: none;
+    width: 150px;
+    position: fixed;
+    bottom: 5vh;
+    left: 5vw; 
+    font-weight: bold;
+    font-color: rgb(222, 223, 224);
+    border-radius: 50px;
+    background-color:#404041;
+    border-color:#404041;
+
 }
 </style>

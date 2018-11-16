@@ -90,7 +90,7 @@ export default {
 <style>
 .pc-button {
         font-family: "Raleway";
-        font-weight:100;
+        font-weight:300;
         font-style: Italic;
         background-color: #eca0be;
         color: white;

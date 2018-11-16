@@ -103,7 +103,7 @@ input, input:focus{
     border-radius: 50px;
     font-size: 18px;
     padding-left:20px;
-    font-weight:100;
+    font-weight:300;
     font-family: "Raleway";
     background-color: rgb(222, 223, 224);
     color: white;
@@ -113,7 +113,7 @@ input, input:focus{
     box-shadow: none !important;
 }
 input::placeholder { 
-    font-weight:100;
+    font-weight:300;
     color: white;
     font-style:italic;
 

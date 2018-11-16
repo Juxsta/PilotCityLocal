@@ -1,6 +1,6 @@
 <template>
     <div>
-        <w_flock />
+        <w_ptype />
     </div>
 </template>
 <script>
@@ -20,6 +20,7 @@ import w_solutions_picker from '@/components/wizard/employer/w_solutions_picker'
 import w_department from '@/components/wizard/employer/w_department'
 import w_employer_story from '@/components/wizard/employer/w_employer_story'
 import w_flock from '@/components/wizard/employer/w_flock'
+import w_ptype from '@/components/wizard/teacher/w_ptype'
 
 
 
@@ -47,6 +48,7 @@ export default {
         w_solutions_picker,
         w_department,
         w_employer_story,
+        w_ptype,
     }
 }
 </script>

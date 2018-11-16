@@ -127,7 +127,7 @@ export default {
     font-size:15px;
     color:white;
     padding: 5px;
-    font-weight:100;
+    font-weight:300;
 }
 
 .icon-add {

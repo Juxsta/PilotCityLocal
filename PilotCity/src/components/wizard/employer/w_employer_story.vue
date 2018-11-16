@@ -90,7 +90,7 @@ export default {
 <style>
 .pc-button {
         font-family: "Raleway";
-        font-weight:100;
+        font-weight:300;
         font-style: Italic;
         background-color: #ae90b0;
         color: white;
@@ -107,7 +107,7 @@ export default {
 }
 .pc-button::placeholder {
     color:white;
-    font-weight:500i;
+    font-weight:300;
     font-size:20px;
     text-align: center;
 
@@ -115,6 +115,7 @@ export default {
 
 .pc-button::placeholder:focus {
     color:#ae90b0 !important;
+    border:transparent;
 
 }
 .teacher-story{
