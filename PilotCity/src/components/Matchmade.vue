@@ -14,38 +14,46 @@
                     <div class="filter-button">Class Size</div>
                 </div>
 
-                <div class="cardstock d-flex row-12 container p-0 m-0">
+                    <div class="cardstock d-flex row-12 container">
 
-                    <div class="card d-flex flex-column">
-                        <div class="col-2">
-                            <div class="d-flex flex-row">
-                                <div class="col-2"></div>
-                                <div class="col-6">
-                                    <div class="col"
-                                </div>
-                                <div class="col-4"></div>
+<div class="card container">
 
-                            </div>
+    <div class="one h-25">
+        <h2 class="card-title">Computer Science AP</h2>
+    </div>
 
-                        </div>
+    <div class="two d-flex flex-row h-50">
+        <div class="four w-25">
+            <h4 class="card-subtitle">Teacher</h4>
+            <h4 class="card-subtitle">Grades</h4>
+            <h4 class="card-subtitle">Class Size</h4>
+            <h4 class="card-subtitle">District</h4>
+            <h4 class="card-subtitle">School</h4>
+            <h4 class="card-subtitle">Address</h4>
+        </div>
+        <div class="five w-75">
+            <h4 class="card-subtitle-text">Anthony Keithley</h4>
+            <h4 class="card-subtitle-text">9th, 10th, 11th</h4>
+            <h4 class="card-subtitle-text">20-25</h4>
+            <h4 class="card-subtitle-text">San Leandro Unified</h4>
+            <h4 class="card-subtitle-text">San Leandro High School</h4>
+            <h4 class="card-subtitle-text">2250 Bancroft Avenue, San Leandro, CA 94577</h4>
+        </div>
+    </div>
 
-                        <div class="col-10">
+    <div class="three h-25">
+        <hr class="card-line"></hr>
+        <div class="pc-tag">Text</div>
+    </div>
 
-                        </div>
+</div>
 
-
-
-
-                        <hr class="card-line mt-auto m-0">
-
-                    </div>
-
-                </div>
+    </div>
 
             </div>
             </div>
 
-            <div class="google-maps container col-5 m-0 ml-auto p-0">Map</div>
+            <div class="google-maps container col-5 m-0 ml-auto p-0"></div>
                     
         </div>
     </div>
@@ -57,6 +65,63 @@
 
 
 <style>
+
+.pc-tag {
+    width: 150px;
+    height:31px;
+    margin-top:12px;
+    margin-bottom:12px;
+    margin-left: 12px;
+    border-radius:25px;
+    text-align: center;
+    padding-top:6px;
+    font-family: "Raleway";
+    font-weight: 700;
+    color:#ffffff;
+    font-size:12px;
+    background-color:#eca0be;
+}
+
+.one {
+    background-color: transparent;
+
+}
+
+.two {
+    background-color: transparent;
+}
+
+.three {
+    background-color: transparent;
+}
+
+.four {
+    background-color: transparent;
+}
+
+.five {
+    background-color: transparent;
+}
+
+.six {
+    background-color:#dbdcde;
+}
+
+.seven {
+    background-color: #3c9ccc;
+}
+
+.eight {
+    background-color: #f79960;
+}
+
+.nine {
+    background-color: #fdd25a;
+}
+
+.ten {
+    background-color:#eca0be;
+}
 
 .entire-box {
     background-color: #f79960;
@@ -111,15 +176,18 @@
 
 .card {
     width:750px;
-    height:200px;
+    height:225px;
     margin: 20px auto 20px auto;
     border: dashed 1px #dbdcde;
     border-radius: 25px;
+    padding:0px;
+
 }
 
 .card-line {
     border-style: dashed;
-    padding-bottom: 50px;
+    padding:0px;
+    margin:0px;
 }
 
 .card-title {
@@ -127,19 +195,35 @@
     font-size: 18px;
     font-weight: 700;
     color: #939597;
-    margin: 15px 15px 15px 15px;
+    width: 500px;
+    margin: 14px 0px 14px 100px;
+
 }
 
 .card-subtitle {
     font-family: "Raleway";
     font-size: 12px;
     font-weight: 700;
+    text-align: right;
+    color: #939597;
+    padding:1px 5px 1px 1px;
+    margin:0;
+}
+
+.card-subtitle-text {
+    font-family: "Raleway";
+    font-size: 12px;
+    font-weight: 300;
+    text-align: left;
+    color: #939597;
+    padding:1px 1px 1px 5px;
+    margin:0;
+
 }
 
 .google-maps {
     background-color: #3c9ccc;
     height:100%;
 }
-
 
 </style>
