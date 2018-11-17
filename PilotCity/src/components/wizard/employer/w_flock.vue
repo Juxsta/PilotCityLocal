@@ -13,6 +13,8 @@
 </template>
 
 <script>
+import { bus } from '../../../main'
+import { Prompter } from '../../../main'
 import tagging from "@/components/wizard/tools/tagging.vue"
 export default {
     name:"w_flock",
@@ -27,6 +29,26 @@ export default {
     },
     components: {
         flock_tag: tagging
+    },
+    created() {
+         var self = this;
+        bus.$on('grab_data', function(obj){
+        if (obj.step != 'employer_flock')
+            return ;
+        if (self.question_keywords.length){
+            var obj = {};
+            obj['employer_question_keywords'] = {
+                selected_question_keywords: self.question_keywords
+            }
+            bus.$emit('form_completed', obj);
+            bus.$emit('validated');
+            console.log('validated')
+            return;
+        }
+        else{
+            Prompter().failed("You're missing a few things","Hey there,");
+        }
+    });
     }
 }
 </script>

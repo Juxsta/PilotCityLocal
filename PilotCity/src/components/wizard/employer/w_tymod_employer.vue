@@ -1,7 +1,7 @@
 <template>
     <div class="container-fluid m-auto justify-content-center">
         <!-- Modal -->
-        <div class="modal fade" id="thankyou-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal fade" id="employer-thankyou-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document" >
             <div class="modal-content pc-light-gray">
             <div class="d-flex flex-column modal-body">
