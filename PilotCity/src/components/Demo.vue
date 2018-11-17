@@ -15,6 +15,7 @@
             <w_solutions_picker id="w_solutions_picker" class="animated fadeIn" />
             <w_solutions_tagging id="w_solutions_tagging" class="animated fadeIn" />
             <w_flock id="w_flock" class="animated fadeIn"  />
+            <w_tymod_employer />
 
         <Button_next />
     </div>
@@ -42,6 +43,8 @@ import w_skills from '@/components/wizard/teacher/w_skills'
 import w_class from '@/components/wizard/teacher/w_class'
 import w_ptype from '@/components/wizard/teacher/w_ptype'
 import w_tymod from '@/components/wizard/teacher/w_tymod'
+import w_tymod_employer from '@/components/wizard/employer/w_tymod_employer'
+
 import firebase from '@/firebase/init'
 
 
@@ -76,7 +79,8 @@ export default {
         w_solutions_picker,
         w_solutions_tagging,
         w_department,
-        w_flock
+        w_flock,
+        w_tymod_employer
     },
     methods:{
         movePage: function(dirct, step, arr){

@@ -61,7 +61,7 @@ export default {
         },
         increment: function(){
             bus.$emit('move', {dirct: 'right', step: this.step++});
-            if (this.step == 6 && this.role==teacher)
+            if (this.step == 6 && this.role=='teacher')
                 document.getElementById("the_best_next_button").innerHTML = 'Finish';
             if(this.step == 7)
                 document.getElementById("the_best_next_button").innerHTML='Finish';
@@ -93,12 +93,13 @@ export default {
             self.role = role;
         });
         bus.$on('validated', ()=> { 
-            if (this.step == 6 && this.role==teacher){
+            if (this.step == 6 && this.role=='teacher'){
                 $('#thankyou-modal').modal('show');
                 bus.$emit('submit');
                 return ;
             }    
-            if(this.step == 7 && this.role==employer) {
+            if(this.step == 7 && this.role=='employer') {
+                $('#employer-thankyou-modal').modal('show');
                 bus.$emit('submit');
                 return;
             }
