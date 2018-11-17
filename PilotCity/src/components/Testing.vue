@@ -1,6 +1,6 @@
 <template>
     <div>
-        <w_ptype />
+        <Matchmade />
     </div>
 </template>
 <script>
@@ -21,7 +21,9 @@ import w_department from '@/components/wizard/employer/w_department'
 import w_employer_story from '@/components/wizard/employer/w_employer_story'
 import w_flock from '@/components/wizard/employer/w_flock'
 import w_ptype from '@/components/wizard/teacher/w_ptype'
-
+import w_curriculum from '@/components/wizard/teacher/w_curriculum'
+import Matchmade from '@/components/Matchmade'
+import w_tymod_employer from '@/components/wizard/employer/w_tymod_employer'
 
 
 export default {
@@ -49,6 +51,9 @@ export default {
         w_department,
         w_employer_story,
         w_ptype,
+        w_curriculum,
+        Matchmade,
+        w_tymod_employer,
     }
 }
 </script>
