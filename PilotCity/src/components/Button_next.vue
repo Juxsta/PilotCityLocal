@@ -21,34 +21,50 @@ export default {
                 case 1:
                     if (this.role == 'teacher')
                         bus.$emit('grab_data', { step: 'story_teacher'});
+                    if (this.role  == 'employer')
+                        bus.$emit('grab_data', { step: 'story_employer'});
                 break ;
                 case 2:
                     if (this.role  == 'teacher')
                         bus.$emit('grab_data', { step: 'story_teacher_address'});
+                    if (this.role  == 'employer')
+                        bus.$emit('grab_data', { step: 'story_employer_address'});
                 break ;
                 case 3:
                     if (this.role  == 'teacher')
                         bus.$emit('grab_data', { step: 'teacher_class'});
+                    if (this.role  == 'employer')
+                        bus.$emit('grab_data', { step: 'employer_sector'});
                 break ;
                 case 4:
                     if (this.role  == 'teacher')
                         bus.$emit('grab_data', { step: 'teacher_ptype'});
+                    if(this.role == 'employer')
+                        bus.$emit('grab_data', {step: 'employer_industry'})
                 break ;
                 case 5:
                     if (this.role  == 'teacher')
                         bus.$emit('grab_data', { step: 'teacher_skills'});
+                    if(this.role == 'employer')
+                        bus.$emit('grab_data', {step: 'employer_solution_type'})
                 break ;
                 case 6:
                     if (this.role  == 'teacher')
                         bus.$emit('grab_data', { step: 'teacher_industry'});
+                    if(this.role =='employer')
+                        bus.$emit('grab_data', {step: 'employer_solution_keywords'})
                 break ;
+                case 7:
+                    if(this.role == 'employer')
+                        bus.$emit('grab_data', {step:'employer_flock'})
             }
         },
         increment: function(){
             bus.$emit('move', {dirct: 'right', step: this.step++});
-            if (this.step == 6)
+            if (this.step == 6 && this.role==teacher)
                 document.getElementById("the_best_next_button").innerHTML = 'Finish';
-            
+            if(this.step == 7)
+                document.getElementById("the_best_next_button").innerHTML='Finish';
         },
         goforward: function(){
             document.getElementById('the_best_prev_button').style.display = "block";
@@ -77,12 +93,15 @@ export default {
             self.role = role;
         });
         bus.$on('validated', ()=> { 
-            if (this.step == 6){
+            if (this.step == 6 && this.role==teacher){
                 $('#thankyou-modal').modal('show');
                 bus.$emit('submit');
                 return ;
             }    
-            
+            if(this.step == 7 && this.role==employer) {
+                bus.$emit('submit');
+                return;
+            }
         
         self.increment() });
     }
