@@ -1,13 +1,10 @@
 <template>
     <div class="container Raleway font-weight-bold mt-5">
+        
         <div class="d-flex flex-col justify-content-center">
-            <h2 class="justify-content-center">If you had a flock of fresh minds to generate solutions for you,</h2>
-        </div>
-        <div class="d-flex flex-col justify-content-center">
-            <h2 class="justify-content-center">what challenge would you ask them to solve?</h2>
-        </div>
-        <div class="d-flex flex-col justify-content-center">
-            <w_flock />
+
+            <w_curriculum />
+             
         </div>
     </div>
 </template>
@@ -24,7 +21,9 @@ import w_solutions_tagging from '@/components/wizard/employer/w_solutions_taggin
 import w_tags from '@/components/wizard/employer/w_tags'
 import w_bottom_line from '@/components/wizard/employer/w_bottom_line'
 import w_flock from '@/components/wizard/employer/w_flock'
+import w_curriculum from '@/components/wizard/teacher/w_curriculum'
 export default {
+
     name: 'Etesting',
     data (){
         return {
@@ -44,7 +43,8 @@ export default {
         w_solutions_tagging,
         w_tags,
         w_bottom_line,
-        w_flock
+        w_flock,
+        w_curriculum
     }
 }
 </script>
