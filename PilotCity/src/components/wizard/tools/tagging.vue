@@ -2,15 +2,17 @@
     <div class="component">
         <form class=" justify-content-center" >
             <div class="pc-panel-tagspanel" >
-                <div class="d-flex flex-row">
+                <div class="d-flex flex-row mb-2">
                         <div class="input-group-text">
                                 <h3 class="pc-keyword-title">{{name}}</h3>
                         </div>
                         <input type="text" class="pc-input-box" :placeholder="placeholder" @keypress.enter.prevent="input_addtoIDB(keyword,selected_keywords)" v-model="keyword">
                     </div>
         <hr class="frame-line-break" />
-            <div class="ml-3 mb-3">
-                <span class="badge badge-pill badge-primary tag-capitalize pr-3 ml-1 mr-1 mb-1 mt-1" v-for="(keyword,index) in selected_keywords" :key="keyword + index" :class="colors[index%7]">
+            <div class="ml-3">
+                <span class="badge badge-pill badge-primary tag-capitalize pr-3 ml-1 mr-1 mb-1 mt-1" 
+                v-for="(keyword,index) in selected_keywords" :key="keyword + index" :class="colors[index%7]">
+                
                     <div class="d-flex">
                         <a href="" @click.prevent>
                             <i class="material-icons icon-clear" @click="rm_Keyword(keyword)">clear</i>
@@ -54,16 +56,16 @@ export default {
         },
         keywords: {
             type: Array
-        }},
+        },
+        selected_keywords: {
+            type:Array            
+        }
+        },
+    
     data () {
         return {
             keyword: null,
             colors: ['pc-green', 'pc-blue', 'pc-yellow', 'pc-orange', 'pc-pink', 'pc-purple','pc-red'],
-            industry_keywords: [
-                'Drones','Robotics','Data Science','Internet of Things','Sustainability','Space',
-                'Artificial Inteligence','Automotive','Bioprinting','Data','Drones','Gaming','Healthcare','Lifestyle'
-                ],
-            selected_keywords:[]
         };
     },
     methods:{
@@ -89,15 +91,6 @@ export default {
 }
 </script>
 <style scoped>
-
-.frame-line-break {
-    margin-top:1px;
-}
-.input-group-text {
-    background-color:transparent;
-    border-color: #ffffff;
-}
-
 .pc-tag {
     margin: 5px;
     font-size: 12px;
@@ -131,6 +124,7 @@ export default {
     border: dashed 1px #dbdcde;
     border-radius:50px;
     width: 1000px;
+    padding-top:20px;
     padding-bottom:20px;
 }
 
@@ -140,8 +134,8 @@ export default {
     font-weight: 700;
     color:#939597;
     padding-top:9px;
-    margin-left:20px;
-    margin-right:20px;
+    margin-left:15px;
+    margin-right:15px;
 }
 
 .pc-input-box {
@@ -150,8 +144,8 @@ export default {
     color:#dbdcde;
     font-style: italic;
     font-size:20px;
+    padding-left:30px;
     width:750px;
-    background: transparent;
 }
 
 .pc-input-box::placeholder{

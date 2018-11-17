@@ -7,6 +7,7 @@
         name="Problems"
         placeholder="Enter keywords that describe problems you want students to solve"
         :keywords=flock_keywords
+        :selected_keywords=question_keywords
         ></flock_tag>
     </div>
 </template>
@@ -17,7 +18,11 @@ export default {
     name:"w_flock",
     data () {
         return {
-            flock_keywords: ['Identifying Use Cases' , 'Developing Case Studies' , 'Community Engagement' , 'Automation' , 'Sales' , 'Training Talent' , 'Implementing Technology' , 'Technology Adoption' , 'Partnerships' , 'Public Relations' , 'Social Media Marketing' , 'Entrepreneurial Culture' , 'Women Empowerment' , 'Diversity & Inclusion']
+            flock_keywords: ['Identifying Use Cases' , 'Developing Case Studies' , 'Community Engagement' , 
+            'Automation' , 'Sales' , 'Training Talent' , 'Implementing Technology' , 'Technology Adoption' , 
+            'Partnerships' , 'Public Relations' , 'Social Media Marketing' , 'Entrepreneurial Culture' , 
+            'Women Empowerment' , 'Diversity & Inclusion'],
+            question_keywords:[]
         }
     },
     components: {

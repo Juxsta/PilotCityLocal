@@ -4,24 +4,61 @@
             <h1 class="Raleway solutions-picker-label">Do you have a product and/or service?</h1>
         </div>
         <div class="d-flex justify-content-center mt-5">
-                <button class="btn button-square solutions-picker-btn color-blue" @click="pickRole(0)">Product</button>
-                <button class="btn button-square solutions-picker-btn color-yellow" @click="pickRole(1)">Service</button>
+                <button class="btn button-square solutions-picker-btn color-blue" 
+                data-toggle="buttons" 
+                @click="isProduct = !isProduct"
+                :class="{border_gray:isProduct}">Product</button>
+                <button class="btn button-square solutions-picker-btn color-yellow" data-toggle="buttons"
+                 @click="isService = !isService"
+                 :class="{border_gray:isService}">Service</button>
         </div>
     </div>
 </template>
 
 <script>
+import { bus } from '../../../main'
+import { Prompter } from '../../../main'
+
 export default {
     name:'w_solutions_picker',
     data () {
         return {
-
+            isProduct:false,
+            isService:false
         }
-    }
+    },
+    methods: {
+
+    },
+    created(){
+    var self = this;
+    console.log(self.isProduct || self.isService)  
+    bus.$on('grab_data', function(obj){
+        if (obj.step != 'employer_solution_type')
+            return ;
+        if (self.isProduct || self.isService){
+            var obj = {};
+            obj['employer_solution_type'] = {
+                isProduct: self.isProduct,
+                isService: self.isService
+            }
+            bus.$emit('solution_type',[self.isProduct,self.isService])
+            bus.$emit('form_completed', obj);
+            bus.$emit('validated');
+            return;
+        }
+        else{
+            Prompter().failed("You're missing a few things","Hey there,");
+        }
+    });
+}
 }
 </script>
 
 <style scoped>
+.border_gray {
+    border: solid 5px lightgray !important;
+}
 .button-regular {
     background-color:#6eba7f;
     width:250px;

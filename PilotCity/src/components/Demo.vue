@@ -8,6 +8,14 @@
             <w_skills id="w_skills" class="animated fadeIn" />
             <w_ptype id="w_ptype" class="animated fadeIn" />
             <w_tymod />
+            <w_employer_story id="w_employer_story" class="animated fadeIn" />
+            <w_address id="w_address" class="animated fadeIn" />
+            <w_sector id="w_sector" class="animated fadeIn" />
+            <w_tags id="w_tags" class="animated fadeIn"  />
+            <w_solutions_picker id="w_solutions_picker" class="animated fadeIn" />
+            <w_solutions_tagging id="w_solutions_tagging" class="animated fadeIn" />
+            <w_flock id="w_flock" class="animated fadeIn"  />
+
         <Button_next />
     </div>
 </template>
@@ -19,12 +27,15 @@ import ClassPicker from '@/components/ClassPicker'
 
 import w_teacher_address from '@/components/wizard/teacher/w_teacher_address'
 import w_address from '@/components/wizard/employer/w_address'
+import w_bottom_line from '@/components/wizard/employer/w_bottom_line'
+import w_solutions_picker from '@/components/wizard/employer/w_solutions_picker'
+import w_solutions_tagging from '@/components/wizard/employer/w_solutions_tagging'
+import w_department from '@/components/wizard/employer/w_department'
+import w_flock from '@/components/wizard/employer/w_flock'
 import w_sector from '@/components/wizard/employer/w_sector'
 import w_tags from '@/components/wizard/employer/w_tags'
+import w_employer_story from '@/components/wizard/employer/w_employer_story'
 import w_story from '@/components/wizard/teacher/w_story'
-import w_department from '@/components/wizard/employer/w_department'
-import w_bottom_line from '@/components/wizard/employer/w_bottom_line'
-import w_question from '@/components/wizard/employer/w_question'
 import Button_next from '@/components/Button_next'
 import w_industry from '@/components/wizard/teacher/w_industry'
 import w_skills from '@/components/wizard/teacher/w_skills'
@@ -40,7 +51,7 @@ export default {
         return{
             authUser: null,
             role: null,
-            e_w_wizards: ['#w_story', '#w_address', '#w_sector', '#w_question'],
+            e_w_wizards: ['#w_employer_story', '#w_address', '#w_sector', '#w_tags','#w_solutions_picker','#w_solutions_tagging','#w_flock'],
             t_w_wizards: ['#w_story', '#w_teacher_address', '#w_class', '#w_ptype', '#w_skills', '#w_industry'],
             data_arr: [],
             db_doc: {}
@@ -54,14 +65,18 @@ export default {
         w_story,
         w_department,
         w_bottom_line,
-        w_question,
         Button_next,
         w_industry,
         w_skills,
         w_teacher_address,
         w_class,
         w_ptype,
-        w_tymod
+        w_tymod,
+        w_employer_story,
+        w_solutions_picker,
+        w_solutions_tagging,
+        w_department,
+        w_flock
     },
     methods:{
         movePage: function(dirct, step, arr){
@@ -69,6 +84,7 @@ export default {
                 if (dirct == 'right') {
                     $(arr[(step - 1)]).hide();
                     $(arr[step]).show();
+                    console.log(step)
                 } else {
                     this.data_arr.pop();
                     $(arr[(step - 1)]).show();
@@ -136,7 +152,8 @@ export default {
 
 <style>
 #w_address, 
-#w_question, #w_story, #w_teacher_address, #w_tags, #w_industry, #w_class, #w_skills, #w_ptype{
+#w_flock, #w_story, #w_teacher_address, #w_industry, #w_class, #w_skills, #w_ptype,
+ #w_employer_story, #w_solutions_picker, #w_solutions_tagging, #w_department, #w_sector, #w_tags {
     display: none;
 }
 
