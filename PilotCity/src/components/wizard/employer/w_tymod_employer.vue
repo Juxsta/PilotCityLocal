@@ -5,13 +5,13 @@
         <div class="modal-dialog modal-dialog-centered" role="document" >
             <div class="modal-content pc-light-gray">
             <div class="d-flex flex-column modal-body">
-                    <h2 class="Raleway font-weight-bold ml-auto mr-auto text-thank-you">Thank you</h2>
+                    <h2 class="Raleway font-weight-bold ml-auto mr-auto text-thank-you-employer">Thank you</h2>
                 <div class="ml-auto mr-auto">
                     <img src='@/assets/matchmake_employer.png' alt="Matchmake" id='Matchmake' >
                 </div>
                     <h2 class="ml-auto mr-auto text-title-notify">We will notify you when your match results are available.</h2>
                 <div class="ml-auto mr-auto">
-                    <button class="btn btn-lg button-over-out" @click="out">Over and out</button>
+                    <button class="btn btn-lg button-over-out-employer" @click="out">Over and out</button>
                 </div>
             </div>
             </div>
@@ -51,7 +51,7 @@ export default {
     font-size: 30px;
 }
 
-.text-thank-you {
+.text-thank-you-employer {
     font-family: Raleway;
     color: #ae90b0;
     text-align: center;
@@ -59,7 +59,7 @@ export default {
     margin-top:25px;
 }
 
-.button-over-out {
+.button-over-out-employer {
     border-radius: 50px;
     font-family: Raleway;
     font-weight: 700;
@@ -72,7 +72,7 @@ export default {
     color:  #ae90b0;
 }
 
-.button-over-out:hover {
+.button-over-out-employer:hover {
     border-radius: 50px;
     font-family: Raleway;
     font-weight: 700;

@@ -97,6 +97,10 @@ export default {
     background-color:#fdd25a;
 }
 
+.color-orange{
+    background-color:#f79960;
+}
+
 .solutions-picker-label{
     color: rgb(222, 223, 224);
     font-style: italic;

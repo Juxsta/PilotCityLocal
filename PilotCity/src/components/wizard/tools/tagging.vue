@@ -3,13 +3,13 @@
         <form class=" justify-content-center" >
             <div class="pc-panel-tagspanel" >
                 <div class="d-flex flex-row mb-2">
-                        <div class="input-group-text">
+                        <div>
                                 <h3 class="pc-keyword-title">{{name}}</h3>
                         </div>
                         <input type="text" class="pc-input-box" :placeholder="placeholder" @keypress.enter.prevent="input_addtoIDB(keyword,selected_keywords)" v-model="keyword">
                     </div>
         <hr class="frame-line-break" />
-            <div class="ml-3">
+            <div class="ml-4">
                 <span class="badge badge-pill badge-primary tag-capitalize pr-3 ml-1 mr-1 mb-1 mt-1" 
                 v-for="(keyword,index) in selected_keywords" :key="keyword + index" :class="colors[index%7]">
                 
@@ -25,7 +25,7 @@
             </div>
 
         <hr class="frame-line-break" />
-            <div class="ml-3">
+            <div class="ml-4 mr-4">
                 <span class="badge badge-pill badge-primary ml-1 mb-1 mt-1 mr-1 pr-3" v-for="(value,i) in keywords" :key="value + i" :class="colors[i%7]">
                     <div class="d-flex" v-if="notFound(value,selected_keywords)">
                         <a href="" @click.prevent>
@@ -94,7 +94,7 @@ export default {
 .pc-tag {
     margin: 5px;
     font-size: 12px;
-    padding-right:20px;
+    padding-right:30px;
     padding-left:0px;
 
 }
@@ -124,8 +124,8 @@ export default {
     border: dashed 1px #dbdcde;
     border-radius:50px;
     width: 1000px;
-    padding-top:20px;
-    padding-bottom:20px;
+    padding-top:15px;
+    padding-bottom:15px;
 }
 
 .pc-keyword-title {
@@ -134,8 +134,8 @@ export default {
     font-weight: 700;
     color:#939597;
     padding-top:9px;
-    margin-left:15px;
-    margin-right:15px;
+    margin-left:30px;
+    margin-right:30px;
 }
 
 .pc-input-box {
@@ -144,7 +144,6 @@ export default {
     color:#dbdcde;
     font-style: italic;
     font-size:20px;
-    padding-left:30px;
     width:750px;
 }
 

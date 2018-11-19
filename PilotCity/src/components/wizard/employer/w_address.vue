@@ -1,11 +1,11 @@
 <template>
-   <div class="container mt-5 pt-5">
+   <div class="container p-auto mt-5 pt-5">
         <form class="mt-3" > 
-            <div class="form-group">
+            <div class="form-group-address col-md-10 pl-0 pr-0 justify-content-center">
                 <label for="inputAddress">Employer Address</label>
                 <input type="text" class="form-control"  placeholder="435 Portage Avenue" v-model="address.street" @keyup.ctrl="skip">
             </div>
-            <div class="form-row" >
+            <div class="form-row justify-content-center" >
                 <div class="form-group col-md-6">
                     <label for="inputCity">City</label>
                     <input type="text" class="form-control"  placeholder="Palo Alto" v-model="address.city">
@@ -62,6 +62,11 @@ export default {
 </script>
 
 <style>
+
+.form-group-address{
+    margin:auto;
+    margin-bottom: 20px;
+}
 .btn-address-purple{
     border-style: dotted;
     background-color: white;
