@@ -4,9 +4,9 @@
             
             <div class="d-flex  col-7 justify-content-center m-0 p-0">
 
-            <div class="leftside flex-column d-flex col-12 p-0 m-0">
+            <div class="leftside justify-content-center flex-column d-flex col-12 p-0 m-0">
 
-                <div class="filter-bar justify-content-center d-flex flex-row container p-0 m-0">
+                <div class="filter-bar justify-content-center d-flex flex-row container">
                     <div class="filter-button">Courses</div>
                     <div class="filter-button">Skills</div>
                     <div class="filter-button">Grades</div>
@@ -14,12 +14,18 @@
                     <div class="filter-button">Class Size</div>
                 </div>
 
-                    <div class="cardstock d-flex row-12 container">
+                    <div class="cardstock d-flex flex-column row-12 container">
+
+        <h2 class="text-classroom-matches">100+ Classrooms Recommended</h2>
 
 <div class="card container">
 
-    <div class="one h-25">
+    <div class="one d-flex flex-row h-25">
+        <i class="material-icons justify-content-center" id="favorite_border">favorite_border</i>
         <h2 class="card-title">Computer Science AP</h2>
+        <i class="material-icons justify-content-center" id="email">email</i>
+        <button class="action-button mt-3">Accept</button>
+        <i class="material-icons action-button-decline">clear</i>
     </div>
 
     <div class="two d-flex flex-row h-50">
@@ -42,8 +48,16 @@
     </div>
 
     <div class="three h-25">
+
         <hr class="card-line"></hr>
-        <div class="pc-tag">Text</div>
+
+        <span class="d-flex mr-2 ml-2">
+            <h3 class="pc-tag1">Python</h3>
+            <h3 class="pc-tag2">Javascript</h3>
+            <h3 class="pc-tag3">C++</h3>
+            <h3 class="pc-tag4">iOS</h3>
+            <h3 class="pc-tag5">Android</h3>             
+        </span>
     </div>
 
 </div>
@@ -53,7 +67,9 @@
             </div>
             </div>
 
-            <div class="google-maps container col-5 m-0 ml-auto p-0"></div>
+            <div class="google-maps container col-5 m-0 ml-auto p-0">
+                <google-map />
+            </div>
                     
         </div>
     </div>
@@ -61,30 +77,229 @@
 
 <script>
 
+import GoogleMap from "@/components/GoogleMap";
+
+export default {
+  name: "Matchmade",
+  components: {
+    GoogleMap
+  }
+};
+
 </script>
 
 
 <style>
 
-.pc-tag {
+.text-classroom-matches {
+    font-family: 'Raleway';
+    font-size: 20px;
+    color: #939597;
+    font-weight: 700;
+    margin: 30px auto 15px auto;
+}
+
+.pc-tag1 {
     width: 150px;
     height:31px;
     margin-top:12px;
     margin-bottom:12px;
-    margin-left: 12px;
+    margin-left: 6px;
+    margin-right: 6px;
     border-radius:25px;
     text-align: center;
-    padding-top:6px;
+    padding-top:8px;
     font-family: "Raleway";
     font-weight: 700;
     color:#ffffff;
     font-size:12px;
-    background-color:#eca0be;
+    background-color:#6eba7f;
+}
+
+.pc-tag2 {
+    width: 150px;
+    height:31px;
+    margin-top:12px;
+    margin-bottom:12px;
+    margin-left: 6px;
+    margin-right: 6px;
+    border-radius:25px;
+    text-align: center;
+    padding-top:8px;
+    font-family: "Raleway";
+    font-weight: 700;
+    color:#ffffff;
+    font-size:12px;
+    background-color:#3c9ccc;
+}
+
+.pc-tag3 {
+    width: 150px;
+    height:31px;
+    margin-top:12px;
+    margin-bottom:12px;
+    margin-left: 6px;
+    margin-right: 6px;
+    border-radius:25px;
+    text-align: center;
+    padding-top:8px;
+    font-family: "Raleway";
+    font-weight: 700;
+    color:#ffffff;
+    font-size:12px;
+    background-color:#ea6763;
+}
+
+.pc-tag4 {
+    width: 150px;
+    height:31px;
+    margin-top:12px;
+    margin-bottom:12px;
+    margin-left: 6px;
+    margin-right: 6px;
+    border-radius:25px;
+    text-align: center;
+    padding-top:8px;
+    font-family: "Raleway";
+    font-weight: 700;
+    color:#ffffff;
+    font-size:12px;
+    background-color:#fdd25a;
+}
+
+.pc-tag5 {
+    width: 150px;
+    height:31px;
+    margin-top:12px;
+    margin-bottom:12px;
+    margin-left: 6px;
+    margin-right: 6px;
+    border-radius:25px;
+    text-align: center;
+    padding-top:8px;
+    font-family: "Raleway";
+    font-weight: 700;
+    color:#ffffff;
+    font-size:12px;
+    background-color:#f79960;
+}
+
+#favorite_border {
+    color:#dbdcde;
+    margin: auto 0px auto 35px;
+}
+
+#favorite_border:hover {
+    color:#eca0be;
+    margin: auto 0px auto 35px;
+    cursor: pointer;
+}
+
+#favorite_border:active {
+    color:#c47e9b;
+    margin: auto 0px auto 35px;
+    cursor: pointer;
 }
 
 .one {
     background-color: transparent;
 
+}
+
+.action-button {
+    width:125px;
+    height:25px;
+    border-radius: 50px;
+    background-color: #ffffff;
+    border: solid 2px #6eba7f;
+    color: #6eba7f;
+    font-family: 'Raleway';
+    font-weight:700;
+    font-size: 11px;
+    margin:auto;
+    padding-top: 3px;
+}
+
+.action-button:hover {
+    width:125px;
+    height:25px;
+    border-radius: 50px;
+    background-color: #6eba7f;
+    border: 0px;
+    color: #ffffff;
+    font-family: 'Raleway';
+    font-weight:700;
+    font-size: 11px;
+    margin:auto;
+    padding-top: 3px;
+}
+
+.action-button:active {
+    width:125px;
+    height:25px;
+    border-radius: 50px;
+    background-color: #408b54;
+    border: 0px;
+    color: #ffffff;
+    font-family: 'Raleway';
+    font-weight:700;
+    font-size: 11px;
+    margin:auto;
+    padding-top: 3px;
+}
+
+.action-button-decline {
+    border-radius:5px;
+    width:17px;
+    height: 17px;
+    background-color: #ea6763;
+    border: 0px;
+    margin: auto 20px auto auto;
+    color: #ffffff;
+    font-size: 80%;
+    text-align: center;
+    padding-top:3px;
+    font-weight: 700;
+    cursor: pointer;
+
+}
+
+.action-button-decline:hover {
+    border-radius:5px;
+    width:17px;
+    height: 17px;
+    background-color: #bb3e40;
+    border: 0px;
+    margin: auto 20px auto auto;
+}
+
+.action-button-decline:active {
+    border-radius:5px;
+    width:17px;
+    height: 17px;
+    background-color: #ea6763;
+    border: 0px;
+    margin: auto 20px auto auto;
+}
+
+#email {
+    font-size: 22px;
+    color: #c6c8ca;
+    margin: auto;
+}
+
+#email:hover {
+    font-size: 22px;
+    color: #939597;
+    margin: auto;
+    cursor: pointer;
+}
+
+#email:active {
+    font-size: 22px;
+    color: #c6c8ca;
+    margin: auto;
+    cursor: pointer;
 }
 
 .two {
@@ -195,8 +410,9 @@
     font-size: 18px;
     font-weight: 700;
     color: #939597;
-    width: 500px;
-    margin: 14px 0px 14px 100px;
+    width: 400px;
+    margin: 14px 0px 14px 35px;
+    padding-top: 3px;
 
 }
 

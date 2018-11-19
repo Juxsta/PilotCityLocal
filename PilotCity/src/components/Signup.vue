@@ -22,7 +22,7 @@
                             <i class="material-icons" id="account_circle_signup">account_circle</i>
                         </div>
                         </div>
-                        <input type="email" class="form-control form-rounded padding form-active form-active" id="signup-input-username"  placeholder="Email" v-model="signup_input_username">
+                        <input type="email" class="form-control form-rounded padding form-active" id="signup-input-username"  placeholder="Email" v-model="signup_input_username">
                     </div>
                 </div>
                 <div class="col-auto form-margin">
@@ -145,8 +145,8 @@ export default {
 }
 .form-rounded {
     border-radius: 50px;
-    background-color: #414042;
-    color: #ffffff !important;
+    background-color: #414042 !important;
+    color: #ffffff;
 
 }
 .form-active:focus-within {

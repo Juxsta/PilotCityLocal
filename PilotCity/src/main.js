@@ -3,7 +3,15 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import swal from 'sweetalert';
+import swal from 'sweetalert'
+import * as VueGoogleMaps from "vue2-google-maps";
+
+Vue.use(VueGoogleMaps, {
+    load: {
+      key: "AIzaSyCKAqodQ85PnaiSX_oJfxveubj-qil0W7k",
+      libraries: "places" // necessary for places input
+    }
+  });
 
 Vue.config.productionTip = false
 

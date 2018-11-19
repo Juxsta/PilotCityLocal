@@ -57,8 +57,9 @@ export default {
 .btn-circle {
     width:250px;
     height:250px;
-    border-radius: 200px;
-    margin: auto 20px;
+    border-radius: 250px;
+    margin: auto 15px;
+    padding: 35px 35px 35px 35px;
     font-family: 'Raleway';
     font-weight:700 !important;
     font-size: 30px;
