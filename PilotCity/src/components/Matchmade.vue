@@ -2,7 +2,7 @@
     <div>
         <div class="entire-box d-flex flex-row">
             
-            <div class="d-flex  col-7 justify-content-center m-0 p-0">
+            <div class="d-flex col-7 justify-content-center m-0 p-0">
 
             <div class="leftside justify-content-center flex-column d-flex col-12 p-0 m-0">
 
@@ -62,12 +62,14 @@
 
 </div>
 
-    </div>
+</div>
+
+
 
             </div>
             </div>
 
-            <div class="google-maps container col-5 m-0 ml-auto p-0">
+            <div class="google-maps container col-5 m-0 p-0">
                 <google-map />
             </div>
                     
@@ -340,12 +342,12 @@ export default {
 
 .entire-box {
     background-color: #f79960;
-    height: 700px;
 }
 
 .leftside {
     background-color: #fdd25a;
-    height: 700px;
+    height: 100vh;
+    overflow:scroll;
 
 }
 
@@ -386,7 +388,8 @@ export default {
 
 .cardstock {
     background-color: #ffffff;
-    height:100%
+    height:100%;
+    overflow:scroll;
 }
 
 .card {
@@ -439,7 +442,6 @@ export default {
 
 .google-maps {
     background-color: #3c9ccc;
-    height:100%;
 }
 
 </style>
