@@ -14,17 +14,46 @@
 <script>
 import { bus } from '@/main'
 import { Prompter } from '@/main'
+import firebase from '@/firebase/init'
+
 export default {
     name:'ClassPicker',
+    data () {
+        return {
+            userdata: {
+                Email: "null",
+                isEmployer: false,
+                isStudent: false,
+                isTeacher: false,
+            }
+        }
+    },
+    watch: {
+        userdata: {
+            handler () {
+                const db = firebase.firestore();
+                let user = firebase.auth().currentUser
+                db.collection("Users").doc(user.uid).set(this.userdata).then( () => {
+                    console.log(user)
+                })
+            },
+            deep:true
+        }
+    },
     methods:{
         pickRole: function(role){
             switch(role)
             {
                 case 0:
-                    bus.$emit('pickedRole', 'teacher');
+                    this.userdata.isEmployer=false;
+                    this.userdata.isStudent=false;
+                    this.userdata.isTeacher=true;
+                    this.$router.push({name: 'w_story'})
                     break ;
                 case 1:
-                    bus.$emit('pickedRole', 'employer');
+                    this.userdata.isEmployer=true;
+                    this.userdata.isStudent=false;
+                    this.userdata.isTeacher=false;
                     break ;
                 case 2:
                     Prompter().info(" ", "Student to come soon.")
@@ -33,7 +62,7 @@ export default {
                     break ;
             }
         }
-    }
+    },
 }
 </script>
 

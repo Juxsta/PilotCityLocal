@@ -36,11 +36,7 @@ export default {
 	},
 	created() {
 		firebase.auth().onAuthStateChanged((user) => {
-			if(user){
-				this.authUser = true
-			} else {
-				this.authUser = null
-			}
+			this.authUser=user
 		})
 	}
 }

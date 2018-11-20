@@ -12,7 +12,8 @@
 </div>
 </template>
 <script>
-
+import firebase from '@/firebase/init'
+import ClassPickerVue from '../profile_builder/wizard/ClassPicker.vue';
 export default {
     name: "Index",
     data() {
@@ -24,7 +25,13 @@ export default {
         open_modal: function(){
             $('#signup-modal').modal('show');
         }
-    }
+    },
+    beforeCreate() {
+		firebase.auth().onAuthStateChanged((user) => {
+            if(user)
+                this.$router.push({name: 'ClassPicker'})
+		})
+	}
 }
 </script>
 <style>
