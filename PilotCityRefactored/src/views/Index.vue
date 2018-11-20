@@ -5,14 +5,13 @@
                 <h2 id = "title">Connecting classrooms to the big bad world. </h2>
             </div>
             <div class="class d-flex flex-row mb-auto mr-auto ml-5">
-                <button type="button" class="btn btn-primary mr-4" id="index-btn-teachers" @click="open_modal">  For Teachers </button>
-                <button type="button" class="btn btn-primary" id="index-btn-employers" @click="open_modal">  For Employers </button>
+                <button type="button" class="btn btn-primary mr-4" id="index-btn-teachers" >  For Teachers </button>
+                <button type="button" class="btn btn-primary" id="index-btn-employers" >  For Employers </button>
             </div>
         </div> 
 </div>
 </template>
 <script>
-
 export default {
     name: "Index",
     data() {
@@ -21,17 +20,10 @@ export default {
         }
     },
     methods:{
-        open_modal: function(){
-            $('#signup-modal').modal('show');
-        }
     }
 }
 </script>
 <style>
-    * {
-        margin: 0px;
-        padding: 0px;
-    }
     #title{
         font-family: "Raleway";
         font-weight: 700;
@@ -78,10 +70,10 @@ export default {
         border: solid 1px white;
     }
     #canvas{
-        height:calc(100% - 66px);
+        height:calc(100% - 65px);
         width: 100%;
         position: absolute !important;
-        background: url('../../assets/header.jpg') no-repeat;
+        background: url('../assets/header.jpg') no-repeat;
         background-size:cover;
     }
   
