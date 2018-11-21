@@ -1,11 +1,15 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Index from '@/components/landing/Index'
-import ClassPicker from '@/components/profile_builder/wizard/ClassPicker'
 import firebase from 'firebase'
-import w_story from '@/components/profile_builder/wizard/teacher/w_story'
+
+import ClassPicker from '@/components/profile_builder/wizard/ClassPicker'
+
+import w_teacher_story from '@/components/profile_builder/wizard/teacher/w_teacher_story'
 import w_teacher from '@/components/profile_builder/wizard/teacher/w_teacher'
 import w_teacher_address from '@/components/profile_builder/wizard/teacher/w_teacher_address'
+import w_teacher_class from '@/components/profile_builder/wizard/teacher/w_teacher_class'
+import w_teacher_class_schedule from '@/components/profile_builder/wizard/teacher/w_teacher_class_schedule'
 Vue.use(Router)
 
 const router = new Router({
@@ -32,16 +36,26 @@ const router = new Router({
       children: [
         {
           path: '1',
-          name:'w_story',
-          component:w_story
+          name:'w_teacher_story',
+          component:w_teacher_story
         },
         {
           path:'2',
           name:'w_teacher_address',
           component:w_teacher_address
+        },
+        {
+          path:'3',
+          name:'w_teacher_class',
+          component: w_teacher_class
+        },
+        {
+          path:'4',
+          name:'w_teacher_class_schedule',
+          component:w_teacher_class_schedule
         }
       ],
-      beforeEnter: (to,from,next) => {
+      /* beforeEnter: (to,from,next) => {
         const db = firebase.firestore()
         let user = firebase.auth().currentUser
         if (user) {
@@ -57,7 +71,7 @@ const router = new Router({
       },
       meta: {
         requiresAuth: true
-      }
+      } */
     },
 /*     {
       path: '*',

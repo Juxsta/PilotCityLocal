@@ -3,71 +3,81 @@
         <form class="mt-5"> 
             <div class="form-group">
                 <label for="inputAddress">School Address</label>
-                <input type="text" class="form-control" id="inputAddress" placeholder="2250 Bancroft Avenue" v-model="address.street" >
+                <input type="text" class="form-control" id="inputAddress" placeholder="2250 Bancroft Avenue" v-model="data.school_address.street" >
             </div>
             <div class="form-row" >
                 <div class="form-group col-md-6">
                     <label for="inputCity">City</label>
-                    <input type="text" class="form-control" id="inputCity" placeholder="San Leandro" v-model="address.city">
+                    <input type="text" class="form-control" id="inputCity" placeholder="San Leandro" v-model="data.school_address.city">
                 </div>
                 <div class="form-group col-md-2">
                     <label for="inputState">State</label>
-                    <input type="text" class="form-control" id="inputState" placeholder="CA" v-model="address.state">
+                    <input type="text" class="form-control" id="inputState" placeholder="CA" v-model="data.school_address.state">
                 </div>
                 <div class="form-group col-md-2">
                     <label for="inputZip">Zip</label>
-                    <input type="number" class="form-control" id="inputZip" placeholder="94577"  v-model="address.zip">
+                    <input type="number" class="form-control" id="inputZip" placeholder="94577"  v-model="data.school_address.zip">
                 </div>
                 <div class="form-group col-md-2">
                     <label for="inputType">Room #</label>
-                    <input type="text" class="form-control" id="inputType" placeholder="101A" v-model="address.room">
+                    <input type="text" class="form-control" id="inputType" placeholder="101A" v-model="data.room_number">
                 </div>
             </div>
             <div class="form-row">
             </div>
         </form>
+        <next_button 
+            route='w_teacher_class'
+            :conditions="data"
+            collection="teachers"
+            />
    </div>
 </template>
 
 <script>
 import { bus } from '@/main'
 import { Prompter } from '@/main'
+import firebase from '@/firebase/init'
+import button from '@/components/profile_builder/wizard/components/button.vue'
 
 export default {
     name: "w_teacher_address",
     data(){
         return{
-            address: {
-                street: null,
-                city: null,
-                state: null,
-                zip: null,
-                room: null,
+            data: {
+                school_address: {
+                    street: null,
+                    city: null,
+                    state: null,
+                    zip: null,
+                    },
+                room_number: null,
             }
         }
     },
-    methods:{
-       /** delete this skip when in production */
-        skip: function(){
-            bus.$emit('validated');
-        } 
+    components: {
+        next_button:button
     },
-    created(){
-        var self = this;
-        bus.$on('grab_data', obj =>{ 
-            if (obj.step != 'story_teacher_address')
-                return ;
-            if (self.address.street && self.address.city && self.address.state && self.address.zip && self.address.room ){
-                var obj = {};
-                obj['teacher_address'] = self.address;
-                bus.$emit('form_completed', obj);
-                bus.$emit('validated'); 
-            } else { 
-                console.log(self.address)
-                Prompter().failed("You're missing a few things","Hey there,");
+    created () {
+        let data = {
+                school_address: {
+                    street: null,
+                    city: null,
+                    state: null,
+                    zip: null,
+                    },
+                room_number: null,
             }
-                
-        });
+        let user = firebase.auth().currentUser
+        const db = firebase.firestore()
+        db.collection("teachers").doc(user.uid).get().then((doc) => {
+            let obj = doc.data()
+            if (Object.keys(data).every((field) => {
+                return obj.hasOwnProperty(field)
+            })){
+                this.data=obj
+            }
+        })
     }
 }
 </script>

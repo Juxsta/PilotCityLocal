@@ -34,7 +34,6 @@ export default {
                 const db = firebase.firestore();
                 let user = firebase.auth().currentUser
                 db.collection("Users").doc(user.uid).set(this.userdata).then( () => {
-                    console.log(user)
                 })
             },
             deep:true
@@ -48,7 +47,7 @@ export default {
                     this.userdata.isEmployer=false;
                     this.userdata.isStudent=false;
                     this.userdata.isTeacher=true;
-                    this.$router.push({name: 'w_story'})
+                    this.$router.push({name: 'w_teacher_story'})
                     break ;
                 case 1:
                     this.userdata.isEmployer=true;
@@ -61,7 +60,7 @@ export default {
                     bus.$emit('pickedRole', 'student');
                     break ;
             }
-        }
+        },
     },
 }
 </script>

@@ -9,10 +9,10 @@
                 <p class="teacher-story">My name is</p>
             </div>
             <div class="p-2 align-self-start">
-                <input type="text" placeholder="First Name" class="badge-pill pc-button" v-model="first_name" >
+                <input type="text" placeholder="First Name" class="badge-pill pc-button" v-model="data.first_name" >
             </div>
             <div class="p-2 align-self-start">
-                <input type="text" placeholder="Last Name" class="badge-pill pc-button" v-model="last_name"> 
+                <input type="text" placeholder="Last Name" class="badge-pill pc-button" v-model="data.last_name"> 
             </div>
         </div>
         <div class="d-flex flex-row justify-content-center mr-5" >
@@ -20,7 +20,7 @@
                 <p class="teacher-story">and I am a teacher at</p>
             </div>
             <div class="p-2 align-self-start">
-                <input type="text" placeholder="School Name" class="badge-pill pc-button" v-model="school_name">
+                <input type="text" placeholder="School Name" class="badge-pill pc-button" v-model="data.school_name">
             </div>
             <div class="p-2 align-self-center">
                 <p class="teacher-story">of the </p>
@@ -28,18 +28,20 @@
         </div>
         <div class="d-flex flex-row justify-content-center">
             <div class="p-2 align-self-start">
-                <input type="text" placeholder="School District" class="badge-pill pc-button" v-model="school_district">
+                <input type="text" placeholder="School District" class="badge-pill pc-button" v-model="data.school_district">
             </div>
             <div class="p-2 align-self-center">
                 <p class="teacher-story">My phone number is</p>
             </div>
             <div class="p-2 align-self-start">
-                    <input type="number" placeholder="Mobile Number" class="badge-pill pc-button" v-model="phone">
+                    <input type="number" placeholder="Mobile Number" class="badge-pill pc-button" v-model="data.phone">
             </div>
         </div>
         </h4>
         <next_button 
             route='w_teacher_address'
+            :conditions="data"
+            collection="teachers"
             />
 
     </div>
@@ -49,22 +51,41 @@
 
 import { Prompter } from '@/main'
 import button from '@/components/profile_builder/wizard/components/button.vue'
+import firebase from '@/firebase/init'
 export default {
-    name:"w_story",
+    name:"w_teacher_story",
     data() {
         return {
-            first_name:null,
-            last_name:null,
-            school_name:null,
-            school_district:null,
-            phone:null
+            data: {
+                first_name:null,
+                last_name:null,
+                school_name:null,
+                school_district:null,
+                phone:null
+            },
         }
-    },
-    methods:{
-
     },
     components: {
         next_button:button
+    },
+    created () {
+        let data = {
+                first_name:null,
+                last_name:null,
+                school_name:null,
+                school_district:null,
+                phone:null
+            }
+        let user = firebase.auth().currentUser
+        const db = firebase.firestore()
+        db.collection("teachers").doc(user.uid).get().then((doc) => {
+            let obj = doc.data()
+            if (Object.keys(data).every((field) => {
+                return obj.hasOwnProperty(field)
+            })){
+                this.data=obj
+            }
+        })
     }
 }
 </script>

@@ -1,5 +1,5 @@
 <template>
-    <router-view />
+        <router-view />
 </template>
 
 <script>
@@ -7,3 +7,7 @@ export default {
     name: 'w_teacher'
 }
 </script>
+
+<style>
+
+</style>

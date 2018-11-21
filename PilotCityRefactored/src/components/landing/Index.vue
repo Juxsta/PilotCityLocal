@@ -31,7 +31,14 @@ export default {
             if(user)
                 this.$router.push({name: 'ClassPicker'})
 		})
-	}
+    },
+    beforeRouteEnter(to,from,next) {
+        let user = firebase.auth().currentUser
+        if(user)
+            next({name:'ClassPicker'})
+        else
+            next()
+    }
 }
 </script>
 <style>
