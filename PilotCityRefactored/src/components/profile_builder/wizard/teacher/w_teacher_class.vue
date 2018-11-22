@@ -6,11 +6,12 @@
         <div class="form-group col-md-1">
             <label v-if="data.classes.indexOf(period)==0">Period</label>
             <select class="custom-select" id="dropdown_period" 
-             v-model="period.Period" >
+             v-model="period.Period" 
+             @change="periodChange(period)">
                 <option selected v-if="!period.Period">Select Period</option>
-                <option selected v-if="period.Period">{{'P' + period.Period}}</option>
+                <option :id=period.uid v-if="period.Period" :value="period.Period">{{'P' + period.Period}}</option>
                 <option v-for="(val,index) in pool" :key="period.uid + index" 
-                :value="val">{{'P' + val}}</option> 
+                :value="val.toString()">{{'P' + val}}</option> 
             </select>
         </div>
         <div class="form-group col-md-3">
@@ -30,20 +31,26 @@
             <label v-if="data.classes.indexOf(period)==0">Grade</label>
             <div>
                 <button class="btn btn-secondary dropdown-toggle align-items-end btn-block dropdown-class select-class-placeholder" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span :id="period.uid">Select</span>
+                    <span v-if="!period.Grade.length">Selected</span>
+                    <span v-if="period.Grade.length">
+                        <span>Selected:</span>
+                        <span v-for="(grade,index) in period.Grade" :key=index>{{grade}}
+                            <span v-if="period.Grade.indexOf(grade) != period.Grade.length-1">,</span>
+                        </span>
+                    </span>
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <div class="checkbox dropdown-item checkbox-container" >
-                        <input type="checkbox" value="9" v-model="period.Grade" @change="checkbox_changed($event, period.uid, period.Grade)"><label class="checkbox-label">Grade 9</label>
+                        <input type="checkbox" value="9" v-model="period.Grade" ><label class="checkbox-label">Grade 9</label>
                     </div>
                     <div class="checkbox dropdown-item checkbox-container">
-                        <input type="checkbox" value="10" v-model="period.Grade" @change="checkbox_changed($event, period.uid, period.Grade)"><label class="checkbox-label">Grade 10</label>
+                        <input type="checkbox" value="10" v-model="period.Grade" ><label class="checkbox-label">Grade 10</label>
                     </div>
                     <div class="checkbox dropdown-item checkbox-container">
-                        <input type="checkbox" value="11" v-model="period.Grade" @change="checkbox_changed($event, period.uid, period.Grade)"><label class="checkbox-label">Grade 11</label>
+                        <input type="checkbox" value="11" v-model="period.Grade" ><label class="checkbox-label">Grade 11</label>
                     </div>
                     <div class="checkbox dropdown-item checkbox-container">
-                        <input type="checkbox" value="12" v-model="period.Grade" @change="checkbox_changed($event, period.uid, period.Grade)"><label class="checkbox-label">Grade 12</label>
+                        <input type="checkbox" value="12" v-model="period.Grade" ><label class="checkbox-label">Grade 12</label>
                     </div>
                 </div>
 
@@ -104,7 +111,6 @@ export default {
                 }
             } 
         ] },
-            pool:[0,1,2,3,4,5,6,7],
         }
     },
     components: {
@@ -116,7 +122,7 @@ export default {
             var pass = true;
             for (var i = 0; i < self.classes.length; i++){
                 for (var _attr in self.classes[i]){
-                    if (self.classes[i][_attr] == null) {
+                    if (self.classes[i][_attr] == null || !self.classes[i].Grade.length) {
                         pass = false;
                         break ;
                     }
@@ -130,16 +136,30 @@ export default {
             if (pass){
                 return true
             }
+        },
+        pool() {
+            let used_periods=[]
+            let values=['0','1','2','3','4','5','6','7']
+            var self = this.data;
+             for (var i = 0; i < self.classes.length; i++){
+                used_periods.push(self.classes[i].Period)
+             }
+             return values.filter((values) => {
+                 return used_periods.indexOf(values) == -1
+             })
         }
     },
     created () {
-        let user = firebase.auth().currentUser
-        const db = firebase.firestore()
-        db.collection("teachers").doc(user.uid).get().then((doc) => {
-            let obj = doc.data()
-            if (obj.hasOwnProperty('classes') && obj.classes.length) {
-                this.data.classes = obj.classes.filter((classes) => {
-                    return (classes.school_year.start == (new Date()).getFullYear() || classes.school_year.end == (new Date()).getFullYear())
+        firebase.auth().onAuthStateChanged((user) => {
+            if(user) {
+                const db = firebase.firestore()
+                db.collection("teachers").doc(user.uid).get().then((doc) => {
+                    let obj = doc.data()
+                    if (obj.hasOwnProperty('classes') && obj.classes.length) {
+                        this.data.classes = obj.classes.filter((classes) => {
+                            return (classes.school_year.start == (new Date()).getFullYear() || classes.school_year.end == (new Date()).getFullYear())
+                        })
+                    }
                 })
             }
         })
@@ -173,6 +193,10 @@ export default {
                     break   
                 }
         },
+        periodChange(period) {
+            let id = '._'+period.uid
+            $(id).val(period.Period)
+        },
         pushPeriod() {
             this.data.classes.push( {
                 uid: ('_' + Math.random().toString(36).substr(2, 9)),
@@ -185,13 +209,10 @@ export default {
                     max: null
                 },
                 school_year:{
-                    start: 2018,
-                    end: 2019
+                    start: null,
+                    end: null
                 }
             });
-        },
-        checkbox_changed: function(e, id, arr){
-            document.getElementById(id).innerText = 'Selected: ' + arr;
         },
         rmThisClass: function(uid)
         {

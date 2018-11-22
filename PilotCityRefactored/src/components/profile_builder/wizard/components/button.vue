@@ -38,17 +38,21 @@ export default {
     },
     methods: {
         pushRoute() {
-            if (this.pass && Object.values(this.conditions).every((data) => {
-                return data != null
-            })){
-                const db = firebase.firestore()
-                db.collection(this.collection).doc(this.user.uid).set(this.conditions,{merge:true}).then(() => {
-                    this.$router.push({name: this.route})  
-                })
-            }
-            else{
-                Prompter().failed("You're missing a few things","Hey there,")
-            }
+            firebase.auth().onAuthStateChanged((user)=> {
+                if(user) {
+                    if (this.pass && Object.values(this.conditions).every((data) => {
+                    return data != null
+                    })) {
+                    const db = firebase.firestore()
+                    db.collection(this.collection).doc(user.uid).set(this.conditions,{merge:true}).then(() => {
+                        this.$router.push({name: this.route})  
+                    })
+                }
+                else{
+                    Prompter().failed("You're missing a few things","Hey there,")
+                }
+                    }
+            })
         }
     }
 }

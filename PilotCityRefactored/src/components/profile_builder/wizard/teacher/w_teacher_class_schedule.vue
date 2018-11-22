@@ -60,12 +60,12 @@
             <i class="material-icons font-weight-bold add-button">add</i>
         </button>
         <!-- <button class="btn-lg" @click="view(Class)"></button> -->
-        <next_button
+<!--         <next_button
             route='TBD'
             :conditions="data"
             collection="teachers"
             :pass = filled 
-            />
+            /> -->
     </div>
 </template>
 
@@ -126,9 +126,6 @@ export default {
         }
     },
     methods: {
-        skip: function(){
-            bus.$emit('validated');
-        },
         variableSelect(event, Obj) {
                 switch(event.target.value){
                 case '0': 
@@ -166,10 +163,6 @@ export default {
                 end_time:null
             });
         },
-        view(Obj) {
-            for (const prop in Obj) 
-                console.log(prop)
-        },
         checkbox_changed: function(e, id, arr){
             document.getElementById(id).innerText = 'Selected: ' + arr;
         },
@@ -184,8 +177,7 @@ export default {
         },
         selected: function(val) {
             return this.pval.indexOf(val) > -1 || this.selectpval.indexOf(val) > -1 
-        }
-        
+        },
     },
 
 }
