@@ -77,8 +77,8 @@
         <!-- <button class="btn-lg" @click="view(Class)"></button> -->
         <next_button @click="parseData()"
             route='w_teacher_class_schedule'
-            :conditions="data"
-            collection="teachers"
+            :conditions="conditions"
+            :collection="collection"
             :pass = filled
             />
     </div>
@@ -111,12 +111,16 @@ export default {
                 }
             } 
         ] },
+        collection: ['teachers'],
         }
     },
     components: {
         next_button:button
     },
     computed: {
+        conditions () {
+            return [this.data]
+        },
         filled() {
             var self = this.data;
             var pass = true;
@@ -150,15 +154,20 @@ export default {
         }
     },
     created () {
+        var self = this
+        //create an array reference to user and teacher data
+        let data = [self.data]
         firebase.auth().onAuthStateChanged((user) => {
             if(user) {
                 const db = firebase.firestore()
-                db.collection("teachers").doc(user.uid).get().then((doc) => {
+                for(let i = 0;i<self.collection.length;i++)
+                db.collection(self.collection[i]).doc(user.uid).get().then((doc) => {
                     let obj = doc.data()
-                    if (obj.hasOwnProperty('classes') && obj.classes.length) {
-                        this.data.classes = obj.classes.filter((classes) => {
-                            return (classes.school_year.start == (new Date()).getFullYear() || classes.school_year.end == (new Date()).getFullYear())
-                        })
+                    for (let field in data[i]) {
+                        if(obj.hasOwnProperty(field)) {
+                            //modify this to account for active classes
+                            data[i][field]=obj[field]
+                        }    
                     }
                 })
             }

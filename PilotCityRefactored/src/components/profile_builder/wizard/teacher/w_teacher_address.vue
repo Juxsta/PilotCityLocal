@@ -3,24 +3,24 @@
         <form class="mt-5"> 
             <div class="form-group">
                 <label for="inputAddress">School Address</label>
-                <input type="text" class="form-control" id="inputAddress" placeholder="2250 Bancroft Avenue" v-model="data.school_address.street" >
+                <input type="text" class="form-control" id="inputAddress" placeholder="2250 Bancroft Avenue" v-model="teacher_data.school_address.street" >
             </div>
             <div class="form-row" >
                 <div class="form-group col-md-6">
                     <label for="inputCity">City</label>
-                    <input type="text" class="form-control" id="inputCity" placeholder="San Leandro" v-model="data.school_address.city">
+                    <input type="text" class="form-control" id="inputCity" placeholder="San Leandro" v-model="teacher_data.school_address.city">
                 </div>
                 <div class="form-group col-md-2">
                     <label for="inputState">State</label>
-                    <input type="text" class="form-control" id="inputState" placeholder="CA" v-model="data.school_address.state">
+                    <input type="text" class="form-control" id="inputState" placeholder="CA" v-model="teacher_data.school_address.state">
                 </div>
                 <div class="form-group col-md-2">
                     <label for="inputZip">Zip</label>
-                    <input type="number" class="form-control" id="inputZip" placeholder="94577"  v-model="data.school_address.zip">
+                    <input type="number" class="form-control" id="inputZip" placeholder="94577"  v-model="teacher_data.school_address.zip">
                 </div>
                 <div class="form-group col-md-2">
                     <label for="inputType">Room #</label>
-                    <input type="text" class="form-control" id="inputType" placeholder="101A" v-model="data.room_number">
+                    <input type="text" class="form-control" id="inputType" placeholder="101A" v-model="teacher_data.room_number">
                 </div>
             </div>
             <div class="form-row">
@@ -28,8 +28,8 @@
         </form>
         <next_button 
             route='w_teacher_class'
-            :conditions="data"
-            collection="teachers"
+            :conditions="conditions"
+            :collection="collection"
             />
    </div>
 </template>
@@ -44,7 +44,7 @@ export default {
     name: "w_teacher_address",
     data(){
         return{
-            data: {
+            teacher_data: {
                 school_address: {
                     street: null,
                     city: null,
@@ -52,30 +52,33 @@ export default {
                     zip: null,
                     },
                 room_number: null,
-            }
+            },
+            collection: ['teachers']
         }
     },
     components: {
         next_button:button
     },
+    computed: {
+        conditions (){
+            return [this.teacher_data]
+        }
+    },
     created () {
-        let data = {
-                school_address: {
-                    street: null,
-                    city: null,
-                    state: null,
-                    zip: null,
-                    },
-                room_number: null,
-            }
-        let user = firebase.auth().currentUser
-        const db = firebase.firestore()
-        db.collection("teachers").doc(user.uid).get().then((doc) => {
-            let obj = doc.data()
-            if (Object.keys(data).every((field) => {
-                return obj.hasOwnProperty(field)
-            })){
-                this.data=obj
+        var self = this
+        let data = [self.teacher_data]
+        firebase.auth().onAuthStateChanged((user) => {
+            if(user) {
+                const db = firebase.firestore()
+                for(let i = 0;i<self.collection.length;i++)
+                db.collection(self.collection[i]).doc(user.uid).get().then((doc) => {
+                    let obj = doc.data()
+                    for (let field in data[i]) {
+                        if(obj.hasOwnProperty(field)) {
+                            data[i][field]=obj[field]
+                        }    
+                    }
+                })
             }
         })
     }

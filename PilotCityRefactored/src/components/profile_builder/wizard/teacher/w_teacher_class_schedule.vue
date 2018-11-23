@@ -2,19 +2,21 @@
     <div class="container container-fluid justify-content-center mr-auto ml-auto" >
         <form class="mt-5">
             <div class="form-row mt-auto" v-for="period in Periods" :key="period.uid">
-                <i class="material-icons font-weight-bold mr-2" id="delete_class" :class="{first_trash:Periods.indexOf(period)==0}" @click="rmThisClass(period.uid)">clear</i>
+                <i class="material-icons font-weight-bold mr-2" id="delete_class" 
+                :class="{first_trash:Periods.indexOf(period)==0}" 
+                @click="rmThisClass(period.uid)">clear</i>
             <div class="form-group-period">
                 <label v-if="Periods.indexOf(period)==0" >Period</label>
                 <select class="custom-select"  v-model="period.period">
                     <option selected>Select Period</option>
-                    <option v-if="pool[0].status" val="0">P0</option> 
-                    <option v-if="pool[1].status" val="1">P1</option> 
-                    <option v-if="pool[2].status" val="2">P2</option> 
-                    <option v-if="pool[3].status" val="3">P3</option> 
-                    <option v-if="pool[4].status" val="4">P4</option> 
-                    <option v-if="pool[5].status" val="5">P5</option> 
-                    <option v-if="pool[6].status" val="6">P6</option> 
-                    <option v-if="pool[7].status" val="7">P7</option> 
+                    <option v-if="pool[0].status" value="0">P0</option> 
+                    <option v-if="pool[1].status" value="1">P1</option> 
+                    <option v-if="pool[2].status" value="2">P2</option> 
+                    <option v-if="pool[3].status" value="3">P3</option> 
+                    <option v-if="pool[4].status" value="4">P4</option> 
+                    <option v-if="pool[5].status" value="5">P5</option> 
+                    <option v-if="pool[6].status" value="6">P6</option> 
+                    <option v-if="pool[7].status" value="7">P7</option> 
                 </select>
             </div>
             <div class="form-group-days">
@@ -109,7 +111,7 @@ export default {
             var pass = true;
             for (var i = 0; i < self.Periods.length; i++){
                 for (var _attr in self.Periods[i]){
-                    if (self.Periods[i][_attr] == null) {
+                    if (self.Periods[i][_attr] == null && !self.Periods.length) {
                         pass = false;
                         break ;
                     }
@@ -123,7 +125,37 @@ export default {
             if (pass){
                 return true
             }
+        },
+        schedules() {
+            var self = this
+            let schedule = {}
+            var arr = []
+            for (let period = 0; period < self.Periods.length; period++) {
+                /* return self.Periods[period].days[0] */
+                for(let i=0;i<self.Periods[period].days.length;i++){
+                    schedule[self.Periods[period].days[i]]={
+                        start_time:self.Periods[period].start_time,
+                        end_time:self.Periods[period].end_time
+                    }
+                }
+                arr.push({'Period':self.Periods[period].period, schedule})
+                schedule = {}
+            }
+            return arr
+        },
+        merged_schedules() {
+           let merged = []
+            for(let i=0; i<schedules.length;i++) {
+                for(let j=0; j<schedules.length;j++) {
+                    if(i != j && schedules[i].Period == schedules[j].Period) {
+                        Object.assign(schedules[i].schedule,schedules[j].schedule)
+                    }
+                }
+            }
         }
+    },
+    created() {
+
     },
     methods: {
         variableSelect(event, Obj) {

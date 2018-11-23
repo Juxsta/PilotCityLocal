@@ -9,10 +9,10 @@
                 <p class="teacher-story">My name is</p>
             </div>
             <div class="p-2 align-self-start">
-                <input type="text" placeholder="First Name" class="badge-pill pc-button" v-model="data.first_name" >
+                <input type="text" placeholder="First Name" class="badge-pill pc-button" v-model="user_data.first_name" >
             </div>
             <div class="p-2 align-self-start">
-                <input type="text" placeholder="Last Name" class="badge-pill pc-button" v-model="data.last_name"> 
+                <input type="text" placeholder="Last Name" class="badge-pill pc-button" v-model="user_data.last_name"> 
             </div>
         </div>
         <div class="d-flex flex-row justify-content-center mr-5" >
@@ -20,7 +20,7 @@
                 <p class="teacher-story">and I am a teacher at</p>
             </div>
             <div class="p-2 align-self-start">
-                <input type="text" placeholder="School Name" class="badge-pill pc-button" v-model="data.school_name">
+                <input type="text" placeholder="School Name" class="badge-pill pc-button" v-model="teacher_data.school_name">
             </div>
             <div class="p-2 align-self-center">
                 <p class="teacher-story">of the </p>
@@ -28,20 +28,20 @@
         </div>
         <div class="d-flex flex-row justify-content-center">
             <div class="p-2 align-self-start">
-                <input type="text" placeholder="School District" class="badge-pill pc-button" v-model="data.school_district">
+                <input type="text" placeholder="School District" class="badge-pill pc-button" v-model="teacher_data.school_district">
             </div>
             <div class="p-2 align-self-center">
                 <p class="teacher-story">My phone number is</p>
             </div>
             <div class="p-2 align-self-start">
-                    <input type="number" placeholder="Mobile Number" class="badge-pill pc-button" v-model="data.phone">
+                    <input type="number" placeholder="Mobile Number" class="badge-pill pc-button" v-model="user_data.phone">
             </div>
         </div>
         </h4>
         <next_button 
             route='w_teacher_address'
-            :conditions="data"
-            collection="teachers"
+            :conditions="conditions"
+            :collection="collection"
             />
 
     </div>
@@ -56,34 +56,42 @@ export default {
     name:"w_teacher_story",
     data() {
         return {
-            data: {
+            user_data: {
                 first_name:null,
-                last_name:null,
-                school_name:null,
-                school_district:null,
-                phone:null
+                last_name: null,
+                phone: null
             },
+            teacher_data: {
+                school_name:null,
+                school_district:null
+            },
+            collection:['teachers','Users']
         }
     },
     components: {
         next_button:button
     },
+    computed: {
+        conditions() {
+            return [this.teacher_data, this.user_data]
+        }
+    },
     created () {
-        let data = {
-                first_name:null,
-                last_name:null,
-                school_name:null,
-                school_district:null,
-                phone:null
-            }
-        let user = firebase.auth().currentUser
-        const db = firebase.firestore()
-        db.collection("teachers").doc(user.uid).get().then((doc) => {
-            let obj = doc.data()
-            if (Object.keys(data).every((field) => {
-                return obj.hasOwnProperty(field)
-            })){
-                this.data=obj
+        var self = this
+        //create an array reference to user and teacher data
+        let data = [self.teacher_data,self.user_data]
+        firebase.auth().onAuthStateChanged((user) => {
+            if(user) {
+                const db = firebase.firestore()
+                for(let i = 0;i<self.collection.length;i++)
+                db.collection(self.collection[i]).doc(user.uid).get().then((doc) => {
+                    let obj = doc.data()
+                    for (let field in data[i]) {
+                        if(obj.hasOwnProperty(field)) {
+                            data[i][field]=obj[field]
+                        }    
+                    }
+                })
             }
         })
     }

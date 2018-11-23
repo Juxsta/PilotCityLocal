@@ -21,7 +21,7 @@ export default {
     data () {
         return {
             userdata: {
-                Email: "null",
+                email: "null",
                 isEmployer: false,
                 isStudent: false,
                 isTeacher: false,
@@ -31,9 +31,15 @@ export default {
     watch: {
         userdata: {
             handler () {
-                const db = firebase.firestore();
-                let user = firebase.auth().currentUser
-                db.collection("Users").doc(user.uid).set(this.userdata).then( () => {
+                var self = this
+                firebase.auth().onAuthStateChanged((user) => {
+                    if(user){
+                        const db = firebase.firestore();
+                        let user = firebase.auth().currentUser
+                        self.userdata.email = user.email
+                        db.collection("Users").doc(user.uid).set(self.userdata).then( () => {
+                        })
+                    }
                 })
             },
             deep:true
