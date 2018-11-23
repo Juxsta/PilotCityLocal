@@ -11,7 +11,9 @@ import w_teacher_address from '@/components/profile_builder/wizard/teacher/w_tea
 import w_teacher_class from '@/components/profile_builder/wizard/teacher/w_teacher_class'
 import w_teacher_class_schedule from '@/components/profile_builder/wizard/teacher/w_teacher_class_schedule'
 
-import w_employer from '@/components/profile_builder/wizard/employer/employer'
+import w_employer from '@/components/profile_builder/wizard/employer/w_employer'
+import w_employer_story from '@/components/profile_builder/wizard/employer/w_employer_story'
+import w_employer_address from '@/components/profile_builder/wizard/employer/w_employer_address'
 Vue.use(Router)
 
 const router = new Router({
@@ -78,7 +80,19 @@ const router = new Router({
     {
       path:'/wizard/employer',
       name:'w_employer',
-      component: w_employer
+      component: w_employer,
+      children: [
+        {
+          path:'1',
+          name:'w_employer_story',
+          component: w_employer_story
+        },
+        {
+          path:'2',
+          name:'w_employer_address',
+          component: w_employer_address
+        }
+      ]
     }
 /*     {
       path: '*',
@@ -87,7 +101,7 @@ const router = new Router({
   ]
 })
 
-router.beforeEach((to,from,next) =>{
+/* router.beforeEach((to,from,next) =>{
   //check to see if router requires auth
   if(to.matched.some(rec => rec.meta.requiresAuth)){
     // check auth state of user
@@ -102,6 +116,6 @@ router.beforeEach((to,from,next) =>{
   } else {
     next()
   }
-}) 
+})  */
 
 export default router

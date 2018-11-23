@@ -59,6 +59,7 @@ export default {
                     this.userdata.isEmployer=true;
                     this.userdata.isStudent=false;
                     this.userdata.isTeacher=false;
+                    this.$router.push({name: 'w_employer_story'})
                     break ;
                 case 2:
                     Prompter().info(" ", "Student to come soon.")
