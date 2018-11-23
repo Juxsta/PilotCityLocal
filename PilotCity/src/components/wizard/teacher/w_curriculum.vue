@@ -7,8 +7,8 @@
     <input   v-for="course in courses" 
     		type="text" 
     		class="form-control pc-input-box"  
-    		:placeholder="course"
-    		@keypress.enter.prevent="addCurriculum(curriculum,curriculumAdded)" v-model="curriculum">
+    		:placeholder="course.courseTitle"
+    		@keypress.enter.prevent="addCurriculum(course.thisCourseCurriculum,course.courseCurriculumArr)" v-model="course.thisCourseCurriculum">
 
 </div>
 </div>
@@ -27,8 +27,28 @@ export default{
 
     	return{
 
-    		curriculum: null,
-    		courses:["Computer Science" , "Engineering Principles", "Intro to Programming"],
+    		 
+    		courses:[
+
+		    			{
+		    				courseTitle:"Computer Science A",
+		    				courseCurriculumArr:[],
+		    				thisCourseCurriculum: null
+
+		    			} ,
+		    			{
+		    				courseTitle:"Engineering Principles",
+		    				courseCurriculumArr:[],
+		    				thisCourseCurriculum: null
+		    			},
+		    			{
+		    				courseTitle:"Intro to Programming",
+		    				courseCurriculumArr:[],
+		    				thisCourseCurriculum: null
+		    			}
+
+    			],
+
     		curriculumAdded:[],
     		colors: ['pc-green', 'pc-blue', 'pc-yellow', 'pc-orange', 'pc-pink', 'pc-purple','pc-red']
 
@@ -41,11 +61,13 @@ export default{
         },
 
     	addCurriculum(item, array){
-    		if(this.notFound(item,this.curriculumAdded)) {
+    		 
+    			console.log(item)
+    		 	array.push(item)
+    		 	console.log("adding " + item)
+    		 
 
-    		 	this.array.push(item)
-    		}
-    		 this.curriculum = null
+ 
 
     	}
 
