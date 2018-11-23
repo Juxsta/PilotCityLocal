@@ -21,7 +21,7 @@
                             <i class="material-icons" id="account_circle_login">account_circle</i>
                         </div>
                         </div>
-                        <input type="email" class="form-control form-rounded padding form-active form-active" id="login-input-username" placeholder="Email" v-model="login_input_username">
+                        <input type="email" class="form-control form-rounded padding form-active" id="login-input-username" placeholder="Email" v-model="login_input_username">
                     </div>
                 </div>
                 <div class="col-auto form-margin">
@@ -101,6 +101,11 @@ export default {
 
 <style>
 @import url('https://fonts.googleapis.com/css?family=Raleway');
+
+.modal-body{
+    padding:25px;
+}
+
 .Raleway {
 	font-family: 'Raleway';
 	font-weight:800;
@@ -130,19 +135,36 @@ export default {
     width: 80px;
     margin-top:25px;
 }
-.padding{
-    padding: 15px;
-}
-.form-rounded {
-    border-radius: 50px;
-    background-color: #414042;
-    color: #ffffff !important;
-    border-color:#939597;
+
+.input-group-text {
+    border-radius:50px;
+    border: solid 1px #939597;
+    padding: 10px 10px 10px 10px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    height:50px;
 
 }
-.form-active:focus-within {
-    color: #000000 !important;
+
+.form-active{
+    font-size: 15px;
+    font-weight:300;
+    font-family: 'Raleway';
+    color: #ffffff;
+    border-radius: 50px;
+    background-color: #414042;
+    border: solid 1px #939597;
+    padding: 10px 10px 10px 10px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    height:50px;
+    font-color: #ffffff;
 }
+
+.form-active:focus{
+    background-color:#414042;
+}
+
 .icon-blue{
     background-color: #3c9ccc;
 }
@@ -185,26 +207,6 @@ export default {
     transition: all 0.7s;
 }
 
-.form-active:focus{
-    background-color:#414042;
-}
-.form-active{
-    padding: 10px !important;
-    font-size: 15px;
-    font-weight:300;
-    font-family: 'Raleway';
-    color: #939598 !important;
-}
-
-.form-active:focus{
-    color: #939598 !important;
-}
-
-.input-group-text {
-    border-radius:50px;
-    border-color:#939597;
-
-}
 #btn-login {
     width: 138px;
     background-color: #4d4d4f !important;

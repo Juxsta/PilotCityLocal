@@ -4,11 +4,16 @@
 
 <div class="form-group col-md-5">
 
-    <input   v-for="course in courses" 
+<!--     <input   v-for="course in courses" 
     		type="text" 
     		class="form-control pc-input-box"  
+<<<<<<< HEAD
     		:placeholder="course.courseTitle"
     		@keypress.enter.prevent="addCurriculum(course.thisCourseCurriculum,course.courseCurriculumArr)" v-model="course.thisCourseCurriculum">
+=======
+    		:placeholder="course"
+    		@keypress.enter.prevent="addCurriculum(curriculum,curriculumAdded)" v-model="curriculum"> -->
+>>>>>>> 9f3fcbbe04dd0a2e88f6f16383d025d7f4007a1e
 
 </div>
 </div>

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <w_ptype />
+        <Foremployer />
     </div>
 </template>
 <script>
@@ -14,14 +14,17 @@ import w_address from '@/components/wizard/employer/w_address'
 import w_sector from '@/components/wizard/employer/w_sector'
 import w_bottom_line from '@/components/wizard/employer/w_bottom_line'
 import w_solutions_tagging from '@/components/wizard/employer/w_solutions_tagging'
-import w_question from '@/components/wizard/employer/w_question'
 import w_tags from '@/components/wizard/employer/w_tags'
 import w_solutions_picker from '@/components/wizard/employer/w_solutions_picker'
 import w_department from '@/components/wizard/employer/w_department'
 import w_employer_story from '@/components/wizard/employer/w_employer_story'
 import w_flock from '@/components/wizard/employer/w_flock'
 import w_ptype from '@/components/wizard/teacher/w_ptype'
-
+import w_curriculum from '@/components/wizard/teacher/w_curriculum'
+import Matchmade from '@/components/Matchmade'
+import w_tymod_employer from '@/components/wizard/employer/w_tymod_employer'
+import Foremployer from '@/components/Foremployer'
+import Forteacher from '@/components/Forteacher'
 
 
 export default {
@@ -49,6 +52,11 @@ export default {
         w_department,
         w_employer_story,
         w_ptype,
+        w_curriculum,
+        Matchmade,
+        w_tymod_employer,
+        Foremployer,
+        Forteacher,
     }
 }
 </script>

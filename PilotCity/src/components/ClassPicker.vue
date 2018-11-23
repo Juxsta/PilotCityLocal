@@ -24,8 +24,8 @@ export default {
                     bus.$emit('pickedRole', 'teacher');
                     break ;
                 case 1:
-                    Prompter().info(" ", "Employer to come soon.")
-                    return ;
+/*                     Prompter().info(" ", "Employer to come soon.")
+                    return ; */
                     bus.$emit('pickedRole', 'employer');
                     break ;
                 case 2:

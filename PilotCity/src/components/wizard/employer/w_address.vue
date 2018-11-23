@@ -1,26 +1,22 @@
 <template>
-   <div class="container mt-5 pt-5">
-        <form class="mt-3" v-for="address in addresses" :key="address.id"> 
-            <div class="form-group">
+   <div class="container p-auto mt-5 pt-5">
+        <form class="mt-3" > 
+            <div class="form-group-address col-md-10 pl-0 pr-0 justify-content-center">
                 <label for="inputAddress">Employer Address</label>
-                <input type="text" class="form-control" id="inputAddress" placeholder="435 Portage Avenue" v-model="address.street" @keyup.ctrl="skip">
+                <input type="text" class="form-control"  placeholder="435 Portage Avenue" v-model="address.street" @keyup.ctrl="skip">
             </div>
-            <div class="form-row" >
+            <div class="form-row justify-content-center" >
                 <div class="form-group col-md-6">
                     <label for="inputCity">City</label>
-                    <input type="text" class="form-control" id="inputCity" placeholder="Palo Alto" v-model="address.city">
+                    <input type="text" class="form-control"  placeholder="Palo Alto" v-model="address.city">
                 </div>
                 <div class="form-group col-md-2">
                     <label for="inputState">State</label>
-                    <input type="text" class="form-control" id="inputState" placeholder="CA" v-model="address.state">
+                    <input type="text" class="form-control"  placeholder="CA" v-model="address.state">
                 </div>
                 <div class="form-group col-md-2">
                     <label for="inputZip">Zip</label>
-                    <input type="text" class="form-control" id="inputZip" placeholder="94577">
-                </div>
-                <div class="form-group col-md-2">
-                    <label for="inputType">Type</label>
-                    <input type="text" class="form-control" id="inputType" placeholder="Primary/HQ" v-model="address.type">
+                    <input type="text" class="form-control"  placeholder="94577" v-model="address.zip">
                 </div>
             </div>
         </form>
@@ -29,30 +25,48 @@
 
 <script>
 
+import { bus } from '../../../main'
+import { Prompter } from '../../../main'
+
 export default {
-    name: "w-address",
+    name: "w_address",
     data(){
         return{
-            addresses:[
+            address:
             {
-                id: 0,
                 street: "",
                 city: "",
                 state: "",
                 zip: "",
-                type: "",
-            }]
+            }
         }
     },
-    methods:{
-        addAddress: function(){
-            this.addresses.push({});
-        }
+        created(){
+        var self = this;
+        bus.$on('grab_data', obj =>{ 
+            if (obj.step != 'story_employer_address')
+                return ;
+            if (self.address.street && self.address.city && self.address.state && self.address.zip ){
+                var obj = {};
+                obj['employer_address'] = self.address;
+                bus.$emit('form_completed', obj);
+                bus.$emit('validated'); 
+            } else { 
+                console.log(self.address)
+                Prompter().failed("You're missing a few things","Hey there,");
+            }
+                
+        });
     }
 }
 </script>
 
 <style>
+
+.form-group-address{
+    margin:auto;
+    margin-bottom: 20px;
+}
 .btn-address-purple{
     border-style: dotted;
     background-color: white;
