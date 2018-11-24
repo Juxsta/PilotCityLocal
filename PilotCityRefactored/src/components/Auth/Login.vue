@@ -56,7 +56,8 @@
 
 <script>
 import firebase from '@/firebase/init'
-import { bus } from '../main'
+import { bus } from '@/main'
+import ClassPickerVue from '../profile_builder/wizard/ClassPicker.vue';
 
 export default {
     name: 'Login',
@@ -71,7 +72,7 @@ export default {
     methods:{
         login: function(){
             var self = this;
-            firebase.auth().signInWithEmailAndPassword(this.login_input_username, this.login_input_password).then((user)=> {
+            firebase.auth().signInWithEmailAndPassword(this.login_input_username, this.login_input_password).then((cred)=> {
                 if (firebase.auth().currentUser && !firebase.auth().currentUser.emailVerified){
                     self.errormsg = "You have not verified your email account."
                     firebase.auth().signOut()
@@ -79,8 +80,8 @@ export default {
                 }
                 self.login_input_username = "";
                 self.login_input_password = "";
-                bus.$emit('userSignedIn', user);
                 $('#login-modal').modal('hide');
+                this.$router.push({name: 'ClassPicker'})
             }).catch(err => {
                 self.errormsg = err.message; 
                 this.resetmsg=""

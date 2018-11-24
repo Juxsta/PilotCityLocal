@@ -5,6 +5,9 @@
 				<img id="logo-pilotcity" src="@/assets/pilotCitylogo.png" alt="Pilot City Logo">
 		  	</router-link> 
 			<div class="btn-group ml-auto" role="group">
+				<Login v-if="!authUser" id="component-login" />
+				<Signup v-if="!authUser" id="component-signup" />
+				<Logout  v-if="authUser"/>
 			</div>
 	</nav>
 </div>
@@ -13,11 +16,15 @@
 <script>
 
 import firebase from '@/firebase/init'
-
+import Login from '@/components/auth/Login'
+import Logout from '@/components/auth/Logout'
+import Signup from '@/components/auth/Signup'
 export default {
   name: 'Navbar',
   components: {
-
+	  Login,
+	  Logout,
+	  Signup,
   },
   data () {
     return {
@@ -27,6 +34,11 @@ export default {
   methods: {
 
 	},
+	created() {
+		firebase.auth().onAuthStateChanged((user) => {
+			this.authUser=user
+		})
+	}
 }
 
 </script>

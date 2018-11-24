@@ -20,7 +20,7 @@
                         "minute" :10
                     }
                 },
-                "Tuesday": "null",
+                "Tuesday": false,
                 "Wednesday" :{
                     "Start Time" :{
                         "hour" : 9,
@@ -31,7 +31,7 @@
                         "minute" : 10
                     }
                 },
-                "Thursday" : "null",
+                "Thursday" : false,
                 "Friday" :{
                     "Start Time":{
                         "hour": 10,
@@ -42,8 +42,8 @@
                         "minute":10
                     }
                 },
-                "Saturday" : "null",
-                "Sunday" : "null"
+                "Saturday" : false,
+                "Sunday" : false
             },
             "Number of Students":{
                 "Min" : 20,
