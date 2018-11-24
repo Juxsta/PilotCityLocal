@@ -53,7 +53,7 @@ export default {
             i_keyword: null,
             colors: ['pc-green', 'pc-blue', 'pc-yellow', 'pc-orange', 'pc-pink', 'pc-purple','pc-red'],
             industry_keywords: [
-                'Drones','Robotics','Data Science','Internet of Things','Sustainability','Space',
+                'Trades','Heathcare','Drones','Robotics','Data Science','Internet of Things','Sustainability','Space',
                 'Artificial Inteligence','Automotive','Bioprinting','Data','Drones','Gaming','Healthcare','Lifestyle'
                 ],
             selected_ikeywords:[]

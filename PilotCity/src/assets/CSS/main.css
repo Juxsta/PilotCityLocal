@@ -1,3 +1,59 @@
+
+.button-square {
+    width:250px;
+    height:250px;
+    border-radius: 50px;
+    margin: auto 20px;
+    color: white;
+    font-size: 30px;
+    font-weight: 700;
+}
+
+.pc-purple {
+    background-color: #ae90b0;
+}
+.pc-pink {
+    background-color: #eca0be;
+}
+.pc-green {
+    background-color: #6eba7f;
+}
+.pc-blue {
+    background-color: #3c9ccc;
+}
+.pc-orange {
+    background-color: #f79960;
+}
+.pc-yellow {
+    background-color: #fdd25a;
+}
+.pc-red {
+    background-color: #ea6763;
+}
+
+.pc-light-gray{
+    background-color: rgba(65, 64, 66, .95);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .button-circle-select {
     width:410px;
     height:410px;
