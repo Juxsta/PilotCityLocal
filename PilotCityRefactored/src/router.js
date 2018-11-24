@@ -14,6 +14,12 @@ import w_teacher_class_schedule from '@/components/profile_builder/wizard/teache
 import w_employer from '@/components/profile_builder/wizard/employer/w_employer'
 import w_employer_story from '@/components/profile_builder/wizard/employer/w_employer_story'
 import w_employer_address from '@/components/profile_builder/wizard/employer/w_employer_address'
+import w_employer_sector from '@/components/profile_builder/wizard/employer/w_employer_sector'
+import w_employer_industry_keywords from '@/components/profile_builder/wizard/employer/w_employer_industry_keywords'
+import w_employer_picker from '@/components/profile_builder/wizard/employer/w_employer_picker'
+import w_employer_solution_keywords from '@/components/profile_builder/wizard/employer/w_employer_solution_keywords'
+import w_employer_department from '@/components/profile_builder/wizard/employer/w_employer_department'
+
 Vue.use(Router)
 
 const router = new Router({
@@ -91,6 +97,31 @@ const router = new Router({
           path:'2',
           name:'w_employer_address',
           component: w_employer_address
+        },
+        {
+          path: '3',
+          name: 'w_employer_sector',
+          component: w_employer_sector
+        },
+        {
+          path: '4',
+          name: 'w_employer_industry_keywords',
+          component: w_employer_industry_keywords
+        },
+        {
+          path: '5',
+          name: 'w_employer_picker',
+          component: w_employer_picker
+        },
+        {
+          path: '6',
+          name: 'w_employer_solution_keywords',
+          component: w_employer_solution_keywords
+        },
+        {
+          path: '7',
+          name: 'w_employer_department',
+          component: w_employer_department
         }
       ]
     }
