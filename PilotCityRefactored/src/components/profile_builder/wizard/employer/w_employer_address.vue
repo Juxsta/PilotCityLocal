@@ -23,9 +23,8 @@
         </form>
          <next_button
             route='w_employer_sector'
-            text='save and continue'
             :conditions="conditions"
-            v-bind:collection="collection"
+            :collection="collection"
             
             />
    </div>
