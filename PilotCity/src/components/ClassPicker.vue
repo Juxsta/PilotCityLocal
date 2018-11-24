@@ -1,12 +1,13 @@
 <template>
+
     <div class="container-fluid mt-5">
         <div class="d-flex justify-content-center">
-            <h1 class="Raleway class-picker-label">Who are you?</h1>
+            <h1 class="Raleway label-title-gray">Who are you?</h1>
         </div>
         <div class="d-flex justify-content-center mt-5">
-                <button class="btn button-square class-picker-btn color-pink" @click="pickRole(0)">Teacher</button>
-                <button class="btn button-square class-picker-btn color-purple" @click="pickRole(1)">Employer</button>
-                <button class="btn button-square class-picker-btn" @click="pickRole(2)">Student</button>
+                <button class="btn button-square pc-pink" @click="pickRole(0)">Teacher</button>
+                <button class="btn button-square pc-purple" @click="pickRole(1)">Employer</button>
+                <button class="btn button-square pc-green" @click="pickRole(2)">Student</button>
         </div>
     </div>
 </template>
@@ -39,47 +40,56 @@ export default {
 }
 </script>
 
-<style>
-.button-regular {
-    background-color:#6eba7f;
-    width:250px;
-    height:96px;
-    border-radius: 50px;
-    margin: auto 20px;
-}
+<style scoped>
+    
+
+/* Move */
+
 
 .button-square {
-    background-color:#6eba7f;
     width:250px;
     height:250px;
     border-radius: 50px;
-}
-
-.class-picker-btn {
     margin: auto 20px;
     color: white;
     font-size: 30px;
     font-weight: 700;
 }
 
-.color-pink{
-    background-color: rgb(226, 165, 190);
+.pc-purple {
+    background-color: #ae90b0;
+}
+.pc-pink {
+    background-color: #eca0be;
+}
+.pc-green {
+    background-color: #6eba7f;
+}
+.pc-blue {
+    background-color: #3c9ccc;
+}
+.pc-orange {
+    background-color: #f79960;
+}
+.pc-yellow {
+    background-color: #fdd25a;
+}
+.pc-red {
+    background-color: #ea6763;
 }
 
-.color-purple{
-    background-color: rgb(169, 145, 174);
-}
-
-.class-picker-label{
+.label-title-gray {
     color: rgb(222, 223, 224);
     font-style: italic;
     font-weight: 700;
     font-size: 30px;
+    font-family: "Raleway";
 }
-.class-picker-btn:active{
-    transition: all 0.5s;
-    border-color: rgb(222, 223, 224) !important;
-    outline: none !important;
-}
+
+
+
+/* Don't Move */
+
+
 
 </style>

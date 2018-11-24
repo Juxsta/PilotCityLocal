@@ -104,7 +104,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 
 #delete_department {
     cursor: pointer;

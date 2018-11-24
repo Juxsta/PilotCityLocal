@@ -1,17 +1,18 @@
 <template>
-    <div class= "container-fluid " id="canvas">
+    <div class= "container-fluid" id="canvas">
         <div class= "justify-content-left align-items-center">
             <div class="class d-flex col-12 mt-5">
                 <h2 id = "title">Connecting classrooms to the big bad world. </h2>
             </div>
             <div class="class d-flex flex-row mb-auto mr-auto ml-5">
-                <button type="button" class="btn btn-primary mr-4" id="index-btn-teachers" @click="open_modal">  For Teachers </button>
-                <button type="button" class="btn btn-primary" id="index-btn-employers" @click="open_modal">  For Employers </button>
+                <button type="button" class="btn btn-primary mr-4" id="button_forteachers" @click="open_modal">  For Teachers </button>
+                <button type="button" class="btn btn-primary" id="button_foremployers" @click="open_modal">  For Employers </button>
             </div>
         </div> 
 </div>
 </template>
 <script>
+
 import w_tymod from '@/components/wizard/teacher/w_tymod'
 export default {
     name: "Index",
@@ -28,7 +29,7 @@ export default {
 }
 </script>
 <style>
-    #title{
+#title {
         font-family: "Raleway";
         font-weight: 700;
         color: white;
@@ -37,7 +38,7 @@ export default {
         margin-top:190px;
         margin-bottom:40px;
     }
-    #index-btn-teachers{
+#button_forteachers{
         font-family: "Raleway";
         font-size: 20px;
         background-color: #eca0be;
@@ -52,10 +53,11 @@ export default {
         padding-right:30px;
     }
     
-    #index-btn-employers:hover{
+#button_foremployers:hover{
         border: solid 1px white;
     }
-#index-btn-employers {
+
+#button_foremployers {
         font-family: "Raleway";
         font-size: 20px;
         font-weight: 700;
@@ -70,7 +72,7 @@ export default {
         text-align: center;
         border-color: transparent;
     }
-    #index-btn-teachers:hover{
+    #button_forteachers:hover{
         border: solid 1px white;
     }
     #canvas{

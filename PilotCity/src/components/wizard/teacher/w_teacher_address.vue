@@ -2,24 +2,24 @@
    <div class="container mt-5 pt-5">
         <form class="mt-5"> 
             <div class="form-group">
-                <label for="inputAddress">School Address</label>
+                <label class="input-label-pink" for="inputAddress">School Address</label>
                 <input type="text" class="form-control" id="inputAddress" placeholder="2250 Bancroft Avenue" v-model="address.street" >
             </div>
             <div class="form-row" >
                 <div class="form-group col-md-6">
-                    <label for="inputCity">City</label>
+                    <label class="input-label-pink" for="inputCity">City</label>
                     <input type="text" class="form-control" id="inputCity" placeholder="San Leandro" v-model="address.city">
                 </div>
                 <div class="form-group col-md-2">
-                    <label for="inputState">State</label>
+                    <label class="input-label-pink" for="inputState">State</label>
                     <input type="text" class="form-control" id="inputState" placeholder="CA" v-model="address.state">
                 </div>
                 <div class="form-group col-md-2">
-                    <label for="inputZip">Zip</label>
+                    <label class="input-label-pink" for="inputZip">Zip</label>
                     <input type="number" class="form-control" id="inputZip" placeholder="94577"  v-model="address.zip">
                 </div>
                 <div class="form-group col-md-2">
-                    <label for="inputType">Room #</label>
+                    <label class="input-label-pink" for="inputType">Room #</label>
                     <input type="text" class="form-control" id="inputType" placeholder="101A" v-model="address.room">
                 </div>
             </div>
@@ -72,27 +72,9 @@ export default {
 }
 </script>
 
-<style>
-.btn-address-purple{
-    border-style: dotted;
-    background-color: white;
-    border-color: #ae90b0;
-    color: #ae90b0;
-}
-
-.btn-address-purple:hover, 
-.btn-address-purple:active{
-    background-color: #ae90b0 !important;
-    border-color: #ae90b0  !important;
-    color: white;
-}
-.btn-address-purple:focus{
-    outline: none !important;
-}
-</style>
 
 <style scoped>
-label {
+.input-label-pink {
     color: #eca0be;
     font-weight: bold;
     font-size:15px;
