@@ -99,7 +99,7 @@ export default {
                 {status:true},
                 {status:true},
                 {status:true}
-            ]
+            ],
         }
     },
     components: {
@@ -145,14 +145,26 @@ export default {
         },
         merged_schedules() {
            let merged = []
-            for(let i=0; i<schedules.length;i++) {
-                for(let j=0; j<schedules.length;j++) {
-                    if(i != j && schedules[i].Period == schedules[j].Period) {
-                        Object.assign(schedules[i].schedule,schedules[j].schedule)
+            for(let i in this.schedules) {
+                for(let j=1;j < this.schedules.length; j++) {
+                    if(i!=j && this.schedules[i].Period==this.schedules[j].Period) {
+                        
+                        let obj = {}
+                        let new_schedule = {}
+                        obj.Period= this.schedules[i].Period
+                        new_schedule = Object.assign(this.schedules[i].schedule,this.schedules[j].schedule)
+                        obj.schedule = new_schedule
+                        merged.push(obj)
                     }
                 }
+                if(merged.every((obj) => {
+                    return obj.Period != this.schedules[i].Period
+                })) {
+                    merged.push(this.schedules[i])
+                }
             }
-        }
+            return merged
+        },
     },
     created() {
 
@@ -210,6 +222,13 @@ export default {
         selected: function(val) {
             return this.pval.indexOf(val) > -1 || this.selectpval.indexOf(val) > -1 
         },
+        checkMergeConflict(obj1,obj2) {
+            return Object.keys(obj1).every((prop1)=> {
+                return Object.keys(obj2).every((prop2) => {
+                    return prop1 != prop2
+                })
+            })
+        }
     },
 
 }

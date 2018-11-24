@@ -6,13 +6,14 @@
         <div class="d-flex justify-content-center align-items-end" >
                 <button class="btn btn-circle" 
                 v-for="(sector,index) in sector_types" :key="index"
-                :class="colors[index]" @click="changeSector(index)">{{sector_types[index]}}</button>
+                :class="[colors[index], {border_gray: sector_types[index] == employer_data.sector}] " 
+                @click="changeSector(index)" >{{sector_types[index]}}</button>
         </div>
         <next_button
+            ref="next_component"
             route='w_employer_industry_keywords'
-            text='save and continue'
             :conditions="conditions"
-            v-bind:collection="collection"
+            :collection="collection"
             />
     </div>
 </template>
@@ -46,6 +47,8 @@ export default {
     methods: {
         changeSector (index) {
             this.employer_data.sector = this.sector_types[index]
+            var next = this.$refs.next_component
+            next.pushRoute()
         }
     },
     created(){
@@ -71,7 +74,9 @@ export default {
 </script>
 
 <style>
-
+.border_gray {
+    border: solid 5px lightgray;
+}
 .btn-circle {
     width:250px;
     height:250px;

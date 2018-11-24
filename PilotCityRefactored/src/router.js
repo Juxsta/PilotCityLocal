@@ -65,7 +65,7 @@ const router = new Router({
           component:w_teacher_class_schedule
         }
       ],
-      /* beforeEnter: (to,from,next) => {
+/*       beforeEnter: (to,from,next) => {
         const db = firebase.firestore()
         let user = firebase.auth().currentUser
         if (user) {
@@ -78,10 +78,10 @@ const router = new Router({
         }
         else
           next({name: 'ClassPicker'})
-      },
+      }, */
       meta: {
         requiresAuth: true
-      } */
+      }
     },
     {
       path:'/wizard/employer',

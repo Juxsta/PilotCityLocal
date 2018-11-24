@@ -72,7 +72,7 @@ export default {
 
 <style scoped>
 .border_gray {
-    border: solid 5px lightgray !important;
+    border: solid 5px lightgray;
 }
 .button-regular {
     background-color:#6eba7f;

@@ -10,7 +10,6 @@
         </div>
          <next_button
             route='w_employer_picker'
-            text='save and continue'
             :conditions="conditions"
             :collection="collection"
             />

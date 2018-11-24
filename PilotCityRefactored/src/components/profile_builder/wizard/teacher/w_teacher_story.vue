@@ -83,15 +83,16 @@ export default {
         firebase.auth().onAuthStateChanged((user) => {
             if(user) {
                 const db = firebase.firestore()
-                for(let i = 0;i<self.collection.length;i++)
-                db.collection(self.collection[i]).doc(user.uid).get().then((doc) => {
-                    let obj = doc.data()
-                    for (let field in data[i]) {
-                        if(obj.hasOwnProperty(field)) {
-                            data[i][field]=obj[field]
-                        }    
-                    }
-                })
+                for(let i = 0;i<self.collection.length;i++){
+                    db.collection(self.collection[i]).doc(user.uid).get().then((doc) => {
+                        let obj = doc.data()
+                        for (let field in data[i]) {
+                            if(obj.hasOwnProperty(field)) {
+                                data[i][field]=obj[field]
+                            }    
+                        }
+                    })
+                }
             }
         })
     }
