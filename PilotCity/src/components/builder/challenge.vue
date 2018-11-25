@@ -1,6 +1,6 @@
 <template>
 
-<div class="d-flex flex-row p-0 m-0">
+<div class="main-body-gray d-flex flex-row p-0 m-0">
 
 
 
@@ -36,207 +36,55 @@
 
 
 
-<div class="main-bar-2 col-8 m-0 p-0 pt-4">
+<div class="main-bar-2 col-8 m-0 p-0 pt-3">
         
-        <div class="my-challenges-frame container">
-            <div id="my-challenges-title">My Challenges</div>
+        <div class="builder-frame d-flex flex-column container flex-wrap mt-0 pt-0 pr-0 pb-2 pl-0">
 
-            <div class="my-challenges d-flex flex-wrap">
-                <div class="challenge-card-add">
-                    <i class="material-icons" id="add_icon_challenge"> add </i>
-                </div>
+            <div class="active-tab-highlight-1 col-4 d-flex flex-row"></div>
 
-                <div class="challenge-card">
-                    <div class="challenge-card-expand-blue">
-                        <i class="material-icons" id="fullscreen_icon_expand"> fullscreen </i>
-                    </div>
-                </div>
+            <div class="builder-frame-tabs d-flex flex-row">
+                <div class="builder-tab active-tab col-4 pt-3">Challenge</div>
+                <div class="builder-tab deactivated-tab-1 col-4 pt-3">Build</div>
+                <div class="builder-tab deactivated-tab-2 col-4 pt-3">Experience</div>
+            </div>
 
-                <div class="challenge-card">
-                    <div class="challenge-card-expand-red">
-                        <i class="material-icons" id="fullscreen_icon_expand"> fullscreen </i>
-                    </div>
-                </div>
+            <div class="builder-frame-content d-flex flex-column m-auto">
 
-                <div class="challenge-card">
-                    <div class="challenge-card-expand-green">
-                        <i class="material-icons" id="fullscreen_icon_expand"> fullscreen </i>
-                    </div>
+                <div class="challenge-tab-employer-name">DJI</div>
+                <div class="challenge-tab-challenge-name">Smart City Autonomous Drones</div>
+                <div class="challenge-tab-prompt-label">Challenge</div>
+                <div class="challenge-tab-prompt">Prototype a smart city drone solution that solves a challenge of one of your city’s municipal government departments.</div>
+                <div class="my-challenges d-flex flex-wrap pt-4">
+                    <div class="challenge-card-photo"><i class="material-icons" id="add_icon_challenge_photo"> add </i></div>
+                    <div class="challenge-card-photo"><i class="material-icons" id="add_icon_challenge_photo"> add </i></div>
+                    <div class="challenge-card-photo"><i class="material-icons" id="add_icon_challenge_photo"> add </i></div>
+                    <div class="challenge-card-photo"><i class="material-icons" id="add_icon_challenge_photo"> add </i></div>
+                    <div class="challenge-card-photo"><i class="material-icons" id="add_icon_challenge_photo"> add </i></div>
+                    <div class="challenge-card-photo"><i class="material-icons" id="add_icon_challenge_photo"> add </i></div>
                 </div>
-
-                <div class="challenge-card">
-                    <div class="challenge-card-expand-purple">
-                        <i class="material-icons" id="fullscreen_icon_expand"> fullscreen </i>
-                    </div>
-                </div>
-
-                <div class="challenge-card">
-                    <div class="challenge-card-expand-pink">
-                        <i class="material-icons" id="fullscreen_icon_expand"> fullscreen </i>
-                    </div>
-                </div>
+                <div class="challenge-tab-description-label">Description</div>
+                <div class="challenge-tab-description">Drones have proved to be an exciting and useful technology that is ready for commercial exploration. It is currently predominantly used in entertainment, videography, photography and digital media purposes - but as the technology becomes more advanced and policy becomes more mature, we will soon see cutting edge applications that would apply to cities and places to make them into smarter communities when it comes to areas such as logistics, telecommunications, energy, transportation, healthcare and even education. Your project is to use DJI drones and it’s related software applications to create solutions for the challenge prompt above.</div>
                 
-            </div>
+                <div class="challenge-tab-solutions-label">Product & Service</div>
+                <div class="challenge-tab-solutions"></div>
 
+                <div class="challenge-tab-skills-label">Skills</div>
+                <div class="challenge-tab-skills"></div>
 
-        <div class="challenge-details-frame flex-row container flex-wrap pt-2 pr-0 pb-2 pl-0">
-           
-            <div class="d-flex mt-3 mb-3">
-                <h2 class="team-rank col-1">Rank</h2>
-                <h2 class="team-project-name col-5">Project Name</h2>
-                <h2 class="team-completion col-3">Completion</h2>
-                <h2 class="team-id col-3">Project ID</h2>
-            </div>
+                <div class="challenge-tab-industry-label">Industry</div>
+                <div class="challenge-tab-industry"></div>
 
-            <div class="list-item d-flex">
-                <h2 class="team-rank-content col-1">1</h2>
-                <h2 class="team-project-name-content col-5">Drone Road Evaluations</h2>
-                <h2 class="team-completion-content col-3">100%</h2>
-                <h2 class="team-id-content col-3">@abdh8z33u8</h2>
-            </div>
+            <br>
+            <br>
+            <br>
             
-             <hr class="challenge-details-frame-break">
-
-            <div class="list-item d-flex">
-                <h2 class="team-rank-content col-1">1</h2>
-                <h2 class="team-project-name-content col-5">Drone Road Evaluations</h2>
-                <h2 class="team-completion-content col-3">100%</h2>
-                <h2 class="team-id-content col-3">@abdh8z33u8</h2>
             </div>
 
-             <hr class="challenge-details-frame-break">
 
-            <div class="list-item d-flex">
-                <h2 class="team-rank-content col-1">1</h2>
-                <h2 class="team-project-name-content col-5">Drone Road Evaluations</h2>
-                <h2 class="team-completion-content col-3">100%</h2>
-                <h2 class="team-id-content col-3">@abdh8z33u8</h2>
-            </div>
-
-             <hr class="challenge-details-frame-break">
-
-            <div class="list-item d-flex">
-                <h2 class="team-rank-content col-1">1</h2>
-                <h2 class="team-project-name-content col-5">Drone Road Evaluations</h2>
-                <h2 class="team-completion-content col-3">100%</h2>
-                <h2 class="team-id-content col-3">@abdh8z33u8</h2>
-            </div>
-
-             <hr class="challenge-details-frame-break">
-
-            <div class="list-item d-flex">
-                <h2 class="team-rank-content col-1">1</h2>
-                <h2 class="team-project-name-content col-5">Drone Road Evaluations</h2>
-                <h2 class="team-completion-content col-3">100%</h2>
-                <h2 class="team-id-content col-3">@abdh8z33u8</h2>
-            </div>
-
-             <hr class="challenge-details-frame-break">
-
-            <div class="list-item d-flex">
-                <h2 class="team-rank-content col-1">1</h2>
-                <h2 class="team-project-name-content col-5">Drone Road Evaluations</h2>
-                <h2 class="team-completion-content col-3">100%</h2>
-                <h2 class="team-id-content col-3">@abdh8z33u8</h2>
-            </div>
-
-             <hr class="challenge-details-frame-break">
-           
-            <div class="list-item d-flex">
-                <h2 class="team-rank-content col-1">1</h2>
-                <h2 class="team-project-name-content col-5">Drone Road Evaluations</h2>
-                <h2 class="team-completion-content col-3">100%</h2>
-                <h2 class="team-id-content col-3">@abdh8z33u8</h2>
-            </div>
-
-             <hr class="challenge-details-frame-break">
-
-            <div class="list-item d-flex">
-                <h2 class="team-rank-content col-1">1</h2>
-                <h2 class="team-project-name-content col-5">Drone Road Evaluations</h2>
-                <h2 class="team-completion-content col-3">100%</h2>
-                <h2 class="team-id-content col-3">@abdh8z33u8</h2>
-            </div>
-
-             <hr class="challenge-details-frame-break">
-
-            <div class="list-item d-flex">
-                <h2 class="team-rank-content col-1">1</h2>
-                <h2 class="team-project-name-content col-5">Drone Road Evaluations</h2>
-                <h2 class="team-completion-content col-3">100%</h2>
-                <h2 class="team-id-content col-3">@abdh8z33u8</h2>
-            </div>
-
-             <hr class="challenge-details-frame-break">
-
-            <div class="list-item d-flex">
-                <h2 class="team-rank-content col-1">1</h2>
-                <h2 class="team-project-name-content col-5">Drone Road Evaluations</h2>
-                <h2 class="team-completion-content col-3">100%</h2>
-                <h2 class="team-id-content col-3">@abdh8z33u8</h2>
-            </div>
-
-             <hr class="challenge-details-frame-break">
-
-            <div class="list-item d-flex">
-                <h2 class="team-rank-content col-1">1</h2>
-                <h2 class="team-project-name-content col-5">Drone Road Evaluations</h2>
-                <h2 class="team-completion-content col-3">100%</h2>
-                <h2 class="team-id-content col-3">@abdh8z33u8</h2>
-            </div>
-
-             <hr class="challenge-details-frame-break">
-
-            <div class="list-item d-flex">
-                <h2 class="team-rank-content col-1">1</h2>
-                <h2 class="team-project-name-content col-5">Drone Road Evaluations</h2>
-                <h2 class="team-completion-content col-3">100%</h2>
-                <h2 class="team-id-content col-3">@abdh8z33u8</h2>
-            </div>
-
-             <hr class="challenge-details-frame-break">
-
-            <div class="list-item d-flex">
-                <h2 class="team-rank-content col-1">1</h2>
-                <h2 class="team-project-name-content col-5">Drone Road Evaluations</h2>
-                <h2 class="team-completion-content col-3">100%</h2>
-                <h2 class="team-id-content col-3">@abdh8z33u8</h2>
-            </div>
-
-             <hr class="challenge-details-frame-break">
-
-            <div class="list-item d-flex">
-                <h2 class="team-rank-content col-1">1</h2>
-                <h2 class="team-project-name-content col-5">Drone Road Evaluations</h2>
-                <h2 class="team-completion-content col-3">100%</h2>
-                <h2 class="team-id-content col-3">@abdh8z33u8</h2>
-            </div>
-
-             <hr class="challenge-details-frame-break">
-
-            <div class="list-item d-flex">
-                <h2 class="team-rank-content col-1">1</h2>
-                <h2 class="team-project-name-content col-5">Drone Road Evaluations</h2>
-                <h2 class="team-completion-content col-3">100%</h2>
-                <h2 class="team-id-content col-3">@abdh8z33u8</h2>
-            </div>
-
-             <hr class="challenge-details-frame-break">
-
-            <div class="list-item d-flex">
-                <h2 class="team-rank-content col-1">1</h2>
-                <h2 class="team-project-name-content col-5">Drone Road Evaluations</h2>
-                <h2 class="team-completion-content col-3">100%</h2>
-                <h2 class="team-id-content col-3">@abdh8z33u8</h2>
-            </div>
-
+        
+        
         </div>
 
-        <br>
-        <br>
-        <br>
-
-        </div>
 
 </div>
 
@@ -250,7 +98,9 @@
         </div>
 
         <div class="details-bar flex-column">
-            <div class="employer-profile-upload"></div>
+            <div class="employer-profile-upload">
+                <i class="material-icons" id="upload_photo_icon"> add </i>
+            </div>
             <div class="d-flex flex-row">
                 <div class="employer-name-text col-8 p-0">DJI</div>
                 <i class="far fa-edit" id="challenge_edit_icon"></i>
@@ -272,18 +122,25 @@
                     <i class="material-icons" id="add_icon_user"> add </i>
                 </div>
             </div>
-            <div class="details-bar-title">Classroom</div>
+            <div class="details-bar-title">Projects</div>
             <div class="details-bar-display-small flex-column">
-                <span>Computer Science AP</span><br>
-                <span>Period 2</span><br>
-                <span>Irvington High School</span>
+                <span class="project-id-list">@abdh8z33u8</span><br>
+                <span class="project-id-list">@okayukno</span><br>
+                <span class="project-id-list">@waitwhat</span><br>
+                <span class="project-id-list">@hbkbc93345</span><br>
+                <span class="project-id-list">@power39322</span><br>
+                <span class="project-id-list">@abdh8z33u8</span><br>
+                <span class="project-id-list">@okayukno</span><br>
+                <span class="project-id-list">@abdh8z33u8</span><br>
+                <span class="project-id-list">@okayukno</span><br>
+                <span class="project-id-list">@waitwhat</span><br>
+                <span class="project-id-list">@hbkbc93345</span><br>
+                <span class="project-id-list">@power39322</span><br>
+                <span class="project-id-list">@abdh8z33u8</span><br>
+                <span class="project-id-list">@okayukno</span><br>
+            
             </div>
-            <div class="details-bar-title">Code</div>
-            <div class="details-bar-display-code flex-row">
-                <i class="material-icons" id="check_circle_outline">check_circle_outline</i>
-                <span>KB-S-2019-P2</span>
 
-            </div>
         </div>
     
 
@@ -303,9 +160,267 @@
 
 <script>
 
+
+
+
 </script>
 
 <style>
+
+
+/* Builder Specific */
+
+.main-body-gray {
+    background-color: #bbbdc0;
+}
+
+.builder-tab {
+    height: 75px;
+    background-color: #358ab4;
+}
+
+.active-tab-highlight-1 {
+    background-color: #358ab4;
+    text-align: center;
+    vertical-align: center;
+    height:8px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+
+}
+
+.active-tab {
+    background-color: #ffffff;
+    text-align: center;
+    vertical-align: center;
+    font-family: "Raleway";
+    color: #3c9ccc;
+    font-weight: 700;
+    font-size: 25px;
+}
+
+.deactivated-tab-1 {
+    background-color: #b1b3b5;
+    text-align: center;
+    vertical-align: center;
+    font-family: "Raleway";
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 25px;
+}
+
+.deactivated-tab-2 {
+    background-color: #939597;
+    text-align: center;
+    vertical-align: center;
+    font-family: "Raleway";
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 25px;
+    border-top-right-radius: 15px;
+}
+
+.deactivated-tab-3 {
+    background-color: #76787a;
+    text-align: center;
+    vertical-align: center;
+    font-family: "Raleway";
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 25px;
+}
+
+.builder-frame-content {
+    width: 100%;
+    height: fit-content;
+    background-color: #ffffff;
+    padding: 50px 0px 0px 50px;
+    margin: 0px 0px 0px 0px;
+}
+
+.challenge-tab-employer-name {
+    font-family: "Raleway";
+    font-size: 25px;
+    color: #3c9ccc;
+    font-weight: 700;
+    padding: 10px 25px 10px 0px;
+}
+
+.challenge-tab-challenge-name {
+    font-family: "Raleway";
+    font-size: 25px;
+    color: #ffffff;
+    background-color: #dbdcde;
+    font-weight: 700;
+    width: 100%;
+    border-radius: 25px;
+    padding: 10px 25px 10px 25px;
+    margin-left:-25px;
+}
+
+.challenge-tab-prompt-label {
+    font-family: "Raleway";
+    font-size: 20px;
+    color: #3c9ccc;
+    font-weight: 700;
+    margin: 15px 15px 15px 0px;
+
+}
+
+.challenge-tab-prompt {
+    font-family: "Raleway";
+    font-size: 20px;
+    color: #ffffff;
+    background-color: #dbdcde;
+    font-weight: 400;
+    width: 100%;
+    border-radius: 25px;
+    padding: 10px 25px 10px 25px;
+    margin-left:-25px;
+
+}
+
+.challenge-card-photo {
+    width: 119px;
+    height: 166px;
+    border-top-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    border: dashed 1px #dbdcde;
+    margin: 20px 30px 20px 0px;
+}
+
+.challenge-card-photo:hover {
+    width: 119px;
+    height: 166px;
+    border: dashed 1px #dbdcde;
+    border-top-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    margin: 20px 30px 20px 0px;
+    cursor: pointer;
+}
+
+.challenge-card-photo:active {
+    width: 119px;
+    height: 166px;
+    border: dashed 1px #dbdcde;
+    border-top-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    margin: 20px 30px 20px 0px;
+    cursor: pointer;
+
+}
+
+#add_icon_challenge_photo {
+    font-size: 40px;
+    font-weight: 800;
+    color: #dbdcde;
+    margin: 60px 0px 0px 40px;
+}
+
+.challenge-tab-description-label {
+    font-family: "Raleway";
+    font-size: 20px;
+    color: #3c9ccc;
+    font-weight: 700;
+    margin: 15px 15px 15px 0px;
+
+}
+
+.challenge-tab-description {
+    font-family: "Raleway";
+    font-size: 15px;
+    color: #ffffff;
+    background-color: #dbdcde;
+    font-weight: 400;
+    width: 100%;
+    border-radius: 25px;
+    padding: 25px 25px 25px 25px;
+    margin-left:-25px;
+    line-height: 25px;
+
+}
+
+.challenge-tab-solutions-label {
+    font-family: "Raleway";
+    font-size: 20px;
+    color: #3c9ccc;
+    font-weight: 700;
+    margin: 15px 15px 15px 0px;
+
+}
+
+.challenge-tab-solutions {
+    font-family: "Raleway";
+    font-size: 15px;
+    color: #ffffff;
+    background-color: #dbdcde;
+    font-weight: 400;
+    width: 100%;
+    border-radius: 25px;
+    padding: 25px 25px 25px 25px;
+    margin-left:-25px;
+    line-height: 25px;
+
+}
+
+.challenge-tab-skills-label {
+    font-family: "Raleway";
+    font-size: 20px;
+    color: #3c9ccc;
+    font-weight: 700;
+    margin: 15px 15px 15px 0px;
+
+}
+
+.challenge-tab-skills {
+    font-family: "Raleway";
+    font-size: 15px;
+    color: #ffffff;
+    background-color: #dbdcde;
+    font-weight: 400;
+    width: 100%;
+    border-radius: 25px;
+    padding: 25px 25px 25px 25px;
+    margin-left:-25px;
+    line-height: 25px;
+
+}
+
+.challenge-tab-industry-label {
+    font-family: "Raleway";
+    font-size: 20px;
+    color: #3c9ccc;
+    font-weight: 700;
+    margin: 15px 15px 15px 0px;
+
+}
+
+.challenge-tab-industry {
+    font-family: "Raleway";
+    font-size: 15px;
+    color: #ffffff;
+    background-color: #dbdcde;
+    font-weight: 400;
+    width: 100%;
+    border-radius: 25px;
+    padding: 25px 25px 25px 25px;
+    margin-left:-25px;
+    line-height: 25px;
+
+}
+
+
+/* Shared */
+
+
+
+
+/* Dashboard Specific */
+
+
 
 .main-bar-1 {
     height: 100vh;
@@ -437,6 +552,28 @@
     position: absolute;
 }
 
+.employer-profile-upload:hover {
+    width:345px;
+    height: 75px;
+    background-color: #c6c8ca;
+    border-top-left-radius: 15px;
+    font-family: "Raleway";
+    font-weight: 800;
+    font-size: 10px;
+    text-align: center;
+    letter-spacing: 2px;
+    color: #ffffff;
+    right: 0px;
+    position: absolute;
+    cursor: pointer;
+}
+
+#upload_photo_icon {
+    font-size: 30px;
+    font-weight: 800;
+    margin: 25px;
+}
+
 .employer-name-text {
     font-family: "Raleway";
     color: #ffffff;
@@ -557,12 +694,7 @@
     margin: 12px;
 }
 
-#add_icon_challenge {
-    font-size: 40px;
-    font-weight: 800;
-    color:#ffffff;
-    margin: 60px 0px 0px 40px;
-}
+
 
 .details-bar-title {
     font-family: "Raleway";
@@ -588,13 +720,36 @@
 .details-bar-display-small {
     font-family: "Raleway";
     font-size: 13px;
-    height: fit-content;
+    max-height: 200px;
     letter-spacing: 0px;
     font-weight: 600;
     background-color: #c6c8ca;
     border-radius: 20px;
     margin: 12px 20px 0px 0px;
     padding: 15px;
+    overflow: scroll;
+}
+
+/* Button Set */
+
+.project-id-list {
+    line-height:25px;
+    margin: 10px;
+    cursor: pointer;
+}
+
+.project-id-list:hover {
+    line-height:25px;
+    margin: 10px;
+    cursor: pointer;
+    color: #939597;
+}
+
+.project-id-list:active {
+    line-height:25px;
+    margin: 10px;
+    cursor: pointer;
+    color: #404041;
 }
 
 .details-bar-display-code {
@@ -654,40 +809,6 @@
     margin-left: 150px;
     border-radius: 25px;
 
-}
-
-/* Button Set */
-
-.challenge-card-add {
-    width: 119px;
-    height: 166px;
-    background-color: #dbdcde;
-    border-top-right-radius: 20px;
-    border-bottom-left-radius: 20px;
-    border-bottom-right-radius: 20px;
-    margin: 0px 30px 30px 0px;
-}
-
-.challenge-card-add:hover {
-    width: 119px;
-    height: 166px;
-    background-color: #babfc4;
-    border-top-right-radius: 20px;
-    border-bottom-left-radius: 20px;
-    border-bottom-right-radius: 20px;
-    margin: 0px 30px 30px 0px;
-    cursor: pointer;
-}
-
-.challenge-card-add:active {
-    width: 119px;
-    height: 166px;
-    background-color: #9fa5aa;
-    border-top-right-radius: 20px;
-    border-bottom-left-radius: 20px;
-    border-bottom-right-radius: 20px;
-    margin: 0px 30px 30px 0px;
-    cursor: pointer;
 }
 
 /* Button Set */
@@ -848,17 +969,6 @@
 
 .my-challenges{
     height: fit-content;
-}
-
-.challenge-details-frame {
-    width:100%;
-    height: fit-content;
-    background-color: #ffffff;
-    border-radius: 25px;
-    border: dashed 1px #dbdcde;
-    padding: 10px 0px 0px 30px;
-    margin:auto;
-
 }
 
 .team-rank {
