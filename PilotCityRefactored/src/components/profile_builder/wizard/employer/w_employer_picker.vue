@@ -15,7 +15,8 @@
         <next_button
             route='w_employer_solution_keywords'
             :conditions="conditions"
-            v-bind:collection="collection"
+            :collection="collection"
+            :pass="pass"
             />
     </div>
 </template>
@@ -44,6 +45,9 @@ export default {
     computed: {
         conditions(){
             return [this.employer_data]
+        },
+        pass() {
+            return (this.employer_data.isService || this.employer_data.isProduct)
         }
     },
     methods: {

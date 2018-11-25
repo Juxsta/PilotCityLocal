@@ -1,19 +1,24 @@
 <template>
     <div class="container mt-5">
-        <product_tag v-if="isProduct"
+        <product_tag v-if="employer_data.isProduct"
             class="d-flex flex-col justify-content-center"
             name="Product"
-            :keywords=product_keywords
+            :keywords="product_keywords"
             placeholder ="Enter keywords here to describe your product"
-            :selected_keywords="selected_product_keywords"
-        ></product_tag>
-        <service_tag v-if="isService"
+            :selected_keywords="employer_data.selected_product_keywords"
+        />
+        <service_tag v-if="employer_data.isService"
             class="d-flex flex-col justify-content-center mt-3"
             name="Service"
-            :keywords=service_keywords
+            v-bind:keywords="service_keywords"
             placeholder ="Enter keywords here to describe your service"
-            :selected_keywords="selected_service_keywords"
-        ></service_tag>
+            :selected_keywords="employer_data.selected_service_keywords"
+        />
+        <next_button
+            route='w_employer_department'
+            :conditions="conditions"
+            :collection="collection"
+        />
     </div>
 </template>
 
@@ -22,47 +27,55 @@
 import { bus } from '@/main'
 import { Prompter } from '@/main'
 import tagging from '@/components/profile_builder/wizard/components/tagging.vue'
+import button from '@/components/profile_builder/wizard/components/button'
+import firebase from '@/firebase/init'
 export default {
-    name: "w_solutions_tagging",
+    name: "w_employer_solution_keywords",
     data () {
         return {
             product_keywords: [
-                '3D Printers', 'Internet of Things', 
-                'Sensors', 'Automation', 'Virtual Reality', 'Robotics', 'Drones'],
-            service_keywords: ['Manufacturing',
-            'Design', 'Public Safety','Logistics', 
-            'IT', 'Healthcare', 'Energy', 'R&D'],
-            selected_product_keywords: [],
-            selected_service_keywords:[],
-            isProduct:false,
-            isService:false
+                '3D Printers', 'Mapping Software', 
+                'Bioprinter', 'Internet of Things', 'Microchips', 
+                'Sensors', 'Artificial Intelligence', 'Virtual Reality', 'Augmented Reality', 
+                '360 Cameras', 'Robotics', 'Drones', 'Autonomous Vehicles', 'Software', 
+                'Hardware'],
+            service_keywords: ['Manufacturing', 'Economic Development', 'Metal Fabrication', '3D Printing', 
+                '3D Design', 'Game Design', 'Policing', 'Firefighting', 'Logistics', 'Transportation', 
+                'Information Technology', 'Healthcare', 'Energy', 'Digital Design', 'Research & Development'],
+            employer_data:{   
+                selected_product_keywords: [],
+                selected_service_keywords:[],
+                isProduct:false,
+                isService:false
+            },
+            collection: ["employers"],
         }
     },
     components: {
         product_tag:tagging,
-        service_tag:tagging
+        service_tag:tagging,
+        next_button:button,
+    }, 
+    computed: {
+        conditions(){
+            return [this.employer_data]
+        }
     },
     created() {
-        bus.$on('solution_type',(data) => {
-            this.isProduct=data[0],
-            this.isService=data[1]
-        });
-        var self = this;
-        bus.$on('grab_data', function(obj){
-        if (obj.step != 'employer_solution_keywords')
-            return ;
-        if (self.product_keywords.length || self.service_keywords.length){
-            var obj = {};
-            obj['employer_solution_keywords'] = {
-                selected_product_keywords: self.selected_product_keywords,
-                selected_service_keywords: self.selected_service_keywords
-            }
-            bus.$emit('form_completed', obj);
-            bus.$emit('validated');
-            return;
-        }
-        else{
-            Prompter().failed("You're missing a few things","Hey there,");
+        var self = this
+        let data = [self.employer_data]
+        firebase.auth().onAuthStateChanged((user) => {
+        if(user) {
+            const db = firebase.firestore()
+            for(let i = 0;i<self.collection.length;i++)
+            db.collection(self.collection[i]).doc(user.uid).get().then((doc) => {
+                let obj = doc.data()
+                for (let field in data[i]) {
+                    if(obj.hasOwnProperty(field)) {
+                        data[i][field]=obj[field]
+                    }    
+                }
+            })
         }
     });
     }

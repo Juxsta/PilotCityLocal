@@ -89,25 +89,24 @@
                 "Data Science",
                 "Internet of Things"
             ],
-            "Solutions":{
-                "Solution1":{
-                    "Keywords": [
+            "Solutions":[
+                    {"Keywords": [
                         "Drones",
                         "DJI Mavic 2",
                         "DJI Tello",
                         "DJI Spark"
                     ],
                     "Type" : "Product"
-                },
-                "Solution2":{
+                    },
+                    {
                     "Keywords": [
                         "Custom Drones",
                         "Photography",
                         "Aerospace Research"
                     ],
                     "Type" : "Service"
-                }
-            },
+                    }
+                ],
             "ROI" :[
                 "Enterprise Sales",
                 "Building Community",

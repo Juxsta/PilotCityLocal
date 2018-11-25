@@ -27,11 +27,14 @@ export default {
     data () {
         return {
             product_keywords: [
-                '3D Printers', 'Internet of Things', 
-                'Sensors', 'Automation', 'Virtual Reality', 'Robotics', 'Drones'],
-            service_keywords: ['Manufacturing',
-            'Design', 'Public Safety','Logistics', 
-            'IT', 'Healthcare', 'Energy', 'R&D'],
+                '3D Printers', 'Mapping Software', 
+                'Bioprinter', 'Internet of Things', 'Microchips', 
+                'Sensors', 'Artificial Intelligence', 'Virtual Reality', 'Augmented Reality', 
+                '360 Cameras', 'Robotics', 'Drones', 'Autonomous Vehicles', 'Software', 
+                'Hardware'],
+            service_keywords: ['Manufacturing', 'Economic Development', 'Metal Fabrication', '3D Printing', 
+            '3D Design', 'Game Design', 'Policing', 'Firefighting', 'Logistics', 'Transportation', 
+            'Information Technology', 'Healthcare', 'Energy', 'Digital Design', 'Research & Development'],
             selected_product_keywords: [],
             selected_service_keywords:[],
             isProduct:false,
