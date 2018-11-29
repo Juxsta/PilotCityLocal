@@ -73,15 +73,19 @@ export default {
         login: function(){
             var self = this;
             firebase.auth().signInWithEmailAndPassword(this.login_input_username, this.login_input_password).then((cred)=> {
+                console.log(firebase.auth().currentUser, !firebase.auth().currentUser.emailVerified)
                 if (firebase.auth().currentUser && !firebase.auth().currentUser.emailVerified){
                     self.errormsg = "You have not verified your email account."
                     firebase.auth().signOut()
-                    return ;
+                    return 
                 }
-                self.login_input_username = "";
-                self.login_input_password = "";
-                $('#login-modal').modal('hide');
-                this.$router.push({name: 'ClassPicker'})
+                else {
+                    console.log("here too somehow")
+                    self.login_input_username = "";
+                    self.login_input_password = "";
+                    $('#login-modal').modal('hide');
+                    this.$router.push({name: 'ClassPicker'})
+                }
             }).catch(err => {
                 self.errormsg = err.message; 
                 this.resetmsg=""

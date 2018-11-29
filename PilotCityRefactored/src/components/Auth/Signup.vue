@@ -69,10 +69,10 @@ export default {
                 firebase.auth().createUserWithEmailAndPassword(self.signup_input_username, self.signup_input_password).then( user => {
                     self.signup_input_username = ""
                     self.signup_input_password = ""
-                    bus.$emit('userSignedIn', user);
                     $('#signup-modal').modal('hide');
                     firebase.auth().currentUser.sendEmailVerification().then(function() {
                         Prompter().success('____', 'Email sent');
+                        firebase.auth().signOut()
                     });
                 }).catch(function(error) {
                     self.errorMessage = error.message;

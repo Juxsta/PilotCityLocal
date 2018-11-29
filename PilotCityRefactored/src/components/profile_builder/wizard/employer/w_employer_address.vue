@@ -25,7 +25,6 @@
             route='w_employer_sector'
             :conditions="conditions"
             :collection="collection"
-            
             />
    </div>
 </template>

@@ -26,7 +26,7 @@ export default {
             $('#signup-modal').modal('show');
         }
     },
-    beforeCreate() {
+/*     beforeCreate() {
 		firebase.auth().onAuthStateChanged((user) => {
             if(user)
                 this.$router.push({name: 'ClassPicker'})
@@ -38,7 +38,7 @@ export default {
             next({name:'ClassPicker'})
         else
             next()
-    }
+    } */
 }
 </script>
 <style>

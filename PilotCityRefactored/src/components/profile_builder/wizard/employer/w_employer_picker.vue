@@ -31,8 +31,8 @@ export default {
     data () {
         return {
             employer_data:{
-            isProduct:false,
-            isService:false
+                isProduct:false,
+                isService:false
             },
         collection: ['employers']
         }
