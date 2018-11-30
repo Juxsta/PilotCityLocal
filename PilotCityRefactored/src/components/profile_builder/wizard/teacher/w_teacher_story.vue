@@ -34,7 +34,7 @@
                 <p class="teacher-story">My phone number is</p>
             </div>
             <div class="p-2 align-self-start">
-                    <the-mask class="badge-pill pc-button" :mask="['(###) ###-####']"  v-model="user_data.phone"/>
+                    <the-mask class="badge-pill pc-button" :mask="['(###) ###-####']"  v-model="user_data.phone" placeholder="(555) 555-5555"/>
             </div>
         </div>
         </h4>

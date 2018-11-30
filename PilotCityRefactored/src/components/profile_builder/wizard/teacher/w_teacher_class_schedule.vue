@@ -78,6 +78,7 @@ import { bus } from '@/main'
 import firebase from '@/firebase/init'
 import { Prompter } from '@/main'
 import button from '@/components/profile_builder/wizard/components/button'
+import _ from 'lodash'
 export default {
     name:'w_teacher_class_schedule',
     data () {
@@ -186,14 +187,14 @@ export default {
             return arr
         },
         teacher_data() {
-            var classes = this.db_classes
-            for(let item in classes){
-                for(let schedule in this.format_schedule){
-                    if(classes[item].period == this.format_schedule[schedule].period){
-                        classes[item]['schedule'] = this.format_schedule[schedule].schedule
-                    }
-                }
-            }
+            var classes = Object.assign({},this.db_classes)
+            var new_format = Object.assign({},this.format_schedule)
+            _.map(classes, function(obj) {
+
+                // add the properties from second array matching the userID
+                // to the object from first array and return the updated object
+                return _.assign(obj, _.find(new_format, {Period: obj.Period}));
+            }); 
             return [{classes}]
         }
     },
@@ -205,7 +206,8 @@ export default {
                 const db = firebase.firestore()
                 db.collection("teachers").doc(user.uid).get().then((doc) => {
                     let obj = doc.data()
-                    for (let field in obj.classes) {
+                    //create local period data to merge with schedules
+                    for (let clas in obj.classes) {
                         let new_period = { 
                         uid: null,
                         period: null,
@@ -213,9 +215,28 @@ export default {
                         start_time: null,
                         end_time:null
                         }
-                        new_period.period = obj.classes[field].Period
-                        new_period.uid = obj.classes[field].uid
-                        new_period.index=obj.classes.indexOf(obj.classes[field])
+                        new_period.period = obj.classes[clas].Period
+                        new_period.uid = obj.classes[clas].uid
+                        new_period.index=obj.classes.indexOf(obj.classes[clas])
+                        //parse database schedules
+                        //create reference to database schedules
+                        let schedule = obj.classes[clas].schedule
+                        console.log(obj.classes[clas].schedule)
+                        var new_schedule = []
+                        for(let item = 0; item < schedule.length; item++) {
+                            let start_time = schedule[item].start_time
+                            let end_time = schedule[item].end_time
+                            new_schedule.push(_.filter(schedule, (day) => {
+                                return (day.start_time == start_time && day.end_time == end_time)
+                            }))
+                            schedule = _.filter(schedule, (day) => {
+                                return (day.start_time == start_time && day.end_time == end_time)
+                            })
+                        }
+                        // At the end of this loop schedule will be empty and new schedule will be an array of objects that are grouped by same start and end times
+                        //Now we want to convert each array in new_schedule into a new period
+                        console.log(new_schedule)
+                        obj.classes[clas].schedule
                         new_periods.push(new_period)
                     }
                     this.db_classes = obj.classes
@@ -225,6 +246,9 @@ export default {
         })
     },
     methods: {
+        parseDBSchedule(scheudle) {
+            return 
+        },
         variableSelect(event, Obj) {
                 switch(event.target.value){
                 case '0': 

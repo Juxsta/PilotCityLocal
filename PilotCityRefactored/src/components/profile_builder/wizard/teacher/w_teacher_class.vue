@@ -91,7 +91,6 @@ import { bus } from '@/main'
 import { Prompter } from '@/main'
 import firebase from '@/firebase/init'
 import button from '@/components/profile_builder/wizard/components/button.vue'
-import merge from 'deepmerge'
 export default {
     name:'w_teacher_class',
     data () {
@@ -122,14 +121,14 @@ export default {
     computed: {
         calcUid() {
             var self = this
-            firebase.auth().onAuthStateChanged((user) => {
-                if(user) {
-                    var classes = self.data.classes
-                    for(let clas in classes) {
-                        classes[clas].uid = user.uid + (new Date()).getTime()
-                    }
+            var user = firebase.auth().currentUser
+            if(user) {
+                var classes = self.data.classes
+                for(let clas in classes) {
+                    classes[clas].uid = user.uid + (new Date()).getTime()
                 }
-            })
+            }
+            
         },
         conditions () {
             return [this.data]
@@ -170,7 +169,6 @@ export default {
         var self = this
         //create an array reference to user and teacher data
         let classes = []
-        const deepmerge = require('deepmerge')
         firebase.auth().onAuthStateChanged((user) => {
             if(user) {
                 const db = firebase.firestore()
@@ -195,11 +193,11 @@ export default {
                                     }
                                 }
                         //loop through each field of those classes
-                        for(let field in dbclass) {
+                        /* for(let field in dbclass) {
                             if(new_obj.hasOwnProperty(field)) {
                                 new_obj[field] = dbclass[field]
                             }
-                        }
+                        } */
                         classes.push(new_obj)
                     }
                 })
