@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Index from '@/components/landing/Index'
 import firebase from 'firebase'
+import test from '@/views/test'
 
 import ClassPicker from '@/components/profile_builder/wizard/ClassPicker'
 
@@ -28,6 +29,11 @@ const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
+    {
+      path:'/test',
+      name:'test',
+      component: test
+    },
     {
       path: '/',
       name: 'Index',
