@@ -20,6 +20,7 @@ import w_employer_picker from '@/components/profile_builder/wizard/employer/w_em
 import w_employer_solution_keywords from '@/components/profile_builder/wizard/employer/w_employer_solution_keywords'
 import w_employer_department from '@/components/profile_builder/wizard/employer/w_employer_department'
 
+
 Vue.use(Router)
 
 const router = new Router({
