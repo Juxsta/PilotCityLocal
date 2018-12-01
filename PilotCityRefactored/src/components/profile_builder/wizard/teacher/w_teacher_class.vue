@@ -193,11 +193,11 @@ export default {
                                     }
                                 }
                         //loop through each field of those classes
-                        /* for(let field in dbclass) {
+                        for(let field in dbclass) {
                             if(new_obj.hasOwnProperty(field)) {
                                 new_obj[field] = dbclass[field]
                             }
-                        } */
+                        }
                         classes.push(new_obj)
                     }
                 })
