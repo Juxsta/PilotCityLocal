@@ -6,8 +6,8 @@
 		  	</router-link> 
 			<div class="btn-group ml-auto" role="group">
 				<Login v-if="!authUser || emailNotVerified" id="component-login" />  
-				<Signup v-if="!authUser" id="component-signup" />
-				<Logout  v-if="authUser"/>
+				<Signup v-if="!authUser || emailNotVerified" id="component-signup" />
+				<Logout  v-if="authUser && !emailNotVerified"/>
 			</div>
 	</nav>
 </div>
