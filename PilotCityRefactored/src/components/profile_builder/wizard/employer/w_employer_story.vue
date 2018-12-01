@@ -40,9 +40,8 @@
         </h4>
         <next_button
             route='w_employer_address'
-            text='save and continue'
             :conditions="conditions"
-            v-bind:collection="collection"
+            :collection="collection"
             />
     </div>
 </template>
@@ -75,6 +74,9 @@ export default {
         conditions () {
             return [this.user_data,this.employer_data]
         },
+        pass() {
+            this.user_data
+        }
     },
     created(){
         var self = this

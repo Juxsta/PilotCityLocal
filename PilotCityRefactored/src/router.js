@@ -10,6 +10,8 @@ import w_teacher from '@/components/profile_builder/wizard/teacher/w_teacher'
 import w_teacher_address from '@/components/profile_builder/wizard/teacher/w_teacher_address'
 import w_teacher_class from '@/components/profile_builder/wizard/teacher/w_teacher_class'
 import w_teacher_class_schedule from '@/components/profile_builder/wizard/teacher/w_teacher_class_schedule'
+import w_teacher_industry_keywords from '@/components/profile_builder/wizard/teacher/w_teacher_industry_keywords'
+import w_teacher_skills_keywords from '@/components/profile_builder/wizard/teacher/w_teacher_skills_keywords'
 
 import w_employer from '@/components/profile_builder/wizard/employer/w_employer'
 import w_employer_story from '@/components/profile_builder/wizard/employer/w_employer_story'
@@ -64,9 +66,19 @@ const router = new Router({
           path:'4',
           name:'w_teacher_class_schedule',
           component:w_teacher_class_schedule
+        },
+        {
+          path:'5',
+          name:'w_teacher_industry_keywords',
+          component: w_teacher_industry_keywords
+        },
+        {
+          path:'6',
+          name:'w_teacher_skills_keywords',
+          component: w_teacher_skills_keywords
         }
       ],
-      /* beforeEnter: (to,from,next) => {
+/*       beforeEnter: (to,from,next) => {
         const db = firebase.firestore()
         let user = firebase.auth().currentUser
         if (user) {
@@ -79,10 +91,10 @@ const router = new Router({
         }
         else
           next({name: 'ClassPicker'})
-      },
+      }, */
       meta: {
         requiresAuth: true
-      } */
+      }
     },
     {
       path:'/wizard/employer',

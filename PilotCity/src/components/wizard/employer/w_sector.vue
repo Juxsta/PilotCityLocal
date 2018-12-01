@@ -52,7 +52,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 
 .btn-circle {
     width:250px;
@@ -63,7 +63,8 @@ export default {
     font-family: 'Raleway';
     font-weight:700 !important;
     font-size: 30px;
-    color: #ffffff
+    color: #ffffff;
+    border: 0px;
 }
 .pc-green {
     background-color: #6eba7f

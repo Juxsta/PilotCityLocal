@@ -2,39 +2,39 @@
     <div class="container-fluid mt-5 mx-auto Raleway">
         <h4 class="font-weight-bold">
             <div>
-                <h2 class="story-title">What's your story?</h2>
+                <h2 class="label-title-pink">What's your story?</h2>
             </div>
         <div class="d-flex flex-row justify-content-center">
             <div class="p-2 align-self-center">
-                <p class="teacher-story">My name is</p>
+                <p class="paragraph_setup_gray">My name is</p>
             </div>
             <div class="p-2 align-self-start">
-                <input type="text" placeholder="First Name" class="badge-pill pc-button" v-model="first_name" >
+                <input type="text" placeholder="First Name" class="input-field-pink" v-model="first_name" >
             </div>
             <div class="p-2 align-self-start">
-                <input type="text" placeholder="Last Name" class="badge-pill pc-button" v-model="last_name"> 
+                <input type="text" placeholder="Last Name" class="input-field-pink" v-model="last_name"> 
             </div>
         </div>
         <div class="d-flex flex-row justify-content-center mr-5" >
             <div class="p-2 align-self-center">
-                <p class="teacher-story">and I am a teacher at</p>
+                <p class="paragraph_setup_gray">and I am a teacher at</p>
             </div>
             <div class="p-2 align-self-start">
-                <input type="text" placeholder="School Name" class="badge-pill pc-button" v-model="school_name">
+                <input type="text" placeholder="School Name" class="input-field-pink" v-model="school_name">
             </div>
             <div class="p-2 align-self-center">
-                <p class="teacher-story">of the </p>
+                <p class="paragraph_setup_gray">of the </p>
             </div>
         </div>
         <div class="d-flex flex-row justify-content-center">
             <div class="p-2 align-self-start">
-                <input type="text" placeholder="School District" class="badge-pill pc-button" v-model="school_district">
+                <input type="text" placeholder="School District" class="input-field-pink" v-model="school_district">
             </div>
             <div class="p-2 align-self-center">
-                <p class="teacher-story">My phone number is</p>
+                <p class="paragraph_setup_gray">My phone number is</p>
             </div>
             <div class="p-2 align-self-start">
-                    <input type="number" placeholder="Mobile Number" class="badge-pill pc-button" v-model="phone">
+                    <input type="number" placeholder="Mobile Number" class="input-field-pink" v-model="phone">
             </div>
         </div>
         </h4>
@@ -69,7 +69,7 @@ export default {
                 return ;
             if (self.first_name && self.last_name && self.school_name && self.school_district && self.phone){
                 var obj = {};
-                obj['teacher_story'] = {
+                obj['paragraph_setup_gray'] = {
                     first_name: self.first_name,
                     last_name: self.last_name,
                     school_name: self.school_name,
@@ -87,8 +87,22 @@ export default {
 }
 </script>
 
-<style>
-.pc-button {
+<style scoped>
+
+.paragraph_setup_gray{
+    font-family: "Raleway";
+    font-style:Italic;
+    font-size: 25px;
+    color: #dbdcde;
+    margin-top:10px;
+}
+
+input:focus{
+    outline: none;
+}
+
+
+.input-field-pink {
         font-family: "Raleway";
         font-weight:300;
         font-style: Italic;
@@ -104,8 +118,10 @@ export default {
         margin-left:5px;
         margin-right:5px;
         border-color: transparent;
+        text-transform: capitalize;
 }
-.pc-button::placeholder {
+
+.input-field-pink::placeholder {
     color:white;
     font-weight:500i;
     font-size:20px;
@@ -113,19 +129,13 @@ export default {
 
 }
 
-.pc-button::placeholder:focus {
+.input-field-pink::placeholder:focus {
     color:#eca0be !important;
+    border:transparent;
 
 }
-.teacher-story{
-    font-family: "Raleway";
-    font-style:Italic;
-    font-size: 25px;
-    color: #dbdcde;
-    margin-top:10px;
-}
 
-.story-title {
+.label-title-pink {
     text-align: center;
     font-family: "Raleway";
     font-style: Italic;
@@ -134,14 +144,6 @@ export default {
     color:#eca0be;
     margin-bottom:50px;
     margin-top:70px;
-}
-
-input:focus{
-    outline: none !important;
-}
-
-.badge-pill {
-    text-transform: capitalize;
 }
 
 </style>

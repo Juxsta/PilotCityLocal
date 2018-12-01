@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Foremployer />
+        <build />
     </div>
 </template>
 <script>
@@ -25,7 +25,11 @@ import Matchmade from '@/components/Matchmade'
 import w_tymod_employer from '@/components/wizard/employer/w_tymod_employer'
 import Foremployer from '@/components/Foremployer'
 import Forteacher from '@/components/Forteacher'
-
+import Backgroundvideo from '@/components/Backgroundvideo'
+import employer from '@/components/dashboard/employer'
+import challenge from '@/components/builder/challenge'
+import build from '@/components/builder/build'
+import experience from '@/components/builder/experience'
 
 export default {
     name: 'Testing',
@@ -57,6 +61,13 @@ export default {
         w_tymod_employer,
         Foremployer,
         Forteacher,
+        Backgroundvideo,
+        employer,
+        challenge,
+        build,
+        experience,
+
+
     }
 }
 </script>

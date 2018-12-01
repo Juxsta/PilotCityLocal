@@ -80,6 +80,7 @@
             :conditions="conditions"
             :collection="collection"
             :pass = filled
+            :force_pass = filled
             />
     </div>
 </template>
@@ -91,12 +92,12 @@ import { Prompter } from '@/main'
 import firebase from '@/firebase/init'
 import button from '@/components/profile_builder/wizard/components/button.vue'
 export default {
-    name:'w_teacher_class_schedule',
+    name:'w_teacher_class',
     data () {
         return {
             data: {
                 classes:[ {
-                uid: ('_' + Math.random().toString(36).substr(2, 9)),
+                uid: null,
                 Period: null,
                 coursename: null,
                 semester : null,
@@ -106,8 +107,8 @@ export default {
                     max: null
                 },
                 school_year:{
-                    start: 2018,
-                    end: 2019
+                    start: null,
+                    end: null
                 }
             } 
         ] },
@@ -118,6 +119,17 @@ export default {
         next_button:button
     },
     computed: {
+        calcUid() {
+            var self = this
+            var user = firebase.auth().currentUser
+            if(user) {
+                var classes = self.data.classes
+                for(let clas in classes) {
+                    classes[clas].uid = user.uid + (new Date()).getTime()
+                }
+            }
+            
+        },
         conditions () {
             return [this.data]
         },
@@ -156,20 +168,40 @@ export default {
     created () {
         var self = this
         //create an array reference to user and teacher data
-        let data = [self.data]
+        let classes = []
         firebase.auth().onAuthStateChanged((user) => {
             if(user) {
                 const db = firebase.firestore()
                 for(let i = 0;i<self.collection.length;i++)
                 db.collection(self.collection[i]).doc(user.uid).get().then((doc) => {
                     let obj = doc.data()
-                    for (let field in data[i]) {
-                        if(obj.hasOwnProperty(field)) {
-                            //modify this to account for active classes
-                            data[i][field]=obj[field]
-                        }    
+                    //loop through each class in database classes
+                    for (let dbclass of obj['classes']){
+                        let new_obj = {
+                                    uid: null,
+                                    Period: null,
+                                    coursename: null,
+                                    semester : null,
+                                    Grade: [],
+                                    students: {
+                                        min: null,
+                                        max: null
+                                    },
+                                    school_year:{
+                                        start: null,
+                                        end: null
+                                    }
+                                }
+                        //loop through each field of those classes
+                        /* for(let field in dbclass) {
+                            if(new_obj.hasOwnProperty(field)) {
+                                new_obj[field] = dbclass[field]
+                            }
+                        } */
+                        classes.push(new_obj)
                     }
                 })
+                self.data.classes = classes
             }
         })
     },
@@ -208,7 +240,7 @@ export default {
         },
         pushPeriod() {
             this.data.classes.push( {
-                uid: ('_' + Math.random().toString(36).substr(2, 9)),
+                uid: null,
                 Period: null,
                 coursename: null,
                 semester : null,

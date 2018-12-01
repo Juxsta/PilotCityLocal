@@ -6,6 +6,7 @@
 <script>
 import { Prompter } from '@/main'
 import firebase from '@/firebase/init'
+import { bus } from '@/main'
 export default {
     props: {
         route: {
@@ -27,6 +28,10 @@ export default {
         pass: {
             type: Boolean,
             default: true
+        },
+        errormsg: {
+            type: String,
+            default: "You're missing a few things"
         }
     },
     methods: {
@@ -35,24 +40,35 @@ export default {
             if(self.conditions.length == self.collection.length) {
                 firebase.auth().onAuthStateChanged((user)=> {
                     if(user) {
-                        for(let i = 0; i < self.conditions.length; i++){
-                            if (self.pass && Object.values(self.conditions[i]).every((data) => {
-                                return data != null
-                                })) {
+                        if (self.pass && self.conditions.every((condition) => {
+                            return Object.values(condition).every((data) => {
+                                return ((data != null && data != false) || data === false)
+                                })
+                        })) {
+                            for(let i in self.conditions){
                                 const db = firebase.firestore()
-                                db.collection(self.collection[i]).doc(user.uid).set(self.conditions[i],{merge:true}).then(() => {
-                                    self.$router.push({name: self.route})  
+                                db.collection(self.collection[i]).doc(user.uid).set(self.conditions[i],
+                                {merge:true}).then(() => {
+                                    if (self.route == 'teacher-thankyou-modal'){
+                                        bus.$emit('teacher_finish')
+                                    }
+                                    else
+                                        self.$router.push({name: self.route})  
                                 })
                             }
-                            else{
-                                Prompter().failed("You're missing a few things","Hey there,")
-                            }
                         }
+                        else{
+                            if(self.errormsg)
+                                Prompter().failed(self.errormsg,"Hey there,")
+                            else
+                                Prompter().failed("You're missing a few things","Hey there,")
+                        }
+
                     }
                 })
             }
             else 
-                Prompted().failed("Length of Conditions and collections must match")
+                Prompter().failed("Length of Conditions and collections must match")
         }
     }
 }
