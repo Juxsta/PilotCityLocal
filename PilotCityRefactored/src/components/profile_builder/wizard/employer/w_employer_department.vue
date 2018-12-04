@@ -22,21 +22,25 @@
                     <div class="col-2">
                         <label for="team_member" v-if="departments.indexOf(department)==0">Team Member?</label>
                         <select class="custom-select" id="select_team_member" v-model="department.team_member">
-                            <option selected>Select</option>
-                            <option value=false>No</option>
-                            <option value=false>Yes</option>
+                            <option selected>Select</option> 
+                            <option value=false>No</option> 
+                            <option value=false>Yes</option> 
                         </select>
                     </div>
                 </div>
             </div>
-            <button id="btn-class-add" type="button" class="btn btn-primary btn-lg btn-block" @click="pushDepartment()">
-                <i class="material-icons font-weight-bold add-button">add</i>
-            </button>
+            <next_button
+                route='w_employer_department'
+                :conditions="conditions"
+                :collection="collection"
+            />
     </div>
     
 </template>
 
 <script>
+import button from '@/components/profile_builder/wizard/components/button'
+import firebase from '@/firebase/init'
 export default {
     name: "w_department",
     data () {
@@ -51,10 +55,14 @@ export default {
                 },
                 team_member: null
                 }
-            ]
+            ],
+            collection: ["employers"],
             
         }
     },
+    components: {
+        next_button:button,
+    }, 
     methods: {
         pushDepartment() {
             this.departments.push({

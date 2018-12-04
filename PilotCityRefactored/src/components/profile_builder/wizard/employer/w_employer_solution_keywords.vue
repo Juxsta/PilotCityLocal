@@ -18,6 +18,7 @@
             route='w_employer_department'
             :conditions="conditions"
             :collection="collection"
+            :force_pass="force_pass"
         />
     </div>
 </template>
@@ -59,6 +60,21 @@ export default {
     computed: {
         conditions(){
             return [this.employer_data]
+        },
+        force_pass(){
+            let data = this.employer_data
+            if ((!data.isProduct && data.isService) || (data.isProduct && !data.isService)){
+                 if (data.selected_product_keywords.length || data.selected_service_keywords.length){
+                     return true
+                 } 
+            }
+            if(data.isproduct && data.isService)
+            {
+                if (data.selected_product_keywords.length || data.selected_service_keywords.length){
+                        return true
+                 }   
+            }
+            return false
         }
     },
     created() {

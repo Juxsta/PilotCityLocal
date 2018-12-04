@@ -20,13 +20,17 @@ export default {
             type: Array, //array of objects
             required: true
         },
-        collection:{
+        collection: {
             type:Array, //array of strings
             required: true
         },
         pass: {
             type: Boolean,
             default: true
+        },
+        force_pass: {
+            type: Boolean,
+            default: false
         }
     },
     methods: {
@@ -35,11 +39,11 @@ export default {
             if(self.conditions.length == self.collection.length) {
                 firebase.auth().onAuthStateChanged((user)=> {
                     if(user) {
-                        if (self.pass && self.conditions.every((condition) => {
+                        if (self.force_pass || (self.pass && self.conditions.every((condition) => {
                             return Object.values(condition).every((data) => {
                                 return ((data != null && data != false) || data === false)
                                 })
-                        })) {
+                        }))) {
                             for(let i in self.conditions){
                                 const db = firebase.firestore()
                                 db.collection(self.collection[i]).doc(user.uid).set(self.conditions[i],
