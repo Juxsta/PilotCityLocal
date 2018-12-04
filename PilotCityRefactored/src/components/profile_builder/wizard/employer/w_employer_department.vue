@@ -1,14 +1,14 @@
 <template>
     <div class="container">
             <div id="w_department" class="container mt-5">
-                <div class="form-row" v-for="department in departments" :key="department.uid">
-                    <i class="material-icons font-weight-bold mr-2" id="delete_department" :class="{first_trash:departments.indexOf(department)==0}" @click="rmThisDepartment(department.uid)">clear</i>
+                <div class="form-row" v-for="department in employer_data.departments" :key="department.uid">
+                    <!-- <i class="material-icons font-weight-bold mr-2" id="delete_department" :class="{first_trash:departments.indexOf(department)==0}" @click="rmThisDepartment(department.uid)">clear</i> -->
                     <div class="col">
-                        <label for="Department_Name" v-if="departments.indexOf(department)==0">Department Name</label>
+                        <label for="Department_Name" v-if="employer_data.departments.indexOf(department)==0">Department Name</label>
                         <input  type="text" class="form-control" placeholder="Department Name" v-model="department.name">
                     </div>
                     <div class="col-3">
-                        <label for="Team_Size" v-if="departments.indexOf(department)==0">Team Size</label>
+                        <label for="Team_Size" v-if="employer_data.departments.indexOf(department)==0">Team Size</label>
                         <select class="custom-select" id="select_team" @change ="variableSelect($event,department.team_size)">
                             <option selected>Select Team Size</option>
                            <option value="0">1 - 3</option>
@@ -20,7 +20,7 @@
                         </select>
                     </div>
                     <div class="col-2">
-                        <label for="team_member" v-if="departments.indexOf(department)==0">Team Member?</label>
+                        <label for="team_member" v-if="employer_data.departments.indexOf(department)==0">Team Member?</label>
                         <select class="custom-select" id="select_team_member" v-model="department.team_member">
                             <option selected>Select</option> 
                             <option value=false>No</option> 
@@ -30,7 +30,7 @@
                 </div>
             </div>
             <next_button
-                route='w_employer_department'
+                route='w_employer_roi'
                 :conditions="conditions"
                 :collection="collection"
             />
@@ -45,17 +45,17 @@ export default {
     name: "w_department",
     data () {
         return {
-            departments :[
-                {
-                uid: (new Date()).getTime(),
-                name: null,
-                team_size: {
-                    min: null,
-                    max: null
-                },
-                team_member: null
-                }
-            ],
+            employer_data:{
+                departments :[{
+                    uid: (new Date()).getTime(),
+                    name: null,
+                    team_size: {
+                        min: null,
+                        max: null
+                    },
+                    team_member: null
+                }],
+            },
             collection: ["employers"],
             
         }
@@ -69,24 +69,25 @@ export default {
         }
     },
     methods: {
-    pushDepartment() {
-            this.departments.push({
+        pushDepartment() {
+            this.employer_data.departments.push({
                 uid: (new Date()).getTime(),
                 name: null,
                 team_size: {
                     min: null,
                     max: null
                 },
-                team_member: null
+            team_member: null
             })
         },
         rmThisDepartment(id) {
-            this.departments = this.departments.filter( (departments) => {
+
+            this.employer_data.departments = this.employer_data.departments.filter( (departments) => {
                 return departments.uid != id
             })
         },
         variableSelect(event, Obj) {
-                switch(event.target.value){
+            switch(event.target.value){
                 case '0': 
                     Obj.min=1
                     Obj.max=3
@@ -111,7 +112,7 @@ export default {
                     Obj.min=50
                     Obj.max=null  
                     break   
-                }
+            }
         }
     }
 }

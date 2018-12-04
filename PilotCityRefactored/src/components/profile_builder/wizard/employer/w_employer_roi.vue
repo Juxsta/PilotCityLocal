@@ -4,13 +4,13 @@
             name="What's your return on investment?"
             :keywords='bottom_line_keywords'
             placeholder ="Enter keywords here to describe your bottom line"
-            :selected_keywords="selected_bottom_line_keywords"
+            :selected_keywords="employer_data.selected_bottom_line_keywords"
         />
         <strategies_tag class="d-flex flex-col justify-content-center mt-5"
             name="How are you doing it now?"
             :keywords='strategies_keywords'
             placeholder ="Enter keywords here to describe your strategies and initiatives"
-            :selected_keywords="selected_strategies_keywords"
+            :selected_keywords="employer_data.selected_strategies_keywords"
         />
         <next_button
             route='w_employer_flock'
@@ -28,11 +28,13 @@ export default {
     name: "w_employer_roi",
     data () {
         return {
+            employer_data:{
+                selected_bottom_line_keywords: [],    
+                selected_strategies_keywords:[]
+            },
             bottom_line_keywords: ['Client Aquisition', 'Use Cases', 'Community Building', 'Training Talent', 'Sales', 'Marketing', 'Public Relations', 'Operations', 'Optimization', 'Innovation', 'Automation','Research & Development', 'Talent Generation', 'Citizen Engagement'],
             strategies_keywords: ['Social Media' , 'Recruitment' , 'Conferences' , 'University Partnerships' , 'Advertisement' , 'Collecting Data' , 'Automation' , 'Crowdfunding' , 'Grants' , 'Events' , 'Trial & Error'],
             collection: ['employers'],
-            selected_bottom_line_keywords:[],
-            selected_strategies_keywords:[]
         }
     },
     components: {
