@@ -146,6 +146,11 @@ const router = new Router({
           path: '8',
           name: 'w_employer_roi',
           component: w_employer_roi
+        },
+        {
+          path: '9',
+          name: 'w_employer_flock',
+          component: w_employer_flock
         }
       ]
     }
