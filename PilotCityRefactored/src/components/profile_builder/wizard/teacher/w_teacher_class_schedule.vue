@@ -44,20 +44,17 @@
                 </div>
 
             </div>
-        </div>
-        <div class="form-group-starttime">
-            <label v-if="Periods.indexOf(period)==0">Start Time</label>
-            <input type="time" class="form-control"   v-model="period.start_time">
-        </div>
-        <div class="form-group-endtime dropdown">
-            <label v-if="Periods.indexOf(period)==0">End Time</label>
-            <input type="time" class="form-control"   v-model="period.end_time">
-            <div>
-
-            </div>
-        </div>
     </div>
-</form>
+    <div class="form-group-starttime">
+        <label v-if="Periods.indexOf(period)==0">Start Time</label>
+        <input type="time" class="form-control"   v-model="period.start_time">
+    </div>
+    <div class="form-group-endtime dropdown">
+        <label v-if="Periods.indexOf(period)==0">End Time</label>
+        <input type="time" class="form-control"   v-model="period.end_time">
+    </div>
+        </div>
+        </form>
         <button id="btn-class-add" type="button" class="btn btn-primary btn-lg btn-block" @click="pushPeriod()">
             <i class="material-icons font-weight-bold add-button">add</i>
         </button>
@@ -104,7 +101,8 @@ export default {
             ],
             errormsg:null,
             collection: ["teachers"],
-            db_classes:[]
+            db_classes:[],
+            data_from_prev_page: []
         }
     },
     components: {
@@ -206,6 +204,18 @@ export default {
                 const db = firebase.firestore()
                 db.collection("teachers").doc(user.uid).get().then((doc) => {
                     let obj = doc.data()
+                    for (let temp in obj.classes){
+                        var uid =  (new Date()).getTime()
+                         self.Periods.push( {
+                            uid: uid,
+                            period: obj.classes[parseInt(temp)].Period,
+                            days: [],
+                            start_time: null,
+                            end_time:null
+                        });
+                        self.data_from_prev_page.push(uid)
+                    }
+                    /*
                     //create local period data to merge with schedules
                     for (let clas in obj.classes) {
                         let new_period = { 
@@ -215,8 +225,8 @@ export default {
                         start_time: null,
                         end_time:null
                         }
-                        console.log('obj',obj)
-                        console.log('classes',obj.classes)
+                        //console.log('obj',obj)
+                        //console.log('classes',obj.classes)
                         new_period.period = obj.classes[clas].Period
                         new_period.uid = obj.classes[clas].uid
                         new_period.index=obj.classes.indexOf(obj.classes[clas])
@@ -236,14 +246,20 @@ export default {
                         }
                         // At the end of this loop schedule will be empty and new schedule will be an array of objects that are grouped by same start and end times
                         //Now we want to convert each array in new_schedule into a new period
+                        //console.log(new_schedule)
                         console.log(new_schedule)
                         obj.classes[clas].schedule
                         new_periods.push(new_period)
                     }
                     this.db_classes = obj.classes
+                    self.Periods=new_periods
+                     for (var period in new_periods)
+                    {
+                        console.log("period:" + new_periods);
+                    }
+                    */
                 })
-                self.Periods=new_periods
-            }
+            } 
         })
     },
     methods: {
@@ -292,6 +308,10 @@ export default {
         },
         rmThisClass: function(uid)
         {
+            if (this.data_from_prev_page.includes(uid)){
+                 Prompter().failed("This period can't be removed.","Hey there,")
+                return 
+            }
             this.Periods = this.Periods.filter((object) => {
                 return object.uid != uid
             });
