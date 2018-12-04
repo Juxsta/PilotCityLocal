@@ -31,7 +31,7 @@
             <label v-if="data.classes.indexOf(period)==0">Grade</label>
             <div>
                 <button class="btn btn-secondary dropdown-toggle align-items-end btn-block dropdown-class select-class-placeholder" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span v-if="!period.Grade.length">Selected</span>
+                    <span v-if="!period.Grade.length">Select</span>
                     <span v-if="period.Grade.length">
                         <span>Selected:</span>
                         <span v-for="(grade,index) in period.Grade" :key=index>{{grade}}
@@ -82,6 +82,10 @@
             :pass = filled
             :force_pass = filled
             />
+        <router-link :to="{ name: 'w_teacher_address' }" 
+            class="prev_button btn btn-secondary btn-lg" tag='prev_button'>
+            Back
+        </router-link>
     </div>
 </template>
 

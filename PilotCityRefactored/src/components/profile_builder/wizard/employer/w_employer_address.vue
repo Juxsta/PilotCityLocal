@@ -26,6 +26,10 @@
             :conditions="conditions"
             :collection="collection"
             />
+        <router-link :to="{ name: 'w_employer_story' }" 
+            class="prev_button btn btn-secondary btn-lg" tag='prev_button'>
+            Back
+        </router-link>
    </div>
 </template>
 

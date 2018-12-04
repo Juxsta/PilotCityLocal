@@ -72,6 +72,10 @@
             :pass = pass
             :errormsg= "errormsg"
             />
+        <router-link :to="{ name: 'w_teacher_class' }" 
+            class="prev_button btn btn-secondary btn-lg" tag='prev_button'>
+            Back
+        </router-link>
     </div>
 </template>
 
@@ -147,25 +151,15 @@ export default {
            let merged = []
             for(let i in this.schedules) {
                 for(let j=1;j < this.schedules.length; j++) {
-                    if(i!=j && this.schedules[i].Period==this.schedules[j].Period) {
-                        if( Object.keys(this.schedules[i].schedule).every((prop1)=> {
-                            return Object.keys(this.schedules[j].schedule).every((prop2) => {
-                                return prop1 != prop2
-                            })
-                        })) {
-                            let obj = {}
-                            let new_schedule = {}
-                            obj.Period= this.schedules[i].Period
-                            return this.schedules[j].schedule
-                            new_schedule = Object.assign(this.schedules[i].schedule,this.schedules[j].schedule)
-                            obj.schedule = new_schedule
-                            merged.push(obj)
-                            this.errormsg=null
-                        }
-                        else {
-                            this.errormsg="Conflicting Period Schedules"
-                            break
-                        }
+                    if(i!=j && this.schedules[i].Period==this.schedules[j].Period) { 
+                        let obj = {}
+                        let new_schedule = {}
+                        obj.Period= this.schedules[i].Period
+                        new_schedule = _.merge({},[this.schedules[i].schedule,this.schedules[j].schedule])
+                        new_schedule =  _.flatMap(new_schedule, (day) => {return day})
+                        obj.schedule = new_schedule
+                        merged.push(obj)
+                        this.errormsg=this.schedules[j]
                     }
                 }
                 if(merged.every((obj) => {
