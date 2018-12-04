@@ -6,6 +6,7 @@
 <script>
 import { Prompter } from '@/main'
 import firebase from '@/firebase/init'
+import { bus } from '@/main'
 export default {
     props: {
         route: {
@@ -30,7 +31,11 @@ export default {
         },
         force_pass: {
             type: Boolean,
-            default: false
+            default: false,
+        },
+        errormsg: {
+            type: String,
+            default: "You're missing a few things"
         }
     },
     methods: {
@@ -48,19 +53,26 @@ export default {
                                 const db = firebase.firestore()
                                 db.collection(self.collection[i]).doc(user.uid).set(self.conditions[i],
                                 {merge:true}).then(() => {
-                                    self.$router.push({name: self.route})  
+                                    if (self.route == 'teacher-thankyou-modal'){
+                                        bus.$emit('teacher_finish')
+                                    }
+                                    else
+                                        self.$router.push({name: self.route})  
                                 })
                             }
                         }
                         else{
-                            Prompter().failed("You're missing a few things","Hey there,")
+                            if(self.errormsg)
+                                Prompter().failed(self.errormsg,"Hey there,")
+                            else
+                                Prompter().failed("You're missing a few things","Hey there,")
                         }
 
                     }
                 })
             }
             else 
-                Prompted().failed("Length of Conditions and collections must match")
+                Prompter().failed("Length of Conditions and collections must match")
         }
     }
 }

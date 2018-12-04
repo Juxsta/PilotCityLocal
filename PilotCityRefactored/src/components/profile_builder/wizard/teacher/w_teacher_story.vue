@@ -34,7 +34,7 @@
                 <p class="teacher-story">My phone number is</p>
             </div>
             <div class="p-2 align-self-start">
-                    <input type="number" placeholder="Mobile Number" class="badge-pill pc-button" v-model="user_data.phone">
+                    <the-mask class="badge-pill pc-button" :mask="['(###) ###-####']"  v-model="user_data.phone" placeholder="(555) 555-5555"/>
             </div>
         </div>
         </h4>
@@ -52,6 +52,7 @@
 import { Prompter } from '@/main'
 import button from '@/components/profile_builder/wizard/components/button.vue'
 import firebase from '@/firebase/init'
+import {TheMask} from 'vue-the-mask'
 export default {
     name:"w_teacher_story",
     data() {
@@ -69,7 +70,8 @@ export default {
         }
     },
     components: {
-        next_button:button
+        next_button:button,
+        TheMask
     },
     computed: {
         conditions() {

@@ -41,7 +41,7 @@ export default {
 
     components:{
         industry_tag: tagging,
-         next_button:button
+        next_button:button
     },
     computed: {
         conditions(){

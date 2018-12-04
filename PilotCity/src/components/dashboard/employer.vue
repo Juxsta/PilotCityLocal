@@ -42,7 +42,7 @@
             <div id="my-challenges-title">My Challenges</div>
 
             <div class="my-challenges d-flex flex-wrap">
-                <div class="challenge-card">
+                <div class="challenge-card-add">
                     <i class="material-icons" id="add_icon_challenge"> add </i>
                 </div>
 
@@ -88,7 +88,7 @@
                 <h2 class="team-id col-3">Project ID</h2>
             </div>
 
-            <div class="d-flex">
+            <div class="list-item d-flex">
                 <h2 class="team-rank-content col-1">1</h2>
                 <h2 class="team-project-name-content col-5">Drone Road Evaluations</h2>
                 <h2 class="team-completion-content col-3">100%</h2>
@@ -97,7 +97,7 @@
             
              <hr class="challenge-details-frame-break">
 
-            <div class="d-flex">
+            <div class="list-item d-flex">
                 <h2 class="team-rank-content col-1">1</h2>
                 <h2 class="team-project-name-content col-5">Drone Road Evaluations</h2>
                 <h2 class="team-completion-content col-3">100%</h2>
@@ -106,7 +106,7 @@
 
              <hr class="challenge-details-frame-break">
 
-            <div class="d-flex">
+            <div class="list-item d-flex">
                 <h2 class="team-rank-content col-1">1</h2>
                 <h2 class="team-project-name-content col-5">Drone Road Evaluations</h2>
                 <h2 class="team-completion-content col-3">100%</h2>
@@ -115,7 +115,7 @@
 
              <hr class="challenge-details-frame-break">
 
-            <div class="d-flex">
+            <div class="list-item d-flex">
                 <h2 class="team-rank-content col-1">1</h2>
                 <h2 class="team-project-name-content col-5">Drone Road Evaluations</h2>
                 <h2 class="team-completion-content col-3">100%</h2>
@@ -124,7 +124,7 @@
 
              <hr class="challenge-details-frame-break">
 
-            <div class="d-flex">
+            <div class="list-item d-flex">
                 <h2 class="team-rank-content col-1">1</h2>
                 <h2 class="team-project-name-content col-5">Drone Road Evaluations</h2>
                 <h2 class="team-completion-content col-3">100%</h2>
@@ -133,7 +133,16 @@
 
              <hr class="challenge-details-frame-break">
 
-            <div class="d-flex">
+            <div class="list-item d-flex">
+                <h2 class="team-rank-content col-1">1</h2>
+                <h2 class="team-project-name-content col-5">Drone Road Evaluations</h2>
+                <h2 class="team-completion-content col-3">100%</h2>
+                <h2 class="team-id-content col-3">@abdh8z33u8</h2>
+            </div>
+
+             <hr class="challenge-details-frame-break">
+           
+            <div class="list-item d-flex">
                 <h2 class="team-rank-content col-1">1</h2>
                 <h2 class="team-project-name-content col-5">Drone Road Evaluations</h2>
                 <h2 class="team-completion-content col-3">100%</h2>
@@ -142,7 +151,7 @@
 
              <hr class="challenge-details-frame-break">
 
-            <div class="d-flex">
+            <div class="list-item d-flex">
                 <h2 class="team-rank-content col-1">1</h2>
                 <h2 class="team-project-name-content col-5">Drone Road Evaluations</h2>
                 <h2 class="team-completion-content col-3">100%</h2>
@@ -151,7 +160,7 @@
 
              <hr class="challenge-details-frame-break">
 
-            <div class="d-flex">
+            <div class="list-item d-flex">
                 <h2 class="team-rank-content col-1">1</h2>
                 <h2 class="team-project-name-content col-5">Drone Road Evaluations</h2>
                 <h2 class="team-completion-content col-3">100%</h2>
@@ -160,7 +169,7 @@
 
              <hr class="challenge-details-frame-break">
 
-            <div class="d-flex">
+            <div class="list-item d-flex">
                 <h2 class="team-rank-content col-1">1</h2>
                 <h2 class="team-project-name-content col-5">Drone Road Evaluations</h2>
                 <h2 class="team-completion-content col-3">100%</h2>
@@ -169,7 +178,7 @@
 
              <hr class="challenge-details-frame-break">
 
-            <div class="d-flex">
+            <div class="list-item d-flex">
                 <h2 class="team-rank-content col-1">1</h2>
                 <h2 class="team-project-name-content col-5">Drone Road Evaluations</h2>
                 <h2 class="team-completion-content col-3">100%</h2>
@@ -178,7 +187,7 @@
 
              <hr class="challenge-details-frame-break">
 
-            <div class="d-flex">
+            <div class="list-item d-flex">
                 <h2 class="team-rank-content col-1">1</h2>
                 <h2 class="team-project-name-content col-5">Drone Road Evaluations</h2>
                 <h2 class="team-completion-content col-3">100%</h2>
@@ -187,7 +196,7 @@
 
              <hr class="challenge-details-frame-break">
 
-            <div class="d-flex">
+            <div class="list-item d-flex">
                 <h2 class="team-rank-content col-1">1</h2>
                 <h2 class="team-project-name-content col-5">Drone Road Evaluations</h2>
                 <h2 class="team-completion-content col-3">100%</h2>
@@ -196,7 +205,7 @@
 
              <hr class="challenge-details-frame-break">
 
-            <div class="d-flex">
+            <div class="list-item d-flex">
                 <h2 class="team-rank-content col-1">1</h2>
                 <h2 class="team-project-name-content col-5">Drone Road Evaluations</h2>
                 <h2 class="team-completion-content col-3">100%</h2>
@@ -205,7 +214,7 @@
 
              <hr class="challenge-details-frame-break">
 
-            <div class="d-flex">
+            <div class="list-item d-flex">
                 <h2 class="team-rank-content col-1">1</h2>
                 <h2 class="team-project-name-content col-5">Drone Road Evaluations</h2>
                 <h2 class="team-completion-content col-3">100%</h2>
@@ -214,16 +223,7 @@
 
              <hr class="challenge-details-frame-break">
 
-            <div class="d-flex">
-                <h2 class="team-rank-content col-1">1</h2>
-                <h2 class="team-project-name-content col-5">Drone Road Evaluations</h2>
-                <h2 class="team-completion-content col-3">100%</h2>
-                <h2 class="team-id-content col-3">@abdh8z33u8</h2>
-            </div>
-
-             <hr class="challenge-details-frame-break">
-
-            <div class="d-flex">
+            <div class="list-item d-flex">
                 <h2 class="team-rank-content col-1">1</h2>
                 <h2 class="team-project-name-content col-5">Drone Road Evaluations</h2>
                 <h2 class="team-completion-content col-3">100%</h2>
@@ -251,10 +251,15 @@
 
         <div class="details-bar flex-column">
             <div class="employer-profile-upload"></div>
-            <div class="employer-name-text">DJI</div>
+            <div class="d-flex flex-row">
+                <div class="employer-name-text col-8 p-0">DJI</div>
+                <i class="far fa-edit" id="challenge_edit_icon"></i>
+                <i class="far fa-clone" id="challenge_clone_icon"></i>
+                <i class="far fa-trash-alt" id="challenge_trash_icon"></i>
+            </div>
             <div class="d-flex flex-row">
                 <div class="user-photo"></div>
-                <div class="user-photo">
+                <div class="user-photo-add">
                     <i class="material-icons" id="add_icon_user"> add </i>
                 </div>
             </div>
@@ -263,7 +268,7 @@
             <div class="details-bar-title">Teacher</div>
             <div class="d-flex flex-row">
                 <div class="user-photo"></div>
-                <div class="user-photo">
+                <div class="user-photo-add">
                     <i class="material-icons" id="add_icon_user"> add </i>
                 </div>
             </div>
@@ -303,21 +308,17 @@
 <style>
 
 .main-bar-1 {
-    background-color: #ffffff;
     height: 100vh;
     width: 125px;
     left: 0px;
-    
 }
 
 .main-bar-2{
-    background-color: #ffffff;
     height: 91vh;
     overflow:auto;
 }
 
 .main-bar-3 {
-    background-color: #ffffff;
     height: 100vh;
     width: 200px;
     right:0px;
@@ -350,10 +351,28 @@
     margin: 15px 15px 15px 15px;
 }
 
+.connect-bar-button:hover {
+    width: 75px;
+    height: 75px;
+    background-color: #3589b3;
+    border-radius: 15px;
+    margin: 15px 15px 15px 15px;
+    cursor:pointer;
+}
+
+.connect-bar-button:active {
+    width: 75px;
+    height: 75px;
+    background-color: #2c779c;
+    border-radius: 15px;
+    margin: 15px 15px 15px 15px;
+    cursor:pointer;
+}
+
 #faq_icon{
     font-size: 28px;
     color: #ffffff;
-    padding-top:22px;
+    padding-top:24px;
     text-align: center;
 }
 
@@ -427,6 +446,69 @@
     margin-top:87px;
 }
 
+/* Button Set */
+
+#challenge_edit_icon {
+    margin: 95px 5px 5px 5px;
+    font-size: 15px;
+}
+
+#challenge_edit_icon:hover {
+    margin: 95px 5px 5px 5px;
+    font-size: 15px;
+    cursor:pointer;
+}
+
+#challenge_edit_icon:active {
+    margin: 95px 5px 5px 5px;
+    font-size: 15px;
+    cursor:pointer;
+    color: #c6c8ca;
+}
+
+/* Button Set */
+
+#challenge_clone_icon {
+    margin: 95px 7px 5px 5px;
+    font-size: 15px;
+}
+
+#challenge_clone_icon:hover {
+    margin: 95px 7px 5px 5px;
+    font-size: 15px;
+    cursor:pointer;
+}
+
+#challenge_clone_icon:active {
+    margin: 95px 7px 5px 5px;
+    font-size: 15px;
+    cursor:pointer;
+    color: #c6c8ca;
+}
+
+/* Button Set */
+
+#challenge_trash_icon {
+    margin: 95px 5px 5px 5px;
+    font-size: 15px;
+}
+
+#challenge_trash_icon:hover {
+    margin: 95px 5px 5px 5px;
+    font-size: 15px;
+    cursor:pointer;
+}
+
+#challenge_trash_icon:active {
+    margin: 95px 5px 5px 5px;
+    font-size: 15px;
+    cursor:pointer;
+    color: #c6c8ca;
+}
+
+
+/* Button Set */
+
 .user-photo {
     width: 40px;
     height: 40px;
@@ -435,6 +517,39 @@
     margin-top: 12px;
     margin-right: 12px;
 }
+
+/* Button Set */
+
+.user-photo-add {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #c6c8ca;
+    margin-top: 12px;
+    margin-right: 12px;
+}
+
+.user-photo-add:hover {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #bcbec0;
+    margin-top: 12px;
+    margin-right: 12px;
+    cursor: pointer;
+}
+
+.user-photo-add:active {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #9d9fa2;
+    margin-top: 12px;
+    margin-right: 12px;
+    cursor: pointer;
+}
+
+/* Button Set */
 
 #add_icon_user {
     font-size: 15px;
@@ -494,6 +609,8 @@
     padding: 10px 15px 10px 15px;
 }
 
+/* Button Set */
+
 #check_circle_outline {
     font-size: 25px;
     text-align: center;
@@ -502,6 +619,17 @@
     margin-right: 6px;
     padding-bottom: 3px;
     vertical-align: middle;
+}
+
+#check_circle_outline:hover {
+    font-size: 25px;
+    text-align: center;
+    right:0px;
+    margin-left: 0px;
+    margin-right: 6px;
+    padding-bottom: 3px;
+    vertical-align: middle;
+    cursor: pointer;
 }
 
 .my-challenges-frame {
@@ -528,6 +656,42 @@
 
 }
 
+/* Button Set */
+
+.challenge-card-add {
+    width: 119px;
+    height: 166px;
+    background-color: #dbdcde;
+    border-top-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    margin: 0px 30px 30px 0px;
+}
+
+.challenge-card-add:hover {
+    width: 119px;
+    height: 166px;
+    background-color: #babfc4;
+    border-top-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    margin: 0px 30px 30px 0px;
+    cursor: pointer;
+}
+
+.challenge-card-add:active {
+    width: 119px;
+    height: 166px;
+    background-color: #9fa5aa;
+    border-top-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    margin: 0px 30px 30px 0px;
+    cursor: pointer;
+}
+
+/* Button Set */
+
 .challenge-card {
     width: 119px;
     height: 166px;
@@ -538,12 +702,43 @@
     margin: 0px 30px 30px 0px;
 }
 
+.challenge-card:hover {
+    width: 119px;
+    height: 166px;
+    background-color: #dbdcde;
+    border-top-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    margin: 0px 30px 30px 0px;
+    cursor: pointer;
+}
+
+/* Button Set */
+
 .challenge-card-expand-blue {
     width: 40px;
     height: 40px;
     background-color: #3c9ccc;
     border-bottom-right-radius: 10px;
 }
+
+.challenge-card-expand-blue:hover {
+    width: 40px;
+    height: 40px;
+    background-color: #358ab4;
+    border-bottom-right-radius: 10px;
+    cursor: pointer;
+}
+
+.challenge-card-expand-blue:active {
+    width: 40px;
+    height: 40px;
+    background-color: #2c779c;
+    border-bottom-right-radius: 10px;
+    cursor: pointer;
+}
+
+/* Button Set */
 
 .challenge-card-expand-red {
     width: 40px;
@@ -552,12 +747,48 @@
     border-bottom-right-radius: 10px;
 }
 
+.challenge-card-expand-red:hover {
+    width: 40px;
+    height: 40px;
+    background-color: #cb5956;
+    border-bottom-right-radius: 10px;
+    cursor: pointer;
+}
+
+.challenge-card-expand-red:active {
+    width: 40px;
+    height: 40px;
+    background-color: #ae4c49;
+    border-bottom-right-radius: 10px;
+    cursor: pointer;
+}
+
+/* Button Set */
+
 .challenge-card-expand-green {
     width: 40px;
     height: 40px;
     background-color: #6eba7f;
     border-bottom-right-radius: 10px;
 }
+
+.challenge-card-expand-green:hover {
+    width: 40px;
+    height: 40px;
+    background-color: #60a36f;
+    border-bottom-right-radius: 10px;
+    cursor: pointer;
+}
+
+.challenge-card-expand-green:active {
+    width: 40px;
+    height: 40px;
+    background-color: #508d60;
+    border-bottom-right-radius: 10px;
+    cursor: pointer;
+}
+
+/* Button Set */
 
 .challenge-card-expand-purple {
     width: 40px;
@@ -566,12 +797,48 @@
     border-bottom-right-radius: 10px;
 }
 
+.challenge-card-expand-purple:hover {
+    width: 40px;
+    height: 40px;
+    background-color: #987f9b;
+    border-bottom-right-radius: 10px;
+    cursor: pointer;
+}
+
+.challenge-card-expand-purple:active {
+    width: 40px;
+    height: 40px;
+    background-color: #836d86;
+    border-bottom-right-radius: 10px;
+    cursor: pointer;
+}
+
+/* Button Set */
+
 .challenge-card-expand-pink {
     width: 40px;
     height: 40px;
     background-color: #eca0be;
     border-bottom-right-radius: 10px;
 }
+
+.challenge-card-expand-pink:hover {
+    width: 40px;
+    height: 40px;
+    background-color: #cd8ca7;
+    border-bottom-right-radius: 10px;
+    cursor: pointer;
+}
+
+.challenge-card-expand-pink:active {
+    width: 40px;
+    height: 40px;
+    background-color: #b17891;
+    border-bottom-right-radius: 10px;
+    cursor: pointer;
+}
+
+/* Button Set */
 
 #fullscreen_icon_expand {
     color: #ffffff;
@@ -640,6 +907,7 @@
     color: #dbdcde;
     font-weight: 600;
     text-transform: capitalize;
+    margin: 15px 0px 15px 0px;
 
 }
 
@@ -649,6 +917,7 @@
     color: #dbdcde;
     font-weight: 600;
     text-transform: capitalize;
+    margin: 15px 0px 15px 0px;
     
 }
 
@@ -658,6 +927,7 @@
     color: #dbdcde;
     font-weight: 600;
     text-transform: capitalize;
+    margin: 15px 0px 15px 0px;
     
 }
 
@@ -667,17 +937,29 @@
     color: #dbdcde;
     font-weight: 600;
     text-transform: capitalize;
+    margin: 15px 0px 15px 0px;
     
 }
 
 .challenge-details-frame-break {
     border: dashed .5px #dbdcde;
-    margin: 7px 0px 15px 0px;
+    margin: 0px;
     padding: 0px;
 
 }
 
+.challenge-details-frame-break {
+    border: dashed .5px #dbdcde;
+    margin: 0px;
+    padding: 0px;
 
+}
+
+.list-item:hover {
+    background-color: #f8f8f8;
+    cursor: pointer;
+
+}
 
 
 </style>

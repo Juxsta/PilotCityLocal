@@ -74,6 +74,9 @@ export default {
         conditions () {
             return [this.user_data,this.employer_data]
         },
+        pass() {
+            this.user_data
+        }
     },
     created(){
         var self = this

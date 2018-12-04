@@ -5,9 +5,9 @@
 				<img id="logo-pilotcity" src="@/assets/pilotCitylogo.png" alt="Pilot City Logo">
 		  	</router-link> 
 			<div class="btn-group ml-auto" role="group">
-				<Login v-if="!authUser" id="component-login" />
-				<Signup v-if="!authUser" id="component-signup" />
-				<Logout  v-if="authUser"/>
+				<Login v-if="!authUser || emailNotVerified" id="component-login" />  
+				<Signup v-if="!authUser || emailNotVerified" id="component-signup" />
+				<Logout  v-if="authUser && !emailNotVerified"/>
 			</div>
 	</nav>
 </div>
@@ -19,6 +19,7 @@ import firebase from '@/firebase/init'
 import Login from '@/components/auth/Login'
 import Logout from '@/components/auth/Logout'
 import Signup from '@/components/auth/Signup'
+import { bus } from '@/main'
 export default {
   name: 'Navbar',
   components: {
@@ -29,14 +30,19 @@ export default {
   data () {
     return {
 		authUser: null,
+		emailNotVerified: false
     }
   },
   methods: {
 
 	},
 	created() {
+		var self = this;
 		firebase.auth().onAuthStateChanged((user) => {
 			this.authUser=user
+		});
+		bus.$on('EmailNotVerified', () => {
+			self.emailNotVerified = true;
 		})
 	}
 }

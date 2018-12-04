@@ -1,7 +1,7 @@
 <template>
     <div class="container container-fluid justify-content-center mr-auto ml-auto" >
         <form class="mt-5">
-            <div class="form-row mt-auto" v-for="period in Periods" :key="period.uid">
+            <div class="form-row mt-auto" v-for="(period,index) in Periods" :key="period.uid+index">
                 <i class="material-icons font-weight-bold mr-2" id="delete_class" 
                 :class="{first_trash:Periods.indexOf(period)==0}" 
                 @click="rmThisClass(period.uid)">clear</i>
@@ -62,12 +62,13 @@
             <i class="material-icons font-weight-bold add-button">add</i>
         </button>
         <!-- <button class="btn-lg" @click="view(Class)"></button> -->
-<!--         <next_button
-            route='TBD'
-            :conditions="data"
-            collection="teachers"
-            :pass = filled 
-            /> -->
+        <next_button
+            route='w_teacher_industry_keywords'
+            :conditions="teacher_data"
+            :collection= collection
+            :pass = pass
+            :errormsg= "errormsg"
+            />
     </div>
 </template>
 
@@ -77,6 +78,7 @@ import { bus } from '@/main'
 import firebase from '@/firebase/init'
 import { Prompter } from '@/main'
 import button from '@/components/profile_builder/wizard/components/button'
+import _ from 'lodash'
 export default {
     name:'w_teacher_class_schedule',
     data () {
@@ -100,6 +102,9 @@ export default {
                 {status:true},
                 {status:true}
             ],
+            errormsg:null,
+            collection: ["teachers"],
+            db_classes:[]
         }
     },
     components: {
@@ -107,24 +112,13 @@ export default {
     },
     computed: {
         filled() {
-            var self = this;
-            var pass = true;
-            for (var i = 0; i < self.Periods.length; i++){
-                for (var _attr in self.Periods[i]){
-                    if (self.Periods[i][_attr] == null && !self.Periods.length) {
-                        pass = false;
-                        break ;
-                    }
-                }
-                if (pass === false)
-                    break ;
-            }
-            if (pass === false){
-                return false
-            }
-            if (pass){
-                return true
-            }
+            let Periods = this.Periods
+            let arr = []
+            return Periods.every((period) => {
+                return Object.values(period).every((field) => {
+                    return field != null
+                })
+            })
         },
         schedules() {
             var self = this
@@ -148,13 +142,23 @@ export default {
             for(let i in this.schedules) {
                 for(let j=1;j < this.schedules.length; j++) {
                     if(i!=j && this.schedules[i].Period==this.schedules[j].Period) {
-                        
-                        let obj = {}
-                        let new_schedule = {}
-                        obj.Period= this.schedules[i].Period
-                        new_schedule = Object.assign(this.schedules[i].schedule,this.schedules[j].schedule)
-                        obj.schedule = new_schedule
-                        merged.push(obj)
+                        if( Object.keys(this.schedules[i].schedule).every((prop1)=> {
+                            return Object.keys(this.schedules[j].schedule).every((prop2) => {
+                                return prop1 != prop2
+                            })
+                        })) {
+                            let obj = {}
+                            let new_schedule = {}
+                            obj.Period= this.schedules[i].Period
+                            new_schedule = Object.assign(this.schedules[i].schedule,this.schedules[j].schedule)
+                            obj.schedule = new_schedule
+                            merged.push(obj)
+                            this.errormsg=null
+                        }
+                        else {
+                            this.errormsg="Conflicting Period Schedules"
+                            break
+                        }
                     }
                 }
                 if(merged.every((obj) => {
@@ -165,11 +169,86 @@ export default {
             }
             return merged
         },
+        pass () {
+            return (this.filled && (!this.errormsg))
+        },
+        format_schedule () {
+            var arr = []
+            var obj = {}
+            obj["classes"]= []
+            var schedules = this.merged_schedules
+            for(let schedule in schedules) {
+                var class_obj= this.Periods.filter((period) => {
+                    return period.period==schedules[schedule].Period
+                })
+                let index = class_obj[0].index
+                arr[index]=schedules[schedule]
+            }
+            return arr
+        },
+        teacher_data() {
+            var classes = Object.assign({},this.db_classes)
+            var new_format = Object.assign({},this.format_schedule)
+            _.map(classes, function(obj) {
+
+                // add the properties from second array matching the userID
+                // to the object from first array and return the updated object
+                return _.assign(obj, _.find(new_format, {Period: obj.Period}));
+            }); 
+            return [{classes}]
+        }
     },
     created() {
-
+        var self = this
+        firebase.auth().onAuthStateChanged((user) => {
+            if(user) {
+                var new_periods =[]
+                const db = firebase.firestore()
+                db.collection("teachers").doc(user.uid).get().then((doc) => {
+                    let obj = doc.data()
+                    //create local period data to merge with schedules
+                    for (let clas in obj.classes) {
+                        let new_period = { 
+                        uid: null,
+                        period: null,
+                        days: [],
+                        start_time: null,
+                        end_time:null
+                        }
+                        new_period.period = obj.classes[clas].Period
+                        new_period.uid = obj.classes[clas].uid
+                        new_period.index=obj.classes.indexOf(obj.classes[clas])
+                        //parse database schedules
+                        //create reference to database schedules
+                        let schedule = obj.classes[clas].schedule
+                        console.log(obj.classes[clas].schedule)
+                        var new_schedule = []
+                        for(let item = 0; item < schedule.length; item++) {
+                            let start_time = schedule[item].start_time
+                            let end_time = schedule[item].end_time
+                            new_schedule.push(_.filter(schedule, (day) => {
+                                return (day.start_time == start_time && day.end_time == end_time)
+                            }))
+                            schedule = _.filter(schedule, (day) => {
+                                return (day.start_time == start_time && day.end_time == end_time)
+                            })
+                        }
+                        // At the end of this loop schedule will be empty and new schedule will be an array of objects that are grouped by same start and end times
+                        //Now we want to convert each array in new_schedule into a new period
+                        console.log(new_schedule)
+                        obj.classes[clas].schedule
+                        new_periods.push(new_period)
+                    }
+                    this.db_classes = obj.classes
+                })
+                self.Periods=new_periods
+            }
+        })
     },
     methods: {
+        parseDBSchedule(scheudle) {
+            return 
+        },
         variableSelect(event, Obj) {
                 switch(event.target.value){
                 case '0': 
@@ -222,13 +301,6 @@ export default {
         selected: function(val) {
             return this.pval.indexOf(val) > -1 || this.selectpval.indexOf(val) > -1 
         },
-        checkMergeConflict(obj1,obj2) {
-            return Object.keys(obj1).every((prop1)=> {
-                return Object.keys(obj2).every((prop2) => {
-                    return prop1 != prop2
-                })
-            })
-        }
     },
 
 }
