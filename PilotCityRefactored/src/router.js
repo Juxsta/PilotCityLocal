@@ -149,15 +149,9 @@ const router = new Router({
           component: w_employer_roi
         },
         {
-<<<<<<< HEAD
           path:'9',
           name:'w_employer_flock',
           component:w_employer_flock
-=======
-          path: '9',
-          name: 'w_employer_flock',
-          component: w_employer_flock
->>>>>>> 96f259b60ce30d54cac25b22b861115dd3ea70bd
         }
       ]
     }
