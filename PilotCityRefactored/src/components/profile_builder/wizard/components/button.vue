@@ -56,6 +56,8 @@ export default {
                                     if (self.route == 'teacher-thankyou-modal'){
                                         bus.$emit('teacher_finish')
                                     }
+                                    else if(self.route =='employer-thankyou-modal')
+                                        bus.$emit('employer_finish')
                                     else
                                         self.$router.push({name: self.route})  
                                 })

@@ -5,7 +5,7 @@
             name="Industry"
             :keywords="industry_keywords"
             placeholder ="Enter keywords here to describe your industry"
-            :selected_keywords="employer_data.keywords"
+            :selected_keywords="employer_data.selected_industry_keywords"
             ></industry_tag>
         </div>
          <next_button

@@ -6,49 +6,71 @@
         <flock_tag class=" container d-flex flex-col justify-content-center"
         name="Problems"
         placeholder="Enter keywords that describe problems you want students to solve"
-        :keywords=flock_keywords
-        :selected_keywords=question_keywords
-        ></flock_tag>
+        :keywords='challenge_keywords'
+        :selected_keywords='employer_data.selected_challenge_keywords'
+        />
+        <finish_button
+            route='employer-thankyou-modal'
+            text='Save and Finish'
+            :conditions=conditions
+            :collection=collection
+        />
+        <div>
+            <w_employer_tymod/>
+        </div>
     </div>
 </template>
 
 <script>
-import { bus } from '../../../main'
-import { Prompter } from '../../../main'
-import tagging from "@/components/wizard/tools/tagging.vue"
+import { bus } from '@/main'
+import firebase from '@/firebase/init'
+import tagging from '@/components/profile_builder/wizard/components/tagging.vue'
+import button from '@/components/profile_builder/wizard/components/button'
+import w_employer_tymod from '@/components/profile_builder/wizard/employer/w_employer_tymod'
 export default {
     name:"w_flock",
     data () {
         return {
-            flock_keywords: ['Identifying Use Cases' , 'Developing Case Studies' , 'Community Engagement' , 
+            challenge_keywords: ['Identifying Use Cases' , 'Developing Case Studies' , 'Community Engagement' , 
             'Automation' , 'Sales' , 'Training Talent' , 'Implementing Technology' , 'Technology Adoption' , 
             'Partnerships' , 'Public Relations' , 'Social Media Marketing' , 'Entrepreneurial Culture' , 
             'Women Empowerment' , 'Diversity & Inclusion'],
-            question_keywords:[]
+            employer_data:{
+                selected_challenge_keywords:[]
+            },
+            collection:['employers']
         }
     },
     components: {
-        flock_tag: tagging
+        flock_tag: tagging,
+        finish_button:button,
+        w_employer_tymod
     },
-    created() {
-         var self = this;
-        bus.$on('grab_data', function(obj){
-        if (obj.step != 'employer_flock')
-            return ;
-        if (self.question_keywords.length){
-            var obj = {};
-            obj['employer_question_keywords'] = {
-                selected_question_keywords: self.question_keywords
+    computed: {
+        conditions() {
+            return [this.employer_data]
+        }
+    },
+    created(){
+            var self = this
+            let data = [self.employer_data]
+            firebase.auth().onAuthStateChanged((user) => {
+            if(user) {
+                const db = firebase.firestore()
+                for(let i = 0;i<self.collection.length;i++)
+                db.collection(self.collection[i]).doc(user.uid).get().then((doc) => {
+                    let obj = doc.data()
+                    for (let field in data[i]) {
+                        if(obj.hasOwnProperty(field)) {
+                            data[i][field]=obj[field]
+                        }    
+                    }
+                })
             }
-            bus.$emit('form_completed', obj);
-            bus.$emit('validated');
-            console.log('validated')
-            return;
-        }
-        else{
-            Prompter().failed("You're missing a few things","Hey there,");
-        }
-    });
+        })
+        bus.$on('employer_finish',function () {
+            $('#employer-thankyou-modal').modal('show')
+        })
     }
 }
 </script>
