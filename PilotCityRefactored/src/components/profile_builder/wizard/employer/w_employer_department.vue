@@ -63,8 +63,13 @@ export default {
     components: {
         next_button:button,
     }, 
+    computed: {
+        conditions(){
+            return [this.employer_data]
+        }
+    },
     methods: {
-        pushDepartment() {
+    pushDepartment() {
             this.departments.push({
                 uid: (new Date()).getTime(),
                 name: null,

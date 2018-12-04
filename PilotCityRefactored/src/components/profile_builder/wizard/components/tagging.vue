@@ -55,10 +55,12 @@ export default {
             default: "placeholder"
         },
         keywords: {
-            type: Array
+            type: Array,
+            required:true
         },
         selected_keywords: {
-            type:Array            
+            type:Array,
+            required:true          
         }
         },
     

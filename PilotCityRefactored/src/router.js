@@ -22,6 +22,7 @@ import w_employer_industry_keywords from '@/components/profile_builder/wizard/em
 import w_employer_picker from '@/components/profile_builder/wizard/employer/w_employer_picker'
 import w_employer_solution_keywords from '@/components/profile_builder/wizard/employer/w_employer_solution_keywords'
 import w_employer_department from '@/components/profile_builder/wizard/employer/w_employer_department'
+import w_employer_roi from '@/components/profile_builder/wizard/employer/w_employer_roi'
 
 Vue.use(Router)
 
@@ -140,6 +141,11 @@ const router = new Router({
           path: '7',
           name: 'w_employer_department',
           component: w_employer_department
+        },
+        {
+          path: '8',
+          name: 'w_employer_roi',
+          component: w_employer_roi
         }
       ]
     }

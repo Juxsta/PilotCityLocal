@@ -18,8 +18,6 @@
 
 <script>
 
-import { bus } from '@/main'
-import { Prompter } from '@/main'
 import tagging from '@/components/profile_builder/wizard/components/tagging.vue'
 import button from '@/components/profile_builder/wizard/components/button'
 import firebase from '@/firebase/init'
@@ -29,7 +27,7 @@ export default {
     data () {
         return {
             employer_data: {
-                keywords:[]
+                selected_industry_keywords:[]
             },
             industry_keywords: [
                 'Drones','Robotics','Data Science','Internet of Things','Sustainability','Space',

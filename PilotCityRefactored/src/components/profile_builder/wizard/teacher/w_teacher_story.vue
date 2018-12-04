@@ -52,7 +52,7 @@
 import { Prompter } from '@/main'
 import button from '@/components/profile_builder/wizard/components/button.vue'
 import firebase from '@/firebase/init'
-import {TheMask} from 'vue-the-mask'
+import { TheMask } from 'vue-the-mask'
 export default {
     name:"w_teacher_story",
     data() {
