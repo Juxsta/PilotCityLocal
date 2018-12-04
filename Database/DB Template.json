@@ -1,58 +1,4 @@
-{
-    "Classes": {
-        "Class1": {
-            "ClassID": "c00000",
-            "Course Name": "AP Computer Science",
-            "Grade": [9,10,11,12],
-            "Semester": "Spring",
-            "School Year" :{
-                "Start" : 2018,
-                "End" : 2019
-            },
-            "Schedule":{
-                "Monday": {
-                    "Start Time" :{
-                        "hour" : 10,
-                        "minute" : 10 
-                    },
-                    "End Time" :{
-                        "hour" : 11,
-                        "minute" :10
-                    }
-                },
-                "Tuesday": false,
-                "Wednesday" :{
-                    "Start Time" :{
-                        "hour" : 9,
-                        "minute" : 10
-                    },
-                    "End Time" :{
-                        "hour" : 10,
-                        "minute" : 10
-                    }
-                },
-                "Thursday" : false,
-                "Friday" :{
-                    "Start Time":{
-                        "hour": 10,
-                        "minute": 11
-                    },
-                    "End Time":{
-                        "hour":11,
-                        "minute":10
-                    }
-                },
-                "Saturday" : false,
-                "Sunday" : false
-            },
-            "Number of Students":{
-                "Min" : 20,
-                "Max" : 25
-            },
-            "TeacherID": "00001",
-            "isActive": true
-        }
-    },
+
     "Employers": {
         "User1": {
             "Company Addresses": {
@@ -160,6 +106,61 @@
             "School Name": "Arroyo High School",
             "Um serID": "00001",
             "Room Number" : "101A"
+            {
+                "Classes": {
+                    "Class1": {
+                        "ClassID": "c00000",
+                        "Course Name": "AP Computer Science",
+                        "Grade": [9,10,11,12],
+                        "Semester": "Spring",
+                        "School Year" :{
+                            "Start" : 2018,
+                            "End" : 2019
+                        },
+                        "Schedule":{
+                            "Monday": {
+                                "Start Time" :{
+                                    "hour" : 10,
+                                    "minute" : 10 
+                                },
+                                "End Time" :{
+                                    "hour" : 11,
+                                    "minute" :10
+                                }
+                            },
+                            "Tuesday": false,
+                            "Wednesday" :{
+                                "Start Time" :{
+                                    "hour" : 9,
+                                    "minute" : 10
+                                },
+                                "End Time" :{
+                                    "hour" : 10,
+                                    "minute" : 10
+                                }
+                            },
+                            "Thursday" : false,
+                            "Friday" :{
+                                "Start Time":{
+                                    "hour": 10,
+                                    "minute": 11
+                                },
+                                "End Time":{
+                                    "hour":11,
+                                    "minute":10
+                                }
+                            },
+                            "Saturday" : false,
+                            "Sunday" : false
+                        },
+                        "Number of Students":{
+                            "Min" : 20,
+                            "Max" : 25
+                        },
+                        "TeacherID": "00001",
+                        "isActive": true
+                    }
+                },
         }
     },
     "Users": {

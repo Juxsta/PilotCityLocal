@@ -201,7 +201,8 @@ export default {
                         classes.push(new_obj)
                     }
                 })
-                self.data.classes = classes
+                if(classes.length)
+                    self.data.classes = classes
             }
         })
     },
