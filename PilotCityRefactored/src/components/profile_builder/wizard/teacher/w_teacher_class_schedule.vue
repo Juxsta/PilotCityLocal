@@ -204,17 +204,37 @@ export default {
                 const db = firebase.firestore()
                 db.collection("teachers").doc(user.uid).get().then((doc) => {
                     let obj = doc.data()
+                    console.log(obj) // the obj data
+                    let hasData = false;
                     for (let temp in obj.classes){
-                        var uid =  (new Date()).getTime()
-                         self.Periods.push( {
-                            uid: uid,
-                            period: obj.classes[parseInt(temp)].Period,
-                            days: [],
-                            start_time: null,
-                            end_time:null
-                        });
-                        self.data_from_prev_page.push(uid)
+                        //check if we had submit before
+                        if (obj.classes[parseInt(temp)].schedule)
+                            hasData = true;                   
+                    } 
+                    if (hasData){
+                        // if we had submmitted data before, parse it back and just self.Periods.push accordingly
+                        // which will be rendered to the view
+                        for (let temp in obj)
+                                    ;
+                        //check if we had submit before
+    
+                    } else { // if we havent submit any data before, then we just pull it from last page
+                        for (let temp in obj.classes){
+                            var uid =  (new Date()).getTime()
+                            self.Periods.push( {
+                                uid: uid,
+                                period: obj.classes[parseInt(temp)].Period,
+                                days: [],
+                                start_time: null,
+                                end_time:null
+                            });
+                            self.data_from_prev_page.push(uid)
+                        }
                     }
+
+                 
+
+
                     /*
                     //create local period data to merge with schedules
                     for (let clas in obj.classes) {
