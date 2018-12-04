@@ -157,18 +157,18 @@ export default {
             let used_periods=[]
             let values=['0','1','2','3','4','5','6','7']
             var self = this.data;
-             for (var i = 0; i < self.classes.length; i++){
+            for (var i = 0; i < self.classes.length; i++){
                 used_periods.push(self.classes[i].Period)
-             }
-             return values.filter((values) => {
-                 return used_periods.indexOf(values) == -1
-             })
+            }
+            return values.filter((values) => {
+                return used_periods.indexOf(values) == -1
+            })
         }
     },
     created () {
         var self = this
         //create an array reference to user and teacher data
-        let classes = []
+        var classes = []
         firebase.auth().onAuthStateChanged((user) => {
             if(user) {
                 const db = firebase.firestore()
@@ -201,8 +201,7 @@ export default {
                         classes.push(new_obj)
                     }
                 })
-                if(classes.length)
-                    self.data.classes = classes
+                self.data.classes = classes
             }
         })
     },
@@ -271,6 +270,9 @@ export default {
                 period.school_year.start = (new Date()).getFullYear()
                 period.school_year.end = (new Date()).getFullYear() + 1
             }
+            //purely to process uid
+            if(this.calcUid)
+                return
         } 
     },
 }

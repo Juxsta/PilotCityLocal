@@ -215,13 +215,14 @@ export default {
                         start_time: null,
                         end_time:null
                         }
+                        console.log('obj',obj)
+                        console.log('classes',obj.classes)
                         new_period.period = obj.classes[clas].Period
                         new_period.uid = obj.classes[clas].uid
                         new_period.index=obj.classes.indexOf(obj.classes[clas])
                         //parse database schedules
                         //create reference to database schedules
                         let schedule = obj.classes[clas].schedule
-                        console.log(obj.classes[clas].schedule)
                         var new_schedule = []
                         for(let item = 0; item < schedule.length; item++) {
                             let start_time = schedule[item].start_time
