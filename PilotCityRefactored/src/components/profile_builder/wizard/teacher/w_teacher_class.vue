@@ -125,7 +125,7 @@ export default {
             if(user) {
                 var classes = self.data.classes
                 for(let clas in classes) {
-                    classes[clas].uid = user.uid + (new Date()).getTime()
+                    classes[clas].uid = user.uid + classes.indexOf(classes[clas])
                 }
             }
             
@@ -176,7 +176,8 @@ export default {
                 db.collection(self.collection[i]).doc(user.uid).get().then((doc) => {
                     let obj = doc.data()
                     //loop through each class in database classes
-                    for (let dbclass of obj['classes']){
+                    for (let database_class in obj['classes']){
+                        let dbclass=obj['classes'][database_class]
                         let new_obj = {
                                     uid: null,
                                     Period: null,
@@ -194,14 +195,15 @@ export default {
                                 }
                         //loop through each field of those classes
                         for(let field in dbclass) {
-                            if(new_obj.hasOwnProperty(field)) {
+                            if(new_obj.hasOwnProperty(field) || field == 'schedule') {
                                 new_obj[field] = dbclass[field]
                             }
                         }
                         classes.push(new_obj)
                     }
                 })
-                self.data.classes = classes
+                if(classes)
+                    self.data.classes = classes
             }
         })
     },

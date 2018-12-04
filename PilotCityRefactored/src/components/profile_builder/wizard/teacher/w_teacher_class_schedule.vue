@@ -23,7 +23,13 @@
                 <label v-if="Periods.indexOf(period)==0">Days</label>
             <div>
                 <button class="btn btn-secondary dropdown-toggle align-items-end btn-block dropdown-class select-class-placeholder" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span :id="period.uid">Select</span>
+                    <!-- <span :id="period.uid">Select </span> -->
+                    <span v-if="period.days.length">
+                        <span>Selected: </span>
+                        <span v-for="(day,index) in period.days" :key=index>{{day}}
+                            <span v-if="period.days.indexOf(day) != period.days.length-1">,</span>
+                        </span>
+                    </span>
                 </button>
                 <div class="dropdown-menu mr-auto ml-auto" aria-labelledby="dropdownMenuButton">
                     <div class="checkbox dropdown-item checkbox-container mr-auto ml-auto" >
@@ -120,18 +126,20 @@ export default {
         },
         schedules() {
             var self = this
-            let schedule = {}
+            let schedule = []
             var arr = []
             for (let period = 0; period < self.Periods.length; period++) {
                 /* return self.Periods[period].days[0] */
                 for(let i=0;i<self.Periods[period].days.length;i++){
-                    schedule[self.Periods[period].days[i]]={
-                        start_time:self.Periods[period].start_time,
-                        end_time:self.Periods[period].end_time
-                    }
+                    schedule.push({ 
+                        [self.Periods[period].days[i]] : {
+                            start_time:self.Periods[period].start_time,
+                            end_time:self.Periods[period].end_time
+                            }
+                    })
                 }
                 arr.push({'Period':self.Periods[period].period, schedule})
-                schedule = {}
+                schedule = []
             }
             return arr
         },
@@ -148,6 +156,7 @@ export default {
                             let obj = {}
                             let new_schedule = {}
                             obj.Period= this.schedules[i].Period
+                            return this.schedules[j].schedule
                             new_schedule = Object.assign(this.schedules[i].schedule,this.schedules[j].schedule)
                             obj.schedule = new_schedule
                             merged.push(obj)
@@ -179,8 +188,7 @@ export default {
                 var class_obj= this.Periods.filter((period) => {
                     return period.period==schedules[schedule].Period
                 })
-                let index = class_obj[0].index
-                arr[index]=schedules[schedule]
+                arr.push(schedules[schedule])
             }
             return arr
         },
@@ -204,8 +212,10 @@ export default {
                 const db = firebase.firestore()
                 db.collection("teachers").doc(user.uid).get().then((doc) => {
                     let obj = doc.data()
-                    console.log(obj) // the obj data
+                    //console.log(obj) // the obj data
                     let hasData = false;
+                    //create a local copy of class data in order to push to the database
+                    this.db_classes = Object.assign({},obj.classes)
                     for (let temp in obj.classes){
                         //check if we had submit before
                         if (obj.classes[parseInt(temp)].schedule)
@@ -214,13 +224,41 @@ export default {
                     if (hasData){
                         // if we had submmitted data before, parse it back and just self.Periods.push accordingly
                         // which will be rendered to the view
-                        for (let temp in obj)
-                                    ;
+                        for (let temp in obj.classes) {
+                            let clas = obj.classes[temp]
+                            for(let day_temp=0;day_temp<clas.schedule.length;day_temp++) {
+                                var new_period ={
+                                uid:clas.uid+day_temp,
+                                period: obj.classes[parseInt(temp)].Period,
+                                days: [],
+                                start_time: null,
+                                end_time:null
+                                 };
+                                let day = clas.schedule[day_temp]
+                                //create an array of days with the same start and end times to merge
+                                let to_merge=_.filter(clas.schedule, (days) => {
+                                    return days.start_time == day.start_time && days.end_time == days.end_time
+                                })
+                                //remove those days from the array
+                                clas.schedule=_.filter(clas.schedule, (days) => {
+                                    return days.start_time != day.start_time || days.end_time != days.end_time
+                                })
+                                //merge array of objects in to_merge
+                                new_period.days=(_.flatMapDeep(to_merge, (days)=> {
+                                    return Object.keys(days)
+                                }))
+                                let first_obj=to_merge[Object.keys(to_merge)[0]]
+                                new_period.start_time = first_obj[Object.keys(first_obj)[0]].start_time
+                                new_period.end_time = first_obj[Object.keys(first_obj)[0]].end_time
+                                self.Periods.push(new_period)
+                            }
+                        }
                         //check if we had submit before
     
                     } else { // if we havent submit any data before, then we just pull it from last page
+                        console.log('here')
                         for (let temp in obj.classes){
-                            var uid =  (new Date()).getTime()
+                            var uid =  obj.classes[temp].uid
                             self.Periods.push( {
                                 uid: uid,
                                 period: obj.classes[parseInt(temp)].Period,
@@ -231,7 +269,7 @@ export default {
                             self.data_from_prev_page.push(uid)
                         }
                     }
-
+                    self.Periods.shift()
                  
 
 
