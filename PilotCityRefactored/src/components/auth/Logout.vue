@@ -6,12 +6,14 @@
 
 <script>
 import firebase from '@/firebase/init'
+import { bus } from '@/main'
 export default {
     name: "Logout",
     methods: {
         logout(){
             firebase.auth().signOut().then(() => {
                 this.$router.push({name: 'Index'})
+                bus.$emit('re-render')
             })
         }
     }
