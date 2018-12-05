@@ -460,6 +460,11 @@ input::placeholder {
     width:150px;
     margin:5px;
 }
-
+.dropdown-item:focus, .dropdown-item:active, .dropdown-item:checked{
+    background-color: white !important;
+}
+.select-class-placeholder{
+    border: none;
+}
 
 </style>
