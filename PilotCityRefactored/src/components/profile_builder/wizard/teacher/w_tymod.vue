@@ -22,7 +22,7 @@
 
 <script>
 import firebase from '@/firebase/init'
-
+import { bus } from '@/main'
 export default {
     name: "w_tymod",
     data() {
@@ -32,9 +32,11 @@ export default {
     },
     methods:{
         out: function(){
-            firebase.auth().signOut();
-            this.$router.push({name: 'Index'})
-            $('#teacher-thankyou-modal').modal('hide');
+            firebase.auth().signOut().then(() => {
+                this.$router.push({name: 'Index'})
+                $('#teacher-thankyou-modal').modal('hide');
+                bus.$emit('re-render')
+            })
         }
     }
 }

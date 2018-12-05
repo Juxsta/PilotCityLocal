@@ -44,7 +44,7 @@
             :collection="collection"
             />
         <router-link :to="{ name: 'ClassPicker' }" 
-            class="prev_button btn btn-secondary btn-lg" tag='prev_button'>
+            class="prev_button btn btn-secondary btn-lg">
             Back
         </router-link>
     </div>
@@ -94,7 +94,7 @@ export default {
                 db.collection(self.collection[i]).doc(user.uid).get().then((doc) => {
                     let obj = doc.data()
                     for (let field in data[i]) {
-                        if(obj.hasOwnProperty(field)) {
+                        if(obj && obj.hasOwnProperty(field)) {
                             data[i][field]=obj[field]
                         }    
                     }

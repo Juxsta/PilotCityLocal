@@ -21,7 +21,7 @@
             :force_pass="force_pass"
         />
         <router-link :to="{ name: 'w_employer_solutions_picker' }" 
-            class="prev_button btn btn-secondary btn-lg" tag='prev_button'>
+            class="prev_button btn btn-secondary btn-lg">
             Back
         </router-link>
     </div>

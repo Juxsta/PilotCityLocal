@@ -24,6 +24,7 @@
             <div>
                 <button class="btn btn-secondary dropdown-toggle align-items-end btn-block dropdown-class select-class-placeholder" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <!-- <span :id="period.uid">Select </span> -->
+                    <span v-if="!period.days.length">Select</span>
                     <span v-if="period.days.length">
                         <span>Selected: </span>
                         <span v-for="(day,index) in period.days" :key=index>{{day}}
@@ -33,19 +34,19 @@
                 </button>
                 <div class="dropdown-menu mr-auto ml-auto" aria-labelledby="dropdownMenuButton">
                     <div class="checkbox dropdown-item checkbox-container mr-auto ml-auto" >
-                        <input type="checkbox" value="M" v-model="period.days" @change="checkbox_changed($event, period.uid, period.days)"><label class="checkbox-label">Monday</label>
+                        <input type="checkbox" value="M" v-model="period.days" ><label class="checkbox-label">Monday</label>
                     </div>
                     <div class="checkbox dropdown-item checkbox-container mr-auto ml-auto">
-                        <input type="checkbox" value="T" v-model="period.days" @change="checkbox_changed($event, period.uid, period.days)"><label class="checkbox-label">Tuesday</label>
+                        <input type="checkbox" value="T" v-model="period.days" ><label class="checkbox-label">Tuesday</label>
                     </div>
                     <div class="checkbox dropdown-item checkbox-container mr-auto ml-auto">
-                        <input type="checkbox" value="W" v-model="period.days" @change="checkbox_changed($event, period.uid, period.days)"><label class="checkbox-label">Wednesday</label>
+                        <input type="checkbox" value="W" v-model="period.days" ><label class="checkbox-label">Wednesday</label>
                     </div>
                     <div class="checkbox dropdown-item checkbox-container mr-auto ml-auto">
-                        <input type="checkbox" value="Th" v-model="period.days" @change="checkbox_changed($event, period.uid, period.days)"><label class="checkbox-label">Thursday</label>
+                        <input type="checkbox" value="Th" v-model="period.days" ><label class="checkbox-label">Thursday</label>
                     </div>
                     <div class="checkbox dropdown-item checkbox-container mr-auto ml-auto">
-                        <input type="checkbox" value="F" v-model="period.days" @change="checkbox_changed($event, period.uid, period.days)"><label class="checkbox-label">Friday</label>
+                        <input type="checkbox" value="F" v-model="period.days" ><label class="checkbox-label">Friday</label>
                     </div>
                 </div>
 
@@ -73,7 +74,7 @@
             :errormsg= "errormsg"
             />
         <router-link :to="{ name: 'w_teacher_class' }" 
-            class="prev_button btn btn-secondary btn-lg" tag='prev_button'>
+            class="prev_button btn btn-secondary btn-lg">
             Back
         </router-link>
     </div>
@@ -159,7 +160,6 @@ export default {
                         new_schedule =  _.flatMap(new_schedule, (day) => {return day})
                         obj.schedule = new_schedule
                         merged.push(obj)
-                        this.errormsg=this.schedules[j]
                     }
                 }
                 if(merged.every((obj) => {
@@ -230,9 +230,11 @@ export default {
                                  };
                                 let day = clas.schedule[day_temp]
                                 //create an array of days with the same start and end times to merge
+                                console.log(day)
                                 let to_merge=_.filter(clas.schedule, (days) => {
-                                    return days.start_time == day.start_time && days.end_time == days.end_time
+                                    return ((days.start_time == day.start_time) && (days.end_time == day.end_time))
                                 })
+                                console.log(to_merge)
                                 //remove those days from the array
                                 clas.schedule=_.filter(clas.schedule, (days) => {
                                     return days.start_time != day.start_time || days.end_time != days.end_time
@@ -250,7 +252,6 @@ export default {
                         //check if we had submit before
     
                     } else { // if we havent submit any data before, then we just pull it from last page
-                        console.log('here')
                         for (let temp in obj.classes){
                             var uid =  obj.classes[temp].uid
                             self.Periods.push( {
@@ -264,52 +265,6 @@ export default {
                         }
                     }
                     self.Periods.shift()
-                 
-
-
-                    /*
-                    //create local period data to merge with schedules
-                    for (let clas in obj.classes) {
-                        let new_period = { 
-                        uid: null,
-                        period: null,
-                        days: [],
-                        start_time: null,
-                        end_time:null
-                        }
-                        //console.log('obj',obj)
-                        //console.log('classes',obj.classes)
-                        new_period.period = obj.classes[clas].Period
-                        new_period.uid = obj.classes[clas].uid
-                        new_period.index=obj.classes.indexOf(obj.classes[clas])
-                        //parse database schedules
-                        //create reference to database schedules
-                        let schedule = obj.classes[clas].schedule
-                        var new_schedule = []
-                        for(let item = 0; item < schedule.length; item++) {
-                            let start_time = schedule[item].start_time
-                            let end_time = schedule[item].end_time
-                            new_schedule.push(_.filter(schedule, (day) => {
-                                return (day.start_time == start_time && day.end_time == end_time)
-                            }))
-                            schedule = _.filter(schedule, (day) => {
-                                return (day.start_time == start_time && day.end_time == end_time)
-                            })
-                        }
-                        // At the end of this loop schedule will be empty and new schedule will be an array of objects that are grouped by same start and end times
-                        //Now we want to convert each array in new_schedule into a new period
-                        //console.log(new_schedule)
-                        console.log(new_schedule)
-                        obj.classes[clas].schedule
-                        new_periods.push(new_period)
-                    }
-                    this.db_classes = obj.classes
-                    self.Periods=new_periods
-                     for (var period in new_periods)
-                    {
-                        console.log("period:" + new_periods);
-                    }
-                    */
                 })
             } 
         })

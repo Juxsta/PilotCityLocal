@@ -12,7 +12,7 @@
             :collection=collection
         />
         <router-link :to="{ name: 'w_teacher_class_schedule' }" 
-            class="prev_button btn btn-secondary btn-lg" tag='prev_button'>
+            class="prev_button btn btn-secondary btn-lg">
             Back
         </router-link>
     </div>

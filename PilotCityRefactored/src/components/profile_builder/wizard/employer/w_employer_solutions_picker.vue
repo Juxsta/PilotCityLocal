@@ -19,7 +19,7 @@
             :pass="pass"
             />
         <router-link :to="{ name: 'w_employer_industry_keywords' }" 
-            class="prev_button btn btn-secondary btn-lg" tag='prev_button'>
+            class="prev_button btn btn-secondary btn-lg">
             Back
         </router-link>
     </div>
