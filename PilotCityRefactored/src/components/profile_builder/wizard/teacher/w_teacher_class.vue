@@ -83,7 +83,7 @@
             :force_pass = filled
             />
         <router-link :to="{ name: 'w_teacher_address' }" 
-            class="prev_button btn btn-secondary btn-lg" tag='prev_button'>
+            class="prev_button btn btn-secondary btn-lg">
             Back
         </router-link>
     </div>
@@ -205,9 +205,10 @@ export default {
                         }
                         classes.push(new_obj)
                     }
-                })
-                if(classes)
+                    if(classes.length)
                     self.data.classes = classes
+                })
+                
             }
         })
     },

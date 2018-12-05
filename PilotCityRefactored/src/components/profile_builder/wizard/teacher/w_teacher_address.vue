@@ -3,20 +3,20 @@
         <form class="mt-5"> 
             <div class="form-group">
                 <label for="inputAddress">School Address</label>
-                <input type="text" class="form-control" id="inputAddress" placeholder="2250 Bancroft Avenue" v-model="teacher_data.school_address.street" >
+                <input type="text" class="form-control" id="inputAddress" placeholder="123 Sesame Street" v-model="teacher_data.school_address.street" >
             </div>
             <div class="form-row" >
                 <div class="form-group col-md-6">
                     <label for="inputCity">City</label>
-                    <input type="text" class="form-control" id="inputCity" placeholder="San Leandro" v-model="teacher_data.school_address.city">
+                    <input type="text" class="form-control" id="inputCity" placeholder="Dreamland" v-model="teacher_data.school_address.city">
                 </div>
                 <div class="form-group col-md-2">
                     <label for="inputState">State</label>
-                    <input type="text" class="form-control" id="inputState" placeholder="CA" v-model="teacher_data.school_address.state">
+                    <input type="text" class="form-control" id="inputState" placeholder="NY" v-model="teacher_data.school_address.state">
                 </div>
                 <div class="form-group col-md-2">
                     <label for="inputZip">Zip</label>
-                    <input type="number" class="form-control" id="inputZip" placeholder="94577"  v-model="teacher_data.school_address.zip">
+                    <input type="number" class="form-control" id="inputZip" placeholder="12345"  v-model="teacher_data.school_address.zip">
                 </div>
                 <div class="form-group col-md-2">
                     <label for="inputType">Room #</label>
@@ -32,9 +32,9 @@
             :collection="collection"
             />
         <router-link :to="{ name: 'w_teacher_story' }" 
-            class="prev_button btn btn-secondary btn-lg" tag='prev_button'>
+            class="prev_button btn btn-secondary btn-lg">
             Back
-            </router-link>
+        </router-link>
    </div>
 </template>
 

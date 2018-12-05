@@ -40,7 +40,7 @@
                 :pass="filled"
             />
         <router-link :to="{ name: 'w_employer_solution_keywords' }" 
-            class="prev_button btn btn-secondary btn-lg" tag='prev_button'>
+            class="prev_button btn btn-secondary btn-lg">
             Back
         </router-link>
     </div>
@@ -80,7 +80,7 @@ export default {
             return _.every(this.employer_data.departments, (department)=> {
                 return Object.keys(department).every((field) => {
                     if(field == 'team_size')
-                        return _.every(department[field],(size) => {return size})
+                        return _.every(department[field],(size) => {return size != null})
                     else
                         return department[field]
                 })
@@ -129,7 +129,7 @@ export default {
                     break
                 case '5':
                     Obj.min=50
-                    Obj.max=null  
+                    Obj.max=false  
                     break   
             }
         }
