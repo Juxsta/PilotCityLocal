@@ -230,14 +230,16 @@ export default {
                                  };
                                 let day = clas.schedule[day_temp]
                                 //create an array of days with the same start and end times to merge
-                                console.log(day)
-                                let to_merge=_.filter(clas.schedule, (days) => {
-                                    return ((days.start_time == day.start_time) && (days.end_time == day.end_time))
+                                //console.log(day)
+                                day = day[Object.keys(day)[0]]
+                                let to_merge=_.filter(clas.schedule, (day_obj) => {
+                                    let days = day_obj[Object.keys(day_obj)[0]]
+                                    return days.start_time == day.start_time && days.end_time == day.end_time
                                 })
-                                console.log(to_merge)
                                 //remove those days from the array
-                                clas.schedule=_.filter(clas.schedule, (days) => {
-                                    return days.start_time != day.start_time || days.end_time != days.end_time
+                                clas.schedule=_.filter(clas.schedule, (day_obj) => {
+                                    let days = day_obj[Object.keys(day_obj)[0]]
+                                    return days.start_time != day.start_time || days.end_time != day.end_time
                                 })
                                 //merge array of objects in to_merge
                                 new_period.days=(_.flatMapDeep(to_merge, (days)=> {
