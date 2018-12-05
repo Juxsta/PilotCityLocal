@@ -187,7 +187,9 @@ export default {
             return arr
         },
         teacher_data() {
-            var classes = Object.assign({},this.db_classes)
+            var classes = []
+            for (let clas in this.db_classes)
+                classes.push(this.db_classes[clas])
             var new_format = Object.assign({},this.format_schedule)
             _.map(classes, function(obj) {
 
