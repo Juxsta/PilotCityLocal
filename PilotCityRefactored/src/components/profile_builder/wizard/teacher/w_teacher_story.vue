@@ -160,5 +160,7 @@ input:focus{
 .badge-pill {
     text-transform: capitalize;
 }
-
+input.badge-pill.pc-button {
+    border:none;
+}
 </style>
