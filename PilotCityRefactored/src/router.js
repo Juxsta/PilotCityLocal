@@ -100,7 +100,7 @@ const router = new Router({
           component: w_teacher_skills_keywords
         }
       ],
-     /*  beforeEnter: (to,from,next) => {
+      beforeEnter: (to,from,next) => {
         const db = firebase.firestore()
         let user = firebase.auth().currentUser
         if (user) {
@@ -116,7 +116,7 @@ const router = new Router({
       },
       meta: {
         requiresAuth: true
-      }*/
+      }
     },
     {
       path:'/wizard/employer',
@@ -203,7 +203,7 @@ const router = new Router({
   ]
 })
 
-/* router.beforeEach((to,from,next) =>{
+router.beforeEach((to,from,next) =>{
   //check to see if router requires auth
   if(to.matched.some(rec => rec.meta.requiresAuth)){
     // check auth state of user
@@ -218,6 +218,6 @@ const router = new Router({
   } else {
     next()
   }
-})  */
+}) 
 
 export default router
