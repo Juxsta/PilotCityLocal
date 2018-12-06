@@ -17,10 +17,10 @@
         </div>
         <div class="d-flex flex-row justify-content-center mr-5" >
             <div class="p-2 align-self-center">
-                <p class="teacher-story">and I am a teacher at</p>
+                <p class="teacher-story">and I am a student at</p>
             </div>
             <div class="p-2 align-self-start">
-                <input type="text" placeholder="School Name" class="badge-pill pc-button" v-model="teacher_data.school_name">
+                <input type="text" placeholder="School Name" class="badge-pill pc-button" v-model="student_data.school_name">
             </div>
             <div class="p-2 align-self-center">
                 <p class="teacher-story">of the </p>
@@ -28,25 +28,34 @@
         </div>
         <div class="d-flex flex-row justify-content-center">
             <div class="p-2 align-self-start">
-                <input type="text" placeholder="School District" class="badge-pill pc-button" v-model="teacher_data.school_district">
+                <input type="text" placeholder="School District" class="badge-pill pc-button" v-model="student_data.school_district">
             </div>
             <div class="p-2 align-self-center">
-                <p class="teacher-story">My phone number is</p>
+                <p class="teacher-story">. My grade level is </p>
+            </div>
+            <div class="p-2 align-self-start">
+                    <input type="text" placeholder="Grade Level" class="badge-pill pc-button"   v-model="student_data.grade"/>
+            </div>
+            <div class="p-2 align-self-center">
+                <p class="teacher-story">. My email is </p>
+            </div>
+            <div class="p-2 align-self-start">
+                    <input type="text" placeholder="email@email.com" class="badge-pill pc-button"   v-model="user_data.phone"/>
+            </div>
+            <div class="p-2 align-self-center">
+                <p class="teacher-story"> and my phone number is</p>
             </div>
             <div class="p-2 align-self-start">
                     <the-mask class="badge-pill pc-button" :mask="['(###) ###-####']"  v-model="user_data.phone" placeholder="(555) 555-5555"/>
             </div>
         </div>
         </h4>
+
         <next_button 
-            route='w_teacher_address'
+            route='w_student_address'
             :conditions="conditions"
             :collection="collection"
             />
-        <router-link :to="{ name: 'ClassPicker' }" 
-            class="prev_button btn btn-secondary btn-lg">
-            Back
-        </router-link>
     </div>
 </template>
 
@@ -56,20 +65,23 @@ import { Prompter } from '@/main'
 import button from '@/components/profile_builder/wizard/components/button.vue'
 import firebase from '@/firebase/init'
 import { TheMask } from 'vue-the-mask'
+
 export default {
-    name:"w_teacher_story",
-    data() {
-        return {
+    name:"w_student_story",
+    data(){
+        return{
             user_data: {
                 first_name:null,
-                last_name: null,
-                phone: null
+                last_name:null,
+                phone:null,
+                email:null,
             },
-            teacher_data: {
+            student_data: {
                 school_name:null,
-                school_district:null
+                school_district:null,
+                grade:null,
             },
-            collection:['teachers','Users']
+            collection:['students', 'Users'],
         }
     },
     components: {
@@ -78,13 +90,14 @@ export default {
     },
     computed: {
         conditions() {
-            return [this.teacher_data, this.user_data]
+            return [this.student_data, this.user_data]
         }
     },
-    created () {
-        var self = this
+    
+    created() {
+         var self = this
         //create an array reference to user and teacher data
-        let data = [self.teacher_data,self.user_data]
+        let data = [self.student_data,self.user_data]
         firebase.auth().onAuthStateChanged((user) => {
             if(user) {
                 const db = firebase.firestore()
@@ -92,7 +105,7 @@ export default {
                     db.collection(self.collection[i]).doc(user.uid).get().then((doc) => {
                         let obj = doc.data()
                         for (let field in data[i]) {
-                            if(obj && obj.hasOwnProperty(field)) {
+                            if(obj.hasOwnProperty(field)) {
                                 data[i][field]=obj[field]
                             }    
                         }
@@ -101,26 +114,29 @@ export default {
             }
         })
     }
+
+
+
 }
 </script>
 
 <style>
 .pc-button {
-        font-family: "Raleway";
-        font-weight:300;
-        font-style: Italic;
-        background-color: #eca0be;
-        color: white;
-        border-radius: 50px;
-        font-size:20px;
-        height: 50px;
-        width: 250px;
-        text-align: center;
-        padding-left: 30px;
-        padding-right:30px;
-        margin-left:5px;
-        margin-right:5px;
-        border-color: transparent;
+    font-family: "Raleway";
+    font-weight:300;
+    font-style: Italic;
+    background-color: #6eba7f;
+    color: white;
+    border-radius: 50px;
+    font-size:20px;
+    height: 50px;
+    width: 250px;
+    text-align: center;
+    padding-left: 30px;
+    padding-right:30px;
+    margin-left:5px;
+    margin-right:5px;
+    border-color: transparent;
 }
 .pc-button::placeholder {
     color:white;
@@ -131,10 +147,10 @@ export default {
 }
 
 .pc-button::placeholder:focus {
-    color:#eca0be !important;
+    color:#6eba7f !important;
 
 }
-.teacher-story{
+.student-story{
     font-family: "Raleway";
     font-style:Italic;
     font-size: 25px;
@@ -148,7 +164,7 @@ export default {
     font-style: Italic;
     font-weight:700;
     font-size:30px;
-    color:#eca0be;
+    color:#6eba7f;
     margin-bottom:50px;
     margin-top:70px;
 }
@@ -160,7 +176,5 @@ input:focus{
 .badge-pill {
     text-transform: capitalize;
 }
-input.badge-pill.pc-button {
-    border:none;
-}
+
 </style>

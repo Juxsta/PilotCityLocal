@@ -21,9 +21,15 @@ import w_employer_story from '@/components/profile_builder/wizard/employer/w_emp
 import w_employer_address from '@/components/profile_builder/wizard/employer/w_employer_address'
 import w_employer_sector from '@/components/profile_builder/wizard/employer/w_employer_sector'
 import w_employer_industry_keywords from '@/components/profile_builder/wizard/employer/w_employer_industry_keywords'
-import w_employer_picker from '@/components/profile_builder/wizard/employer/w_employer_picker'
+import w_employer_solutions_picker from '@/components/profile_builder/wizard/employer/w_employer_solutions_picker'
 import w_employer_solution_keywords from '@/components/profile_builder/wizard/employer/w_employer_solution_keywords'
 import w_employer_department from '@/components/profile_builder/wizard/employer/w_employer_department'
+import w_employer_roi from '@/components/profile_builder/wizard/employer/w_employer_roi'
+import w_employer_flock from '@/components/profile_builder/wizard/employer/w_employer_flock'
+
+import w_student from '@/components/profile_builder/wizard/student/w_student'
+import w_student_story from '@/components/profile_builder/wizard/student/w_student_story'
+
 
 
 Vue.use(Router)
@@ -93,7 +99,7 @@ const router = new Router({
           component: w_teacher_skills_keywords
         }
       ],
-/*       beforeEnter: (to,from,next) => {
+     /*  beforeEnter: (to,from,next) => {
         const db = firebase.firestore()
         let user = firebase.auth().currentUser
         if (user) {
@@ -106,10 +112,10 @@ const router = new Router({
         }
         else
           next({name: 'ClassPicker'})
-      }, */
+      },
       meta: {
         requiresAuth: true
-      }
+      }*/
     },
     {
       path:'/wizard/employer',
@@ -138,8 +144,8 @@ const router = new Router({
         },
         {
           path: '5',
-          name: 'w_employer_picker',
-          component: w_employer_picker
+          name: 'w_employer_solutions_picker',
+          component: w_employer_solutions_picker
         },
         {
           path: '6',
@@ -150,13 +156,54 @@ const router = new Router({
           path: '7',
           name: 'w_employer_department',
           component: w_employer_department
+        },
+        {
+          path: '8',
+          name: 'w_employer_roi',
+          component: w_employer_roi
+        },
+        {
+<<<<<<< HEAD
+          path: '9',
+          name: 'w_employer_flock',
+          component: w_employer_flock
+=======
+          path:'9',
+          name:'w_employer_flock',
+          component:w_employer_flock
+>>>>>>> 150d72f9d290cdd1df14f287aa105bafd38f59ea
         }
+      ],
+      meta: {
+        requiresAuth: true
+      }
+    },
+    /* 
+    
+    somthins something broken code
+    
+    
+    */
+    {
+      path:'/wizard/student',
+      name:'w_student',
+      component: w_student,
+      children: [
+        {
+          path: '1',
+          name:'w_student_story',
+          component:w_student_story
+        },
       ]
-    }
+    },
+<<<<<<< HEAD
 /*     {
+=======
+    {
+>>>>>>> 150d72f9d290cdd1df14f287aa105bafd38f59ea
       path: '*',
       redirect: {name: 'Index'}
-    } */
+    }
   ]
 })
 
