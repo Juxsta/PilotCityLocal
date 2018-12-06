@@ -86,7 +86,15 @@ export default {
   bottom: 100px;
   right: 100px;
   font-weight: 600;
+  border-radius: 50px;
   font-size: 3vh;
 }
+#the_best_next_button:hover {
+    font-weight: bold;
+    border-radius: 50px;
+    font-color: rgb(222, 223, 224);
+    background-color:#404041;
+    border-color:#404041;
+} 
 </style>
 

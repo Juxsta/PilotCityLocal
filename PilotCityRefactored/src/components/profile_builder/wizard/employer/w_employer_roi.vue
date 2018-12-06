@@ -17,6 +17,10 @@
             :conditions="conditions"
             :collection="collection"
             />
+        <router-link :to="{ name: 'w_employer_industry_keywords' }" 
+            class="prev_button btn btn-secondary btn-lg">
+            Back
+        </router-link>
     </div>
 </template>
 
@@ -46,6 +50,24 @@ export default {
         conditions(){
             return [this.employer_data]
         }
+    },
+    created(){
+        var self = this
+        let data = [self.employer_data]
+        firebase.auth().onAuthStateChanged((user) => {
+            if(user) {
+                const db = firebase.firestore()
+                for(let i = 0;i<self.collection.length;i++)
+                db.collection(self.collection[i]).doc(user.uid).get().then((doc) => {
+                    let obj = doc.data()
+                    for (let field in data[i]) {
+                        if(obj.hasOwnProperty(field)) {
+                            data[i][field]=obj[field]
+                        }    
+                    }
+                })
+            }
+        })
     }
 }
 </script>

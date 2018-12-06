@@ -18,6 +18,10 @@
             :collection="collection"
             :pass="pass"
             />
+        <router-link :to="{ name: 'w_employer_industry_keywords' }" 
+            class="prev_button btn btn-secondary btn-lg">
+            Back
+        </router-link>
     </div>
 </template>
 
@@ -28,7 +32,7 @@ import button from '@/components/profile_builder/wizard/components/button'
 import firebase from '@/firebase/init'
 
 export default {
-    name:'w_solutions_picker',
+    name:'w_employer_solutions_picker',
     data () {
         return {
             employer_data:{

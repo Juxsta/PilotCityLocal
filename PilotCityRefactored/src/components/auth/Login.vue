@@ -71,9 +71,11 @@ export default {
     },
     methods:{
         login: function(){
+            var testEnv = true
+            //var testEnv = false; // delete this when in prodcution env
             var self = this;
             firebase.auth().signInWithEmailAndPassword(this.login_input_username, this.login_input_password).then((cred)=> {
-                if (firebase.auth().currentUser && !firebase.auth().currentUser.emailVerified){
+                if (testEnv && firebase.auth().currentUser && !firebase.auth().currentUser.emailVerified){
                     self.errormsg = "You have not verified your email account."
                     bus.$emit("EmailNotVerified");
                     firebase.auth().signOut();

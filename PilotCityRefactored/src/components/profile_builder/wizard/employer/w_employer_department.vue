@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-            <div id="w_department" class="container mt-5">
+            <div id="w_department" class="container mt-5 pt-5">
                 <div class="form-row" v-for="department in employer_data.departments" :key="department.uid">
                     <!-- <i class="material-icons font-weight-bold mr-2" id="delete_department" :class="{first_trash:departments.indexOf(department)==0}" @click="rmThisDepartment(department.uid)">clear</i> -->
                     <div class="col">
@@ -10,8 +10,12 @@
                     <div class="col-3">
                         <label for="Team_Size" v-if="employer_data.departments.indexOf(department)==0">Team Size</label>
                         <select class="custom-select" id="select_team" @change ="variableSelect($event,department.team_size)">
-                            <option selected>Select Team Size</option>
-                           <option value="0">1 - 3</option>
+                            <option selected value='' v-if="!department.team_size.min">Select</option>
+                            <option selected value='' v-if="department.team_size.min">
+                                <span v-if="department.team_size.max">{{'Selected: ' + department.team_size.min+'-'+department.team_size.max}}</span>
+                                <span v-if="!department.team_size.max">{{'Selected: ' + department.team_size.min+'+'}}</span>
+                            </option>
+                            <option value="0">1 - 3</option>
                             <option value="1">4 - 6</option>
                             <option value="2">7 - 10</option>
                             <option value="3">11 - 20</option>
@@ -19,21 +23,26 @@
                             <option value="5">50+</option>
                         </select>
                     </div>
-                    <div class="col-2">
+  <!--                   <div class="col-2">
                         <label for="team_member" v-if="employer_data.departments.indexOf(department)==0">Team Member?</label>
                         <select class="custom-select" id="select_team_member" v-model="department.team_member">
                             <option selected>Select</option> 
                             <option value=false>No</option> 
                             <option value=false>Yes</option> 
                         </select>
-                    </div>
+                    </div> -->
                 </div>
             </div>
             <next_button
                 route='w_employer_roi'
                 :conditions="conditions"
                 :collection="collection"
+                :pass="filled"
             />
+        <router-link :to="{ name: 'w_employer_solution_keywords' }" 
+            class="prev_button btn btn-secondary btn-lg">
+            Back
+        </router-link>
     </div>
     
 </template>
@@ -53,7 +62,7 @@ export default {
                         min: null,
                         max: null
                     },
-                    team_member: null
+                    //team_member: null
                 }],
             },
             collection: ["employers"],
@@ -66,6 +75,16 @@ export default {
     computed: {
         conditions(){
             return [this.employer_data]
+        },
+        filled() {
+            return _.every(this.employer_data.departments, (department)=> {
+                return Object.keys(department).every((field) => {
+                    if(field == 'team_size')
+                        return _.every(department[field],(size) => {return size != null})
+                    else
+                        return department[field]
+                })
+            })
         }
     },
     methods: {
@@ -110,10 +129,28 @@ export default {
                     break
                 case '5':
                     Obj.min=50
-                    Obj.max=null  
+                    Obj.max=false  
                     break   
             }
         }
+    },
+    created(){
+        var self = this
+        let data = [self.employer_data]
+        firebase.auth().onAuthStateChanged((user) => {
+            if(user) {
+                const db = firebase.firestore()
+                for(let i = 0;i<self.collection.length;i++)
+                db.collection(self.collection[i]).doc(user.uid).get().then((doc) => {
+                    let obj = doc.data()
+                    for (let field in data[i]) {
+                        if(obj.hasOwnProperty(field)) {
+                            data[i][field]=obj[field]
+                        }    
+                    }
+                })
+            }
+        })
     }
 }
 </script>

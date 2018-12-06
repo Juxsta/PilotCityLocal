@@ -4,7 +4,8 @@
     </div>
 </template>
 <script>
+import { bus } from '@/main'
 export default {
-    name:'w_employer'
+    name:'w_employer',
 }
 </script>

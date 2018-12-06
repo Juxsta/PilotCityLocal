@@ -15,6 +15,10 @@
         <div>
             <w_tymod/>
         </div>
+        <router-link :to="{ name: 'w_teacher_industry_keywords' }" 
+            class="prev_button btn btn-secondary btn-lg">
+            Back
+        </router-link>
    </div>
 </template>
 

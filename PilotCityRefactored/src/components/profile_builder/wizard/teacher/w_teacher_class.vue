@@ -31,7 +31,7 @@
             <label v-if="data.classes.indexOf(period)==0">Grade</label>
             <div>
                 <button class="btn btn-secondary dropdown-toggle align-items-end btn-block dropdown-class select-class-placeholder" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span v-if="!period.Grade.length">Selected</span>
+                    <span v-if="!period.Grade.length">Select</span>
                     <span v-if="period.Grade.length">
                         <span>Selected:</span>
                         <span v-for="(grade,index) in period.Grade" :key=index>{{grade}}
@@ -82,6 +82,10 @@
             :pass = filled
             :force_pass = filled
             />
+        <router-link :to="{ name: 'w_teacher_address' }" 
+            class="prev_button btn btn-secondary btn-lg">
+            Back
+        </router-link>
     </div>
 </template>
 
@@ -125,7 +129,7 @@ export default {
             if(user) {
                 var classes = self.data.classes
                 for(let clas in classes) {
-                    classes[clas].uid = user.uid + (new Date()).getTime()
+                    classes[clas].uid = user.uid + classes.indexOf(classes[clas])
                 }
             }
             
@@ -176,7 +180,8 @@ export default {
                 db.collection(self.collection[i]).doc(user.uid).get().then((doc) => {
                     let obj = doc.data()
                     //loop through each class in database classes
-                    for (let dbclass of obj['classes']){
+                    for (let database_class in obj['classes']){
+                        let dbclass=obj['classes'][database_class]
                         let new_obj = {
                                     uid: null,
                                     Period: null,
@@ -194,14 +199,16 @@ export default {
                                 }
                         //loop through each field of those classes
                         for(let field in dbclass) {
-                            if(new_obj.hasOwnProperty(field)) {
+                            if(new_obj.hasOwnProperty(field) || field == 'schedule') {
                                 new_obj[field] = dbclass[field]
                             }
                         }
                         classes.push(new_obj)
                     }
+                    if(classes.length)
+                    self.data.classes = classes
                 })
-                self.data.classes = classes
+                
             }
         })
     },
@@ -374,6 +381,11 @@ input::placeholder {
 .custom-select {
     background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3E%3Cpath fill='white' d='M2 0L0 2h4zm0 5L0 3h4z'/%3E%3C/svg%3E")
 }
-
+.dropdown-item:focus, .dropdown-item:active, .dropdown-item:checked{
+    background-color: white !important;
+}
+.select-class-placeholder{
+    border: none;
+}
 </style>
  

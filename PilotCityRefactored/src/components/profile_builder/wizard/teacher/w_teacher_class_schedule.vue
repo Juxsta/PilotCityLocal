@@ -23,41 +23,45 @@
                 <label v-if="Periods.indexOf(period)==0">Days</label>
             <div>
                 <button class="btn btn-secondary dropdown-toggle align-items-end btn-block dropdown-class select-class-placeholder" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span :id="period.uid">Select</span>
+                    <!-- <span :id="period.uid">Select </span> -->
+                    <span v-if="!period.days.length">Select</span>
+                    <span v-if="period.days.length">
+                        <span>Selected: </span>
+                        <span v-for="(day,index) in period.days" :key=index>{{day}}
+                            <span v-if="period.days.indexOf(day) != period.days.length-1">,</span>
+                        </span>
+                    </span>
                 </button>
                 <div class="dropdown-menu mr-auto ml-auto" aria-labelledby="dropdownMenuButton">
                     <div class="checkbox dropdown-item checkbox-container mr-auto ml-auto" >
-                        <input type="checkbox" value="M" v-model="period.days" @change="checkbox_changed($event, period.uid, period.days)"><label class="checkbox-label">Monday</label>
+                        <input type="checkbox" value="M" v-model="period.days" ><label class="checkbox-label">Monday</label>
                     </div>
                     <div class="checkbox dropdown-item checkbox-container mr-auto ml-auto">
-                        <input type="checkbox" value="T" v-model="period.days" @change="checkbox_changed($event, period.uid, period.days)"><label class="checkbox-label">Tuesday</label>
+                        <input type="checkbox" value="T" v-model="period.days" ><label class="checkbox-label">Tuesday</label>
                     </div>
                     <div class="checkbox dropdown-item checkbox-container mr-auto ml-auto">
-                        <input type="checkbox" value="W" v-model="period.days" @change="checkbox_changed($event, period.uid, period.days)"><label class="checkbox-label">Wednesday</label>
+                        <input type="checkbox" value="W" v-model="period.days" ><label class="checkbox-label">Wednesday</label>
                     </div>
                     <div class="checkbox dropdown-item checkbox-container mr-auto ml-auto">
-                        <input type="checkbox" value="Th" v-model="period.days" @change="checkbox_changed($event, period.uid, period.days)"><label class="checkbox-label">Thursday</label>
+                        <input type="checkbox" value="Th" v-model="period.days" ><label class="checkbox-label">Thursday</label>
                     </div>
                     <div class="checkbox dropdown-item checkbox-container mr-auto ml-auto">
-                        <input type="checkbox" value="F" v-model="period.days" @change="checkbox_changed($event, period.uid, period.days)"><label class="checkbox-label">Friday</label>
+                        <input type="checkbox" value="F" v-model="period.days" ><label class="checkbox-label">Friday</label>
                     </div>
                 </div>
 
             </div>
-        </div>
-        <div class="form-group-starttime">
-            <label v-if="Periods.indexOf(period)==0">Start Time</label>
-            <input type="time" class="form-control"   v-model="period.start_time">
-        </div>
-        <div class="form-group-endtime dropdown">
-            <label v-if="Periods.indexOf(period)==0">End Time</label>
-            <input type="time" class="form-control"   v-model="period.end_time">
-            <div>
-
-            </div>
-        </div>
     </div>
-</form>
+    <div class="form-group-starttime">
+        <label v-if="Periods.indexOf(period)==0">Start Time</label>
+        <input type="time" class="form-control"   v-model="period.start_time">
+    </div>
+    <div class="form-group-endtime dropdown">
+        <label v-if="Periods.indexOf(period)==0">End Time</label>
+        <input type="time" class="form-control"   v-model="period.end_time">
+    </div>
+        </div>
+        </form>
         <button id="btn-class-add" type="button" class="btn btn-primary btn-lg btn-block" @click="pushPeriod()">
             <i class="material-icons font-weight-bold add-button">add</i>
         </button>
@@ -69,6 +73,10 @@
             :pass = pass
             :errormsg= "errormsg"
             />
+        <router-link :to="{ name: 'w_teacher_class' }" 
+            class="prev_button btn btn-secondary btn-lg">
+            Back
+        </router-link>
     </div>
 </template>
 
@@ -104,7 +112,8 @@ export default {
             ],
             errormsg:null,
             collection: ["teachers"],
-            db_classes:[]
+            db_classes:[],
+            data_from_prev_page: []
         }
     },
     components: {
@@ -122,18 +131,20 @@ export default {
         },
         schedules() {
             var self = this
-            let schedule = {}
+            let schedule = []
             var arr = []
             for (let period = 0; period < self.Periods.length; period++) {
                 /* return self.Periods[period].days[0] */
                 for(let i=0;i<self.Periods[period].days.length;i++){
-                    schedule[self.Periods[period].days[i]]={
-                        start_time:self.Periods[period].start_time,
-                        end_time:self.Periods[period].end_time
-                    }
+                    schedule.push({ 
+                        [self.Periods[period].days[i]] : {
+                            start_time:self.Periods[period].start_time,
+                            end_time:self.Periods[period].end_time
+                            }
+                    })
                 }
                 arr.push({'Period':self.Periods[period].period, schedule})
-                schedule = {}
+                schedule = []
             }
             return arr
         },
@@ -141,24 +152,14 @@ export default {
            let merged = []
             for(let i in this.schedules) {
                 for(let j=1;j < this.schedules.length; j++) {
-                    if(i!=j && this.schedules[i].Period==this.schedules[j].Period) {
-                        if( Object.keys(this.schedules[i].schedule).every((prop1)=> {
-                            return Object.keys(this.schedules[j].schedule).every((prop2) => {
-                                return prop1 != prop2
-                            })
-                        })) {
-                            let obj = {}
-                            let new_schedule = {}
-                            obj.Period= this.schedules[i].Period
-                            new_schedule = Object.assign(this.schedules[i].schedule,this.schedules[j].schedule)
-                            obj.schedule = new_schedule
-                            merged.push(obj)
-                            this.errormsg=null
-                        }
-                        else {
-                            this.errormsg="Conflicting Period Schedules"
-                            break
-                        }
+                    if(i!=j && this.schedules[i].Period==this.schedules[j].Period) { 
+                        let obj = {}
+                        let new_schedule = {}
+                        obj.Period= this.schedules[i].Period
+                        new_schedule = _.merge({},[this.schedules[i].schedule,this.schedules[j].schedule])
+                        new_schedule =  _.flatMap(new_schedule, (day) => {return day})
+                        obj.schedule = new_schedule
+                        merged.push(obj)
                     }
                 }
                 if(merged.every((obj) => {
@@ -181,13 +182,14 @@ export default {
                 var class_obj= this.Periods.filter((period) => {
                     return period.period==schedules[schedule].Period
                 })
-                let index = class_obj[0].index
-                arr[index]=schedules[schedule]
+                arr.push(schedules[schedule])
             }
             return arr
         },
         teacher_data() {
-            var classes = Object.assign({},this.db_classes)
+            var classes = []
+            for (let clas in this.db_classes)
+                classes.push(this.db_classes[clas])
             var new_format = Object.assign({},this.format_schedule)
             _.map(classes, function(obj) {
 
@@ -206,44 +208,69 @@ export default {
                 const db = firebase.firestore()
                 db.collection("teachers").doc(user.uid).get().then((doc) => {
                     let obj = doc.data()
-                    //create local period data to merge with schedules
-                    for (let clas in obj.classes) {
-                        let new_period = { 
-                        uid: null,
-                        period: null,
-                        days: [],
-                        start_time: null,
-                        end_time:null
+                    //console.log(obj) // the obj data
+                    let hasData = false;
+                    //create a local copy of class data in order to push to the database
+                    this.db_classes = Object.assign({},obj.classes)
+                    for (let temp in obj.classes){
+                        //check if we had submit before
+                        if (obj.classes[parseInt(temp)].schedule)
+                            hasData = true;                   
+                    } 
+                    if (hasData){
+                        // if we had submmitted data before, parse it back and just self.Periods.push accordingly
+                        // which will be rendered to the view
+                        for (let temp in obj.classes) {
+                            let clas = obj.classes[temp]
+                            for(let day_temp=0;day_temp<clas.schedule.length;day_temp++) {
+                                var new_period ={
+                                uid:clas.uid+day_temp,
+                                period: obj.classes[parseInt(temp)].Period,
+                                days: [],
+                                start_time: null,
+                                end_time:null
+                                 };
+                                let day = clas.schedule[day_temp]
+                                //create an array of days with the same start and end times to merge
+                                //console.log(day)
+                                day = day[Object.keys(day)[0]]
+                                let to_merge=_.filter(clas.schedule, (day_obj) => {
+                                    let days = day_obj[Object.keys(day_obj)[0]]
+                                    return days.start_time == day.start_time && days.end_time == day.end_time
+                                })
+                                //remove those days from the array
+                                clas.schedule=_.filter(clas.schedule, (day_obj) => {
+                                    let days = day_obj[Object.keys(day_obj)[0]]
+                                    return days.start_time != day.start_time || days.end_time != day.end_time
+                                })
+                                //merge array of objects in to_merge
+                                new_period.days=(_.flatMapDeep(to_merge, (days)=> {
+                                    return Object.keys(days)
+                                }))
+                                let first_obj=to_merge[Object.keys(to_merge)[0]]
+                                new_period.start_time = first_obj[Object.keys(first_obj)[0]].start_time
+                                new_period.end_time = first_obj[Object.keys(first_obj)[0]].end_time
+                                self.Periods.push(new_period)
+                            }
                         }
-                        console.log('obj',obj)
-                        console.log('classes',obj.classes)
-                        new_period.period = obj.classes[clas].Period
-                        new_period.uid = obj.classes[clas].uid
-                        new_period.index=obj.classes.indexOf(obj.classes[clas])
-                        //parse database schedules
-                        //create reference to database schedules
-                        let schedule = obj.classes[clas].schedule
-                        var new_schedule = []
-                        for(let item = 0; item < schedule.length; item++) {
-                            let start_time = schedule[item].start_time
-                            let end_time = schedule[item].end_time
-                            new_schedule.push(_.filter(schedule, (day) => {
-                                return (day.start_time == start_time && day.end_time == end_time)
-                            }))
-                            schedule = _.filter(schedule, (day) => {
-                                return (day.start_time == start_time && day.end_time == end_time)
-                            })
+                        //check if we had submit before
+    
+                    } else { // if we havent submit any data before, then we just pull it from last page
+                        for (let temp in obj.classes){
+                            var uid =  obj.classes[temp].uid
+                            self.Periods.push( {
+                                uid: uid,
+                                period: obj.classes[parseInt(temp)].Period,
+                                days: [],
+                                start_time: null,
+                                end_time:null
+                            });
+                            self.data_from_prev_page.push(uid)
                         }
-                        // At the end of this loop schedule will be empty and new schedule will be an array of objects that are grouped by same start and end times
-                        //Now we want to convert each array in new_schedule into a new period
-                        console.log(new_schedule)
-                        obj.classes[clas].schedule
-                        new_periods.push(new_period)
                     }
-                    this.db_classes = obj.classes
+                    self.Periods.shift()
                 })
-                self.Periods=new_periods
-            }
+            } 
         })
     },
     methods: {
@@ -292,6 +319,10 @@ export default {
         },
         rmThisClass: function(uid)
         {
+            if (this.data_from_prev_page.includes(uid)){
+                 Prompter().failed("This period can't be removed.","Hey there,")
+                return 
+            }
             this.Periods = this.Periods.filter((object) => {
                 return object.uid != uid
             });
@@ -433,6 +464,11 @@ input::placeholder {
     width:150px;
     margin:5px;
 }
-
+.dropdown-item:focus, .dropdown-item:active, .dropdown-item:checked{
+    background-color: white !important;
+}
+.select-class-placeholder{
+    border: none;
+}
 
 </style>

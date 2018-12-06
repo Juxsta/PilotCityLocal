@@ -43,7 +43,10 @@
             :conditions="conditions"
             :collection="collection"
             />
-
+        <router-link :to="{ name: 'ClassPicker' }" 
+            class="prev_button btn btn-secondary btn-lg">
+            Back
+        </router-link>
     </div>
 </template>
 
@@ -89,7 +92,7 @@ export default {
                     db.collection(self.collection[i]).doc(user.uid).get().then((doc) => {
                         let obj = doc.data()
                         for (let field in data[i]) {
-                            if(obj.hasOwnProperty(field)) {
+                            if(obj && obj.hasOwnProperty(field)) {
                                 data[i][field]=obj[field]
                             }    
                         }
@@ -157,5 +160,7 @@ input:focus{
 .badge-pill {
     text-transform: capitalize;
 }
-
+input.badge-pill.pc-button {
+    border:none;
+}
 </style>
