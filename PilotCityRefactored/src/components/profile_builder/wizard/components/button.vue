@@ -6,6 +6,7 @@
 <script>
 import { Prompter } from '@/main'
 import firebase from '@/firebase/init'
+import * as fb from 'firebase';
 import { bus } from '@/main'
 export default {
     props: {
@@ -36,6 +37,10 @@ export default {
         errormsg: {
             type: String,
             default: "You're missing a few things"
+        },
+        from: {
+            type: String,
+            default: ""
         }
     },
     methods: {
@@ -44,24 +49,66 @@ export default {
             if(self.conditions.length == self.collection.length) {
                 firebase.auth().onAuthStateChanged((user)=> {
                     if(user) {
+                        const db = firebase.firestore()
                         if (self.force_pass || (self.pass && self.conditions.every((condition) => {
                             return Object.values(condition).every((data) => {
                                 return ((data != null && data != false) || data === false)
                                 })
                         }))) {
-                            for(let i in self.conditions){
-                                const db = firebase.firestore()
-                                db.collection(self.collection[i]).doc(user.uid).set(self.conditions[i],
-                                {merge:true}).then(() => {
-                                    if (self.route == 'teacher-thankyou-modal'){
-                                        bus.$emit('teacher_finish')
-                                    }
-                                    else if(self.route =='employer-thankyou-modal')
-                                        bus.$emit('employer_finish')
-                                    else
-                                        self.$router.push({name: self.route})  
-                                })
-                            }
+                            if (self.from == "w_teacher_class_schedule"){
+                                for (var i in self.conditions[0].classes)
+                                {
+                                    console.log(user.uid);
+
+                                    self.conditions[0].classes[i].teacher_uid = user.uid;
+
+                                    db.collection("classroom").add(self.conditions[0].classes[i]).then(function(docRef) {
+                                        self.conditions[0].classes[i].uid = docRef.id;
+                                        db.collection("classroom").doc(docRef.id).set({
+                                            uid: docRef.id
+                                        }, { merge: true }).then(() => { 
+
+                                        for(let i in self.conditions){
+                                            db.collection(self.collection[i]).doc(user.uid).set(self.conditions[i],
+                                            {merge:true}).then(() => {
+                                                if (self.route == 'teacher-thankyou-modal'){
+                                                    bus.$emit('teacher_finish')
+                                                }
+                                                else if(self.route =='employer-thankyou-modal')
+                                                    bus.$emit('employer_finish')
+                                                else
+                                                    self.$router.push({name: self.route})  
+                                            })
+                                        }
+                                    
+                                        // the code above submit the class to classroom collection
+                                        // code below here would be submitting to the teacher array
+                                       
+                                        // db.collection("teachers").doc(user.uid).update({
+                                        //         classes: fb.firestore.FieldValue.arrayUnion(self.conditions[0].classes[i])
+                                        //     }).then(() => {
+                                        //         console.log("good"); 
+                                        //     });
+                                        // })
+                                    
+
+                                        }); 
+                                    });
+                                }
+                             } else {
+                                for(let i in self.conditions){
+                                    db.collection(self.collection[i]).doc(user.uid).set(self.conditions[i],
+                                    {merge:true}).then(() => {
+                                        if (self.route == 'teacher-thankyou-modal'){
+                                            bus.$emit('teacher_finish')
+                                        }
+                                        else if(self.route =='employer-thankyou-modal')
+                                            bus.$emit('employer_finish')
+                                        else
+                                            self.$router.push({name: self.route})  
+                                    })
+                                }
+                             }              
                         }
                         else{
                             if(self.errormsg)

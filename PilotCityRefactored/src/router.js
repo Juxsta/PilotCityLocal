@@ -163,15 +163,9 @@ const router = new Router({
           component: w_employer_roi
         },
         {
-<<<<<<< HEAD
-          path: '9',
-          name: 'w_employer_flock',
-          component: w_employer_flock
-=======
           path:'9',
           name:'w_employer_flock',
           component:w_employer_flock
->>>>>>> 150d72f9d290cdd1df14f287aa105bafd38f59ea
         }
       ],
       meta: {
@@ -196,11 +190,7 @@ const router = new Router({
         },
       ]
     },
-<<<<<<< HEAD
-/*     {
-=======
     {
->>>>>>> 150d72f9d290cdd1df14f287aa105bafd38f59ea
       path: '*',
       redirect: {name: 'Index'}
     }

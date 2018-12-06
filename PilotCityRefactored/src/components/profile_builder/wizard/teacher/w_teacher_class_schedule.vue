@@ -67,11 +67,12 @@
         </button>
         <!-- <button class="btn-lg" @click="view(Class)"></button> -->
         <next_button
-            route='w_teacher_industry_keywords'
-            :conditions="teacher_data"
-            :collection= collection
+            route ='w_teacher_industry_keywords'
+            :conditions ="teacher_data"
+            :collection = collection
             :pass = pass
-            :errormsg= "errormsg"
+            :errormsg = "errormsg"
+            :from = me
             />
         <router-link :to="{ name: 'w_teacher_class' }" 
             class="prev_button btn btn-secondary btn-lg">
@@ -91,6 +92,7 @@ export default {
     name:'w_teacher_class_schedule',
     data () {
         return {
+            me: 'w_teacher_class_schedule',
             Periods:[ {
                 uid: (new Date()).getTime(),
                 period: null,
