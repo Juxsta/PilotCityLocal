@@ -29,6 +29,7 @@ import w_employer_flock from '@/components/profile_builder/wizard/employer/w_emp
 
 import w_student from '@/components/profile_builder/wizard/student/w_student'
 import w_student_story from '@/components/profile_builder/wizard/student/w_student_story'
+import w_student_demographic from '@/components/profile_builder/wizard/student/w_student_demographic'
 
 
 
@@ -163,15 +164,9 @@ const router = new Router({
           component: w_employer_roi
         },
         {
-<<<<<<< HEAD
-          path: '9',
-          name: 'w_employer_flock',
-          component: w_employer_flock
-=======
           path:'9',
           name:'w_employer_flock',
           component:w_employer_flock
->>>>>>> 150d72f9d290cdd1df14f287aa105bafd38f59ea
         }
       ],
       meta: {
@@ -194,13 +189,14 @@ const router = new Router({
           name:'w_student_story',
           component:w_student_story
         },
+        {
+          path: '2',
+          name: 'w_student_demographic',
+          component:w_student_demographic
+        }
       ]
     },
-<<<<<<< HEAD
-/*     {
-=======
     {
->>>>>>> 150d72f9d290cdd1df14f287aa105bafd38f59ea
       path: '*',
       redirect: {name: 'Index'}
     }

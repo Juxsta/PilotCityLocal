@@ -1,10 +1,10 @@
 <template>
-    <div class="container-fluid mt-5 mx-auto Raleway">
+    <div class="container-fluid mt-5 mx-auto Raleway main_div">
         <h4 class="font-weight-bold">
             <div>
                 <h2 class="story-title">What's your story?</h2>
             </div>
-        <div class="d-flex flex-row justify-content-center">
+        <div class="d-flex flex-row justify-content-left mr-5">
             <div class="p-2 align-self-center">
                 <p class="teacher-story">My name is</p>
             </div>
@@ -14,10 +14,11 @@
             <div class="p-2 align-self-start">
                 <input type="text" placeholder="Last Name" class="badge-pill pc-button" v-model="user_data.last_name"> 
             </div>
+            <p class="teacher-story"> and I am a student at </p>
         </div>
-        <div class="d-flex flex-row justify-content-center mr-5" >
+        <div class="d-flex flex-row justify-content-left mr-5" >
             <div class="p-2 align-self-center">
-                <p class="teacher-story">and I am a student at</p>
+            
             </div>
             <div class="p-2 align-self-start">
                 <input type="text" placeholder="School Name" class="badge-pill pc-button" v-model="student_data.school_name">
@@ -25,22 +26,16 @@
             <div class="p-2 align-self-center">
                 <p class="teacher-story">of the </p>
             </div>
+            <input type="text" placeholder="School District" class="badge-pill pc-button" v-model="student_data.school_district">
+                <p class="teacher-story"> school district. My grade is </p>
+            
         </div>
-        <div class="d-flex flex-row justify-content-center">
-            <div class="p-2 align-self-start">
-                <input type="text" placeholder="School District" class="badge-pill pc-button" v-model="student_data.school_district">
-            </div>
-            <div class="p-2 align-self-center">
-                <p class="teacher-story">. My grade level is </p>
+        <div class="d-flex flex-row justify-content-left">
+           <div class="p-2 align-self-center">
+            
             </div>
             <div class="p-2 align-self-start">
                     <input type="text" placeholder="Grade Level" class="badge-pill pc-button"   v-model="student_data.grade"/>
-            </div>
-            <div class="p-2 align-self-center">
-                <p class="teacher-story">. My email is </p>
-            </div>
-            <div class="p-2 align-self-start">
-                    <input type="text" placeholder="email@email.com" class="badge-pill pc-button"   v-model="user_data.phone"/>
             </div>
             <div class="p-2 align-self-center">
                 <p class="teacher-story"> and my phone number is</p>
@@ -52,7 +47,7 @@
         </h4>
 
         <next_button 
-            route='w_student_address'
+            route='w_student_demographic'
             :conditions="conditions"
             :collection="collection"
             />
@@ -120,7 +115,12 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+.main_div {
+  width: 100%;
+  padding-left: 100px;
+    
+}
 .pc-button {
     font-family: "Raleway";
     font-weight:300;
@@ -176,5 +176,13 @@ input:focus{
 .badge-pill {
     text-transform: capitalize;
 }
+p{
+    font-family: "Raleway";
+    font-style: Italic;
+    font-weight:300;
+    font-size:30px;
+    
+}
+
 
 </style>
