@@ -25,6 +25,10 @@ import w_employer_department from '@/components/profile_builder/wizard/employer/
 import w_employer_roi from '@/components/profile_builder/wizard/employer/w_employer_roi'
 import w_employer_flock from '@/components/profile_builder/wizard/employer/w_employer_flock'
 
+import w_student from '@/components/profile_builder/wizard/student/w_student'
+import w_student_story from '@/components/profile_builder/wizard/student/w_student_story'
+
+
 Vue.use(Router)
 
 const router = new Router({
@@ -149,18 +153,33 @@ const router = new Router({
           component: w_employer_roi
         },
         {
-<<<<<<< HEAD
-          path:'9',
-          name:'w_employer_flock',
-          component:w_employer_flock
-=======
           path: '9',
           name: 'w_employer_flock',
           component: w_employer_flock
->>>>>>> 96f259b60ce30d54cac25b22b861115dd3ea70bd
         }
+      ],
+      meta: {
+        requiresAuth: true
+      }
+    },
+    /* 
+    
+    somthins something broken code
+    
+    
+    */
+    {
+      path:'/wizard/student',
+      name:'w_student',
+      component: w_student,
+      children: [
+        {
+          path: '1',
+          name:'w_student_story',
+          component:w_student_story
+        },
       ]
-    }
+    },
 /*     {
       path: '*',
       redirect: {name: 'Index'}
