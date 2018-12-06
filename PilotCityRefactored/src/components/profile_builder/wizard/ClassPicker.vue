@@ -37,7 +37,7 @@ export default {
                         const db = firebase.firestore();
                         let user = firebase.auth().currentUser
                         self.userdata.email = user.email
-                        db.collection("Users").doc(user.uid).set(self.userdata).then( () => {
+                        db.collection("Users").doc(user.uid).set(self.userdata, {merge:true}).then( () => {
                         })
                     }
                 })

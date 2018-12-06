@@ -26,13 +26,19 @@ export default {
             $('#signup-modal').modal('show');
         }
     },
-    beforeRouteEnter(to,from,next) {
+    beforeCreate() {
+		firebase.auth().onAuthStateChanged((user) => {
+            if(user && user.emailVerified)
+                this.$router.push({name: 'ClassPicker'})
+		})
+    },
+/*     beforeRouteEnter(to,from,next) {
         let user = firebase.auth().currentUser
         if(user)
             next({name:'ClassPicker'})
         else
             next()
-    }
+    } */
 }
 </script>
 <style>
