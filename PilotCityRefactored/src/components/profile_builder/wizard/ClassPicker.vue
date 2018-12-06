@@ -62,9 +62,10 @@ export default {
                     this.$router.push({name: 'w_employer_story'})
                     break ;
                 case 2:
-                    Prompter().info(" ", "Student to come soon.")
-                    return ;
-                    bus.$emit('pickedRole', 'student');
+                    this.userdata.isEmployer=false;
+                    this.userdata.isStudent=true;
+                    this.userdata.isTeacher=false;
+                    this.$router.push({name: 'w_student_story'})
                     break ;
             }
         },

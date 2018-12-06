@@ -2,7 +2,9 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Index from '@/components/landing/Index'
 import firebase from 'firebase'
+
 import test from '@/views/test'
+import camitest from '@/views/camitest'
 
 import ClassPicker from '@/components/profile_builder/wizard/ClassPicker'
 
@@ -25,6 +27,11 @@ import w_employer_department from '@/components/profile_builder/wizard/employer/
 import w_employer_roi from '@/components/profile_builder/wizard/employer/w_employer_roi'
 import w_employer_flock from '@/components/profile_builder/wizard/employer/w_employer_flock'
 
+import w_student from '@/components/profile_builder/wizard/student/w_student'
+import w_student_story from '@/components/profile_builder/wizard/student/w_student_story'
+
+
+
 Vue.use(Router)
 
 const router = new Router({
@@ -34,7 +41,14 @@ const router = new Router({
     {
       path:'/test',
       name:'test',
-      component: test
+      component: test,
+      children: [
+        {
+          path: 'cami',
+          name: 'camitest',
+          component: camitest
+        }
+      ]
     },
     {
       path: '/',
@@ -153,6 +167,27 @@ const router = new Router({
           name:'w_employer_flock',
           component:w_employer_flock
         }
+      ],
+      meta: {
+        requiresAuth: true
+      }
+    },
+    /* 
+    
+    somthins something broken code
+    
+    
+    */
+    {
+      path:'/wizard/student',
+      name:'w_student',
+      component: w_student,
+      children: [
+        {
+          path: '1',
+          name:'w_student_story',
+          component:w_student_story
+        },
       ]
     },
     {
