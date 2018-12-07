@@ -4,6 +4,7 @@
             <div>
                 <h2 class="story-title">What's your story?</h2>
             </div>
+            <div class="m">
         <div class="d-flex flex-row justify-content-center">
             <div class="p-2 align-self-center">
                 <p class="teacher-story">My name is</p>
@@ -36,6 +37,7 @@
             <div class="p-2 align-self-start">
                     <the-mask class="badge-pill pc-button" :mask="['(###) ###-####']"  v-model="user_data.phone" placeholder="(555) 555-5555"/>
             </div>
+        </div>
         </div>
         </h4>
         <next_button 
@@ -162,5 +164,9 @@ input:focus{
 }
 input.badge-pill.pc-button {
     border:none;
+}
+
+.m{
+    margin-right:;
 }
 </style>
