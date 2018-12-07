@@ -66,14 +66,16 @@
             <i class="material-icons font-weight-bold add-button">add</i>
         </button>
         <!-- <button class="btn-lg" @click="view(Class)"></button> -->
-        <next_button
-            route ='w_teacher_industry_keywords'
-            :conditions ="teacher_data"
-            :collection = collection
-            :pass = pass
-            :errormsg = "errormsg"
-            :from = me
-            />
+        <div @click="submit">
+            <next_button
+                route ='w_teacher_industry_keywords'
+                :conditions ="teacher_data"
+                :collection = collection
+                :pass = pass
+                :errormsg = "errormsg"
+                :from = me
+                />
+        </div>
         <router-link :to="{ name: 'w_teacher_class' }" 
             class="prev_button btn btn-secondary btn-lg">
             Back
@@ -140,8 +142,8 @@ export default {
                 for(let i=0;i<self.Periods[period].days.length;i++){
                     schedule.push({ 
                         [self.Periods[period].days[i]] : {
-                            start_time:self.Periods[period].start_time,
-                            end_time:self.Periods[period].end_time
+                                start_time:self.Periods[period].start_time,
+                                end_time:self.Periods[period].end_time
                             }
                     })
                 }
@@ -199,6 +201,7 @@ export default {
                 // to the object from first array and return the updated object
                 return _.assign(obj, _.find(new_format, {Period: obj.Period}));
             }); 
+         
             return [{classes}]
         }
     },
@@ -276,6 +279,15 @@ export default {
         })
     },
     methods: {
+        submit(){
+            for (let i in this.teacher_data[0].classes)
+            {
+                this.teacher_data[0].classes[i].teacher_uid = firebase.auth().currentUser.uid;
+                firebase.firestore().collection("classroom").doc(this.teacher_data[0].classes[i].uid).set(
+                    this.teacher_data[0].classes[i]
+                );
+            }
+        },
         parseDBSchedule(scheudle) {
             return 
         },
