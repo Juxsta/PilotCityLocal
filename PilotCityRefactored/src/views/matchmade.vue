@@ -10,7 +10,7 @@
 
             <b-popover target="PopoverSkills" placement="auto">
                 <div class="container-fluid">
-                    <b-btn class="pc-tag1 col">hi</b-btn>
+                    <b-btn class="pc-tag1 pl-y col">hi</b-btn>
                 </div>
             </b-popover>
             <div class="filter-button">Grades</div>
@@ -82,7 +82,9 @@ export default {
   name: "matchmade",
   data() {
       return {
-          
+        class_size:['1-10','11-15','16-20','21-25','26-30'],
+        location:['Alameda','Emeryville','Fremont','Hayward','Mill Valley','Oakland',
+        'Richmond','San Leandro','San Lorenzo']
       }
   }
 };
