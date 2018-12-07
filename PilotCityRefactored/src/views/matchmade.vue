@@ -9,9 +9,9 @@
             <b-btn class="filter-button" id="PopoverSkills">Skills</b-btn>
 
             <b-popover target="PopoverSkills" placement="auto">
-                <div class="container-fluid">
-                    <b-btn class="pc-tag1 col">hi</b-btn>
-                </div>
+              <div class="container-fluid">
+                <b-btn class="pc-tag1 col">hi</b-btn>
+              </div>
             </b-popover>
             <div class="filter-button">Grades</div>
             <div class="filter-button">Location</div>
@@ -76,21 +76,63 @@
 </template>
 
 <script>
-
-
 export default {
   name: "matchmade",
   data() {
-      return {
-          
-      }
+    return {
+      courses: [
+        "Computer Science",
+        "Engineering",
+        "Digital Media",
+        "English",
+        "Manufcturing",
+        "Automotive",
+        "Graphic Design",
+        "Videography"
+      ],
+      filtered_courses: [],
+      skills: [
+        "Manufacturing",
+        "Mapping",
+        "Mixed Reality",
+        "Networking",
+        "Sensors",
+        "Shipping",
+        "Transport",
+        "Virtual Reality",
+        "Country Governance",
+        "Laboratory",
+        "Municipality",
+        "Public Saftey",
+        "Sustainibility",
+        "Space",
+        "Artificial Intelligence",
+        "Automotive",
+        "Bioprinting",
+        "Data",
+        "Drones",
+        "Gaming",
+        "Healthcare",
+        "Internet of Things",
+        "Lifestyle",
+      ],
+      filtered_courses:[],
+      grades: [
+        "9th Grade",
+        "10th Grade",
+        "11th Grade",
+        "12th Grade"
+      ],
+      filtered_grades:[],
+
+
+    };
   }
 };
 </script>
 
 
 <style lang="scss" scoped>
-
 $white: #fff;
 $black: #000;
 $green: #6eba7f;
@@ -98,10 +140,10 @@ $blue: #3c9ccc;
 $orange: #f79960;
 $yellow: #fdd25a;
 $red: #ea6763;
-$purple:#ae90b0;
+$purple: #ae90b0;
 $pink: #eca0be;
 
-$popover-max-width:1000px;
+$popover-max-width: 1000px;
 .text-classroom-matches {
   font-family: "Raleway";
   font-size: 20px;
@@ -447,5 +489,4 @@ $popover-max-width:1000px;
 }
 
 //bootstrap imports
-
 </style>
