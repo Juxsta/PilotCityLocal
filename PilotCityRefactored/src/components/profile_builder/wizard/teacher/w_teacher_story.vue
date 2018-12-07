@@ -167,6 +167,6 @@ input.badge-pill.pc-button {
 }
 
 .m{
-    margin-right:;
+    margin-right:
 }
 </style>

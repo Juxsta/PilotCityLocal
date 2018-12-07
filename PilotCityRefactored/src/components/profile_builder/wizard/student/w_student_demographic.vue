@@ -55,7 +55,6 @@
             <br>
             <input
               type="text"
-              name="Yes/No"
               placeholder="Spanish"
               class="badge-pill pc-button"
               v-model="student_data.family_language"
@@ -70,7 +69,6 @@
             <br>
             <input
               type="text"
-              name="Yes/No"
               placeholder="Transgender Female"
               class="badge-pill pc-button"
               v-model="student_data.supergender"
@@ -84,18 +82,11 @@
         <form>
           <div class="group labels">
             <label for="lunch" class="labels">Free or Reduced Lunch?</label>
-            <br>
-            <input
-              type="text"
-              name="Yes/No"
-              placeholder="Yes/No"
-              class="badge-pill pc-button"
-              v-model="student_data.lunch_status"
-            >
-            <b-form-group id="exampleInputGroup3" label="Yes/No" label-for="exampleInput3">
+            <b-form-group id="exampleInputGroup3" label-for="exampleInput3">
               <b-form-select
                 id="exampleInput3"
                 :options="lunch"
+                class="badge-pill pc-button"
                 v-model="student_data.lunch_status"
               ></b-form-select>
             </b-form-group>
@@ -125,10 +116,10 @@ export default {
         ethnicity: null,
         family_language: [],
         supergender: null,
-        lunch_status: null,
+        lunch_status: null
       },
       collection: ["students"],
-      lunch: ["yes", "no"]
+      lunch: [{text:"Yes/No", value:null}, "yes", "no"]
     };
   },
   components: {
