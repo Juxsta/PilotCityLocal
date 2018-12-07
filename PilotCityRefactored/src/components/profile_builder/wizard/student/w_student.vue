@@ -1,6 +1,6 @@
 <template>
     <div>
-        Hllo
+    
         <router-view /> 
     </div>
 </template>
