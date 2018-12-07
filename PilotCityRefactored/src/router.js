@@ -100,20 +100,20 @@ const router = new Router({
           component: w_teacher_skills_keywords
         }
       ],
-      // beforeEnter: (to,from,next) => {
-      //   const db = firebase.firestore()
-      //   let user = firebase.auth().currentUser
-      //   if (user) {
-      //     db.collection("Users").doc(user.uid).get().then( (doc) => {
-      //       if(doc.data().isTeacher) 
-      //         next()
-      //       else
-      //         next({name: 'ClassPicker'})
-      //     })
-      //   }
-      //   else
-      //     next({name: 'ClassPicker'})
-      // },
+      beforeEnter: (to,from,next) => {
+        const db = firebase.firestore()
+        let user = firebase.auth().currentUser
+        if (user) {
+          db.collection("Users").doc(user.uid).get().then( (doc) => {
+            if(doc.data().isTeacher) 
+              next()
+            else
+              next({name: 'ClassPicker'})
+          })
+        }
+        else
+          next({name: 'ClassPicker'})
+      },
       meta: {
         requiresAuth: true
       }
@@ -193,6 +193,10 @@ const router = new Router({
           path: '2',
           name: 'w_student_demographic',
           component:w_student_demographic
+        },
+        {
+          path: '3',
+          name: 'w_student'
         }
       ]
     },
@@ -203,21 +207,21 @@ const router = new Router({
   ]
 })
 
-// router.beforeEach((to,from,next) =>{
-//   //check to see if router requires auth
-//   if(to.matched.some(rec => rec.meta.requiresAuth)){
-//     // check auth state of user
-//     let user = firebase.auth().currentUser
-//     if(user){
-//       //user signed in, proceed
-//       next()
-//     } else {
-//       // no user signed in, redirect to login
-//       next({ name: 'Index'})
-//     }
-//   } else {
-//     next()
-//   }
-// }) 
+router.beforeEach((to,from,next) =>{
+  //check to see if router requires auth
+  if(to.matched.some(rec => rec.meta.requiresAuth)){
+    // check auth state of user
+    let user = firebase.auth().currentUser
+    if(user){
+      //user signed in, proceed
+      next()
+    } else {
+      // no user signed in, redirect to login
+      next({ name: 'Index'})
+    }
+  } else {
+    next()
+  }
+}) 
 
 export default router
