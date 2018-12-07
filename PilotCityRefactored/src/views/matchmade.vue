@@ -6,11 +6,11 @@
           <div class="filter-bar justify-content-center d-flex flex-row container">
             <b-btn class="filter-button">Courses</b-btn>
 
-            <b-btn class="filter-button" id="PopoverSkils">Skills</b-btn>
+            <b-btn class="filter-button" id="PopoverSkills">Skills</b-btn>
 
             <b-popover target="PopoverSkills" placement="auto">
-                <div class="container">
-                    <b-btn variant="primary">Stuff</b-btn>
+                <div class="container-fluid">
+                    <b-btn class="pc-tag1 col">hi</b-btn>
                 </div>
             </b-popover>
             <div class="filter-button">Grades</div>
@@ -56,7 +56,7 @@
                 <hr class="card-line">
 
                 <span class="d-flex mr-2 ml-2">
-                  <h3 class="btn btn-red">Python</h3>
+                  <h3 class="pc-tag1">Python</h3>
                   <h3 class="pc-tag2">Javascript</h3>
                   <h3 class="pc-tag3">C++</h3>
                   <h3 class="pc-tag4">iOS</h3>
