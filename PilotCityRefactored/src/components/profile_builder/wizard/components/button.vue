@@ -6,6 +6,7 @@
 <script>
 import { Prompter } from '@/main'
 import firebase from '@/firebase/init'
+import * as fb from 'firebase';
 import { bus } from '@/main'
 export default {
     props: {
@@ -36,6 +37,10 @@ export default {
         errormsg: {
             type: String,
             default: "You're missing a few things"
+        },
+        from: {
+            type: String,
+            default: ""
         }
     },
     methods: {
@@ -44,13 +49,14 @@ export default {
             if(self.conditions.length == self.collection.length) {
                 firebase.auth().onAuthStateChanged((user)=> {
                     if(user) {
+                        const db = firebase.firestore()
                         if (self.force_pass || (self.pass && self.conditions.every((condition) => {
                             return Object.values(condition).every((data) => {
                                 return ((data != null && data != false) || data === false)
                                 })
-                        }))) {
+                        })))
+                        {
                             for(let i in self.conditions){
-                                const db = firebase.firestore()
                                 db.collection(self.collection[i]).doc(user.uid).set(self.conditions[i],
                                 {merge:true}).then(() => {
                                     if (self.route == 'teacher-thankyou-modal'){
@@ -61,9 +67,10 @@ export default {
                                     else
                                         self.$router.push({name: self.route})  
                                 })
-                            }
-                        }
-                        else{
+                            } 
+
+                        }       
+                        } else{
                             if(self.errormsg)
                                 Prompter().failed(self.errormsg,"Hey there,")
                             else
@@ -71,7 +78,7 @@ export default {
                         }
 
                     }
-                })
+                );
             }
             else 
                 Prompter().failed("Length of Conditions and collections must match")

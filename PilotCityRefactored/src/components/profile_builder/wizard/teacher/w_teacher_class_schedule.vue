@@ -85,17 +85,19 @@
       <i class="material-icons font-weight-bold add-button">add</i>
     </button>
     <!-- <button class="btn-lg" @click="view(Class)"></button> -->
-    <next_button
-      route="w_teacher_industry_keywords"
-      :conditions="teacher_data"
-      :collection="collection"
-      :pass="pass"
-      :errormsg="errormsg"
-    />
+      <div @click="submit">
+            <next_button
+                route ='w_teacher_industry_keywords'
+                :conditions ="teacher_data"
+                :collection = collection
+                :pass = pass
+                :errormsg = "errormsg"
+                :from = me
+                />
+        </div>
     <router-link :to="{ name: 'w_teacher_class' }" class="prev_button btn btn-secondary btn-lg">Back</router-link>
   </div>
 </template>
-
 <script>
 import { bus } from "@/main";
 import firebase from "@/firebase/init";
@@ -322,6 +324,15 @@ export default {
     });
   },
   methods: {
+    submit(){
+      for (let i in this.teacher_data[0].classes)
+      {
+          this.teacher_data[0].classes[i].teacher_uid = firebase.auth().currentUser.uid;
+          firebase.firestore().collection("classroom").doc(this.teacher_data[0].classes[i].uid).set(
+              this.teacher_data[0].classes[i]
+          );
+      }
+    },
     parseDBSchedule(scheudle) {
       return;
     },
@@ -383,8 +394,6 @@ export default {
   }
 };
 </script>
-
-
 <style scoped>
 #delete_class {
   cursor: pointer;
@@ -419,7 +428,6 @@ select:focus {
   border-color: #dbdcde;
   box-shadow: none !important;
 }
-
 .dropdown-class,
 .dropdown-class:focus {
   border-radius: 50px;
@@ -442,11 +450,9 @@ select:focus,
 input::placeholder {
   color: white;
 }
-
 .dropdown-item {
   cursor: pointer;
 }
-
 input[type="checkbox"] {
   height: 25px;
 }
@@ -463,7 +469,6 @@ input[type="checkbox"] {
   margin-left: 220px;
   margin-top: 10px;
 }
-
 #btn-class-add:hover {
   border: solid 1px #dbdcde;
 }
@@ -473,42 +478,34 @@ input[type="checkbox"] {
   color: white;
   border-radius: 50px;
 }
-
 .add-button {
   margin-top: 4px;
   color: #eca0be;
 }
-
 .select-class-placeholder {
   font-size: 18px;
   text-align: left;
   padding-left: 20px;
 }
-
 .custom-select {
   background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3E%3Cpath fill='white' d='M2 0L0 2h4zm0 5L0 3h4z'/%3E%3C/svg%3E");
 }
-
 .form-row {
   margin-left: 150px;
   margin-right: 125px;
 }
-
 .form-group-period {
   width: 100px;
   margin: 5px;
 }
-
 .form-group-days {
   width: 250px;
   margin: 5px;
 }
-
 .form-group-starttime {
   width: 150px;
   margin: 5px;
 }
-
 .form-group-endtime {
   width: 150px;
   margin: 5px;

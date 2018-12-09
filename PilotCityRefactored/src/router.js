@@ -193,6 +193,10 @@ const router = new Router({
           path: '2',
           name: 'w_student_demographic',
           component:w_student_demographic
+        },
+        {
+          path: '3',
+          name: 'w_student'
         }
       ]
     },
