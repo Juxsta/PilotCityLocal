@@ -80,6 +80,7 @@ export default {
 <style>
 .border_gray {
     border: solid 5px lightgray;
+
 }
 .btn-circle {
     width:250px;
@@ -92,6 +93,7 @@ export default {
     font-size: 30px;
     color: #ffffff
 }
+
 .pc-green {
     background-color: #6eba7f
 }

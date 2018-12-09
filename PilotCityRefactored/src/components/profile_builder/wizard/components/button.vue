@@ -83,18 +83,28 @@ export default {
 <style>
 #the_best_next_button {
   position: absolute;
-  bottom: 100px;
-  right: 100px;
-  font-weight: 600;
+  bottom: 75px;
+  right: 75px;
+  font-weight: 700;
   border-radius: 50px;
   font-size: 3vh;
+  border: none;
+  padding-left: 35px;
+  padding-right: 35px;
+  font-family: "Raleway";
+  background-color: #dbdcde;
+
 }
 #the_best_next_button:hover {
-    font-weight: bold;
+    font-weight: 700;
     border-radius: 50px;
-    font-color: rgb(222, 223, 224);
+    color: #ffffff;
     background-color:#404041;
-    border-color:#404041;
 } 
+
+#the_best_next_button:active{
+    border: none 0px #ffffff;
+} 
+
 </style>
 

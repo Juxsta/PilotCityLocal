@@ -2,13 +2,13 @@
     <div class="component">
         <form class=" justify-content-center" >
             <div class="pc-panel-tagspanel" >
-                <div class="d-flex flex-row mb-2">
+                <div class="d-flex flex-row mb-0">
                         <div>
-                                <h3 class="pc-keyword-title">{{name}}</h3>
+                                <h3 class="pc-keyword-title mb-0 mt-1">{{name}}</h3>
                         </div>
                         <input type="text" class="pc-input-box" :placeholder="placeholder" @keypress.enter.prevent="input_addtoIDB(keyword,selected_keywords)" v-model="keyword">
                     </div>
-        <hr class="frame-line-break" />
+        <hr class="frame-line-break mt-2" />
             <div class="ml-4">
                 <span class="badge badge-pill badge-primary tag-capitalize pr-3 ml-1 mr-1 mb-1 mt-1" 
                 v-for="(keyword,index) in selected_keywords" :key="keyword + index" :class="colors[index%7]">
@@ -143,14 +143,16 @@ export default {
 .pc-input-box {
     border:solid 0px #ffffff;
     font-family: "Raleway";
-    color:#dbdcde;
+    color:#c6c8ca;
     font-style: italic;
     font-size:20px;
-    width:750px;
+    width:650px;
+    margin: 0px;
+    padding:0px;
 }
 
 .pc-input-box::placeholder{
-    color:#dbdcde;
+    color:#c6c8ca;
     font-weight:300;
 }
 
