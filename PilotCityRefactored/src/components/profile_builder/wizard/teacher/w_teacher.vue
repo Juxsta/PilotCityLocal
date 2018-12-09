@@ -21,6 +21,7 @@ export default {
   padding-left: 35px;
   padding-right: 35px;
   background-color: #dbdcde; 
+    color: #ffffff;
 }
 .prev_button:hover {
     font-weight: 700;

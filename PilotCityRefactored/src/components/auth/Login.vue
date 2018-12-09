@@ -223,6 +223,7 @@ export default {
     background-color: #939597 !important;
 }
 
+
 .model-btn-login{
     height: 45px !important;
     width: 175px !important;

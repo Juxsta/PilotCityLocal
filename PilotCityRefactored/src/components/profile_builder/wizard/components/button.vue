@@ -100,6 +100,7 @@ export default {
   padding-right: 35px;
   font-family: "Raleway";
   background-color: #dbdcde;
+    color: #ffffff;
 
 }
 #the_best_next_button:hover {
