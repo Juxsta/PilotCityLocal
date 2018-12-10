@@ -101,7 +101,7 @@ export default {
     font-size: 15px;
     background-color: #404041;
     font-family: "Raleway";
-    font-weight: 600;
+    font-weight: 700;
     cursor:pointer !important;
     transition: border 0.5s;
     padding-left : 40px;
@@ -109,6 +109,7 @@ export default {
     margin-left:10px;
     margin-right:50px;
     text-align: center;
+    letter-spacing: .5px;
 }
 
 #SignupBtn:hover {
