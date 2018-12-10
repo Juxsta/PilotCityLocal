@@ -49,14 +49,13 @@ export default {
             if(self.conditions.length == self.collection.length) {
                 firebase.auth().onAuthStateChanged((user)=> {
                     if(user) {
-                        const db = firebase.firestore()
                         if (self.force_pass || (self.pass && self.conditions.every((condition) => {
                             return Object.values(condition).every((data) => {
                                 return ((data != null && data != false) || data === false)
                                 })
-                        })))
-                        {
+                        }))) {
                             for(let i in self.conditions){
+                                const db = firebase.firestore()
                                 db.collection(self.collection[i]).doc(user.uid).set(self.conditions[i],
                                 {merge:true}).then(() => {
                                     if (self.route == 'teacher-thankyou-modal'){
@@ -67,18 +66,16 @@ export default {
                                     else
                                         self.$router.push({name: self.route})  
                                 })
-                            } 
-
-                        }       
-                        } else{
+                            }
+                        }
+                        else{
                             if(self.errormsg)
                                 Prompter().failed(self.errormsg,"Hey there,")
                             else
                                 Prompter().failed("You're missing a few things","Hey there,")
                         }
-
                     }
-                );
+                })
             }
             else 
                 Prompter().failed("Length of Conditions and collections must match")
