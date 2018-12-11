@@ -6,6 +6,7 @@
 <script>
 import { Prompter } from '@/main'
 import firebase from '@/firebase/init'
+import * as fb from 'firebase';
 import { bus } from '@/main'
 export default {
     props: {
@@ -36,6 +37,10 @@ export default {
         errormsg: {
             type: String,
             default: "You're missing a few things"
+        },
+        from: {
+            type: String,
+            default: ""
         }
     },
     methods: {
@@ -69,7 +74,6 @@ export default {
                             else
                                 Prompter().failed("You're missing a few things","Hey there,")
                         }
-
                     }
                 })
             }
@@ -83,18 +87,29 @@ export default {
 <style>
 #the_best_next_button {
   position: absolute;
-  bottom: 100px;
-  right: 100px;
-  font-weight: 600;
+  bottom: 75px;
+  right: 75px;
+  font-weight: 700;
   border-radius: 50px;
   font-size: 3vh;
+  border: none;
+  padding-left: 35px;
+  padding-right: 35px;
+  font-family: "Raleway";
+  background-color: #dbdcde;
+    color: #ffffff;
+
 }
 #the_best_next_button:hover {
-    font-weight: bold;
+    font-weight: 700;
     border-radius: 50px;
-    font-color: rgb(222, 223, 224);
+    color: #ffffff;
     background-color:#404041;
-    border-color:#404041;
 } 
+
+#the_best_next_button:active{
+    border: none 0px #ffffff;
+} 
+
 </style>
 

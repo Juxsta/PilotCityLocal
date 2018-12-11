@@ -1,15 +1,15 @@
 <template>
     <div class="container ">
-        <bottom_line_tag class="d-flex flex-col justify-content-center"
-            name="What's your return on investment?"
+        <bottom_line_tag class="d-flex flex-col justify-content-center mt-5"
+            name="Bottom Line"
             :keywords='bottom_line_keywords'
-            placeholder ="Enter keywords here to describe your bottom line"
+            placeholder ="Enter keywords here to describe your return on investment"
             :selected_keywords="employer_data.selected_bottom_line_keywords"
         />
-        <strategies_tag class="d-flex flex-col justify-content-center mt-5"
+        <strategies_tag class="d-flex flex-col justify-content-center mt-3"
             name="How are you doing it now?"
             :keywords='strategies_keywords'
-            placeholder ="Enter keywords here to describe your strategies and initiatives"
+            placeholder ="Enter keywords here to describe how you reach bottom line currently"
             :selected_keywords="employer_data.selected_strategies_keywords"
         />
         <next_button

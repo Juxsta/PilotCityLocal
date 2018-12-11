@@ -332,7 +332,7 @@ input, input:focus, select, select:focus{
     box-shadow: none !important;
 }
  input:focus, select:focus, .dropdown-class:focus{
-    border-color: #c6c8ca !important;
+    border-color: #939597 !important;
  }
 input::placeholder { 
     color:white;

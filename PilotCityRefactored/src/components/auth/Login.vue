@@ -123,11 +123,12 @@ export default {
 	border: solid 1px #404041;
     font-size: 15px;
     font-family: "Raleway";
-    font-weight: 700;
+    font-weight: 600;
     cursor:pointer !important;
     transition: border 0.5s;
     margin: auto 20px;
     text-align: center;
+    letter-spacing: .5px;
 }
 
 .modal-content  {
@@ -222,6 +223,7 @@ export default {
 #btn-login:hover{
     background-color: #939597 !important;
 }
+
 
 .model-btn-login{
     height: 45px !important;

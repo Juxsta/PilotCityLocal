@@ -85,17 +85,18 @@
       <i class="material-icons font-weight-bold add-button">add</i>
     </button>
     <!-- <button class="btn-lg" @click="view(Class)"></button> -->
-    <next_button
-      route="w_teacher_industry_keywords"
-      :conditions="teacher_data"
-      :collection="collection"
-      :pass="pass"
-      :errormsg="errormsg"
-    />
+      <div @click="submit">
+            <next_button
+                route ='w_teacher_industry_keywords'
+                :conditions ="teacher_data"
+                :collection = collection
+                :pass = pass
+                :errormsg = "errormsg"
+                />
+        </div>
     <router-link :to="{ name: 'w_teacher_class' }" class="prev_button btn btn-secondary btn-lg">Back</router-link>
   </div>
 </template>
-
 <script>
 import { bus } from "@/main";
 import firebase from "@/firebase/init";
@@ -253,7 +254,7 @@ export default {
                     day_temp++
                   ) {
                     var new_period = {
-                      uid: clas.uid + day_temp,
+                      uid: clas.uid,
                       period: obj.classes[parseInt(temp)].Period,
                       days: [],
                       start_time: null,
@@ -322,6 +323,15 @@ export default {
     });
   },
   methods: {
+    submit(){
+      for (let i in this.teacher_data[0].classes)
+      {
+          this.teacher_data[0].classes[i].teacher_uid = firebase.auth().currentUser.uid;
+          firebase.firestore().collection("classroom").doc(this.teacher_data[0].classes[i].uid).set(
+              this.teacher_data[0].classes[i]
+          );
+      }
+    },
     parseDBSchedule(scheudle) {
       return;
     },
@@ -368,11 +378,19 @@ export default {
     rmThisClass: function(uid) {
       if (this.data_from_prev_page.includes(uid)) {
         Prompter().failed("This period can't be removed.", "Hey there,");
-        return;
+        return ;
       }
+      console.log(uid);
+      firebase.firestore().collection("classroom").doc(uid).delete().then(function() {
+        Prompter().success("This period has been delete.", "Hey there,");
+      }).catch(err => {
+          Prompter().failed("This period can't be removed. ( " + err.msg + ")", "Hey there,");
+      });
       this.Periods = this.Periods.filter(object => {
         return object.uid != uid;
       });
+      console.log(this.Periods);
+      console.log(this.teacher_data);
     },
     popVal: function(val, event) {
       this.pool[val] = false;
@@ -383,8 +401,6 @@ export default {
   }
 };
 </script>
-
-
 <style scoped>
 #delete_class {
   cursor: pointer;
@@ -419,7 +435,6 @@ select:focus {
   border-color: #dbdcde;
   box-shadow: none !important;
 }
-
 .dropdown-class,
 .dropdown-class:focus {
   border-radius: 50px;
@@ -437,16 +452,14 @@ select:focus {
 input:focus,
 select:focus,
 .dropdown-class:focus {
-  border-color: #c6c8ca !important;
+  border-color: #939597 !important;
 }
 input::placeholder {
   color: white;
 }
-
 .dropdown-item {
   cursor: pointer;
 }
-
 input[type="checkbox"] {
   height: 25px;
 }
@@ -463,7 +476,6 @@ input[type="checkbox"] {
   margin-left: 220px;
   margin-top: 10px;
 }
-
 #btn-class-add:hover {
   border: solid 1px #dbdcde;
 }
@@ -473,42 +485,34 @@ input[type="checkbox"] {
   color: white;
   border-radius: 50px;
 }
-
 .add-button {
   margin-top: 4px;
   color: #eca0be;
 }
-
 .select-class-placeholder {
   font-size: 18px;
   text-align: left;
   padding-left: 20px;
 }
-
 .custom-select {
   background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3E%3Cpath fill='white' d='M2 0L0 2h4zm0 5L0 3h4z'/%3E%3C/svg%3E");
 }
-
 .form-row {
   margin-left: 150px;
   margin-right: 125px;
 }
-
 .form-group-period {
   width: 100px;
   margin: 5px;
 }
-
 .form-group-days {
   width: 250px;
   margin: 5px;
 }
-
 .form-group-starttime {
   width: 150px;
   margin: 5px;
 }
-
 .form-group-endtime {
   width: 150px;
   margin: 5px;

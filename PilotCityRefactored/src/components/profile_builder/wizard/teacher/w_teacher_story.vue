@@ -129,12 +129,10 @@ export default {
     font-weight:500i;
     font-size:20px;
     text-align: center;
-
 }
 
 .pc-button::placeholder:focus {
     color:#eca0be !important;
-
 }
 .teacher-story{
     font-family: "Raleway";
@@ -161,9 +159,14 @@ input:focus{
 
 .badge-pill {
     text-transform: capitalize;
+
+
 }
 input.badge-pill.pc-button {
     border:none;
+    font-size: 20px;
+    padding-left: 30px;
+    padding-right:30px;
 }
 
 .m{
