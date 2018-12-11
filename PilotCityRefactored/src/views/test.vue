@@ -5,11 +5,11 @@
 </template>
 
 <script>
-import matchmade from '../views/matchmade'
+// import matchmade from '../views/matchmade'
 export default {
     name:'test',
     components:{
-        matchmade
+        // matchmade
     }
 }
 </script>

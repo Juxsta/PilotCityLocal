@@ -6,6 +6,8 @@ import firebase from 'firebase'
 import test from '@/views/test'
 import camitest from '@/views/camitest'
 
+import wizard from '@/components/profile_builder/wizard/wizard.vue'
+//#region Profile Builder Routes
 import ClassPicker from '@/components/profile_builder/wizard/ClassPicker'
 
 import w_teacher_story from '@/components/profile_builder/wizard/teacher/w_teacher_story'
@@ -30,9 +32,10 @@ import w_employer_flock from '@/components/profile_builder/wizard/employer/w_emp
 import w_student from '@/components/profile_builder/wizard/student/w_student'
 import w_student_story from '@/components/profile_builder/wizard/student/w_student_story'
 import w_student_demographic from '@/components/profile_builder/wizard/student/w_student_demographic'
+//#endregion
 
-
-
+import matchmaking from '@/components/matchmaking/matchmaking.vue'
+import mm_employer from '@/components/matchmaking/employer/mm_employer.vue'
 Vue.use(Router)
 
 const router = new Router({
@@ -40,8 +43,8 @@ const router = new Router({
   base: process.env.BASE_URL,
   routes: [
     {
-      path:'/test',
-      name:'test',
+      path: '/test',
+      name: 'test',
       component: test,
       children: [
         {
@@ -57,171 +60,212 @@ const router = new Router({
       component: Index,
     },
     {
-      path:'/classpicker',
-      name:'ClassPicker',
-      component:ClassPicker,
+      path: '/wizard',
+      name: 'wizard',
+      component: wizard,
       meta: {
         requiresAuth: true
       },
-    },
-    {
-      path:'/wizard/teacher',
-      name:'w_teacher',
-      component: w_teacher,
       children: [
         {
-          path: '1',
-          name:'w_teacher_story',
-          component:w_teacher_story
+          path: '/classpicker',
+          name: 'ClassPicker',
+          component: ClassPicker,
         },
         {
-          path:'2',
-          name:'w_teacher_address',
-          component:w_teacher_address
-        },
-        {
-          path:'3',
-          name:'w_teacher_class',
-          component: w_teacher_class
-        },
-        {
-          path:'4',
-          name:'w_teacher_class_schedule',
-          component:w_teacher_class_schedule
-        },
-        {
-          path:'5',
-          name:'w_teacher_industry_keywords',
-          component: w_teacher_industry_keywords
-        },
-        {
-          path:'6',
-          name:'w_teacher_skills_keywords',
-          component: w_teacher_skills_keywords
-        }
-      ],
-      beforeEnter: (to,from,next) => {
-        const db = firebase.firestore()
-        let user = firebase.auth().currentUser
-        if (user) {
-          db.collection("Users").doc(user.uid).get().then( (doc) => {
-            if(doc.data().isTeacher) 
-              next()
+          path: 'teacher',
+          name: 'w_teacher',
+          component: w_teacher,
+          children: [
+            {
+              path: '1',
+              name: 'w_teacher_story',
+              component: w_teacher_story
+            },
+            {
+              path: '2',
+              name: 'w_teacher_address',
+              component: w_teacher_address
+            },
+            {
+              path: '3',
+              name: 'w_teacher_class',
+              component: w_teacher_class
+            },
+            {
+              path: '4',
+              name: 'w_teacher_class_schedule',
+              component: w_teacher_class_schedule
+            },
+            {
+              path: '5',
+              name: 'w_teacher_industry_keywords',
+              component: w_teacher_industry_keywords
+            },
+            {
+              path: '6',
+              name: 'w_teacher_skills_keywords',
+              component: w_teacher_skills_keywords
+            }
+          ],
+          //#region RouteGuard for teacher class
+          beforeEnter: (to, from, next) => {
+            const db = firebase.firestore()
+            let user = firebase.auth().currentUser
+            if (user) {
+              db.collection("Users").doc(user.uid).get().then((doc) => {
+                if (doc.data().isTeacher)
+                  next()
+                else
+                  next({ name: 'ClassPicker' })
+              })
+            }
             else
-              next({name: 'ClassPicker'})
-          })
-        }
-        else
-          next({name: 'ClassPicker'})
-      },
-      meta: {
-        requiresAuth: true
-      }
-    },
-    {
-      path:'/wizard/employer',
-      name:'w_employer',
-      component: w_employer,
-      children: [
-        {
-          path:'1',
-          name:'w_employer_story',
-          component: w_employer_story
+              next({ name: 'ClassPicker' })
+          },
+          //#endregion
         },
         {
-          path:'2',
-          name:'w_employer_address',
-          component: w_employer_address
+          path: 'employer',
+          name: 'w_employer',
+          component: w_employer,
+          children: [
+            {
+              path: '1',
+              name: 'w_employer_story',
+              component: w_employer_story
+            },
+            {
+              path: '2',
+              name: 'w_employer_address',
+              component: w_employer_address
+            },
+            {
+              path: '3',
+              name: 'w_employer_sector',
+              component: w_employer_sector
+            },
+            {
+              path: '4',
+              name: 'w_employer_industry_keywords',
+              component: w_employer_industry_keywords
+            },
+            {
+              path: '5',
+              name: 'w_employer_solutions_picker',
+              component: w_employer_solutions_picker
+            },
+            {
+              path: '6',
+              name: 'w_employer_solution_keywords',
+              component: w_employer_solution_keywords
+            },
+            {
+              path: '7',
+              name: 'w_employer_department',
+              component: w_employer_department
+            },
+            {
+              path: '8',
+              name: 'w_employer_roi',
+              component: w_employer_roi
+            },
+            {
+              path: '9',
+              name: 'w_employer_flock',
+              component: w_employer_flock
+            }
+          ],
+          //#region RouteGuard for employer class
+          beforeEnter: (to, from, next) => {
+            const db = firebase.firestore()
+            let user = firebase.auth().currentUser
+            if (user) {
+              db.collection("Users").doc(user.uid).get().then((doc) => {
+                if (doc.data().isEmployer)
+                  next()
+                else
+                  next({ name: 'ClassPicker' })
+              })
+            }
+            else
+              next({ name: 'ClassPicker' })
+          },
+          //#endregion
         },
         {
-          path: '3',
-          name: 'w_employer_sector',
-          component: w_employer_sector
+          path: 'student',
+          name: 'w_student',
+          component: w_student,
+          children: [
+            {
+              path: '1',
+              name: 'w_student_story',
+              component: w_student_story
+            },
+            {
+              path: '2',
+              name: 'w_student_demographic',
+              component: w_student_demographic
+            },
+          ],
+          //#region RouteGuard for student class
+          beforeEnter: (to, from, next) => {
+            const db = firebase.firestore()
+            let user = firebase.auth().currentUser
+            if (user) {
+              db.collection("Users").doc(user.uid).get().then((doc) => {
+                if (doc.data().isStudent)
+                  next()
+                else
+                  next({ name: 'ClassPicker' })
+              })
+            }
+            else
+              next({ name: 'ClassPicker' })
+          },
+          //#endregion
         },
-        {
-          path: '4',
-          name: 'w_employer_industry_keywords',
-          component: w_employer_industry_keywords
-        },
-        {
-          path: '5',
-          name: 'w_employer_solutions_picker',
-          component: w_employer_solutions_picker
-        },
-        {
-          path: '6',
-          name: 'w_employer_solution_keywords',
-          component: w_employer_solution_keywords
-        },
-        {
-          path: '7',
-          name: 'w_employer_department',
-          component: w_employer_department
-        },
-        {
-          path: '8',
-          name: 'w_employer_roi',
-          component: w_employer_roi
-        },
-        {
-          path:'9',
-          name:'w_employer_flock',
-          component:w_employer_flock
-        }
-      ],
-      meta: {
-        requiresAuth: true
-      }
-    },
-    /* 
-    
-    somthins something broken code
-    
-    
-    */
-    {
-      path:'/wizard/student',
-      name:'w_student',
-      component: w_student,
-      children: [
-        {
-          path: '1',
-          name:'w_student_story',
-          component:w_student_story
-        },
-        {
-          path: '2',
-          name: 'w_student_demographic',
-          component:w_student_demographic
-        },
-        {
-          path: '3',
-          name: 'w_student'
-        }
       ]
     },
-    {
+    { //Sends user back to index if page does not exist
       path: '*',
-      redirect: {name: 'Index'}
+      redirect: { name: 'Index' }
+    },
+    {
+      path:'/matchmaking',
+      name:'matchmaking',
+      component:matchmaking,
+      meta:{
+        requiresAuth:true
+      },
+      children:[
+        {
+          path:'employer',
+          name:'mm_employer',
+          component:mm_employer
+        }
+      ]
     }
   ]
 })
-
-router.beforeEach((to,from,next) =>{
-  //check to see if router requires auth
-  if(to.matched.some(rec => rec.meta.requiresAuth)){
-    // check auth state of user
-    let user = firebase.auth().currentUser
-    if(user){
-      //user signed in, proceed
-      next()
-    } else {
-      // no user signed in, redirect to login
-      next({ name: 'Index'})
-    }
-  } else {
-    next()
-  }
-}) 
+// #region  RouterGuard Implementation to check for user Authentication
+// router.beforeEach((to, from, next) => {
+//   //check to see if router requires auth
+//   if (to.matched.some(rec => rec.meta.requiresAuth)) {
+//     // check auth state of user
+//     let user = firebase.auth().currentUser
+//     if (user) {
+//       //user signed in, proceed
+//       next()
+//     } else {
+//       // no user signed in, redirect to login
+//       next({ name: 'Index' })
+//     }
+//   } else {
+//     next()
+//   }
+// })
+//#endregion
 
 export default router

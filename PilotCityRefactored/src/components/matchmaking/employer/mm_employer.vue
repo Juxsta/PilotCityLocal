@@ -21,7 +21,7 @@
           <div class="cardstock d-flex flex-column row-12 container">
             <h2 class="text-classroom-matches">100+ Classrooms Recommended</h2>
 
-            <div class="card container">
+            <!-- <div class="card container">
               <div class="one d-flex flex-row h-25">
                 <i
                   class="material-icons justify-content-center"
@@ -63,21 +63,21 @@
                   <h3 class="pc-tag5">Android</h3>
                 </span>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
 
-      <div class="google-maps container col-5 m-0 p-0">
+      <!-- <div class="google-maps container col-5 m-0 p-0">
         <google-map/>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "matchmade",
+  name: "mm_employer",
   data() {
       return {
         class_size:['1-10','11-15','16-20','21-25','26-30'],
