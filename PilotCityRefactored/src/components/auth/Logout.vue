@@ -37,7 +37,10 @@ export default {
 
 #logout-button {
 	border: solid 1px #ffffff;
+    letter-spacing: .5px;
     }
+
+
 
 
 </style>

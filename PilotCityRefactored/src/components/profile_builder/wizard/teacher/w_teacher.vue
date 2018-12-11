@@ -12,18 +12,23 @@ export default {
 
 .prev_button {
   position: absolute;
-  bottom: 100px;
-  left: 100px;
-  font-weight: 600;
+  bottom: 75px;
+  left: 75px;
+  font-weight: 700;
   border-radius: 50px;
   font-size: 3vh;
+  border: none;
+  padding-left: 35px;
+  padding-right: 35px;
+  background-color: #dbdcde; 
+    color: #ffffff;
 }
 .prev_button:hover {
-    font-weight: bold;
+    font-weight: 700;
     border-radius: 50px;
-    font-color: rgb(222, 223, 224);
+    color: #ffffff;
     background-color:#404041;
-    border-color:#404041;
+
 } 
 
 
