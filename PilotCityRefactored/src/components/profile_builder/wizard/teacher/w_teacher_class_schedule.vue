@@ -1,13 +1,14 @@
 <template>
   <div class="container container-fluid justify-content-center mr-auto ml-auto">
     <form class="mt-5">
-      <div class="form-row mt-auto" v-for="(period,index) in Periods" :key="period.uid+index">
+      <div class="form-row mt-auto" v-for="(period,index) in Periods" :key="period.uid">
         <i
           class="material-icons font-weight-bold mr-2"
           id="delete_class"
-          :class="{first_trash:Periods.indexOf(period)==0}"
+          :class="[{first_trash:Periods.indexOf(period)==0},{white:getuid(index)+'0'==period.uid}]"
           @click="rmThisClass(period.uid)"
         >clear</i>
+        <!-- <span>{{(db_classes[index])}}</span> -->
         <div class="form-group-period">
           <label v-if="Periods.indexOf(period)==0">Period</label>
           <select class="custom-select" v-model="period.period">
@@ -131,7 +132,7 @@ export default {
       errormsg: null,
       collection: ["teachers"],
       db_classes: [],
-      data_from_prev_page: []
+      data_from_prev_page: [],
     };
   },
   components: {
@@ -214,7 +215,7 @@ export default {
     teacher_data() {
       var classes = [];
       for (let clas in this.db_classes) classes.push(this.db_classes[clas]);
-      var new_format = Object.assign({}, this.format_schedule);
+      let new_format = Object.assign({}, this.format_schedule);
       _.map(classes, function(obj) {
         // add the properties from second array matching the userID
         // to the object from first array and return the updated object
@@ -254,7 +255,7 @@ export default {
                     day_temp++
                   ) {
                     var new_period = {
-                      uid: clas.uid,
+                      uid: clas.uid + day_temp,
                       period: obj.classes[parseInt(temp)].Period,
                       days: [],
                       start_time: null,
@@ -323,6 +324,10 @@ export default {
     });
   },
   methods: {
+    getuid(index){
+      if(this.db_classes[index])
+        return this.db_classes[index]["uid"]
+    },
     submit(){
       for (let i in this.teacher_data[0].classes)
       {
@@ -380,17 +385,17 @@ export default {
         Prompter().failed("This period can't be removed.", "Hey there,");
         return ;
       }
-      console.log(uid);
-      firebase.firestore().collection("classroom").doc(uid).delete().then(function() {
-        Prompter().success("This period has been delete.", "Hey there,");
-      }).catch(err => {
-          Prompter().failed("This period can't be removed. ( " + err.msg + ")", "Hey there,");
-      });
+      // console.log(uid);
+      // firebase.firestore().collection("classroom").doc(uid).delete().then(function() {
+      //   Prompter().success("This period has been delete.", "Hey there,");
+      // }).catch(err => {
+      //     Prompter().failed("This period can't be removed. ( " + err.msg + ")", "Hey there,");
+      // });
       this.Periods = this.Periods.filter(object => {
         return object.uid != uid;
       });
-      console.log(this.Periods);
-      console.log(this.teacher_data);
+      // console.log(this.Periods);
+      // console.log(this.teacher_data);
     },
     popVal: function(val, event) {
       this.pool[val] = false;
@@ -408,6 +413,11 @@ export default {
   margin-top: 22px;
   font-size: 100%;
   margin-left: 42px;
+}
+.white{
+  background-color: white !important;
+  color: white !important;
+  cursor:default !important;
 }
 .first_trash {
   padding-top: 31px;
