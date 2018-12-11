@@ -92,7 +92,6 @@
                 :collection = collection
                 :pass = pass
                 :errormsg = "errormsg"
-                :from = me
                 />
         </div>
     <router-link :to="{ name: 'w_teacher_class' }" class="prev_button btn btn-secondary btn-lg">Back</router-link>
@@ -255,7 +254,7 @@ export default {
                     day_temp++
                   ) {
                     var new_period = {
-                      uid: clas.uid + day_temp,
+                      uid: clas.uid,
                       period: obj.classes[parseInt(temp)].Period,
                       days: [],
                       start_time: null,
@@ -379,11 +378,19 @@ export default {
     rmThisClass: function(uid) {
       if (this.data_from_prev_page.includes(uid)) {
         Prompter().failed("This period can't be removed.", "Hey there,");
-        return;
+        return ;
       }
+      console.log(uid);
+      firebase.firestore().collection("classroom").doc(uid).delete().then(function() {
+        Prompter().success("This period has been delete.", "Hey there,");
+      }).catch(err => {
+          Prompter().failed("This period can't be removed. ( " + err.msg + ")", "Hey there,");
+      });
       this.Periods = this.Periods.filter(object => {
         return object.uid != uid;
       });
+      console.log(this.Periods);
+      console.log(this.teacher_data);
     },
     popVal: function(val, event) {
       this.pool[val] = false;
