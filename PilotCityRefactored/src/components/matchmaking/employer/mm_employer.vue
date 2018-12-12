@@ -1,5 +1,6 @@
-<template>
+<template> 
   <div>
+      <!-- random -->
     <div class="entire-box d-flex flex-row">
       <div class="d-flex col-7 justify-content-center m-0 p-0">
         <div class="leftside justify-content-center flex-column d-flex col-12 p-0 m-0">
