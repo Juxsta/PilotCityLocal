@@ -7,7 +7,6 @@ import test from '@/views/test'
 import camitest from '@/views/camitest'
 
 import wizard from '@/components/profile_builder/wizard/wizard.vue'
-//#region Profile Builder Routes
 import ClassPicker from '@/components/profile_builder/wizard/ClassPicker'
 
 import w_teacher_story from '@/components/profile_builder/wizard/teacher/w_teacher_story'
