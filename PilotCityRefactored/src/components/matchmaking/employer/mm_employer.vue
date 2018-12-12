@@ -9,9 +9,9 @@
             <b-btn class="filter-button" id="PopoverSkills">Skills</b-btn>
 
             <b-popover target="PopoverSkills" placement="auto">
-                <div class="container-fluid">
-                    <b-btn class="pc-tag1 pl-y col">hi</b-btn>
-                </div>
+              <div class="container-fluid">
+                <b-btn class="pc-tag1 pl-y col">hi</b-btn>
+              </div>
             </b-popover>
             <div class="filter-button">Grades</div>
             <div class="filter-button">Location</div>
@@ -20,69 +20,38 @@
 
           <div class="cardstock d-flex flex-column row-12 container">
             <h2 class="text-classroom-matches">100+ Classrooms Recommended</h2>
-
-            <!-- <div class="card container">
-              <div class="one d-flex flex-row h-25">
-                <i
-                  class="material-icons justify-content-center"
-                  id="favorite_border"
-                >favorite_border</i>
-                <h2 class="card-title">Computer Science AP</h2>
-                <i class="material-icons justify-content-center" id="email">email</i>
-                <button class="action-button mt-3">Accept</button>
-                <i class="material-icons action-button-decline">clear</i>
-              </div>
-
-              <div class="two d-flex flex-row h-50">
-                <div class="four w-25">
-                  <h4 class="card-subtitle">Teacher</h4>
-                  <h4 class="card-subtitle">Grades</h4>
-                  <h4 class="card-subtitle">Class Size</h4>
-                  <h4 class="card-subtitle">District</h4>
-                  <h4 class="card-subtitle">School</h4>
-                  <h4 class="card-subtitle">Address</h4>
-                </div>
-                <div class="five w-75">
-                  <h4 class="card-subtitle-text">Anthony Keithley</h4>
-                  <h4 class="card-subtitle-text">9th, 10th, 11th</h4>
-                  <h4 class="card-subtitle-text">20-25</h4>
-                  <h4 class="card-subtitle-text">San Leandro Unified</h4>
-                  <h4 class="card-subtitle-text">San Leandro High School</h4>
-                  <h4 class="card-subtitle-text">2250 Bancroft Avenue, San Leandro, CA 94577</h4>
-                </div>
-              </div>
-
-              <div class="three h-25">
-                <hr class="card-line">
-
-                <span class="d-flex mr-2 ml-2">
-                  <h3 class="pc-tag1">Python</h3>
-                  <h3 class="pc-tag2">Javascript</h3>
-                  <h3 class="pc-tag3">C++</h3>
-                  <h3 class="pc-tag4">iOS</h3>
-                  <h3 class="pc-tag5">Android</h3>
-                </span>
-              </div>
-            </div> -->
           </div>
         </div>
       </div>
 
       <!-- <div class="google-maps container col-5 m-0 p-0">
         <google-map/>
-      </div> -->
+      </div>-->
     </div>
   </div>
 </template>
 
 <script>
+import _ from "lodash";
+import firebase from "@/firebase/init";
+import fb from 'firebase'
+import w_teacherVue from '../../profile_builder/wizard/teacher/w_teacher.vue';
 export default {
   name: "mm_employer",
   data() {
-      return {
-        class_size:['1-10','11-15','16-20','21-25','26-30'],
-        location:['Alameda','Emeryville','Fremont','Hayward','Mill Valley','Oakland',
-        'Richmond','San Leandro','San Lorenzo'],
+    return {
+      class_size: ["1-10", "11-15", "16-20", "21-25", "26-30"],
+      location: [
+        "Alameda",
+        "Emeryville",
+        "Fremont",
+        "Hayward",
+        "Mill Valley",
+        "Oakland",
+        "Richmond",
+        "San Leandro",
+        "San Lorenzo"
+      ],
       courses: [
         "Computer Science",
         "Engineering",
@@ -117,19 +86,67 @@ export default {
         "Gaming",
         "Healthcare",
         "Internet of Things",
-        "Lifestyle",
+        "Lifestyle"
       ],
-      filtered_courses:[],
-      grades: [
-        "9th Grade",
-        "10th Grade",
-        "11th Grade",
-        "12th Grade"
-      ],
-      filtered_grades:[],
-
-
+      filtered_courses: [],
+      grades: ["9th Grade", "10th Grade", "11th Grade", "12th Grade"],
+      filtered_grades: [],
+      loaded_classrooms: [],
+      loaded_teachers: [],
+      recmd: []
     };
+  },
+  created() {
+    var self = this;
+    var teacherIds = [];
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        const db = firebase.firestore();
+        db.collection("classroom")
+          .get()
+          .then(classroom_querySnapshot => {
+            //get info from all the classrooms
+            // console.log(classroom_querySnapshot)
+            classroom_querySnapshot.forEach(doc => {
+              var class_data = doc.data();
+              //keep a reference to all the teacher ids in an array
+              teacherIds.push(class_data.teacher_uid);
+              //keep local reference to the classrooms that were loaded
+              self.loaded_classrooms.push(class_data);
+            });
+            // filter out repeated teacher ids
+            teacherIds = _.uniq(teacherIds);
+            // console.log(teacherIds)
+            // create a query reference to the teachers collection
+            var query_teacher = db.collection("teachers");
+            // set query to get all teacher documents that are in teacher ids
+            console.log(...teacherIds)
+            // for(let id of teacherIds)
+                query_teacher = query_teacher.where(_.includes(teacherIds,fb.firestore.FieldPath.documentId()), '==', true)
+                // query_teacher = query_teacher.where(fb.firestore.FieldPath.documentId(), '==', "49Z7lfsLuihpCaJUZBpuZ0g2rGt1")
+                // query_teacher = query_tea(fb.firestore.FieldPath.documentId(), '==', "C6D3Y2PoHIXoFJvgbzVQG2kIwX02")
+            // const refs = teacherIds.map(id => query_teacher.doc())
+            query_teacher.get().then(teacher_querySnapshot => {
+                console.log(teacher_querySnapshot)
+              teacher_querySnapshot.forEach(doc => {
+                // store all loaded teacher data and keep local reference of their uid's
+                var teacher_data = doc.data();
+                teacher_data["uid"] = doc.id;
+                self.loaded_teachers.push(teacher_data);
+              });
+              // Get teacher names from Users collection and store them in teacher
+              var query_user = db.collection("Users");
+              query_user = query_user.doc(...teacherIds);
+              query_user.get().then(doc => {
+                var user_data = doc.data();
+                var teacher_ref = _.find(self.loaded_teachers, { uid: doc.id });
+                teacher_ref.first_name = user_data.first_name;
+                teacher_ref.last_name = user_data.last_name;
+              });
+            });
+          });
+      }
+    });
   }
 };
 </script>
