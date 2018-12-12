@@ -7,7 +7,7 @@
             <div class="d-flex flex-column modal-body">
                     <h2 class="Raleway font-weight-bold ml-auto mr-auto text-thank-you-employer">Thank you</h2>
                 <div class="ml-auto mr-auto">
-                    <img src='@/assets/matchmake_employer.png' alt="Matchmake" id='Matchmake' >
+                    <img src='@/assets/images/matchmake_employer.png' alt="Matchmake" id='Matchmake' >
                 </div>
                     <h2 class="ml-auto mr-auto text-title-notify">We will notify you when your match results are available.</h2>
                 <div class="ml-auto mr-auto">

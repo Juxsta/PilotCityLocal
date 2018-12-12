@@ -2,7 +2,7 @@
 <div>
 	<nav class="navbar navbar-expand-lg navbar-light Raleway">
   			<router-link to="/">
-				<img id="logo-pilotcity" src="@/assets/pilotCitylogo.png" alt="Pilot City Logo">
+				<img id="logo-pilotcity" src="@/assets/images/pilotCitylogo.png" alt="Pilot City Logo">
 		  	</router-link> 
 			<div class="btn-group ml-auto" role="group">
 				<Login v-if="!authUser || emailNotVerified" id="component-login" />  
