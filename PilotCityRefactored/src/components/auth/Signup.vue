@@ -11,7 +11,7 @@
             <div class="modal-content pc-light-gray">
             <div class="modal-body">
                 <div class="d-flex justify-content-center">
-                    <img src='@/assets/3_Hand.png' alt="Hand Logo" id='Handlogo' >
+                    <img src='@/assets/images/3_Hand.png' alt="Hand Logo" id='Handlogo' >
                 </div>
                 <form>
                 <div class="col-auto form-margin">

@@ -11,7 +11,7 @@
             <div class="modal-content pc-light-gray">
             <div class="modal-body">
                 <div class="d-flex justify-content-center">
-                    <img src='@/assets/2_Heart.png' alt="Heart Logo" id='Heartlogo' >
+                    <img src='@/assets/images/2_Heart.png' alt="Heart Logo" id='Heartlogo' >
                 </div>
                 <form>
                 <div class="col-auto form-margin">
