@@ -9,6 +9,7 @@
 import Navbar from '@/components/Navbar'
 import { bus } from '@/main'
 import firebase from '@/firebase/init'
+
 export default {
   name: 'App',
   components: {
