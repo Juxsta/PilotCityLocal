@@ -1,6 +1,6 @@
-<template> 
+<template>
   <div>
-      <!-- random -->
+    <!-- random -->
     <div class="entire-box d-flex flex-row">
       <div class="d-flex col-7 justify-content-center m-0 p-0">
         <div class="leftside justify-content-center flex-column d-flex col-12 p-0 m-0">
@@ -21,6 +21,7 @@
 
           <div class="cardstock d-flex flex-column row-12 container">
             <h2 class="text-classroom-matches">100+ Classrooms Recommended</h2>
+            <mm_teacher_card v-if="loaded_classrooms.length && loaded_teachers.length" :classroom="loaded_classrooms[2]" :teacher="loaded_teachers[2]"/>
           </div>
         </div>
       </div>
@@ -35,8 +36,8 @@
 <script>
 import _ from "lodash";
 import firebase from "@/firebase/init";
-import fb from 'firebase'
-import w_teacherVue from '../../profile_builder/wizard/teacher/w_teacher.vue';
+import fb from "firebase";
+import mm_teacher_card from "@/components/matchmaking/components/mm_teacher_card.vue";
 export default {
   name: "mm_employer",
   data() {
@@ -97,54 +98,44 @@ export default {
       recmd: []
     };
   },
+  components: {
+    mm_teacher_card
+  },
   created() {
     var self = this;
-    var teacherIds = [];
+    var classIds = [];
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         const db = firebase.firestore();
-        db.collection("classroom")
+
+        db.collection("teachers")
           .get()
-          .then(classroom_querySnapshot => {
-            //get info from all the classrooms
-            // console.log(classroom_querySnapshot)
-            classroom_querySnapshot.forEach(doc => {
-              var class_data = doc.data();
-              //keep a reference to all the teacher ids in an array
-              teacherIds.push(class_data.teacher_uid);
-              //keep local reference to the classrooms that were loaded
-              self.loaded_classrooms.push(class_data);
+          .then(teacher_querySnapshot => {
+            teacher_querySnapshot.forEach(doc => {
+              var teacher_data = doc.data();
+              teacher_data["uid"] = doc.id;
+              self.loaded_teachers.push(teacher_data);
             });
-            // filter out repeated teacher ids
-            teacherIds = _.uniq(teacherIds);
-            // console.log(teacherIds)
-            // create a query reference to the teachers collection
-            var query_teacher = db.collection("teachers");
-            // set query to get all teacher documents that are in teacher ids
-            console.log(...teacherIds)
-            // for(let id of teacherIds)
-                query_teacher = query_teacher.where(_.includes(teacherIds,fb.firestore.FieldPath.documentId()), '==', true)
-                // query_teacher = query_teacher.where(fb.firestore.FieldPath.documentId(), '==', "49Z7lfsLuihpCaJUZBpuZ0g2rGt1")
-                // query_teacher = query_tea(fb.firestore.FieldPath.documentId(), '==', "C6D3Y2PoHIXoFJvgbzVQG2kIwX02")
-            // const refs = teacherIds.map(id => query_teacher.doc())
-            query_teacher.get().then(teacher_querySnapshot => {
-                console.log(teacher_querySnapshot)
-              teacher_querySnapshot.forEach(doc => {
-                // store all loaded teacher data and keep local reference of their uid's
-                var teacher_data = doc.data();
-                teacher_data["uid"] = doc.id;
-                self.loaded_teachers.push(teacher_data);
+            db.collection("classroom")
+              .get()
+              .then(classroom_querySnapshot => {
+                classroom_querySnapshot.forEach(doc => {
+                  var class_data = doc.data();
+                  // console.log(doc.data());
+                  self.loaded_classrooms.push(class_data);
+                });
+                for (let teacher in self.loaded_teachers)
+                  db.collection("Users")
+                    .doc(self.loaded_teachers[teacher]["uid"])
+                    .get()
+                    .then(doc => {
+                      var user_data = doc.data();
+                      self.loaded_teachers[teacher]["first_name"] =
+                        user_data.first_name;
+                      self.loaded_teachers[teacher]["last_name"] =
+                        user_data.last_name;
+                    });
               });
-              // Get teacher names from Users collection and store them in teacher
-              var query_user = db.collection("Users");
-              query_user = query_user.doc(...teacherIds);
-              query_user.get().then(doc => {
-                var user_data = doc.data();
-                var teacher_ref = _.find(self.loaded_teachers, { uid: doc.id });
-                teacher_ref.first_name = user_data.first_name;
-                teacher_ref.last_name = user_data.last_name;
-              });
-            });
           });
       }
     });
