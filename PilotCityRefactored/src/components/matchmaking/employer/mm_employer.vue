@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="render">
     <!-- random -->
     <div class="entire-box d-flex flex-row">
       <div class="d-flex col-7 justify-content-center m-0 p-0">
@@ -36,12 +36,12 @@
 <script>
 import _ from "lodash";
 import firebase from "@/firebase/init";
-import fb from "firebase";
 import mm_teacher_card from "@/components/matchmaking/components/mm_teacher_card.vue";
 export default {
   name: "mm_employer",
   data() {
     return {
+      render: false,
       class_size: ["1-10", "11-15", "16-20", "21-25", "26-30"],
       location: [
         "Alameda",
@@ -101,7 +101,7 @@ export default {
   components: {
     mm_teacher_card
   },
-  created() {
+created() {
     var self = this;
     var classIds = [];
     firebase.auth().onAuthStateChanged(user => {
@@ -124,17 +124,29 @@ export default {
                   // console.log(doc.data());
                   self.loaded_classrooms.push(class_data);
                 });
-                for (let teacher in self.loaded_teachers)
-                  db.collection("Users")
-                    .doc(self.loaded_teachers[teacher]["uid"])
-                    .get()
-                    .then(doc => {
-                      var user_data = doc.data();
-                      self.loaded_teachers[teacher]["first_name"] =
-                        user_data.first_name;
-                      self.loaded_teachers[teacher]["last_name"] =
-                        user_data.last_name;
-                    });
+                var promises = [];
+                for (
+                  let teacher = 0;
+                  teacher < self.loaded_teachers.length;
+                  teacher++
+                ) {
+                  promises.push(
+                    db
+                      .collection("Users")
+                      .doc(self.loaded_teachers[teacher]["uid"])
+                      .get()
+                      .then(doc => {
+                        var user_data = doc.data();
+                        self.loaded_teachers[teacher]["first_name"] =
+                          user_data.first_name;
+                        self.loaded_teachers[teacher]["last_name"] =
+                          user_data.last_name;
+                      })
+                  );
+                }
+                Promise.all(promises).then(val => {
+                  self.render=true
+                })
               });
           });
       }

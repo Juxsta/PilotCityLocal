@@ -1,15 +1,18 @@
 <template>
   <div class="card container">
-    <div>
       <div class="one d-flex flex-row h-25">
-        <i class="material-icons justify-content-center pt-2 px-3" id="favorite_border">favorite_border</i>
+        <i
+          class="material-icons justify-content-center pt-2 px-3"
+          id="favorite_border"
+        >favorite_border</i>
         <h2 class="card-title">{{classroom.coursename | capitalize}}</h2>
-        <!-- Computer Science AP -->
-        <i class="material-icons justify-content-center pt-2 px-3" id="email">email</i>
-        <button class="action-button mt-3">Accept</button>
-        <!-- place holder button -->
-        <i class="material-icons action-button-decline pl-3">clear</i>
-        <!--Place holder [x]  -->
+        <div class="card-buttons">
+          <i class="material-icons justify-content-center pt-2 px-3" id="email">email</i>
+          <button @click=message() class="action-button mt-3">Accept</button>
+          <!-- place holder button -->
+          <i class="material-icons action-button-decline pl-3">clear</i>
+          <!--Place holder [x]  -->
+        </div>
       </div>
 
       <div class="two d-flex flex-row h-200">
@@ -22,7 +25,7 @@
           <h4 class="card-subtitle">Address</h4>
         </div>
         <div class="five w-75">
-          <h4 class="card-subtitle">
+          <h4 class="card-subtitle text">
             <span>{{teacher.first_name | capitalize}}</span>
             <span>{{" "}}</span>
             <span>{{teacher.last_name | capitalize}}</span>
@@ -79,7 +82,9 @@
 </template>
 
 <script>
+// import tagging from @/components
 export default {
+  
   props: {
     classroom: {
       required: true
@@ -94,8 +99,9 @@ export default {
       value = value.toString();
       return value.charAt(0).toUpperCase() + value.slice(1);
     }
-  }
-};
+  },
+
+}; 
 </script>
 
 <style lang="scss" scoped>
@@ -104,4 +110,7 @@ li {
   display: inline-block;
   margin: 3px;
 }
+// .card-buttons{
+//   padding-left: 125px
+// }
 </style>
