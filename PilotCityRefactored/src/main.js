@@ -3,7 +3,7 @@ import App from './App.vue'
 import router from './router'
 import swal from 'sweetalert'
 import BootstrapVue from "bootstrap-vue"
-import * as VueGoogleMaps from 'vue2-google-maps'
+//import * as VueGoogleMaps from 'vue2-google-maps'
  
 import "bootstrap-vue/dist/bootstrap-vue.css"
 
@@ -12,13 +12,13 @@ Vue.config.productionTip = false
 
 export const GEOCODEKEY = {key: "AIzaSyDfuNr3RaCZkituTfoB7b7pR2u2rWuraWE"}; 
 export const bus = new Vue();
-Vue.use(VueGoogleMaps, {
-    load: {
-      key: 'AIzaSyDfuNr3RaCZkituTfoB7b7pR2u2rWuraWE',
-      libraries: 'places', 
-    },
+// Vue.use(VueGoogleMaps, {
+//     load: {
+//       key: 'AIzaSyDfuNr3RaCZkituTfoB7b7pR2u2rWuraWE',
+//       libraries: 'places', 
+//     },
    
-  })
+//   })
   
 export const Prompter = () => {
   return ({

@@ -1,73 +1,79 @@
 <template>
   <div v-if="render">
     <!-- random -->
-    <div class="entire-box d-flex flex-row">
-      <div class="d-flex col-7 justify-content-center m-0 p-0">
-        <div class="leftside justify-content-center flex-column d-flex col-12 p-0 m-0">
+    <div class="entire-box d-flex flex-row" >
+      <div class="d-flex col-7 justify-content-center m-0 p-0" >
+      
+        <div class="leftside justify-content-center flex-column d-flex col-12 p-0 m-0" >
           <div class="filter-bar justify-content-center d-flex flex-row container">
-            <b-btn class="filter__button">Courses</b-btn>
-            <mm_filter_skills
-            :skills="skills"
-            :selected_skills="selected_skills"/>
-            <b-btn class="filter__button">Grades</b-btn>
-            <b-btn class="filter__button">Location</b-btn>
-            <b-btn class="filter__button">Class Size</b-btn>
+            <mm_filter
+              :options="courses"
+              :selected_options="filtered_courses"
+              name="Courses"
+            />
+            <mm_filter :options="skills" :selected_options="filtered_skills" name="Skills"/>
+            <mm_filter :options="grades" :selected_options="filtered_grades" name="Grades"/>
+            <mm_filter
+              :options="locations"
+              :selected_options="filtered_locations"
+              name="Location"
+            />
+            <!-- <mm_filter_skills
+              :options="skills"
+              :selected_options="selected_skills"
+              name="Class Size"
+            />-->
           </div>
 
           <div class="cardstock container">
             <h2 class="text-classroom-matches row">100+ Classrooms Recommended</h2>
             <mm_teacher_card
+              v-if="loaded_teachers[index]"
               :classroom="classroom"
-              :teacher="loaded_teachers[index]"
-              v-for="(classroom,index) in loaded_classrooms"
+              :teacher="findbyId(loaded_teachers,classroom.teacher_uid)"
+              v-for="(classroom,index) in filter_list"
               :key="index"
               class="row-12"
             />
+            <b-btn @click="filter_list" class="justify-content-start">Next</b-btn>
+            <b-btn @click="filter_list" class="justify-content-end">Prev</b-btn>
           </div>
         </div>
       </div>
-        <!-- pass paras to the center to change the position -->
        <div class="google-maps container col-5 m-0 p-0">
-          <GmapMap
-          :center=gmap_prop.center
-          :zoom=gmap_prop.zoom
-          map-type-id="roadmap"
-          style="width: 100%; height: 100%"
-        >
-          <GmapMarker
-            :key="index"
-            v-for="(m, index) in gmap_markers"
-            :position="m.position"
-            :clickable="true"
-            :draggable="false"
-            @click="gmap_prop.center=m.position"
-          /> 
-        </GmapMap>
+     
+       <GoogleMap name="test" :addresses=address_arr :apikey=apikey> </GoogleMap>
       </div>
     </div>
   </div>
 </template>
 
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDfuNr3RaCZkituTfoB7b7pR2u2rWuraWE&callback=initMap"
+async defer></script>
 <script>
 import _ from "lodash";
 import firebase from "@/firebase/init";
+import mm_filter from "@/components/matchmaking/components/mm_filter.vue"
 import mm_teacher_card from "@/components/matchmaking/components/mm_teacher_card.vue";
+
+import GoogleMap from '@/components/map/GoogleMap'
 import {  GEOCODEKEY } from '@/main'
-import axios from 'axios';
-import mm_filter_skills from "@/components/matchmaking/components/mm_filter_skills.vue"
 import "@/assets/SASS/pages/_matchmaking.scss";
+
 export default {
   name: "mm_employer",
   data() {
     return {
+      apikey: GEOCODEKEY.key,
       gmap_prop:{
         center: { lat:37.7249, lng:-122.1561 },
         zoom: 11
       },
-      gmap_markers:[],
+      gmap_markers: [],
       render: false,
       class_size: ["1-10", "11-15", "16-20", "21-25", "26-30"],
-      location: [
+      filtered_class_size: [],
+      locations: [
         "Alameda",
         "Emeryville",
         "Fremont",
@@ -78,6 +84,7 @@ export default {
         "San Leandro",
         "San Lorenzo"
       ],
+      filtered_locations: [],
       courses: [
         "Computer Science",
         "Engineering",
@@ -117,42 +124,100 @@ export default {
       filtered_courses: [],
       grades: ["9th Grade", "10th Grade", "11th Grade", "12th Grade"],
       filtered_grades: [],
-      selected_skills: [],
+      filtered_skills: [],
       loaded_classrooms: [],
+      render_classroms: [],
       loaded_teachers: [],
       recmd: []
     };
   },
-  components: {
-    mm_teacher_card,
-    mm_filter_skills
-  },
-  methods: {
-    pinAllClassroomsOnMap(arr_of_classrooms_addr){
-        for (var i = 0; i < arr_of_classrooms_addr.length; i++){
-          this.pinMarkerWithLink(this.getLink(arr_of_classrooms_addr[i]));
-        }
+  computed: {
+    filter_list() {
+      var arr_filters = [
+        this.filtered_skills,
+        this.filtered_locations,
+        this.filtered_courses,
+        this.filtered_grades,
+        this.filtered_class_size
+      ];
+      var self = this;
+      return _.filter(self.loaded_classrooms, clas => {
+        // check through all the classes
+        return arr_filters.every(filter => {
+          // check through each filter
+          return filter.every(item => {
+            //make sure the class has all the filters applied form each filter
+            return _.some(clas, field => {
+              if (typeof field == "string")
+                return field
+                  .trim()
+                  .toLowerCase()
+                  .includes(item.trim().toLowerCase());
+              else return field == item;
+            });
+          });
+        });
+      })
     },
-    getLink(address){
-      var api_link = "https://maps.googleapis.com/maps/api/geocode/json?address=";
-      var key = "&key=" +  GEOCODEKEY.key;
-      return (api_link + address.replace(/\s/g, '+') + key);
-    },
-    pinMarkerWithLink(link){
-      axios.get(link).then( response => {
-          this.gmap_markers.push({ position: response.data.results[0].geometry.location});
-      }).catch( error => {
-          console.log(error.message);
-      });
+    address_arr() {
+      var arr = [];
+      var str = "";
+      for (var i = 0; i < this.loaded_teachers.length;i++)
+      {
+        str = this.loaded_teachers[i].school_address.street + '+' +
+              this.loaded_teachers[i].school_address.city   + '+' +
+              this.loaded_teachers[i].school_address.state  + '+' +
+              this.loaded_teachers[i].school_address.zip;
+        str = str.replace(/\s/g, '+');
+        arr.push(str);
+      }
+      return (arr);
     }
   },
+  components: {
+    mm_teacher_card,
+    mm_filter,
+    GoogleMap 
+  },
+  methods: {
+    shuffle(a) {
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    },
+    findbyId(arr, uid) {
+      return arr.filter(obj => {
+        return obj.uid == uid;
+      })[0];
+    },
+    pinAllClassroomsOnMap(arr_of_classrooms_addr) {
+      for (var i = 0; i < arr_of_classrooms_addr.length; i++) {
+        this.pinMarkerWithLink(this.getLink(arr_of_classrooms_addr[i]));
+      }
+    },
+    getLink(address) {
+      var api_link =
+        "https://maps.googleapis.com/maps/api/geocode/json?address=";
+      var key = "&key=" + GEOCODEKEY.key;
+      return api_link + address.replace(/\s/g, "+") + key;
+    },
+    pinMarkerWithLink(link) {
+      axios
+        .get(link)
+        .then(response => {
+          this.gmap_markers.push({
+            position: response.data.results[0].geometry.location
+          });
+        })
+        .catch(error => {
+          console.log(error.message);
+        });
+    }
+  },
+
   created() {
-    var arr_of_classrooms_addr = [
-      "Royal Sunset High school,Hayward, California, 20450 Royal St, 94541",
-      "2200 Bancroft Ave, San Leandro, CA 94577",
-    ]
-    this.pinAllClassroomsOnMap(arr_of_classrooms_addr);
-    
     var self = this;
     var classIds = [];
     firebase.auth().onAuthStateChanged(user => {
@@ -196,6 +261,7 @@ export default {
                   );
                 }
                 Promise.all(promises).then(val => {
+                  self.shuffle(self.loaded_classrooms);
                   self.render = true;
                 });
               });
@@ -208,4 +274,6 @@ export default {
 
 
 <style lang="scss">
+
+
 </style>
