@@ -82,6 +82,7 @@
 </template>
 
 <script>
+
 // import tagging from @/components
 export default {
   props: {
@@ -98,6 +99,9 @@ export default {
       value = value.toString();
       return value.charAt(0).toUpperCase() + value.slice(1);
     }
+  },
+  created(){
+
   }
 };
 </script>
@@ -110,6 +114,7 @@ li {
   display: inline-block;
   margin: 3px;
 }
+
 // .card-buttons{
 //   padding-left: 125px
 // }
