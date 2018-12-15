@@ -25,10 +25,24 @@
           </div>
         </div>
       </div>
-
-      <!-- <div class="google-maps container col-5 m-0 p-0">
-        <google-map/>
-      </div>-->
+        <!-- pass paras to the center to change the position -->
+       <div class="google-maps container col-5 m-0 p-0">
+          <GmapMap
+          :center=gmap_prop.center
+          :zoom=gmap_prop.zoom
+          map-type-id="roadmap"
+          style="width: 100%; height: 100%"
+        >
+          <GmapMarker
+            :key="index"
+            v-for="(m, index) in gmap_markers"
+            :position="m.position"
+            :clickable="true"
+            :draggable="false"
+            @click="gmap_prop.center=m.position"
+          /> 
+        </GmapMap>
+      </div>
     </div>
   </div>
 </template>
@@ -38,10 +52,17 @@ import _ from "lodash";
 import firebase from "@/firebase/init";
 import fb from "firebase";
 import mm_teacher_card from "@/components/matchmaking/components/mm_teacher_card.vue";
+import {  GEOCODEKEY } from '@/main'
+import axios from 'axios';
 export default {
   name: "mm_employer",
   data() {
     return {
+      gmap_prop:{
+        center: { lat:37.7249, lng:-122.1561 },
+        zoom: 11
+      },
+      gmap_markers:[],
       class_size: ["1-10", "11-15", "16-20", "21-25", "26-30"],
       location: [
         "Alameda",
@@ -101,7 +122,32 @@ export default {
   components: {
     mm_teacher_card
   },
+  methods: {
+    pinAllClassroomsOnMap(arr_of_classrooms_addr){
+        for (var i = 0; i < arr_of_classrooms_addr.length; i++){
+          this.pinMarkerWithLink(this.getLink(arr_of_classrooms_addr[i]));
+        }
+    },
+    getLink(address){
+      var api_link = "https://maps.googleapis.com/maps/api/geocode/json?address=";
+      var key = "&key=" +  GEOCODEKEY.key;
+      return (api_link + address.replace(/\s/g, '+') + key);
+    },
+    pinMarkerWithLink(link){
+      axios.get(link).then( response => {
+          this.gmap_markers.push({ position: response.data.results[0].geometry.location});
+      }).catch( error => {
+          console.log(error.message);
+      });
+    }
+  },
   created() {
+    var arr_of_classrooms_addr = [
+      "Royal Sunset High school,Hayward, California, 20450 Royal St, 94541",
+      "2200 Bancroft Ave, San Leandro, CA 94577",
+    ]
+    this.pinAllClassroomsOnMap(arr_of_classrooms_addr);
+    
     var self = this;
     var classIds = [];
     firebase.auth().onAuthStateChanged(user => {

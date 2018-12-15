@@ -79,6 +79,7 @@
 </template>
 
 <script>
+
 export default {
   props: {
     classroom: {
@@ -94,6 +95,9 @@ export default {
       value = value.toString();
       return value.charAt(0).toUpperCase() + value.slice(1);
     }
+  },
+  created(){
+
   }
 };
 </script>
@@ -104,4 +108,5 @@ li {
   display: inline-block;
   margin: 3px;
 }
+
 </style>
