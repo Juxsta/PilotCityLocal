@@ -18,7 +18,7 @@
         <h4 class="card-subtitle">School</h4>
         <h4 class="card-subtitle">Address</h4>
       </div>
-      <div class="five w-75">
+      <div class="five">
         <h4 class="card-subtitle-text">
           <span>{{teacher.first_name | capitalize}}</span>
           <span>{{" "}}</span>
