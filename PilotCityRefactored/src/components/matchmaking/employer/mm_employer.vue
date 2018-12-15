@@ -6,9 +6,7 @@
         <div class="leftside justify-content-center flex-column d-flex col-12 p-0 m-0">
           <div class="filter-bar justify-content-center d-flex flex-row container">
             <b-btn class="filter__button">Courses</b-btn>
-            <mm_filter_skills
-            :skills="skills"
-            :selected_skills="selected_skills"/>
+            <mm_filter_skills :skills="skills" :selected_skills="selected_skills"/>
             <b-btn class="filter__button">Grades</b-btn>
             <b-btn class="filter__button">Location</b-btn>
             <b-btn class="filter__button">Class Size</b-btn>
@@ -17,6 +15,7 @@
           <div class="cardstock container">
             <h2 class="text-classroom-matches row">100+ Classrooms Recommended</h2>
             <mm_teacher_card
+            v-if="loaded_teachers[index]"
               :classroom="classroom"
               :teacher="loaded_teachers[index]"
               v-for="(classroom,index) in loaded_classrooms"
@@ -38,7 +37,7 @@
 import _ from "lodash";
 import firebase from "@/firebase/init";
 import mm_teacher_card from "@/components/matchmaking/components/mm_teacher_card.vue";
-import mm_filter_skills from "@/components/matchmaking/components/mm_filter_skills.vue"
+import mm_filter_skills from "@/components/matchmaking/components/mm_filter_skills.vue";
 import "@/assets/SASS/pages/_matchmaking.scss";
 export default {
   name: "mm_employer",
