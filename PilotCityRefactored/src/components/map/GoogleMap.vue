@@ -42,7 +42,7 @@ export default {
                 self.markers_ref[i] = 
                     new google.maps.Marker({position: self.markers[i],
                                             map: map,
-                                            label: i + "",
+                                            label: {text: i + "", color: "white"},
                                             icon: 'https://firebasestorage.googleapis.com/v0/b/pilotcity-firestore.appspot.com/o/add-label-button.png?alt=media&token=5f3e240e-1b9d-41dc-92bb-aaf6baac24e2'
                                             });
             }
