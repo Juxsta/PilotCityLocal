@@ -26,23 +26,8 @@
           </div>
         </div>
       </div>
-        <!-- pass paras to the center to change the position -->
        <div class="google-maps container col-5 m-0 p-0">
-          <!-- <GmapMap
-          :center=gmap_prop.center
-          :zoom=gmap_prop.zoom
-          map-type-id="roadmap"
-          style="width: 100%; height: 100%"
-        >
-          <GmapMarker
-            :key="index"
-            v-for="(m, index) in gmap_markers"
-            :position="m.position"
-            :clickable="true"
-            :draggable="false"
-            @click="gmap_prop.center=m.position"
-          /> 
-        </GmapMap> -->
+        
        <GoogleMap name="test" :addresses=address_arr :apikey=apikey> </GoogleMap>
          
       </div>
@@ -58,9 +43,10 @@ import firebase from "@/firebase/init";
 import mm_filter_skills from "@/components/matchmaking/components/mm_filter_skills.vue"
 import mm_teacher_card from "@/components/matchmaking/components/mm_teacher_card.vue";
 //import mm_filter_skills from "@/components/matchmaking/components/mm_filter_skills.vue";
+
+import GoogleMap from '@/components/map/GoogleMap'
 import {  GEOCODEKEY } from '@/main'
 import "@/assets/SASS/pages/_matchmaking.scss";
-import GoogleMap from '@/components/map/GoogleMap'
 
 export default {
   name: "mm_employer",
@@ -215,8 +201,5 @@ export default {
 
 <style lang="scss">
 
-#map_canvas{
-  height:100%;
-  width:100%;
-}
+
 </style>
