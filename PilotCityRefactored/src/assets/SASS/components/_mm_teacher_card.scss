@@ -1,15 +1,40 @@
 @import "@/assets/SASS/pages/_matchmaking.scss";
 
-.action-button-cancel{
-    width: 125px;
+.action-button-pending{
+  width: 125px;
   height: 25px;
   border-radius: 50px;
-  background-color: #ffffff;
-  border: solid 2px #6eba7f;
-  color: #6eba7f;
+  background-color: #fdd25a;
+  border: solid 2px #fdd25a;
+  color: #ffffff;
   font-family: "Raleway";
   font-weight: 700;
   font-size: 11px;
   margin: auto;
   padding-top: 3px;
+  &:hover {
+    background-color: #bb3e40;
+    border:0px;
+    color: #ffffff;
+    content:"cancel"
+  }
 }
+
+// .action-button-cancel{
+//   width: 125px;
+//   height: 25px;
+//   border-radius: 50px;
+//   background-color: #bb3e40;
+//   border: solid 0px #bb3e40;
+//   color: white;
+//   font-family: "Raleway";
+//   font-weight: 700;
+//   font-size: 11px;
+//   margin: auto;
+//   padding-top: 3px;
+//   // &:hover {
+//   //   background-color: #bb3e40;
+//   //   border:0px;
+//   //   color:#ffffff;
+//   // }
+// }

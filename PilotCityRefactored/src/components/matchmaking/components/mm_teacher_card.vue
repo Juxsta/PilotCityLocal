@@ -6,12 +6,12 @@
         id="favorite_border"
       >favorite_border</i>
       <h2 class="card-title">{{classroom.coursename | capitalize}}</h2>
-      <div class="card-buttons">
-        <i class="material-icons justify-content-center pt-2 px-3" id="email">email</i>
-        <button @click="message" :class="{'action-button':invite, 'action-button-cancel':pending}">{{text}}</button>
+      <div class="mt-4">
+        <button
+          @click="hover=false;update_invite()"
+          :class="{'action-button':invite, 'action-button-pending':pending}"
+        >{{text}}</button>
         <!-- place holder button -->
-        <i class="material-icons action-button-decline pl-3">clear</i>
-        <!--Place holder [x]  -->
       </div>
     </div>
 
@@ -82,6 +82,7 @@
 </template>
 
 <script>
+import "@/assets/SASS/components/_mm_teacher_card.scss";
 // import tagging from @/components
 export default {
   data() {
@@ -97,17 +98,25 @@ export default {
     },
     teacher: {
       required: true
+    },
+    invited: {
+      required: true
     }
   },
   methods: {
-    update(event) {
+    update_invite(event) {
       this.invite = !this.invite;
       this.pending = !this.pending;
       if (this.invite == true) {
         this.text = "Invite";
+        this.invited.push(this.classroom.uid);
       } else {
         this.text = "Invited";
+        this.invited.splice(this.invited.indexof(this.classroom.uid),1);
       }
+    },
+    check_invited(){
+      
     }
   },
   computed: {},

@@ -128,7 +128,8 @@ export default {
       loaded_classrooms: [],
       render_classroms: [],
       loaded_teachers: [],
-      recmd: []
+      recmd: [],
+      
     };
   },
   computed: {
