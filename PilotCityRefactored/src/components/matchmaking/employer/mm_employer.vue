@@ -36,8 +36,8 @@
               :key="index"
               class="row-12"
             />
-            <b-btn @click="filter_list" class="justify-content-start">Next</b-btn>
-            <b-btn @click="filter_list" class="justify-content-end">Prev</b-btn>
+            <b-btn @click="filter_list" class="prevpage__btn justify-content-start">Previous</b-btn>
+            <b-btn @click="filter_list" class="nextpage__btn justify-content-end">Next</b-btn>
           </div>
         </div>
       </div>

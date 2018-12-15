@@ -15,9 +15,13 @@ $popover-max-width: 1000px;
     border: solid 1px #dbdcde;
     cursor: pointer;
     &:hover {
-        background-color: $pink;
-        border: solid 1px $pink;
+        background-color: $purple;
+        border: solid 1px $purple;
     }
+    &:active {
+      background-color: $purple;
+      border: none;
+  }
   }
   
 .text-classroom-matches {
@@ -28,13 +32,11 @@ $popover-max-width: 1000px;
   margin: 30px auto 15px auto;
 }
 
-.pc-tag1 {
-  width: 150px;
+.tag__skills {
   height: 31px;
-  margin-top: 12px;
-  margin-bottom: 12px;
-  margin-left: 6px;
-  margin-right: 6px;
+  margin: 10px 0px 0px 10px;
+  padding-left: 12px;
+  padding-right: 12px;
   border-radius: 25px;
   text-align: center;
   padding-top: 8px;
@@ -42,75 +44,44 @@ $popover-max-width: 1000px;
   font-weight: 700;
   color: #ffffff;
   font-size: 12px;
-  background-color: #6eba7f;
+  letter-spacing: .75px;
+  text-transform: capitalize; 
+  background-color: $blue
 }
 
-.pc-tag2 {
-  width: 150px;
-  height: 31px;
-  margin-top: 12px;
-  margin-bottom: 12px;
-  margin-left: 6px;
-  margin-right: 6px;
-  border-radius: 25px;
-  text-align: center;
-  padding-top: 8px;
-  font-family: "Raleway";
-  font-weight: 700;
-  color: #ffffff;
-  font-size: 12px;
-  background-color: #3c9ccc;
+.tag__skills--red {
+  @extend .tag__skills;
+  background-color: $red
 }
 
-.pc-tag3 {
-  width: 150px;
-  height: 31px;
-  margin-top: 12px;
-  margin-bottom: 12px;
-  margin-left: 6px;
-  margin-right: 6px;
-  border-radius: 25px;
-  text-align: center;
-  padding-top: 8px;
-  font-family: "Raleway";
-  font-weight: 700;
-  color: #ffffff;
-  font-size: 12px;
-  background-color: #ea6763;
+.tag__skills--green {
+  @extend .tag__skills;
+  background-color: $green
 }
 
-.pc-tag4 {
-  width: 150px;
-  height: 31px;
-  margin-top: 12px;
-  margin-bottom: 12px;
-  margin-left: 6px;
-  margin-right: 6px;
-  border-radius: 25px;
-  text-align: center;
-  padding-top: 8px;
-  font-family: "Raleway";
-  font-weight: 700;
-  color: #ffffff;
-  font-size: 12px;
-  background-color: #fdd25a;
+.tag__skills--orange {
+  @extend .tag__skills;
+  background-color: $orange
 }
 
-.pc-tag5 {
-  width: 150px;
-  height: 31px;
-  margin-top: 12px;
-  margin-bottom: 12px;
-  margin-left: 6px;
-  margin-right: 6px;
-  border-radius: 25px;
-  text-align: center;
-  padding-top: 8px;
-  font-family: "Raleway";
-  font-weight: 700;
-  color: #ffffff;
-  font-size: 12px;
-  background-color: #f79960;
+.tag__skills--yellow {
+  @extend .tag__skills;
+  background-color: $yellow
+}
+
+.tag__skills--purple {
+  @extend .tag__skills;
+  background-color: $purple
+}
+
+.tag__skills--pink {
+  @extend .tag__skills;
+  background-color: $pink
+}
+
+.tag__skills--blue {
+  @extend .tag__skills;
+  background-color: $blue
 }
 
 #favorite_border {
@@ -288,11 +259,22 @@ $popover-max-width: 1000px;
 
 .card {
   width: 750px;
-  height: 225px;
-  margin: 20px auto 20px auto;
   border: dashed 1px #dbdcde;
   border-radius: 25px;
-  padding: 0px;
+  padding: 0px 0px 10px 0px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+
+  &:hover {
+    background-color: #f8f8f8;
+    cursor: pointer;
+  }
+
+  &:active {
+    background-color: #ededee;
+    cursor: pointer;
+  }
+
 }
 
 .card-line {
@@ -333,6 +315,30 @@ $popover-max-width: 1000px;
 
 .google-maps {
   background-color: #3c9ccc;
+}
+
+.nextpage__btn {
+  width: 150px;
+  height:50px;
+  border-radius: 25px;
+  font-family: "Raleway";
+  font-weight: 700;
+  background-color:#c6c8ca;
+  font-size: 20px;
+  border: none;
+  margin: 25px 5px 50px 15px;
+}
+
+.prevpage__btn {
+  width: 150px;
+  height:50px;
+  border-radius: 25px;
+  font-family: "Raleway";
+  font-weight: 700;
+  background-color:#c6c8ca;
+  font-size: 20px;
+  border: none;
+  margin: 25px 5px 50px 25px;
 }
 
 //bootstrap imports
