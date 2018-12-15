@@ -7,7 +7,7 @@ import test from '@/views/test'
 import camitest from '@/views/camitest'
 
 import wizard from '@/components/profile_builder/wizard/wizard.vue'
-//#region Profile Builder Routes
+//#region Prfile Builder Routes
 import ClassPicker from '@/components/profile_builder/wizard/ClassPicker'
 
 import w_teacher_story from '@/components/profile_builder/wizard/teacher/w_teacher_story'
@@ -233,17 +233,17 @@ const router = new Router({
       redirect: { name: 'Index' }
     },
     {
-      path:'/matchmaking',
-      name:'matchmaking',
-      component:matchmaking,
-      meta:{
-        requiresAuth:true
+      path: '/matchmaking',
+      name: 'matchmaking',
+      component: matchmaking,
+      meta: {
+        requiresAuth: true
       },
-      children:[
+      children: [
         {
-          path:'employer',
-          name:'mm_employer',
-          component:mm_employer
+          path: 'employer',
+          name: 'mm_employer',
+          component: mm_employer
         }
       ]
     }

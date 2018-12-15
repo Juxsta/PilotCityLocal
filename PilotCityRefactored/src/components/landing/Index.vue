@@ -95,7 +95,7 @@ export default {
         height:calc(100% - 66px);
         width: 100%;
         position: absolute !important;
-        background: url('../../assets/header.jpg') no-repeat;
+        background: url('../../assets/images/header.jpg') no-repeat;
         background-size:cover;
     }
   
