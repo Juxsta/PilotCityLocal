@@ -29,6 +29,7 @@
             <h2 class="text-classroom-matches row">100+ Classrooms Recommended</h2>
             <mm_teacher_card
               v-if="loaded_teachers[index]"
+              :invited="invited"
               :classroom="classroom"
               :teacher="findbyId(loaded_teachers,classroom.teacher_uid)"
               v-for="(classroom,index) in filter_list"
@@ -129,7 +130,7 @@ export default {
       render_classroms: [],
       loaded_teachers: [],
       recmd: [],
-      
+      invited: [],
     };
   },
   computed: {

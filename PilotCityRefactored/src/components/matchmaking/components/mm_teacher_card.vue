@@ -100,7 +100,8 @@ export default {
       required: true
     },
     invited: {
-      required: true
+      required: true,
+      type: Array
     }
   },
   methods: {
@@ -109,10 +110,10 @@ export default {
       this.pending = !this.pending;
       if (this.invite == true) {
         this.text = "Invite";
-        this.invited.push(this.classroom.uid);
+        this.invited.splice(this.invited.indexOf(this.classroom.uid),1);
       } else {
         this.text = "Invited";
-        this.invited.splice(this.invited.indexof(this.classroom.uid),1);
+        this.invited.push(this.classroom.uid);
       }
     },
     check_invited(){
