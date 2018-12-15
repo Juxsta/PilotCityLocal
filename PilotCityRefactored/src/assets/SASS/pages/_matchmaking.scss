@@ -264,6 +264,17 @@ $popover-max-width: 1000px;
   padding: 0px 0px 10px 0px;
   margin-top: 20px;
   margin-bottom: 20px;
+
+  &:hover {
+    background-color: #f8f8f8;
+    cursor: pointer;
+  }
+
+  &:active {
+    background-color: #ededee;
+    cursor: pointer;
+  }
+
 }
 
 .card-line {
@@ -304,6 +315,30 @@ $popover-max-width: 1000px;
 
 .google-maps {
   background-color: #3c9ccc;
+}
+
+.nextpage__btn {
+  width: 150px;
+  height:50px;
+  border-radius: 25px;
+  font-family: "Raleway";
+  font-weight: 700;
+  background-color:#c6c8ca;
+  font-size: 20px;
+  border: none;
+  margin: 25px 5px 50px 15px;
+}
+
+.prevpage__btn {
+  width: 150px;
+  height:50px;
+  border-radius: 25px;
+  font-family: "Raleway";
+  font-weight: 700;
+  background-color:#c6c8ca;
+  font-size: 20px;
+  border: none;
+  margin: 25px 5px 50px 25px;
 }
 
 //bootstrap imports
