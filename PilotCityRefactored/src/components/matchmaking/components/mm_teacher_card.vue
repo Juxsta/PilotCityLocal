@@ -1,5 +1,5 @@
 <template>
-  <div class="card container">
+  <div class="card container" @click="$emit('teacherCardClicked')">
     <div class="one d-flex flex-row h-25">
       <i
         class="material-icons justify-content-center pt-2 px-3"
@@ -91,6 +91,11 @@ export default {
     },
     teacher: {
       required: true
+    }
+  },
+  methods:{
+    message(){
+
     }
   },
   filters: {

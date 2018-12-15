@@ -25,7 +25,7 @@
             />-->
           </div>
 
-          <div class="cardstock container">
+          <div class="cardstock container" >
             <h2 class="text-classroom-matches row">100+ Classrooms Recommended</h2>
             <mm_teacher_card
               v-if="loaded_teachers[index]"
@@ -33,7 +33,8 @@
               :teacher="findbyId(loaded_teachers,classroom.teacher_uid)"
               v-for="(classroom,index) in filter_list"
               :key="index"
-              class="row-12"
+              class="row-12 card-teacher-match"
+              @teacherCardClicked="highlight_pin(findbyId(loaded_teachers,classroom.teacher_uid))"
             />
             <b-btn @click="filter_list" class="justify-content-start">Next</b-btn>
             <b-btn @click="filter_list" class="justify-content-end">Prev</b-btn>
@@ -42,7 +43,7 @@
       </div>
        <div class="google-maps container col-5 m-0 p-0">
      
-       <GoogleMap name="test" :addresses=address_arr :apikey=apikey> </GoogleMap>
+       <GoogleMap name="test" :map_data=map_data :apikey=apikey :mapcenter=mapcenter> </GoogleMap>
       </div>
     </div>
   </div>
@@ -65,10 +66,7 @@ export default {
   data() {
     return {
       apikey: GEOCODEKEY.key,
-      gmap_prop:{
-        center: { lat:37.7249, lng:-122.1561 },
-        zoom: 11
-      },
+      mapcenter: { lat:37.7249, lng:-122.1561 },
       gmap_markers: [],
       render: false,
       class_size: ["1-10", "11-15", "16-20", "21-25", "26-30"],
@@ -140,37 +138,22 @@ export default {
         this.filtered_grades,
         this.filtered_class_size
       ];
-      var self = this;
-      return _.filter(self.loaded_classrooms, clas => {
-        // check through all the classes
-        return arr_filters.every(filter => {
-          // check through each filter
-          return filter.every(item => {
-            //make sure the class has all the filters applied form each filter
-            return _.some(clas, field => {
-              if (typeof field == "string")
-                return field
-                  .trim()
-                  .toLowerCase()
-                  .includes(item.trim().toLowerCase());
-              else return field == item;
-            });
-          });
-        });
-      })
+     return
+      
     },
-    address_arr() {
-      var arr = [];
-      var str = "";
-      for (var i = 0; i < this.loaded_teachers.length;i++)
-      {
-        str = this.loaded_teachers[i].school_address.street + '+' +
-              this.loaded_teachers[i].school_address.city   + '+' +
-              this.loaded_teachers[i].school_address.state  + '+' +
-              this.loaded_teachers[i].school_address.zip;
-        str = str.replace(/\s/g, '+');
-        arr.push(str);
-      }
+    map_data() {
+      // the following commented code parse addresses with space to formatted address
+      // var str = "";
+      // for (var i = 0; i < this.loaded_teachers.length;i++)
+      // {
+      //   str = this.loaded_teachers[i].school_address.street + '+' +
+      //         this.loaded_teachers[i].school_address.city   + '+' +
+      //         this.loaded_teachers[i].school_address.state  + '+' +
+      //         this.loaded_teachers[i].school_address.zip;
+      //   str = str.replace(/\s/g, '+');
+      //   arr.push(str);
+      // }
+      var arr = _.filter(this.loaded_teachers, teacher => {return teacher.coordinate});
       return (arr);
     }
   },
@@ -192,28 +175,11 @@ export default {
         return obj.uid == uid;
       })[0];
     },
-    pinAllClassroomsOnMap(arr_of_classrooms_addr) {
-      for (var i = 0; i < arr_of_classrooms_addr.length; i++) {
-        this.pinMarkerWithLink(this.getLink(arr_of_classrooms_addr[i]));
-      }
-    },
-    getLink(address) {
-      var api_link =
-        "https://maps.googleapis.com/maps/api/geocode/json?address=";
-      var key = "&key=" + GEOCODEKEY.key;
-      return api_link + address.replace(/\s/g, "+") + key;
-    },
-    pinMarkerWithLink(link) {
-      axios
-        .get(link)
-        .then(response => {
-          this.gmap_markers.push({
-            position: response.data.results[0].geometry.location
-          });
-        })
-        .catch(error => {
-          console.log(error.message);
-        });
+    highlight_pin(teacher){
+      if (teacher.coordinate)
+        this.mapcenter = teacher.coordinate;
+      else 
+        console.log("This classroom's teacher does not have coordinate!")
     }
   },
 
