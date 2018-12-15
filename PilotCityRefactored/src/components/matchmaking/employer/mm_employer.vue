@@ -6,14 +6,14 @@
       
         <div class="leftside justify-content-center flex-column d-flex col-12 p-0 m-0" >
           <div class="filter-bar justify-content-center d-flex flex-row container">
-            <mm_filter_skills
+            <mm_filter
               :options="courses"
               :selected_options="filtered_courses"
               name="Courses"
             />
-            <mm_filter_skills :options="skills" :selected_options="filtered_skills" name="Skills"/>
-            <mm_filter_skills :options="grades" :selected_options="filtered_grades" name="Grades"/>
-            <mm_filter_skills
+            <mm_filter :options="skills" :selected_options="filtered_skills" name="Skills"/>
+            <mm_filter :options="grades" :selected_options="filtered_grades" name="Grades"/>
+            <mm_filter
               :options="locations"
               :selected_options="filtered_locations"
               name="Location"
@@ -53,9 +53,8 @@ async defer></script>
 <script>
 import _ from "lodash";
 import firebase from "@/firebase/init";
-import mm_filter_skills from "@/components/matchmaking/components/mm_filter_skills.vue"
+import mm_filter from "@/components/matchmaking/components/mm_filter.vue"
 import mm_teacher_card from "@/components/matchmaking/components/mm_teacher_card.vue";
-//import mm_filter_skills from "@/components/matchmaking/components/mm_filter_skills.vue";
 
 import GoogleMap from '@/components/map/GoogleMap'
 import {  GEOCODEKEY } from '@/main'
@@ -177,7 +176,8 @@ export default {
   },
   components: {
     mm_teacher_card,
-    mm_filter_skills
+    mm_filter,
+    GoogleMap 
   },
   methods: {
     shuffle(a) {
