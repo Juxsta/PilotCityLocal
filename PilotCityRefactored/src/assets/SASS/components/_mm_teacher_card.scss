@@ -1,6 +1,15 @@
-@import "@/assets/SASS/pages/_matchmaking.scss"
+@import "@/assets/SASS/pages/_matchmaking.scss";
 
-// .li {
-//     display: inline-block;
-//     margin: 3px;
-//   }
+.action-button-cancel{
+    width: 125px;
+  height: 25px;
+  border-radius: 50px;
+  background-color: #ffffff;
+  border: solid 2px #6eba7f;
+  color: #6eba7f;
+  font-family: "Raleway";
+  font-weight: 700;
+  font-size: 11px;
+  margin: auto;
+  padding-top: 3px;
+}

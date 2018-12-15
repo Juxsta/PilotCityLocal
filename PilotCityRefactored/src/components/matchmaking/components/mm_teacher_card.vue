@@ -8,7 +8,7 @@
       <h2 class="card-title">{{classroom.coursename | capitalize}}</h2>
       <div class="card-buttons">
         <i class="material-icons justify-content-center pt-2 px-3" id="email">email</i>
-        <button @click="message()" class="action-button mt-3">Accept</button>
+        <button @click="message" :class="{'action-button':invite, 'action-button-cancel':pending}">{{text}}</button>
         <!-- place holder button -->
         <i class="material-icons action-button-decline pl-3">clear</i>
         <!--Place holder [x]  -->
@@ -37,7 +37,7 @@
             v-for="(grade,index) in classroom.Grade"
             :key="index"
           >
-            <li>{{grade + 'th'}}</li>
+            <span>{{grade + 'th'}}</span>
             <span v-if="index != classroom.Grade.length-1">{{" "}}</span>
           </h4>
         </div>
@@ -84,6 +84,13 @@
 <script>
 // import tagging from @/components
 export default {
+  data() {
+    return {
+      invite: true,
+      pending: false,
+      text: "Invite"
+    };
+  },
   props: {
     classroom: {
       required: true
@@ -93,33 +100,24 @@ export default {
     }
   },
   methods: {
-    update (event) {
-        this.invite = !this.invite;
-        this.pending = !this.pending;
-        if(this.invite == true){
-          this.text = "Invite"
-        }
-        else{
-          this.text = "Invited";
-        }
+    update(event) {
+      this.invite = !this.invite;
+      this.pending = !this.pending;
+      if (this.invite == true) {
+        this.text = "Invite";
+      } else {
+        this.text = "Invited";
+      }
     }
   },
-  computed: {
-    // status: function() {
-    //   return {
-    //     'action-button': this.
-    //   };
-    // }
-  },
+  computed: {},
   filters: {
     capitalize: function(value) {
       if (!value) return "";
       value = value.toString();
       return value.charAt(0).toUpperCase() + value.slice(1);
     }
-  }
+  },
+  created() {}
 };
 </script>
-
-<style lang="scss" scoped>
-</style>
