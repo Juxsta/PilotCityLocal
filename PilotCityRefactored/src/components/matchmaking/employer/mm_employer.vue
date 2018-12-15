@@ -43,27 +43,30 @@
             @click="gmap_prop.center=m.position"
           /> 
         </GmapMap> -->
-        <div id="map_canvas" ></div>
+       <GoogleMap name="test" :addresses=address_arr :apikey=apikey> </GoogleMap>
+         
       </div>
     </div>
   </div>
 </template>
 
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDfuNr3RaCZkituTfoB7b7pR2u2rWuraWE&callback=initMap"
+async defer></script>
 <script>
 import _ from "lodash";
 import firebase from "@/firebase/init";
 import mm_filter_skills from "@/components/matchmaking/components/mm_filter_skills.vue"
 import mm_teacher_card from "@/components/matchmaking/components/mm_teacher_card.vue";
-import mm_filter_skills from "@/components/matchmaking/components/mm_filter_skills.vue";
+//import mm_filter_skills from "@/components/matchmaking/components/mm_filter_skills.vue";
 import {  GEOCODEKEY } from '@/main'
-import axios from 'axios';
 import "@/assets/SASS/pages/_matchmaking.scss";
-import GoogleMapsLoader from 'google-maps'
+import GoogleMap from '@/components/map/GoogleMap'
 
 export default {
   name: "mm_employer",
   data() {
     return {
+      apikey: GEOCODEKEY.key,
       gmap_prop:{
         center: { lat:37.7249, lng:-122.1561 },
         zoom: 11
@@ -127,46 +130,28 @@ export default {
       recmd: []
     };
   },
-  components: {
-    mm_teacher_card,
-    mm_filter_skills
-  },
-  methods: {
-    map_build(){
-      let map = new google.maps.Map(document.getElementById('map_canvas'), {
-        zoom: 12,
-        center: this.center,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-      });
-    },
-    pinAllClassroomsOnMap(arr_of_classrooms_addr){
-        for (var i = 0; i < arr_of_classrooms_addr.length; i++){
-          this.pinMarkerWithLink(this.getLink(arr_of_classrooms_addr[i]));
-        }
-    },
-    getLink(address){
-      var api_link = "https://maps.googleapis.com/maps/api/geocode/json?address=";
-      var key = "&key=" +  GEOCODEKEY.key;
-      return (api_link + address.replace(/\s/g, '+') + key);
-    },
-    pinMarkerWithLink(link){
-      axios.get(link).then( response => {
-          this.gmap_markers.push({ position: response.data.results[0].geometry.location});
-      }).catch( error => {
-          console.log(error.message);
-      });
+  computed: {
+    address_arr: function(){
+      var arr = [];
+      var str = "";
+      for (var i = 0; i < this.loaded_teachers.length;i++)
+      {
+        str = this.loaded_teachers[i].school_address.street + '+' +
+              this.loaded_teachers[i].school_address.city   + '+' +
+              this.loaded_teachers[i].school_address.state  + '+' +
+              this.loaded_teachers[i].school_address.zip;
+        str = str.replace(/\s/g, '+');
+        arr.push(str);
+      }
+      return (arr);
     }
   },
-  mounted(){
-    let initializeWhenGoogleIsAvailable = () => {
-      if (google) { // test if google is available
-        this.map_build(); // if it is, then initalize
-      } else {
-        setTimeout(initializeWhenGoogleIsAvailable, 100) // if it isn't, wait a bit and retry
-      }
-    };
-    initializeWhenGoogleIsAvailable();
+  components: {
+    mm_teacher_card,
+    mm_filter_skills,
+    GoogleMap
   },
+
   created() {
     var arr_of_classrooms_addr = [
       "Royal Sunset High school,Hayward, California, 20450 Royal St, 94541",
@@ -174,8 +159,6 @@ export default {
     ]
     //this.pinAllClassroomsOnMap(arr_of_classrooms_addr);
    
-
-
     var self = this;
     var classIds = [];
     firebase.auth().onAuthStateChanged(user => {
@@ -231,4 +214,9 @@ export default {
 
 
 <style lang="scss">
+
+#map_canvas{
+  height:100%;
+  width:100%;
+}
 </style>
