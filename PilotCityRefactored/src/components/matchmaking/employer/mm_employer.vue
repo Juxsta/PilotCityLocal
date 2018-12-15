@@ -1,9 +1,10 @@
 <template>
   <div v-if="render">
     <!-- random -->
-    <div class="entire-box d-flex flex-row">
-      <div class="d-flex col-7 justify-content-center m-0 p-0">
-        <div class="leftside justify-content-center flex-column d-flex col-12 p-0 m-0">
+    <div class="entire-box d-flex flex-row" >
+      <div class="d-flex col-7 justify-content-center m-0 p-0" >
+      
+        <div class="leftside justify-content-center flex-column d-flex col-12 p-0 m-0" >
           <div class="filter-bar justify-content-center d-flex flex-row container">
             <mm_filter_skills
               :options="courses"
@@ -39,11 +40,19 @@
           </div>
         </div>
       </div>
+<<<<<<< HEAD
       <!-- pass paras to the center to change the position -->
       <div class="google-maps container col-5 m-0 p-0">
         <GmapMap
           :center="gmap_prop.center"
           :zoom="gmap_prop.zoom"
+=======
+        <!-- pass paras to the center to change the position -->
+       <div class="google-maps container col-5 m-0 p-0">
+          <!-- <GmapMap
+          :center=gmap_prop.center
+          :zoom=gmap_prop.zoom
+>>>>>>> c31bfc0b4bb5790183b67c15d8d93b07c2700fcd
           map-type-id="roadmap"
           style="width: 100%; height: 100%"
         >
@@ -54,27 +63,50 @@
             :clickable="true"
             :draggable="false"
             @click="gmap_prop.center=m.position"
+<<<<<<< HEAD
           />
         </GmapMap>
+=======
+          /> 
+        </GmapMap> -->
+       <GoogleMap name="test" :addresses=address_arr :apikey=apikey> </GoogleMap>
+         
+>>>>>>> c31bfc0b4bb5790183b67c15d8d93b07c2700fcd
       </div>
     </div>
   </div>
 </template>
 
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDfuNr3RaCZkituTfoB7b7pR2u2rWuraWE&callback=initMap"
+async defer></script>
 <script>
 import _ from "lodash";
 import firebase from "@/firebase/init";
+import mm_filter_skills from "@/components/matchmaking/components/mm_filter_skills.vue"
 import mm_teacher_card from "@/components/matchmaking/components/mm_teacher_card.vue";
+<<<<<<< HEAD
 import mm_filter_skills from "@/components/matchmaking/components/mm_filter.vue";
 import { GEOCODEKEY } from "@/main";
 import axios from "axios";
+=======
+//import mm_filter_skills from "@/components/matchmaking/components/mm_filter_skills.vue";
+import {  GEOCODEKEY } from '@/main'
+>>>>>>> c31bfc0b4bb5790183b67c15d8d93b07c2700fcd
 import "@/assets/SASS/pages/_matchmaking.scss";
+import GoogleMap from '@/components/map/GoogleMap'
+
 export default {
   name: "mm_employer",
   data() {
     return {
+<<<<<<< HEAD
       gmap_prop: {
         center: { lat: 37.7249, lng: -122.1561 },
+=======
+      apikey: GEOCODEKEY.key,
+      gmap_prop:{
+        center: { lat:37.7249, lng:-122.1561 },
+>>>>>>> c31bfc0b4bb5790183b67c15d8d93b07c2700fcd
         zoom: 11
       },
       gmap_markers: [],
@@ -165,7 +197,21 @@ export default {
             });
           });
         });
-      });
+      })
+    },
+    address_arr() {
+      var arr = [];
+      var str = "";
+      for (var i = 0; i < this.loaded_teachers.length;i++)
+      {
+        str = this.loaded_teachers[i].school_address.street + '+' +
+              this.loaded_teachers[i].school_address.city   + '+' +
+              this.loaded_teachers[i].school_address.state  + '+' +
+              this.loaded_teachers[i].school_address.zip;
+        str = str.replace(/\s/g, '+');
+        arr.push(str);
+      }
+      return (arr);
     }
   },
   components: {
@@ -208,14 +254,11 @@ export default {
           console.log(error.message);
         });
     }
+    mm_filter_skills,
+    GoogleMap
   },
-  created() {
-    var arr_of_classrooms_addr = [
-      "Royal Sunset High school,Hayward, California, 20450 Royal St, 94541",
-      "2200 Bancroft Ave, San Leandro, CA 94577"
-    ];
-    this.pinAllClassroomsOnMap(arr_of_classrooms_addr);
 
+  created() {
     var self = this;
     var classIds = [];
     firebase.auth().onAuthStateChanged(user => {
@@ -272,4 +315,9 @@ export default {
 
 
 <style lang="scss">
+
+#map_canvas{
+  height:100%;
+  width:100%;
+}
 </style>
