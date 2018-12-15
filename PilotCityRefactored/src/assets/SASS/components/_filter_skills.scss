@@ -1,0 +1,77 @@
+@import "@/assets/SASS/utils/_variables.scss";
+$popover-max-width: 5000px !important;
+#popover-content{
+    width:5000px;
+}
+.selected_tag {
+    width: 150px;
+    height: 30px;
+    margin-top: 12px;
+    margin-bottom: 12px;
+    margin-left: 6px;
+    margin-right: 6px;
+    border-radius: 25px;
+    text-align: center;
+    font-family: "Raleway";
+    font-weight: 700;
+    color: white;
+    font-size: 12px;
+}
+
+.selected_tag--green{
+    @extend .selected_tag;
+    background-color: $green;
+    &:hover{
+        background-color: $green;
+    }
+}
+.selected_tag--purple{
+    @extend .selected_tag;
+    background-color: $purple;
+    &:hover{
+        background-color: $purple;
+    }
+}
+.selected_tag--orange{
+    @extend .selected_tag;
+    background-color: $orange;
+    &:hover{
+        background-color: $orange;
+    }
+}
+.selected_tag--blue{
+    @extend .selected_tag;
+    background-color: $blue;
+    &:hover{
+        background-color: $blue;
+    }
+}
+.selected_tag--yellow{
+    @extend .selected_tag;
+    background-color: $yellow;
+    &:hover{
+        background-color: $yellow;
+    }
+}
+.selected_tag--pink{
+    @extend .selected_tag;
+    background-color: $pink;
+    &:hover{
+        background-color: $pink;
+    }
+}
+.selected_tag--red{
+    @extend .selected_tag;
+    background-color: $red;
+    &:hover{
+        background-color: $red;
+    }
+}
+
+.selected_tag--disabled{
+    @extend .selected_tag;
+    background-color: $darkgrey;
+    &:hover{
+        background-color: $darkgrey;
+    }
+}
