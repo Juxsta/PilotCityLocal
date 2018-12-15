@@ -70,7 +70,7 @@
       <div class="container">
         <span class="d-flex row">
           <h4
-            class="pc-tag1 col-2"
+            :class="tags[Math.floor(Math.random()*Math.floor(7))]"
             v-for="(skill,index) in teacher.selected_skills_keywords"
             :key="index"
           >{{skill | capitalize}}</h4>
@@ -85,6 +85,17 @@
 
 // import tagging from @/components
 export default {
+  data() {
+    return {
+      tags: [ "tag__skills--red",
+"tag__skills--green",
+"tag__skills--orange",
+"tag__skills--yellow",
+"tag__skills--purple",
+"tag__skills--pink",
+"tag__skills--blue"]
+    }
+  },
   props: {
     classroom: {
       required: true
