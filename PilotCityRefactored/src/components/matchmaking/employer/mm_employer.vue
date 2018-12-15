@@ -1,9 +1,10 @@
 <template>
   <div v-if="render">
     <!-- random -->
-    <div class="entire-box d-flex flex-row">
-      <div class="d-flex col-7 justify-content-center m-0 p-0">
-        <div class="leftside justify-content-center flex-column d-flex col-12 p-0 m-0">
+    <div class="entire-box d-flex flex-row" >
+      <div class="d-flex col-7 justify-content-center m-0 p-0" >
+      
+        <div class="leftside justify-content-center flex-column d-flex col-12 p-0 m-0" >
           <div class="filter-bar justify-content-center d-flex flex-row container">
             <b-btn class="filter__button">Courses</b-btn>
             <mm_filter_skills
@@ -28,7 +29,7 @@
       </div>
         <!-- pass paras to the center to change the position -->
        <div class="google-maps container col-5 m-0 p-0">
-          <GmapMap
+          <!-- <GmapMap
           :center=gmap_prop.center
           :zoom=gmap_prop.zoom
           map-type-id="roadmap"
@@ -42,7 +43,8 @@
             :draggable="false"
             @click="gmap_prop.center=m.position"
           /> 
-        </GmapMap>
+        </GmapMap> -->
+        <div id="map_canvas" ></div>
       </div>
     </div>
   </div>
@@ -51,11 +53,13 @@
 <script>
 import _ from "lodash";
 import firebase from "@/firebase/init";
+import mm_filter_skills from "@/components/matchmaking/components/mm_filter_skills.vue"
 import mm_teacher_card from "@/components/matchmaking/components/mm_teacher_card.vue";
 import {  GEOCODEKEY } from '@/main'
 import axios from 'axios';
-import mm_filter_skills from "@/components/matchmaking/components/mm_filter_skills.vue"
 import "@/assets/SASS/pages/_matchmaking.scss";
+import GoogleMapsLoader from 'google-maps'
+
 export default {
   name: "mm_employer",
   data() {
@@ -128,6 +132,13 @@ export default {
     mm_filter_skills
   },
   methods: {
+    map_build(){
+      let map = new google.maps.Map(document.getElementById('map_canvas'), {
+        zoom: 12,
+        center: this.center,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      });
+    },
     pinAllClassroomsOnMap(arr_of_classrooms_addr){
         for (var i = 0; i < arr_of_classrooms_addr.length; i++){
           this.pinMarkerWithLink(this.getLink(arr_of_classrooms_addr[i]));
@@ -146,13 +157,25 @@ export default {
       });
     }
   },
+  mounted(){
+    let initializeWhenGoogleIsAvailable = () => {
+      if (google) { // test if google is available
+        this.map_build(); // if it is, then initalize
+      } else {
+        setTimeout(initializeWhenGoogleIsAvailable, 100) // if it isn't, wait a bit and retry
+      }
+    };
+    initializeWhenGoogleIsAvailable();
+  },
   created() {
     var arr_of_classrooms_addr = [
       "Royal Sunset High school,Hayward, California, 20450 Royal St, 94541",
       "2200 Bancroft Ave, San Leandro, CA 94577",
     ]
-    this.pinAllClassroomsOnMap(arr_of_classrooms_addr);
-    
+    //this.pinAllClassroomsOnMap(arr_of_classrooms_addr);
+   
+
+
     var self = this;
     var classIds = [];
     firebase.auth().onAuthStateChanged(user => {
