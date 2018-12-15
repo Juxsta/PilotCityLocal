@@ -6,30 +6,43 @@
       
         <div class="leftside justify-content-center flex-column d-flex col-12 p-0 m-0" >
           <div class="filter-bar justify-content-center d-flex flex-row container">
-            <b-btn class="filter__button">Courses</b-btn>
-            <mm_filter_skills :skills="skills" :selected_skills="selected_skills"/>
-            <b-btn class="filter__button">Grades</b-btn>
-            <b-btn class="filter__button">Location</b-btn>
-            <b-btn class="filter__button">Class Size</b-btn>
+            <mm_filter_skills
+              :options="courses"
+              :selected_options="filtered_courses"
+              name="Courses"
+            />
+            <mm_filter_skills :options="skills" :selected_options="filtered_skills" name="Skills"/>
+            <mm_filter_skills :options="grades" :selected_options="filtered_grades" name="Grades"/>
+            <mm_filter_skills
+              :options="locations"
+              :selected_options="filtered_locations"
+              name="Location"
+            />
+            <!-- <mm_filter_skills
+              :options="skills"
+              :selected_options="selected_skills"
+              name="Class Size"
+            />-->
           </div>
 
           <div class="cardstock container">
             <h2 class="text-classroom-matches row">100+ Classrooms Recommended</h2>
             <mm_teacher_card
-            v-if="loaded_teachers[index]"
+              v-if="loaded_teachers[index]"
               :classroom="classroom"
-              :teacher="loaded_teachers[index]"
-              v-for="(classroom,index) in loaded_classrooms"
+              :teacher="findbyId(loaded_teachers,classroom.teacher_uid)"
+              v-for="(classroom,index) in filter_list"
               :key="index"
               class="row-12"
             />
+            <b-btn @click="filter_list" class="justify-content-start">Next</b-btn>
+            <b-btn @click="filter_list" class="justify-content-end">Prev</b-btn>
           </div>
         </div>
       </div>
        <div class="google-maps container col-5 m-0 p-0">
-        
+     
        <GoogleMap name="test" :addresses=address_arr :apikey=apikey> </GoogleMap>
-         
       </div>
     </div>
   </div>
@@ -57,10 +70,11 @@ export default {
         center: { lat:37.7249, lng:-122.1561 },
         zoom: 11
       },
-      gmap_markers:[],
+      gmap_markers: [],
       render: false,
       class_size: ["1-10", "11-15", "16-20", "21-25", "26-30"],
-      location: [
+      filtered_class_size: [],
+      locations: [
         "Alameda",
         "Emeryville",
         "Fremont",
@@ -71,6 +85,7 @@ export default {
         "San Leandro",
         "San Lorenzo"
       ],
+      filtered_locations: [],
       courses: [
         "Computer Science",
         "Engineering",
@@ -110,14 +125,42 @@ export default {
       filtered_courses: [],
       grades: ["9th Grade", "10th Grade", "11th Grade", "12th Grade"],
       filtered_grades: [],
-      selected_skills: [],
+      filtered_skills: [],
       loaded_classrooms: [],
+      render_classroms: [],
       loaded_teachers: [],
       recmd: []
     };
   },
   computed: {
-    address_arr: function(){
+    filter_list() {
+      var arr_filters = [
+        this.filtered_skills,
+        this.filtered_locations,
+        this.filtered_courses,
+        this.filtered_grades,
+        this.filtered_class_size
+      ];
+      var self = this;
+      return _.filter(self.loaded_classrooms, clas => {
+        // check through all the classes
+        return arr_filters.every(filter => {
+          // check through each filter
+          return filter.every(item => {
+            //make sure the class has all the filters applied form each filter
+            return _.some(clas, field => {
+              if (typeof field == "string")
+                return field
+                  .trim()
+                  .toLowerCase()
+                  .includes(item.trim().toLowerCase());
+              else return field == item;
+            });
+          });
+        });
+      })
+    },
+    address_arr() {
       var arr = [];
       var str = "";
       for (var i = 0; i < this.loaded_teachers.length;i++)
@@ -134,17 +177,47 @@ export default {
   },
   components: {
     mm_teacher_card,
-    mm_filter_skills,
-    GoogleMap
+    mm_filter_skills
+  },
+  methods: {
+    shuffle(a) {
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    },
+    findbyId(arr, uid) {
+      return arr.filter(obj => {
+        return obj.uid == uid;
+      })[0];
+    },
+    pinAllClassroomsOnMap(arr_of_classrooms_addr) {
+      for (var i = 0; i < arr_of_classrooms_addr.length; i++) {
+        this.pinMarkerWithLink(this.getLink(arr_of_classrooms_addr[i]));
+      }
+    },
+    getLink(address) {
+      var api_link =
+        "https://maps.googleapis.com/maps/api/geocode/json?address=";
+      var key = "&key=" + GEOCODEKEY.key;
+      return api_link + address.replace(/\s/g, "+") + key;
+    },
+    pinMarkerWithLink(link) {
+      axios
+        .get(link)
+        .then(response => {
+          this.gmap_markers.push({
+            position: response.data.results[0].geometry.location
+          });
+        })
+        .catch(error => {
+          console.log(error.message);
+        });
+    }
   },
 
   created() {
-    var arr_of_classrooms_addr = [
-      "Royal Sunset High school,Hayward, California, 20450 Royal St, 94541",
-      "2200 Bancroft Ave, San Leandro, CA 94577",
-    ]
-    //this.pinAllClassroomsOnMap(arr_of_classrooms_addr);
-   
     var self = this;
     var classIds = [];
     firebase.auth().onAuthStateChanged(user => {
@@ -188,6 +261,7 @@ export default {
                   );
                 }
                 Promise.all(promises).then(val => {
+                  self.shuffle(self.loaded_classrooms);
                   self.render = true;
                 });
               });
