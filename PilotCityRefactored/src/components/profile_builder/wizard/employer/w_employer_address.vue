@@ -21,6 +21,7 @@
             </div>
 
         </form>
+        
          <next_button
             route='w_employer_sector'
             :conditions="conditions"
@@ -144,6 +145,17 @@ input::placeholder {
  input:focus, select:focus, .dropdown-class:focus{
     border-color: #c6c8ca !important;
  }
+ @media only screen and (max-width: 700px){
+#the_best_next_button {
+    position: absolute;
+  bottom: 35px;
+  right: 15px;
+  height: 45px;
+  width: 165px;
+  font-size: 2.5vh;
+  
+}
+}
 </style>
  
  

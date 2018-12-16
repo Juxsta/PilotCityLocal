@@ -8,16 +8,20 @@ $popover-max-width: 1000px;
     background-color: white;
     margin: 15px 10px 15px 10px;
     text-align: center;
-    padding-top: 10px;
+    padding-top: 7px;
     font-family: "Raleway";
     color: #939597;
     font-weight: 700;
     border: solid 1px #dbdcde;
     cursor: pointer;
     &:hover {
-        background-color: $pink;
-        border: solid 1px $pink;
+        background-color: $purple;
+        border: solid 1px $purple;
     }
+    &:active {
+      background-color: $purple;
+      border: none;
+  }
   }
   
 .text-classroom-matches {
@@ -26,15 +30,15 @@ $popover-max-width: 1000px;
   color: #939597;
   font-weight: 700;
   margin: 30px auto 15px auto;
+  text-align: center;
+
 }
 
-.pc-tag1 {
-  width: 150px;
+.tag__skills {
   height: 31px;
-  margin-top: 12px;
-  margin-bottom: 12px;
-  margin-left: 6px;
-  margin-right: 6px;
+  margin: 10px 0px 0px 10px;
+  padding-left: 12px;
+  padding-right: 12px;
   border-radius: 25px;
   text-align: center;
   padding-top: 8px;
@@ -42,91 +46,61 @@ $popover-max-width: 1000px;
   font-weight: 700;
   color: #ffffff;
   font-size: 12px;
-  background-color: #6eba7f;
+  letter-spacing: .75px;
+  text-transform: capitalize; 
+  background-color: $blue;
 }
 
-.pc-tag2 {
-  width: 150px;
-  height: 31px;
-  margin-top: 12px;
-  margin-bottom: 12px;
-  margin-left: 6px;
-  margin-right: 6px;
-  border-radius: 25px;
-  text-align: center;
-  padding-top: 8px;
-  font-family: "Raleway";
-  font-weight: 700;
-  color: #ffffff;
-  font-size: 12px;
-  background-color: #3c9ccc;
+.tag__skills--red {
+  @extend .tag__skills;
+  background-color: $red;
 }
 
-.pc-tag3 {
-  width: 150px;
-  height: 31px;
-  margin-top: 12px;
-  margin-bottom: 12px;
-  margin-left: 6px;
-  margin-right: 6px;
-  border-radius: 25px;
-  text-align: center;
-  padding-top: 8px;
-  font-family: "Raleway";
-  font-weight: 700;
-  color: #ffffff;
-  font-size: 12px;
-  background-color: #ea6763;
+.tag__skills--green {
+  @extend .tag__skills;
+  background-color: $green
 }
 
-.pc-tag4 {
-  width: 150px;
-  height: 31px;
-  margin-top: 12px;
-  margin-bottom: 12px;
-  margin-left: 6px;
-  margin-right: 6px;
-  border-radius: 25px;
-  text-align: center;
-  padding-top: 8px;
-  font-family: "Raleway";
-  font-weight: 700;
-  color: #ffffff;
-  font-size: 12px;
-  background-color: #fdd25a;
+.tag__skills--orange {
+  @extend .tag__skills;
+  background-color: $orange
 }
 
-.pc-tag5 {
-  width: 150px;
-  height: 31px;
-  margin-top: 12px;
-  margin-bottom: 12px;
-  margin-left: 6px;
-  margin-right: 6px;
-  border-radius: 25px;
-  text-align: center;
-  padding-top: 8px;
-  font-family: "Raleway";
-  font-weight: 700;
-  color: #ffffff;
-  font-size: 12px;
-  background-color: #f79960;
+.tag__skills--yellow {
+  @extend .tag__skills;
+  background-color: $yellow
+}
+
+.tag__skills--purple {
+  @extend .tag__skills;
+  background-color: $purple
+}
+
+.tag__skills--pink {
+  @extend .tag__skills;
+  background-color: $pink
+}
+
+.tag__skills--blue {
+  @extend .tag__skills;
+  background-color: $blue
 }
 
 #favorite_border {
   color: #dbdcde;
-  margin: auto 0px auto 35px;
+  margin: auto 0px auto 0px;
+
 }
 
 #favorite_border:hover {
   color: #eca0be;
-  margin: auto 0px auto 35px;
+  margin: auto 0px auto 0px;
   cursor: pointer;
 }
 
 #favorite_border:active {
   color: #c47e9b;
-  margin: auto 0px auto 35px;
+  margin: auto 0px auto 0px;
   cursor: pointer;
 }
 
@@ -231,68 +205,109 @@ $popover-max-width: 1000px;
 
 .two {
   background-color: transparent;
+
 }
 
 .three {
   background-color: transparent;
+
 }
 
 .four {
   background-color: transparent;
+
 }
 
 .five {
   background-color: transparent;
+
 }
 
 .six {
   background-color: #dbdcde;
+
 }
 
 .seven {
   background-color: #3c9ccc;
+
 }
 
 .eight {
   background-color: #f79960;
+
 }
 
 .nine {
   background-color: #fdd25a;
+
 }
 
 .ten {
   background-color: #eca0be;
+
 }
 
 .entire-box {
   background-color: #f79960;
+
 }
 
 .leftside {
-  background-color: #fdd25a;
+  background-color: white;
   height: 100vh;
+
 //   overflow: scroll;
 }
 
 .filter-bar {
   background-color: #ffffff;
   height: 75px;
+  z-index: 2;
+  -moz-box-shadow:0px 3px 2px lightgrey;
+  -webkit-box-shadow:0px 3px 2px lightgrey;
+  box-shadow:0px 2px 2px lightgrey;
+
 }
 
 .cardstock {
+  width: 100%;
   background-color: #ffffff;
   height: 100%;
   overflow: scroll;
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+  }
+  &::-webkit-scrollbar-thumb {
+    background: rgb(207, 207, 207); 
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    background: rgb(167, 167, 167); 
+  }  
 }
 
 .card {
   width: 750px;
-  height: 225px;
-  margin: 20px auto 20px auto;
   border: dashed 1px #dbdcde;
   border-radius: 25px;
-  padding: 0px;
+  padding: 0px 0px 10px 0px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+
+
+  &:hover {
+    background-color: #f8f8f8;
+    cursor: pointer;
+  }
+
+  &:active {
+    background-color: #ededee;
+    cursor: pointer;
+  }
+
 }
 
 .card-line {
@@ -309,16 +324,19 @@ $popover-max-width: 1000px;
   width: 400px;
   margin: 14px 0px 14px 35px;
   padding-top: 3px;
+  text-transform: capitalize;
+
 }
 
 .card-subtitle {
   font-family: "Raleway";
   font-size: 12px;
   font-weight: 700;
-  text-align: right;
+  text-align: left;
   color: #939597;
   padding: 1px 5px 1px 1px;
   margin: 0;
+
 }
 
 .card-subtitle-text {
@@ -329,10 +347,73 @@ $popover-max-width: 1000px;
   color: #939597;
   padding: 1px 1px 1px 5px;
   margin: 0;
+  text-transform: capitalize;
+
 }
 
 .google-maps {
   background-color: #3c9ccc;
 }
+
+.nextpage__btn {
+  width: 150px;
+  height:50px;
+  border-radius: 25px;
+  font-family: "Raleway";
+  font-weight: 700;
+  background-color:#c6c8ca;
+  font-size: 20px;
+  border: none;
+  margin: 25px 5px 50px 15px;
+
+}
+
+.prevpage__btn {
+  width: 150px;
+  height:50px;
+  border-radius: 25px;
+  font-family: "Raleway";
+  font-weight: 700;
+  background-color:#c6c8ca;
+  font-size: 20px;
+  border: none;
+  margin: 25px 5px 50px 25px;
+}
+
+.custom-control {
+  width: 200px;
+  height: 30px;
+  margin: 0px;
+  padding-left: 15px;
+
+
+}
+
+.custom-control-label {
+  color: #939597;
+
+
+}
+
+.popover-body {
+  padding: 0px;
+  margin: 25px 0px 0px 15px;
+}
+
+.custom-checkbox {
+
+}
+
+.checkbox {
+  border: solid 1px #3c9ccc;
+}
+
+
+
+.label {
+
+}
+
+
 
 //bootstrap imports

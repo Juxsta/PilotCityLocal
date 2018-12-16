@@ -1,22 +1,21 @@
 <template>
-  <div class="card container">
+  <div class="card container" @click="$emit('teacherCardClicked')">
     <div class="one d-flex flex-row h-25">
-      <i
-        class="material-icons justify-content-center pt-2 px-3"
-        id="favorite_border"
-      >favorite_border</i>
       <h2 class="card-title">{{classroom.coursename | capitalize}}</h2>
-      <div class="card-buttons">
-        <i class="material-icons justify-content-center pt-2 px-3" id="email">email</i>
-        <button @click="message()" class="action-button mt-3">Accept</button>
+
+      <div class="mt-3">
+        <button
+          @click="hover=false;update_invite()"
+          :class="{'action-button':invite, 'action-button-pending':pending}"
+        >{{text}}</button>
         <!-- place holder button -->
-        <i class="material-icons action-button-decline pl-3">clear</i>
         <!--Place holder [x]  -->
       </div>
+      <i class="material-icons justify-content-center pt-2 px-3" id="favorite_border">favorite_border</i>
     </div>
 
     <div class="two d-flex flex-row">
-      <div class="four mx-2 justify-content-start">
+      <div class="four ml-5 mr-3 pb-3 justify-content-start">
         <h4 class="card-subtitle">Teacher</h4>
         <h4 class="card-subtitle">Grades</h4>
         <h4 class="card-subtitle">Class Size</h4>
@@ -25,25 +24,25 @@
         <h4 class="card-subtitle">Address</h4>
       </div>
       <div class="five">
-        <h4 class="card-subtitle text">
+        <h4 class="card-subtitle-text text">
           <span>{{teacher.first_name | capitalize}}</span>
           <span>{{" "}}</span>
           <span>{{teacher.last_name | capitalize}}</span>
         </h4>
         <!-- Anthony Keithle -->
-        <div class="container d-flex flex-row">
+        <div class="container p-0 d-flex flex-row">
           <h4
-            class="card-subtitle text row mr-3"
+            class="card-subtitle-text text row"
             v-for="(grade,index) in classroom.Grade"
             :key="index"
           >
-            <li>{{grade + 'th'}}</li>
+            <span>{{grade + 'th'}}</span>
             <span v-if="index != classroom.Grade.length-1">{{" "}}</span>
           </h4>
         </div>
 
         <!-- 9th, 10th, 11th -->
-        <h4 class="card-subtitle text">
+        <h4 class="card-subtitle-text text">
           <span>{{classroom.students.min}}</span>
           <span v-if="classroom.students.max">
             <span>{{" - "}}</span>
@@ -52,10 +51,10 @@
           <span v-else>+</span>
           <span>{{" Students"}}</span>
         </h4>
-        <h4 class="card-subtitle text">{{teacher.school_district | capitalize}}</h4>
+        <h4 class="card-subtitle-text text">{{teacher.school_district | capitalize}}</h4>
         <!-- San Leandro Unified -->
-        <h4 class="card-subtitle text">{{teacher.school_name | capitalize}}</h4>
-        <h4 class="card-subtitle text">
+        <h4 class="card-subtitle-text text">{{teacher.school_name | capitalize}}</h4>
+        <h4 class="card-subtitle-text text">
           <span v-for="(field,index) in Object.keys(teacher.school_address)" :key="index">
             <span>{{teacher.school_address[field] | capitalize}}</span>
             <span v-if="index != (Object.keys(teacher.school_address).length-1)">{{", "}}</span>
@@ -70,7 +69,7 @@
       <div class="container">
         <span class="d-flex row">
           <h4
-            class="pc-tag1 col-2"
+            :class="tags[Math.floor(Math.random()*Math.floor(7))]"
             v-for="(skill,index) in teacher.selected_skills_keywords"
             :key="index"
           >{{skill | capitalize}}</h4>
@@ -82,15 +81,55 @@
 </template>
 
 <script>
-
+import "@/assets/SASS/components/_mm_teacher_card.scss";
 // import tagging from @/components
 export default {
+  data() {
+    return {
+      invite: true,
+      pending: false,
+      text: "Invite",
+      tags: [ "tag__skills--red",
+"tag__skills--green",
+"tag__skills--orange",
+"tag__skills--yellow",
+"tag__skills--purple",
+"tag__skills--pink",
+"tag__skills--blue"]
+    };
+  },
+      
   props: {
     classroom: {
       required: true
     },
     teacher: {
       required: true
+    },
+    invited: {
+      required: true,
+      type: Array
+    }
+  },
+  methods: {
+    update_invite(event) {
+      this.invite = !this.invite;
+      this.pending = !this.pending;
+      if (this.invite == true) {
+        this.text = "Invite";
+        this.invited.splice(this.invited.indexOf(this.classroom.uid),1);
+      } else {
+        this.text = "Invited";
+        this.invited.push(this.classroom.uid);
+      }
+    },
+    check_invited(){
+      
+    }
+  },
+  methods:{
+    message(){
+
     }
   },
   filters: {
@@ -100,22 +139,6 @@ export default {
       return value.charAt(0).toUpperCase() + value.slice(1);
     }
   },
-  created(){
-
-  }
+  created() {}
 };
 </script>
-
-<style lang="scss" scoped>
-
-
-// temporarily
-li {
-  display: inline-block;
-  margin: 3px;
-}
-
-// .card-buttons{
-//   padding-left: 125px
-// }
-</style>

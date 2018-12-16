@@ -10,7 +10,7 @@
             @input="updateSelected"
             name="filter"
             :options="options"
-            :style="{'overflow-y':'auto'}"
+            :style="{'overflow-y':'hidden'}"
           ></b-form-checkbox-group>
         </b-form-group>
       </div>
@@ -20,7 +20,7 @@
 
 <script>
 import "@/assets/SASS/pages/_matchmaking.scss";
-import "@/assets/SASS/components/_filter_skills.scss";
+import "@/assets/SASS/components/_mm_filter_bar.scss";
 import _ from "lodash";
 export default {
   data() {

@@ -4,7 +4,8 @@ import router from './router'
 import swal from 'sweetalert'
 import BootstrapVue from "bootstrap-vue"
 //import * as VueGoogleMaps from 'vue2-google-maps'
- 
+import { store } from './store/store'
+
 import "bootstrap-vue/dist/bootstrap-vue.css"
 
 Vue.use(BootstrapVue)
@@ -50,5 +51,6 @@ export const Prompter = () => {
 }
 new Vue({
   router,
+  store,
   render: h => h(App)
 }).$mount('#app')
