@@ -9,7 +9,7 @@
       <div class="one d-flex flex-row">
         <h2 class="card-title">{{classroom.coursename | capitalize}}</h2>
 
-        <div class="mt-3">
+        <div class="mt-3 ml-auto">
           <button
             @click="update_invite(),upload()"
             :class="{'action-button':invite, 'action-button-pending':pending}"
