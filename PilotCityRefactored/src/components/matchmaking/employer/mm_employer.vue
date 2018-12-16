@@ -74,7 +74,7 @@ export default {
         threshold: 0.6,
         location: 0,
         distance: 100,
-        maxPatternLength: 40,
+        maxPatternLength: 32,
         minMatchCharLength: 1,
         keys: []
       },
@@ -169,6 +169,19 @@ export default {
         key = key.replace(/th/g, "");
         key = key.replace(/Grade/g, "");
       }
+
+      if (this.filtered_courses && this.filtered_courses.length) {
+        key += String(this.filtered_courses);
+        // only course name is relavant in this case
+        this.search_options.keys.push("coursename");
+      }
+       if (this.filtered_class_size && this.filtered_class_size.length) {
+        key += String(this.filtered_class_size);
+
+        // only course name is relavant in this case
+        this.search_options.keys.push("students");
+      }
+
       if (this.filtered_courses && this.filtered_courses.length) {
         key += String(this.filtered_courses);
         // only course name is relavant in this case
@@ -189,7 +202,7 @@ export default {
       key = key.replace(/\s,/g, "");
       // if no params is selected from the filter, we return the whil array.
       if (key == "") return this.loaded_classrooms;
-
+      key = "10";
       /* ======= Testing Purpose =======
           console.log(key);
           console.log(this.search_options.keys)
@@ -197,7 +210,6 @@ export default {
       // fuse.js initialization
       var fuse = new Fuse(this.loaded_classrooms, this.search_options);
       duplicated_results = fuse.search(key);
-
       // uniqueness check
       var ht = {};
       for (var i = 0; i < duplicated_results.length; i++) {
@@ -368,7 +380,7 @@ export default {
                       var new_arr = [];
                       new_arr.push(to_move, self.loaded_classrooms);
                       new_arr = _.flattenDeep(new_arr);
-                      console.log(new_arr);
+                      //console.log(new_arr);
                       self.loaded_classrooms = new_arr;
                     });
                   self.shuffle(self.loaded_classrooms);

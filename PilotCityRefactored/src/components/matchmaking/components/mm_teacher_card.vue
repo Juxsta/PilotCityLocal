@@ -162,7 +162,7 @@ export default {
     }
   },
   created() {
-    console.log(this.invited.indexOf(this.classroom.uid))
+    //console.log(this.invited.indexOf(this.classroom.uid))
     if(this.invited.indexOf(this.classroom.uid) > -1) {
       this.invite = false;
       this.pending = true;
