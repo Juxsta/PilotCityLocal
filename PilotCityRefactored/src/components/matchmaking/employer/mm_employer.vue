@@ -1,6 +1,13 @@
 <template>
   <div v-if="render">
     <!-- random -->
+<<<<<<< HEAD
+    <div class="entire-box d-flex flex-row">
+      <div class="d-flex col-7 justify-content-center m-0 p-0">
+        <div class="leftside justify-content-center flex-column d-flex col-12 p-0 m-0">
+          <div class="filter-bar justify-content-center d-flex flex-row container">
+            <mm_filter :options="courses" :selected_options="filtered_courses" name="Courses"/>
+=======
     <div class="entire-box d-flex flex-row" >
       <div class="d-flex col-7 justify-content-center m-0 p-0" >
       
@@ -11,13 +18,10 @@
               :selected_options="filtered_courses"
               name="Courses"
             />
+>>>>>>> acbc7b2a61429cb4d9f2d0e06601a65808216571
             <mm_filter :options="skills" :selected_options="filtered_skills" name="Skills"/>
             <mm_filter :options="grades" :selected_options="filtered_grades" name="Grades"/>
-            <mm_filter
-              :options="locations"
-              :selected_options="filtered_locations"
-              name="Location"
-            />
+            <mm_filter :options="locations" :selected_options="filtered_locations" name="Location"/>
             <!-- <mm_filter_skills
               :options="skills"
               :selected_options="selected_skills"
@@ -32,7 +36,7 @@
               :invited="invited"
               :classroom="classroom"
               :teacher="findbyId(loaded_teachers,classroom.teacher_uid)"
-              v-for="(classroom,index) in filter_list"
+              v-for="(classroom,index) in loaded_classrooms"
               :key="index"
               class="row-12 card-teacher-match"
               @teacherCardClicked="highlight_pin(findbyId(loaded_teachers,classroom.teacher_uid))"
@@ -42,11 +46,17 @@
           </div>
         </div>
       </div>
+<<<<<<< HEAD
+      <div class="google-maps container col-5 m-0 p-0">
+        <GoogleMap name="test" :addresses="address_arr" :apikey="apikey"></GoogleMap>
+=======
        <div class="google-maps container col-5 m-0 p-0">
      
        <GoogleMap name="test" :map_data=map_data :apikey=apikey :mapcenter=mapcenter> </GoogleMap>
+>>>>>>> acbc7b2a61429cb4d9f2d0e06601a65808216571
       </div>
     </div>
+    <b-btn @click="filter_list">Refilter</b-btn>
   </div>
 </template>
 
@@ -55,11 +65,11 @@ async defer></script>
 <script>
 import _ from "lodash";
 import firebase from "@/firebase/init";
-import mm_filter from "@/components/matchmaking/components/mm_filter.vue"
+import mm_filter from "@/components/matchmaking/components/mm_filter.vue";
 import mm_teacher_card from "@/components/matchmaking/components/mm_teacher_card.vue";
 
-import GoogleMap from '@/components/map/GoogleMap'
-import {  GEOCODEKEY } from '@/main'
+import GoogleMap from "@/components/map/GoogleMap";
+import { GEOCODEKEY } from "@/main";
 import "@/assets/SASS/pages/_matchmaking.scss";
 
 export default {
@@ -67,7 +77,14 @@ export default {
   data() {
     return {
       apikey: GEOCODEKEY.key,
+<<<<<<< HEAD
+      gmap_prop: {
+        center: { lat: 37.7249, lng: -122.1561 },
+        zoom: 11
+      },
+=======
       mapcenter: { lat:37.7249, lng:-122.1561 },
+>>>>>>> acbc7b2a61429cb4d9f2d0e06601a65808216571
       gmap_markers: [],
       render: false,
       class_size: ["1-10", "11-15", "16-20", "21-25", "26-30"],
@@ -132,6 +149,24 @@ export default {
     };
   },
   computed: {
+<<<<<<< HEAD
+    address_arr() {
+      var arr = [];
+      var str = "";
+      for (var i = 0; i < this.loaded_teachers.length; i++) {
+        str =
+          this.loaded_teachers[i].school_address.street +
+          "+" +
+          this.loaded_teachers[i].school_address.city +
+          "+" +
+          this.loaded_teachers[i].school_address.state +
+          "+" +
+          this.loaded_teachers[i].school_address.zip;
+        str = str.replace(/\s/g, "+");
+        arr.push(str);
+      }
+      return arr;
+=======
     filter_list() {
       var arr_filters = [
         this.filtered_skills,
@@ -174,14 +209,63 @@ export default {
       // }
       var arr = _.filter(this.loaded_teachers, teacher => {return teacher.coordinate});
       return (arr);
+>>>>>>> acbc7b2a61429cb4d9f2d0e06601a65808216571
     }
   },
   components: {
     mm_teacher_card,
     mm_filter,
-    GoogleMap 
+    GoogleMap
   },
   methods: {
+    filter_list() {
+      var arr_filters = [
+        this.filtered_skills,
+        this.filtered_locations,
+        this.filtered_courses,
+        this.filtered_grades,
+        this.filtered_class_size
+      ];
+      var self = this;
+      console.log(
+        _.filter(self.loaded_classrooms, clas => {
+          // check through all the classes
+          return arr_filters.every(filter => {
+            // check through each filter
+            return filter.every(item => {
+              //make sure the class has all the filters applied form each filter
+              return (
+                _.some(clas, field => {
+                  if (typeof field == "string")
+                    return field
+                      .trim()
+                      .toLowerCase()
+                      .includes(item.trim().toLowerCase());
+                  return field == item;
+                }) ||
+                _.some(
+                  self.findbyId(self.loaded_teachers, clas.teacher_uid),
+                  field => {
+                    if (typeof field == "string")
+                      return field
+                        .trim()
+                        .toLowerCase()
+                        .includes(item.trim().toLowerCase());
+                    return field == item;
+                    if (field.length || Object.keys(field).length) {
+                      _.some(field, subfield => {
+                        console.log(subfield)
+                        return subfield == item;
+                      });
+                    }
+                  }
+                )
+              );
+            });
+          });
+        })
+      );
+    },
     shuffle(a) {
       for (let i = a.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -259,6 +343,4 @@ export default {
 
 
 <style lang="scss">
-
-
 </style>
