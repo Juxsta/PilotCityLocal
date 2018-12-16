@@ -67,11 +67,10 @@ export default {
             this.markers_ref.push(obj);
             ht[key] = true;
           } else {
-            console.log("same address : ) [" + key + "]");
-            console.log(JSON.stringify(this.map_data[i]))
+            //console.log("same address : ) [" + key + "]");
+            //console.log(JSON.stringify(this.map_data[i]))
           }
         }
-        console.log(this.markers_ref)
         //
         // The following code accepts an array of formatted address(with space replaced by '+') and make ajax request to the 
         // google geolocation api and retrieves coordinates, use those coordinates as the position of the markers

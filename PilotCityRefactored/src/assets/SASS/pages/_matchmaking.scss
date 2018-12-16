@@ -321,9 +321,9 @@ $primary: $purple;
   font-family: "Raleway";
   font-size: 18px;
   font-weight: 700;
-  color: #939597;
-  width: 400px;
-  margin: 14px 0px 14px 35px;
+  color: #58585b;
+  width: 550px;
+  margin: 14px 0px 14px 48px;
   padding-top: 3px;
   text-transform: capitalize;
 
@@ -399,6 +399,9 @@ $primary: $purple;
 .popover-body {
   padding: 0px;
   margin: 25px 0px 0px 15px;
+  max-height: 500px;
+  overflow: scroll;
+
 }
 
 .custom-checkbox {
