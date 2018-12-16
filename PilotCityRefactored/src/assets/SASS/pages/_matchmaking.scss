@@ -336,7 +336,6 @@ $popover-max-width: 1000px;
   color: #939597;
   padding: 1px 5px 1px 1px;
   margin: 0;
-  letter-spacing: .25px;
 
 }
 
@@ -399,6 +398,9 @@ $popover-max-width: 1000px;
 .popover-body {
   padding: 0px;
   margin: 25px 0px 0px 15px;
+  max-height: 500px;
+  overflow: scroll;
+
 }
 
 .custom-checkbox {
