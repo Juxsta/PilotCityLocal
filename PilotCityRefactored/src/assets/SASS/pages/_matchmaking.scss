@@ -309,6 +309,7 @@ $popover-max-width: 1000px;
   width: 400px;
   margin: 14px 0px 14px 35px;
   padding-top: 3px;
+  text-transform: capitalize;
 }
 
 .card-subtitle {
@@ -319,6 +320,7 @@ $popover-max-width: 1000px;
   color: #939597;
   padding: 1px 5px 1px 1px;
   margin: 0;
+
 }
 
 .card-subtitle-text {
@@ -329,6 +331,7 @@ $popover-max-width: 1000px;
   color: #939597;
   padding: 1px 1px 1px 5px;
   margin: 0;
+  text-transform: capitalize;
 }
 
 .google-maps {
