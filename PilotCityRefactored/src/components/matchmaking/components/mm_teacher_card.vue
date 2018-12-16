@@ -85,6 +85,7 @@
 
 <script>
 import "@/assets/SASS/components/_mm_teacher_card.scss";
+import _ from 'lodash'
 import firebase from "@/firebase/init";
 export default {
   data() {
@@ -126,6 +127,7 @@ export default {
       } else {
         this.text = "Invited";
         this.invited.push(this.classroom.uid);
+        this.invited = _.uniq(this.invited)
       }
     },
     upload() {
@@ -150,6 +152,12 @@ export default {
       return value.charAt(0).toUpperCase() + value.slice(1);
     }
   },
-  created() {}
+  created() {
+    if(this.invited.indexOf(this.classroom.uid) > -1){
+      console.log("change")
+      this.invite = !this.invite
+      this.pending=!this.pending
+    }
+  }
 };
 </script>

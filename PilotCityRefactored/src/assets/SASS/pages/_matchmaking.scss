@@ -23,6 +23,11 @@ $primary: $purple;
       background-color: $primary;
       border: none;
   }
+    &:focus {
+      outline: 0;
+      box-shadow: none;
+      -webkit-box-shadow:none;
+    }
   }
   
 .text-classroom-matches {
@@ -32,6 +37,7 @@ $primary: $purple;
   font-weight: 700;
   margin: 30px auto 15px auto;
   text-align: center;
+
 
 }
 
@@ -118,9 +124,9 @@ $primary: $purple;
   color: #6eba7f;
   font-family: "Raleway";
   font-weight: 700;
-  font-size: 11px;
+  font-size: 12px;
   margin: auto;
-  padding-top: 3px;
+  padding-top: 1px;
 }
 
 .action-button:hover {
@@ -132,9 +138,9 @@ $primary: $purple;
   color: #ffffff;
   font-family: "Raleway";
   font-weight: 700;
-  font-size: 11px;
+  font-size: 12px;
   margin: auto;
-  padding-top: 3px;
+  padding-top: 1px;
 }
 
 .action-button:active {
@@ -146,9 +152,9 @@ $primary: $purple;
   color: #ffffff;
   font-family: "Raleway";
   font-weight: 700;
-  font-size: 11px;
+  font-size: 12px;
   margin: auto;
-  padding-top: 3px;
+  padding-top: 1px;
 }
 
 .action-button-decline {
@@ -159,9 +165,9 @@ $primary: $purple;
   border: 0px;
   margin: auto 20px auto auto;
   color: #ffffff;
-  font-size: 80%;
+  font-size: 12px;
   text-align: center;
-  padding-top: 3px;
+  padding-top: 1px;
   font-weight: 700;
   cursor: pointer;
 }
@@ -172,6 +178,7 @@ $primary: $purple;
   height: 17px;
   background-color: #bb3e40;
   border: 0px;
+  font-size: 12px;
   margin: auto 20px auto auto;
 }
 
@@ -181,6 +188,7 @@ $primary: $purple;
   height: 17px;
   background-color: #ea6763;
   border: 0px;
+  font-size: 12px;
   margin: auto 20px auto auto;
 }
 
