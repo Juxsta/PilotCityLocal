@@ -25,10 +25,9 @@
             <h2 class="text-classroom-matches">100+ Classrooms Recommended</h2>
             <mm_teacher_card
               v-if="loaded_teachers[index]"
-              :invited="invited"
               :classroom="classroom"
               :teacher="findbyId(loaded_teachers,classroom.teacher_uid)"
-              v-for="(classroom,index) in loaded_classrooms"
+              v-for="(classroom,index) in filter_list"
               :key="index"
               class="row-12 card-teacher-match"
               @teacherCardClicked="highlight_pin(findbyId(loaded_teachers,classroom.teacher_uid))"
@@ -58,12 +57,25 @@ import mm_teacher_card from "@/components/matchmaking/components/mm_teacher_card
 import GoogleMap from "@/components/map/GoogleMap";
 import { GEOCODEKEY } from "@/main";
 import "@/assets/SASS/pages/_matchmaking.scss";
-
+import Fuse from 'fuse.js';
 export default {
   name: "mm_employer",
   data() {
     return {
+      allClasses: null,
       apikey: GEOCODEKEY.key,
+<<<<<<< HEAD
+=======
+      search_options: {
+        shouldSort: true,
+        threshold: 0.6,
+        location: 0,
+        distance: 100,
+        maxPatternLength: 32,
+        minMatchCharLength: 1,
+        keys: []
+      },
+>>>>>>> 20ec66f54f1f67114da1d087740f4ac4101cdb8f
       mapcenter: { lat:37.7249, lng:-122.1561 },
       gmap_markers: [],
       render: false,
@@ -124,38 +136,71 @@ export default {
       loaded_classrooms: [],
       render_classroms: [],
       loaded_teachers: [],
-      recmd: [],
-      invited: [],
+      recmd: []
     };
   },
   computed: {
     filter_list() {
-      var arr_filters = [
-        this.filtered_skills,
-        this.filtered_locations,
-        this.filtered_courses,
-        this.filtered_grades,
-        this.filtered_class_size
-      ];
-      var self = this;
-
-      return _.filter(self.loaded_classrooms, clas => {
-        // check through all the classes
-        return arr_filters.every(filter => {
-          // check through each filter
-          return filter.every(item => {
-            //make sure the class has all the filters applied form each filter
-            return _.some(clas, field => {
-              if (typeof field == "string")
-                return field
-                  .trim()
-                  .toLowerCase()
-                  .includes(item.trim().toLowerCase());
-              else return field == item;
-            });
-          });
-        });
-      })
+      // definition of an unique class array: elements' coursename can't be duplicated, teacher_uid is Ok.
+      var key = "";                 // the key we use to search, consist of params from filter.
+      var duplicated_results = [];  // the result may be duplicate since we have courses with different periods
+      var filtered_result = [];     // the final array we return, all classrooms here are unique 
+      this.search_options.keys = [];
+        // pull all the parameters from the filter, concatenate them into a string called 'key' //
+        // only search for relavant keys based on the difference of params 
+      if (this.filtered_courses && this.filtered_courses.length){
+        key += String(this.filtered_courses);
+        // only course name is relavant in this case
+        this.search_options.keys.push("coursename");  
+      }
+      if (this.filtered_grades && this.filtered_grades.length)
+      {
+        key += " " + String(this.filtered_grades);
+        this.search_options.keys.push("Grade");
+      }
+      if (this.filtered_skills && this.filtered_skills.length)
+      {
+         key += " " + String(this.filtered_skills);
+        this.search_options.keys.push("selected_skills_keywords");
+        this.search_options.keys.push("selected_industry_keywords");
+      }
+      if (this.filtered_locations && this.filtered_locations.length)
+      {
+        key += " " + String(this.filtered_locations);
+        this.search_options.keys.push("school_address");
+        this.search_options.keys.push("school_district");
+        this.search_options.keys.push("school_name");
+      }
+      // if no params is selected from the filter, we return the whil array.
+      if (key == "")
+        return (this.loaded_classrooms);
+      /* ======= Testing Purpose =======
+          console.log(key);
+          console.log(this.search_options.keys)
+      ================================== */
+      // fuse.js initialization
+      var fuse = new Fuse(this.loaded_classrooms, this.search_options);
+      duplicated_results = fuse.search(key);
+  
+      // uniqueness check 
+      var ht = {};
+      for (var i = 0; i < duplicated_results.length; i++)
+      {
+        if (duplicated_results[i].teacher_uid && !Array.isArray(ht[duplicated_results[i].teacher_uid]))
+        {
+          ht[duplicated_results[i].teacher_uid] = [];
+          filtered_result.push(duplicated_results[i]);
+          ht[duplicated_results[i].teacher_uid].push(duplicated_results[i].coursename);
+        }
+        else if (duplicated_results[i].teacher_uid && Array.isArray(ht[duplicated_results[i].teacher_uid])
+          && !ht[duplicated_results[i].teacher_uid].includes(duplicated_results[i].coursename))
+        {
+          filtered_result.push(duplicated_results[i]);
+          ht[duplicated_results[i].teacher_uid].push(duplicated_results[i].coursename)
+        }
+      }
+      
+      return (filtered_result);
     },
     map_data() {
       // the following commented code parse addresses with space to formatted address
@@ -267,6 +312,11 @@ export default {
               .then(classroom_querySnapshot => {
                 classroom_querySnapshot.forEach(doc => {
                   var class_data = doc.data();
+                  class_data["school_address"]=self.findbyId(self.loaded_teachers,class_data.teacher_uid).school_address
+                  class_data["school_district"]=self.findbyId(self.loaded_teachers,class_data.teacher_uid).school_district
+                  class_data["school_name"]=self.findbyId(self.loaded_teachers,class_data.teacher_uid).school_name
+                  class_data["selected_industry_keywords"]=self.findbyId(self.loaded_teachers,class_data.teacher_uid).selected_industry_keywords
+                  class_data["selected_skills_keywords"]=self.findbyId(self.loaded_teachers,class_data.teacher_uid).selected_skills_keywords
                   // console.log(doc.data());
                   self.loaded_classrooms.push(class_data);
                 });

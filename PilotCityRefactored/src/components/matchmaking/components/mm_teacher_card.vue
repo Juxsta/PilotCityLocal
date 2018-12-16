@@ -90,12 +90,12 @@ export default {
       pending: false,
       text: "Invite",
       tags: [ "tag__skills--red",
-"tag__skills--green",
-"tag__skills--orange",
-"tag__skills--yellow",
-"tag__skills--purple",
-"tag__skills--pink",
-"tag__skills--blue"]
+              "tag__skills--green",
+              "tag__skills--orange",
+              "tag__skills--yellow",
+              "tag__skills--purple",
+              "tag__skills--pink",
+              "tag__skills--blue"]
     };
   },
       
@@ -107,7 +107,7 @@ export default {
       required: true
     },
     invited: {
-      required: true,
+      required: false,
       type: Array
     }
   },
