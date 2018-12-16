@@ -27,6 +27,7 @@ npm <template>
               v-if="loaded_teachers[index]"
               :classroom="classroom"
               :teacher="findbyId(loaded_teachers,classroom.teacher_uid)"
+              :invited="invited"
               v-for="(classroom,index) in filter_list"
               :key="index"
               class="row-12 card-teacher-match"
@@ -133,6 +134,7 @@ export default {
       loaded_classrooms: [],
       render_classroms: [],
       loaded_teachers: [],
+      invited: [],
       recmd: []
     };
   },
