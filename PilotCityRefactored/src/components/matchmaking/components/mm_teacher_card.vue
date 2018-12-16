@@ -5,7 +5,7 @@
 
       <div class="mt-3">
         <button
-          @click="update_invite()"
+          @click="update_invite(),upload()"
           :class="{'action-button':invite, 'action-button-pending':pending}"
         >{{text}}</button>
         <!-- place holder button -->
@@ -85,7 +85,8 @@
 
 <script>
 import "@/assets/SASS/components/_mm_teacher_card.scss";
-
+import _ from 'lodash'
+import firebase from "@/firebase/init";
 export default {
   data() {
     return {
@@ -114,7 +115,7 @@ export default {
     invited: {
       required: false,
       type: Array
-    }
+    },
   },
   methods: {
     update_invite(event) {
@@ -126,7 +127,21 @@ export default {
       } else {
         this.text = "Invited";
         this.invited.push(this.classroom.uid);
+        this.invited = _.uniq(this.invited)
       }
+    },
+    upload() {
+      var self = this;
+      var payload = {"invited": this.invited}
+      firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+          const db = firebase.firestore();
+          db.collection("employers")
+            .doc(user.uid)
+            .set( payload, {merge: true });
+        }
+      });
+      return true
     },
     check_invited() {}
   },
@@ -137,6 +152,12 @@ export default {
       return value.charAt(0).toUpperCase() + value.slice(1);
     }
   },
-  created() {}
+  created() {
+    if(this.invited.indexOf(this.classroom.uid) > -1){
+      console.log("change")
+      this.invite = !this.invite
+      this.pending=!this.pending
+    }
+  }
 };
 </script>

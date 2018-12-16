@@ -110,8 +110,9 @@ export default {
                                       })
             };
             obj.marker.index = i;
+            obj.marker.poi = this.markers[i];
             obj.marker.addListener('click', function() {
-              self.$parent.$emit('markerClicked', this.index);
+              self.$parent.$emit('markerClicked', this.index, this.poi);
             });
             this.markers_ref.push(obj);
             ht[key] = true;
