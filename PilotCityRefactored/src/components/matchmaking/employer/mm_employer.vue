@@ -29,14 +29,15 @@
             <h2 class="text-classroom-matches row">100+ Classrooms Recommended</h2>
             <mm_teacher_card
               v-if="loaded_teachers[index]"
+              :invited="invited"
               :classroom="classroom"
               :teacher="findbyId(loaded_teachers,classroom.teacher_uid)"
               v-for="(classroom,index) in filter_list"
               :key="index"
               class="row-12"
             />
-            <b-btn @click="filter_list" class="justify-content-start">Next</b-btn>
-            <b-btn @click="filter_list" class="justify-content-end">Prev</b-btn>
+            <b-btn @click="filter_list" class="prevpage__btn justify-content-start">Previous</b-btn>
+            <b-btn @click="filter_list" class="nextpage__btn justify-content-end">Next</b-btn>
           </div>
         </div>
       </div>
@@ -128,7 +129,8 @@ export default {
       loaded_classrooms: [],
       render_classroms: [],
       loaded_teachers: [],
-      recmd: []
+      recmd: [],
+      invited: [],
     };
   },
   computed: {

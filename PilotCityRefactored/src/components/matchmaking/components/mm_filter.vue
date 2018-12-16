@@ -1,6 +1,7 @@
 <template>
   <div>
     <b-btn class="filter__button" :id="'PopoverFilter' + Name">{{Name}}</b-btn>
+
     <b-popover :target="'PopoverFilter' + Name" placement="bottom">
       <div class="container">
         <b-form-group label>
@@ -20,7 +21,7 @@
 
 <script>
 import "@/assets/SASS/pages/_matchmaking.scss";
-import "@/assets/SASS/components/_filter_skills.scss";
+import "@/assets/SASS/components/_mm_filter_bar.scss";
 import _ from "lodash";
 export default {
   data() {
