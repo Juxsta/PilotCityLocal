@@ -4,7 +4,7 @@ npm <template>
     <div class="entire-box d-flex flex-row" >
       <div class="d-flex col-7 justify-content-center m-0 p-0" >
       
-        <div class="leftside justify-content-center flex-column d-flex col-12 p-0 m-0" >
+        <div class="leftside justify-content-center flex-column d-flex col-12 p-0 m-0" id="mm_left">
           <div class="filter-bar justify-content-center d-flex flex-row">
             <mm_filter
               :options="courses"
@@ -24,6 +24,7 @@ npm <template>
           <div class="cardstock" >
             <h2 class="text-classroom-matches">100+ Classrooms Recommended</h2>
             <mm_teacher_card
+              :id="index"
               v-if="loaded_teachers[index]"
               :classroom="classroom"
               :teacher="findbyId(loaded_teachers,classroom.teacher_uid)"
@@ -31,7 +32,7 @@ npm <template>
               v-for="(classroom,index) in filter_list"
               :key="index"
               class="row-12 card-teacher-match"
-              @teacherCardClicked="highlight_pin(findbyId(loaded_teachers,classroom.teacher_uid))"
+              @teacherCardClicked="highlight_pin(findbyId(loaded_teachers,classroom.teacher_uid), index)"
             />
             <b-btn @click="filter_list" class="prevpage__btn justify-content-start">Previous</b-btn>
             <b-btn @click="filter_list" class="nextpage__btn justify-content-end">Next</b-btn>
@@ -40,10 +41,9 @@ npm <template>
       </div>
        <div class="google-maps container col-5 m-0 p-0">
      
-       <GoogleMap name="test" :map_data=map_data :apikey=apikey :mapcenter=mapcenter> </GoogleMap>
+       <GoogleMap name="test" :map_data=map_data :apikey=apikey :mapcenter=mapcenter > </GoogleMap>
       </div>
     </div>
-    <b-btn @click="filter_list">Refilter</b-btn>
   </div>
 </template>
 
@@ -70,7 +70,7 @@ export default {
         threshold: 0.6,
         location: 0,
         distance: 100,
-        maxPatternLength: 32,
+        maxPatternLength: 40,
         minMatchCharLength: 1,
         keys: []
       },
@@ -288,7 +288,7 @@ export default {
         return obj.uid == uid;
       })[0];
     },
-    highlight_pin(teacher){
+    highlight_pin(teacher, id){
       if (teacher.coordinate)
         this.mapcenter = teacher.coordinate;
       else 
@@ -297,6 +297,12 @@ export default {
   },
 
   created() {
+    this.$on("markerClicked", function(value){
+      var el = document.getElementById(value)
+      if (el)
+        el.scrollIntoView({ behavior: 'smooth', inline: 'start' });
+      //console.log(document.getElementById(value))
+    });
     var self = this;
     var classIds = [];
     firebase.auth().onAuthStateChanged(user => {
@@ -359,5 +365,9 @@ export default {
 </script>
 
 
-<style lang="scss">
+<style >
+
+body{
+  overflow: hidden;
+}
 </style>
