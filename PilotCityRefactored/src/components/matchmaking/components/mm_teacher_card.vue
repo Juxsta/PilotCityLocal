@@ -72,6 +72,7 @@
       <div class="container">
         <span class="d-flex row">
           <h4
+            placement="bottom"
             :class="tags[Math.floor(Math.random()*Math.floor(7))]"
             v-for="(skill,index) in teacher.selected_skills_keywords"
             :key="index"
@@ -151,9 +152,10 @@ export default {
     }
   },
   created() {
+    console.log(this.invited.indexOf(this.classroom.uid))
     if(this.invited.indexOf(this.classroom.uid) > -1) {
-      this.invite = true;
-      this.pending = false;
+      this.invite = false;
+      this.pending = true;
     }
   }
 };

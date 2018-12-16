@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-btn class="filter__button" :id="'PopoverFilter' + name">{{name}}</b-btn>
-    <b-popover :target="'PopoverFilter' + name" placement="bottom">
+    <b-popover :target="'PopoverFilter' + name" placement="bottom" triggers="focus">
       <div class="container">
         <b-form-group label>
           <b-form-checkbox-group
