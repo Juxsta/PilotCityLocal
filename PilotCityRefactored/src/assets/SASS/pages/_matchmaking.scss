@@ -48,12 +48,11 @@ $primary: $purple;
   }
 .text-classroom-matches {
   font-family: "Raleway";
-  font-size: 20px;
-  color: #939597;
+  font-size: 25px;
+  color: #dbdcde;
   font-weight: 700;
-  margin: 30px auto 15px auto;
+  margin: 40px auto 15px auto;
   text-align: center;
-
 
 }
 
@@ -392,6 +391,12 @@ $primary: $purple;
   font-size: 20px;
   border: none;
   margin: 25px 5px 50px 15px;
+  &:focus {
+    color: #ffffff;
+    outline: 0;
+    box-shadow: none;
+    -webkit-box-shadow:none;
+  }
 
 }
 
@@ -405,6 +410,12 @@ $primary: $purple;
   font-size: 20px;
   border: none;
   margin: 25px 5px 50px 25px;
+  &:focus {
+    color: #ffffff;
+    outline: 0;
+    box-shadow: none;
+    -webkit-box-shadow:none;
+  }
 }
 
 .custom-control {

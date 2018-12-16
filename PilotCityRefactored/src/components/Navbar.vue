@@ -19,6 +19,7 @@ import firebase from '@/firebase/init'
 import Login from '@/components/auth/Login'
 import Logout from '@/components/auth/Logout'
 import Signup from '@/components/auth/Signup'
+import matchmaking from '@/components/matchmaking/matchmaking'
 import { bus } from '@/main'
 export default {
   name: 'Navbar',
@@ -26,6 +27,7 @@ export default {
 	  Login,
 	  Logout,
 	  Signup,
+	  matchmaking,
   },
   data () {
     return {
