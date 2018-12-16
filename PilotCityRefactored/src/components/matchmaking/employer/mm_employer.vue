@@ -1,16 +1,10 @@
 npm <template>
   <div v-if="render">
     <!-- random -->
-<<<<<<< HEAD
     <div class="entire-box d-flex flex-row" >
       <div class="d-flex col-8 justify-content-center m-0 p-0" >
       
         <div class="leftside justify-content-center flex-column d-flex col-12 p-0 m-0" >
-=======
-    <div class="entire-box d-flex flex-row">
-      <div class="d-flex col-7 justify-content-center m-0 p-0">
-        <div class="leftside justify-content-center flex-column d-flex col-12 p-0 m-0">
->>>>>>> c11db1d3fcfc103636b8043e8dd53fb79d67ffbe
           <div class="filter-bar justify-content-center d-flex flex-row">
             <mm_filter :options="courses" :selected_options="filtered_courses" name="Courses"/>
             <mm_filter :options="skills" :selected_options="filtered_skills" name="Skills"/>
@@ -33,8 +27,9 @@ npm <template>
               v-for="(classroom,index) in render_class"
               :key="index"
               :invited="invited"
+              :number="index"
+              :active_card="active_card"
               class="row-12 card-teacher-match"
-              :class="{'card__teacher--active':index==active_card}"
               @teacherCardClicked="highlight_pin(findbyId(loaded_teachers,classroom.teacher_uid), index)"
             />
             <b-btn
@@ -49,14 +44,9 @@ npm <template>
           </div>
         </div>
       </div>
-<<<<<<< HEAD
        <div class="google-maps container col-4 m-0 p-0">
      
        <GoogleMap name="test" :map_data=map_data :apikey=apikey :mapcenter=mapcenter> </GoogleMap>
-=======
-      <div class="google-maps container col-5 m-0 p-0">
-        <GoogleMap name="test" :map_data="map_data" :apikey="apikey" :mapcenter="mapcenter"></GoogleMap>
->>>>>>> c11db1d3fcfc103636b8043e8dd53fb79d67ffbe
       </div>
     </div>
   </div>
