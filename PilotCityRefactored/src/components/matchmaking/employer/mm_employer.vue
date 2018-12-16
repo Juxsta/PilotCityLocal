@@ -78,7 +78,7 @@ export default {
         threshold: 0.6,
         location: 0,
         distance: 100,
-        maxPatternLength: 40,
+        maxPatternLength: 32,
         minMatchCharLength: 1,
         keys: []
       },
@@ -86,7 +86,7 @@ export default {
       gmap_markers: [],
       render: false,
       page: 0,
-      class_size: ["1-10", "11-15", "16-20", "21-25", "26-30"],
+      class_size: ["0-10", "11-15", "16-20", "21-25", "26-30"],
       filtered_class_size: [],
       locations: [
         "Alameda",
@@ -172,6 +172,19 @@ export default {
         key = key.replace(/th/g, "");
         key = key.replace(/Grade/g, "");
       }
+
+      if (this.filtered_courses && this.filtered_courses.length) {
+        key += String(this.filtered_courses);
+        // only course name is relavant in this case
+        this.search_options.keys.push("coursename");
+      }
+       if (this.filtered_class_size && this.filtered_class_size.length) {
+        key += String(this.filtered_class_size);
+        // only course name is relavant in this case
+        this.search_options.keys.push("students.max");
+        this.search_options.keys.push("students.min");
+      }
+
       if (this.filtered_courses && this.filtered_courses.length) {
         key += String(this.filtered_courses);
         // only course name is relavant in this case
@@ -185,22 +198,21 @@ export default {
       }
       if (this.filtered_locations && this.filtered_locations.length) {
         key += String(this.filtered_locations);
-        this.search_options.keys.push("school_address");
+        this.search_options.keys.push("school_address.city");
         this.search_options.keys.push("school_district");
         this.search_options.keys.push("school_name");
       }
       key = key.replace(/\s,/g, "");
       // if no params is selected from the filter, we return the whil array.
       if (key == "") return this.loaded_classrooms;
-
+    
       // ======= Testing Purpose =======
       // console.log(key);
       // console.log(this.search_options.keys)
       // ==================================
       // fuse.js initialization
       var fuse = new Fuse(this.loaded_classrooms, this.search_options);
-      duplicated_results = fuse.search(key);
-
+      duplicated_results = fuse.search(key);    
       // uniqueness check
       var ht = {};
       for (var i = 0; i < duplicated_results.length; i++) {
@@ -275,14 +287,20 @@ export default {
 
   created() {
     var self = this;
-    this.$on("markerClicked", function(value, position) {
-      // console.log(value);
+    this.$on("markerClicked", function(key, position) {
       self.mapcenter = position;
-      this.page = parseInt(value / 10);
-      var el = document.getElementById(value);
+
+      var index = _.findIndex(this.filter_list, function(cl){
+        return cl.poi == key;
+      })
+      // console.log(index)
+      this.page = parseInt(index / 10);
+      var i = index % 10;
+      console.log(i);
+      var el = document.getElementById(i);
       if (el) {
         el.scrollIntoView({ block: "center" });
-        this.active_card = value;
+        this.active_card = i;
       }
     });
     var classIds = [];
@@ -328,7 +346,10 @@ export default {
                     self.loaded_teachers,
                     class_data.teacher_uid
                   ).coordinate;
-
+                  if (class_data["coordinate"] && class_data["coordinate"].lat)
+                    class_data["poi"] = String(class_data["coordinate"]["lat"])
+                      + String(class_data["coordinate"]["lng"]);
+    
                   // console.log(doc.data());
                   self.courses.push(class_data.coursename)
                   self.loaded_classrooms.push(class_data);
@@ -374,7 +395,7 @@ export default {
                       var new_arr = [];
                       new_arr.push(to_move, self.loaded_classrooms);
                       new_arr = _.flattenDeep(new_arr);
-                      console.log(new_arr);
+                      //console.log(new_arr);
                       self.loaded_classrooms = new_arr;
                     });
                   self.shuffle(self.loaded_classrooms);
