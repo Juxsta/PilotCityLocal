@@ -31,6 +31,7 @@ $popover-max-width: 1000px;
   font-weight: 700;
   margin: 30px auto 15px auto;
   text-align: center;
+
 }
 
 .tag__skills {
@@ -47,12 +48,12 @@ $popover-max-width: 1000px;
   font-size: 12px;
   letter-spacing: .75px;
   text-transform: capitalize; 
-  background-color: $blue
+  background-color: $blue;
 }
 
 .tag__skills--red {
   @extend .tag__skills;
-  background-color: $red
+  background-color: $red;
 }
 
 .tag__skills--green {
@@ -87,18 +88,19 @@ $popover-max-width: 1000px;
 
 #favorite_border {
   color: #dbdcde;
-  margin: auto 0px auto 35px;
+  margin: auto 0px auto 0px;
+
 }
 
 #favorite_border:hover {
   color: #eca0be;
-  margin: auto 0px auto 35px;
+  margin: auto 0px auto 0px;
   cursor: pointer;
 }
 
 #favorite_border:active {
   color: #c47e9b;
-  margin: auto 0px auto 35px;
+  margin: auto 0px auto 0px;
   cursor: pointer;
 }
 
@@ -203,47 +205,58 @@ $popover-max-width: 1000px;
 
 .two {
   background-color: transparent;
+
 }
 
 .three {
   background-color: transparent;
+
 }
 
 .four {
   background-color: transparent;
+
 }
 
 .five {
   background-color: transparent;
+
 }
 
 .six {
   background-color: #dbdcde;
+
 }
 
 .seven {
   background-color: #3c9ccc;
+
 }
 
 .eight {
   background-color: #f79960;
+
 }
 
 .nine {
   background-color: #fdd25a;
+
 }
 
 .ten {
   background-color: #eca0be;
+
 }
 
 .entire-box {
   background-color: #f79960;
+
 }
 
 .leftside {
   background-color: white;
   height: 100vh;
+
 //   overflow: scroll;
 }
 
@@ -254,6 +267,7 @@ $popover-max-width: 1000px;
   -moz-box-shadow:0px 3px 2px lightgrey;
   -webkit-box-shadow:0px 3px 2px lightgrey;
   box-shadow:0px 2px 2px lightgrey;
+
 }
 
 .cardstock {
@@ -283,6 +297,7 @@ $popover-max-width: 1000px;
   margin-top: 20px;
   margin-bottom: 20px;
 
+
   &:hover {
     background-color: #f8f8f8;
     cursor: pointer;
@@ -305,21 +320,23 @@ $popover-max-width: 1000px;
   font-family: "Raleway";
   font-size: 18px;
   font-weight: 700;
-  color: #939597;
-  width: 400px;
-  margin: 14px 0px 14px 35px;
+  color: #58585b;
+  width: 550px;
+  margin: 14px 0px 14px 48px;
   padding-top: 3px;
   text-transform: capitalize;
+
 }
 
 .card-subtitle {
   font-family: "Raleway";
   font-size: 12px;
   font-weight: 700;
-  text-align: right;
+  text-align: left;
   color: #939597;
   padding: 1px 5px 1px 1px;
   margin: 0;
+  letter-spacing: .25px;
 
 }
 
@@ -332,6 +349,7 @@ $popover-max-width: 1000px;
   padding: 1px 1px 1px 5px;
   margin: 0;
   text-transform: capitalize;
+
 }
 
 .google-maps {
@@ -348,6 +366,7 @@ $popover-max-width: 1000px;
   font-size: 20px;
   border: none;
   margin: 25px 5px 50px 15px;
+
 }
 
 .prevpage__btn {
@@ -361,5 +380,41 @@ $popover-max-width: 1000px;
   border: none;
   margin: 25px 5px 50px 25px;
 }
+
+.custom-control {
+  width: 200px;
+  height: 30px;
+  margin: 0px;
+  padding-left: 15px;
+
+
+}
+
+.custom-control-label {
+  color: #939597;
+
+
+}
+
+.popover-body {
+  padding: 0px;
+  margin: 25px 0px 0px 15px;
+}
+
+.custom-checkbox {
+
+}
+
+.checkbox {
+  border: solid 1px #3c9ccc;
+}
+
+
+
+.label {
+
+}
+
+
 
 //bootstrap imports

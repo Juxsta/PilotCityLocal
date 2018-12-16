@@ -13,11 +13,7 @@
             />
             <mm_filter :options="skills" :selected_options="filtered_skills" name="Skills"/>
             <mm_filter :options="grades" :selected_options="filtered_grades" name="Grades"/>
-            <mm_filter
-              :options="locations"
-              :selected_options="filtered_locations"
-              name="Location"
-            />
+            <mm_filter :options="locations" :selected_options="filtered_locations" name="Location"/>
             <!-- <mm_filter_skills
               :options="skills"
               :selected_options="selected_skills"
@@ -46,6 +42,7 @@
        <GoogleMap name="test" :map_data=map_data :apikey=apikey :mapcenter=mapcenter> </GoogleMap>
       </div>
     </div>
+    <b-btn @click="filter_list">Refilter</b-btn>
   </div>
 </template>
 
@@ -54,10 +51,11 @@ async defer></script>
 <script>
 import _ from "lodash";
 import firebase from "@/firebase/init";
-import mm_filter from "@/components/matchmaking/components/mm_filter.vue"
+import mm_filter from "@/components/matchmaking/components/mm_filter.vue";
 import mm_teacher_card from "@/components/matchmaking/components/mm_teacher_card.vue";
-import GoogleMap from '@/components/map/GoogleMap'
-import {  GEOCODEKEY } from '@/main'
+
+import GoogleMap from "@/components/map/GoogleMap";
+import { GEOCODEKEY } from "@/main";
 import "@/assets/SASS/pages/_matchmaking.scss";
 import Fuse from 'fuse.js';
 export default {
@@ -97,7 +95,7 @@ export default {
         "Engineering",
         "Digital Media",
         "English",
-        "Manufcturing",
+        "Manufacturing",
         "Automotive",
         "Graphic Design",
         "Videography"
@@ -116,7 +114,7 @@ export default {
         "Laboratory",
         "Municipality",
         "Public Saftey",
-        "Sustainibility",
+        "Sustainability",
         "Space",
         "Artificial Intelligence",
         "Automotive",
@@ -220,9 +218,57 @@ export default {
   components: {
     mm_teacher_card,
     mm_filter,
-    GoogleMap 
+    GoogleMap
   },
   methods: {
+    filter_list() {
+      var arr_filters = [
+        this.filtered_skills,
+        this.filtered_locations,
+        this.filtered_courses,
+        this.filtered_grades,
+        this.filtered_class_size
+      ];
+      var self = this;
+      console.log(
+        _.filter(self.loaded_classrooms, clas => {
+          // check through all the classes
+          return arr_filters.every(filter => {
+            // check through each filter
+            return filter.every(item => {
+              //make sure the class has all the filters applied form each filter
+              return (
+                _.some(clas, field => {
+                  if (typeof field == "string")
+                    return field
+                      .trim()
+                      .toLowerCase()
+                      .includes(item.trim().toLowerCase());
+                  return field == item;
+                }) ||
+                _.some(
+                  self.findbyId(self.loaded_teachers, clas.teacher_uid),
+                  field => {
+                    if (typeof field == "string")
+                      return field
+                        .trim()
+                        .toLowerCase()
+                        .includes(item.trim().toLowerCase());
+                    return field == item;
+                    if (field.length || Object.keys(field).length) {
+                      _.some(field, subfield => {
+                        console.log(subfield)
+                        return subfield == item;
+                      });
+                    }
+                  }
+                )
+              );
+            });
+          });
+        })
+      );
+    },
     shuffle(a) {
       for (let i = a.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -305,6 +351,4 @@ export default {
 
 
 <style lang="scss">
-
-
 </style>
