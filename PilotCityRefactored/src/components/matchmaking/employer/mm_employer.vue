@@ -1,10 +1,9 @@
 npm <template>
   <div v-if="render">
     <!-- random -->
-    <div class="entire-box d-flex flex-row" >
-      <div class="d-flex col-8 justify-content-center m-0 p-0" >
-      
-        <div class="leftside justify-content-center flex-column d-flex col-12 p-0 m-0" >
+    <div class="entire-box d-flex flex-row">
+      <div class="d-flex col-8 justify-content-center m-0 p-0">
+        <div class="leftside justify-content-center flex-column d-flex col-12 p-0 m-0">
           <div class="filter-bar justify-content-center d-flex flex-row">
             <mm_filter :options="courses" :selected_options="filtered_courses" name="Courses"/>
             <mm_filter :options="skills" :selected_options="filtered_skills" name="Skills"/>
@@ -44,9 +43,8 @@ npm <template>
           </div>
         </div>
       </div>
-       <div class="google-maps container col-4 m-0 p-0">
-     
-       <GoogleMap name="test" :map_data=map_data :apikey=apikey :mapcenter=mapcenter> </GoogleMap>
+      <div class="google-maps container col-4 m-0 p-0">
+        <GoogleMap name="test" :map_data="map_data" :apikey="apikey" :mapcenter="mapcenter"></GoogleMap>
       </div>
     </div>
   </div>
@@ -63,7 +61,7 @@ import GoogleMap from "@/components/map/GoogleMap";
 import { GEOCODEKEY } from "@/main";
 import "@/assets/SASS/pages/_matchmaking.scss";
 import Fuse from "fuse.js";
-import { createECDH } from 'crypto';
+import { createECDH } from "crypto";
 export default {
   name: "mm_employer",
   data() {
@@ -265,25 +263,21 @@ export default {
       })[0];
     },
     highlight_pin(teacher, index) {
-      if (this.active_card == index)
-        this.active_card = -1;
-      else
-        this.active_card = index;
+      if (this.active_card == index) this.active_card = -1;
+      else this.active_card = index;
       if (teacher.coordinate) this.mapcenter = teacher.coordinate;
       else console.log("This classroom's teacher does not have coordinate!");
     }
   },
 
   created() {
-
     var self = this;
-    this.$on("markerClicked", function(value, position){
+    this.$on("markerClicked", function(value, position) {
       self.mapcenter = position;
       this.page = parseInt(value / 10);
-      var el = document.getElementById(value)
-      if (el)
-      {
-        el.scrollIntoView({block: "center"});
+      var el = document.getElementById(value);
+      if (el) {
+        el.scrollIntoView({ block: "center" });
         this.active_card = value;
       }
     });
@@ -362,17 +356,20 @@ export default {
                       if (doc.data().invited) self.invited = doc.data().invited;
                       var to_move = _.filter(self.loaded_classrooms, clas => {
                         return _.some(self.invited, uid => {
-                          return clas.uid == uid
-                        })
+                          return clas.uid == uid;
+                        });
                       });
-                      for(let clas of to_move){
-                        self.loaded_classrooms.splice(self.loaded_classrooms.indexOf(clas),1)
+                      for (let clas of to_move) {
+                        self.loaded_classrooms.splice(
+                          self.loaded_classrooms.indexOf(clas),
+                          1
+                        );
                       }
-                      var new_arr = []
-                      new_arr.push(to_move,self.loaded_classrooms)
-                      new_arr =_.flattenDeep(new_arr)
-                      console.log(new_arr)
-                      self.loaded_classrooms=new_arr
+                      var new_arr = [];
+                      new_arr.push(to_move, self.loaded_classrooms);
+                      new_arr = _.flattenDeep(new_arr);
+                      console.log(new_arr);
+                      self.loaded_classrooms = new_arr;
                     });
                   self.shuffle(self.loaded_classrooms);
                   self.render = true;
@@ -387,8 +384,7 @@ export default {
 
 
 <style >
-
-body{
+body {
   overflow: hidden;
 }
 </style>
