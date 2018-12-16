@@ -23,6 +23,8 @@ $popover-max-width: 1000px;
       border: none;
   }
     &:focus {
+      background-color: $purple;
+      color: #ffffff;
       outline: 0;
       box-shadow: none;
       -webkit-box-shadow:none;
@@ -126,34 +128,38 @@ $popover-max-width: 1000px;
   font-size: 12px;
   margin: auto;
   padding-top: 1px;
-}
-
-.action-button:hover {
-  width: 125px;
-  height: 25px;
-  border-radius: 50px;
-  background-color: #6eba7f;
-  border: 0px;
-  color: #ffffff;
-  font-family: "Raleway";
-  font-weight: 700;
-  font-size: 12px;
-  margin: auto;
-  padding-top: 1px;
-}
-
-.action-button:active {
-  width: 125px;
-  height: 25px;
-  border-radius: 50px;
-  background-color: #408b54;
-  border: 0px;
-  color: #ffffff;
-  font-family: "Raleway";
-  font-weight: 700;
-  font-size: 12px;
-  margin: auto;
-  padding-top: 1px;
+  &:focus {
+    outline: none !important;
+    box-shadow: none !important;
+    -webkit-box-shadow:none !important;
+    -moz-box-shadow:none !important;
+  }
+  &:hover{
+    width: 125px;
+    height: 25px;
+    border-radius: 50px;
+    background-color: #6eba7f;
+    border: 0px;
+    color: #ffffff;
+    font-family: "Raleway";
+    font-weight: 700;
+    font-size: 12px;
+    margin: auto;
+    padding-top: 1px;
+  }
+  &:active{
+    width: 125px;
+    height: 25px;
+    border-radius: 50px;
+    background-color: #408b54;
+    border: 0px;
+    color: #ffffff;
+    font-family: "Raleway";
+    font-weight: 700;
+    font-size: 12px;
+    margin: auto;
+    padding-top: 1px;
+  }
 }
 
 .action-button-decline {
@@ -169,9 +175,13 @@ $popover-max-width: 1000px;
   padding-top: 1px;
   font-weight: 700;
   cursor: pointer;
-}
-
-.action-button-decline:hover {
+  &:focus {
+    outline: none !important;
+    box-shadow: none !important;
+    -webkit-box-shadow:none !important;
+    -moz-box-shadow:none !important;
+  }
+&:hover {
   border-radius: 5px;
   width: 17px;
   height: 17px;
@@ -180,8 +190,7 @@ $popover-max-width: 1000px;
   font-size: 12px;
   margin: auto 20px auto auto;
 }
-
-.action-button-decline:active {
+&:active {
   border-radius: 5px;
   width: 17px;
   height: 17px;
@@ -189,7 +198,10 @@ $popover-max-width: 1000px;
   border: 0px;
   font-size: 12px;
   margin: auto 20px auto auto;
+
 }
+}
+
 
 #email {
   font-size: 22px;
@@ -275,6 +287,7 @@ $popover-max-width: 1000px;
   -moz-box-shadow:0px 3px 2px lightgrey;
   -webkit-box-shadow:0px 3px 2px lightgrey;
   box-shadow:0px 2px 2px lightgrey;
+  padding-bottom: 75px;
 
 }
 
@@ -298,14 +311,12 @@ $popover-max-width: 1000px;
 }
 
 .card {
-  width: 750px;
+  width: 725px;
   border: dashed 1px #dbdcde;
   border-radius: 25px;
-  padding: 0px 0px 10px 0px;
+  padding: 0px 10px 10px 0px;
   margin-top: 20px;
   margin-bottom: 20px;
-
-
   &:hover {
     background-color: #f8f8f8;
     cursor: pointer;
@@ -338,12 +349,15 @@ $popover-max-width: 1000px;
 
 .card-subtitle {
   font-family: "Raleway";
-  font-size: 12px;
-  font-weight: 700;
+  font-size: 9.5px;
+  font-weight: 800;
+  letter-spacing: 1px;
   text-align: left;
   color: #939597;
   padding: 1px 5px 1px 1px;
   margin: 0;
+  line-height: 17px;
+  text-transform: uppercase;
 
 }
 
@@ -356,6 +370,7 @@ $popover-max-width: 1000px;
   padding: 1px 1px 1px 5px;
   margin: 0;
   text-transform: capitalize;
+  line-height: 17px;
 
 }
 
@@ -423,6 +438,18 @@ $popover-max-width: 1000px;
 
 .label {
 
+}
+
+.ranking_number {
+text-align: center;
+  font-family: "Raleway";
+  font-weight: 300;
+  font-size: 25px;
+  color: #c6c8ca;
+  width: 40px;
+  height: 40px;
+  border-radius: 25px;
+  padding-top:2px;
 }
 
 

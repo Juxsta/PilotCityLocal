@@ -1,6 +1,8 @@
 <template>
-  <div class="card container" @click="$emit('teacherCardClicked')">
-    <div class="one d-flex flex-row h-25">
+  <div class="d-flex flex-row">
+  <div class="m-auto p-auto ranking_number">1</div>
+  <div class="card container col-10 ml-0" @click="$emit('teacherCardClicked')">
+    <div class="one d-flex flex-row">
       <h2 class="card-title">{{classroom.coursename | capitalize}}</h2>
 
       <div class="mt-3">
@@ -67,7 +69,7 @@
       </div>
     </div>
 
-    <div class="three h-25">
+    <div class="three">
       <hr class="card-line">
       <div class="container">
         <span class="d-flex row">
@@ -81,6 +83,7 @@
       </div>
     </div>
   </div>
+</div>
 </template>
 
 <script>

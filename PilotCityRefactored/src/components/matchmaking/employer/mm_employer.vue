@@ -2,7 +2,7 @@ npm <template>
   <div v-if="render">
     <!-- random -->
     <div class="entire-box d-flex flex-row" >
-      <div class="d-flex col-7 justify-content-center m-0 p-0" >
+      <div class="d-flex col-8 justify-content-center m-0 p-0" >
       
         <div class="leftside justify-content-center flex-column d-flex col-12 p-0 m-0" >
           <div class="filter-bar justify-content-center d-flex flex-row">
@@ -38,7 +38,7 @@ npm <template>
           </div>
         </div>
       </div>
-       <div class="google-maps container col-5 m-0 p-0">
+       <div class="google-maps container col-4 m-0 p-0">
      
        <GoogleMap name="test" :map_data=map_data :apikey=apikey :mapcenter=mapcenter> </GoogleMap>
       </div>
