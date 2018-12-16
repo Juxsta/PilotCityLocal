@@ -10,7 +10,7 @@
             @input="updateSelected"
             name="filter"
             :options="options"
-            :style="{'overflow-y':'hidden'}"
+            :style="{'overflow-x':'hidden'}"
           ></b-form-checkbox-group>
         </b-form-group>
       </div>
