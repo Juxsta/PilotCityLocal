@@ -5,6 +5,8 @@
 				<img id="logo-pilotcity" src="@/assets/images/pilotCitylogo.png" alt="Pilot City Logo">
 		  	</router-link> 
 			<div class="btn-group ml-auto" role="group">
+				<b-link  :to ="{name : 'ClassPicker'}" v-if="authUser">Wizard</b-link>
+				<b-link :to="{name : 'mm_employer'}" v-if="match_ready">Match</b-link>
 				<Login v-if="!authUser || emailNotVerified" id="component-login" />  
 				<Signup v-if="!authUser || emailNotVerified" id="component-signup" />
 				<Logout  v-if="authUser && !emailNotVerified"/>
@@ -30,8 +32,14 @@ export default {
   data () {
     return {
 		authUser: null,
-		emailNotVerified: false
+		emailNotVerified: false,
+		user_data: null
     }
+  },
+  computed: {
+	  match_ready() {
+		  return this.authUser && this.user_data && this.user_data.selected_challenge_keywords
+	  }
   },
   methods: {
 
@@ -40,6 +48,10 @@ export default {
 		var self = this;
 		firebase.auth().onAuthStateChanged((user) => {
 			this.authUser=user
+			const db = firebase.firestore()
+			db.collection("employers").doc(user.uid).get().then(doc => {
+				self.user_data = doc.data()
+			})
 		});
 		bus.$on('EmailNotVerified', () => {
 			self.emailNotVerified = true;

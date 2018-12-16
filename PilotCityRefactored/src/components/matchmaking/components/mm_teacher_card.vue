@@ -1,90 +1,94 @@
 <template>
   <div class="d-flex flex-row">
-  <div class="m-auto p-auto ranking_number">{{number + page*10 + 1}}</div>
-  <div class="card container col-10 ml-0" :class="{'card__teacher--active':number==active_card}" @click="$emit('teacherCardClicked')">
-    <div class="one d-flex flex-row">
-      <h2 class="card-title">{{classroom.coursename | capitalize}}</h2>
+    <div class="m-auto p-auto ranking_number">{{number + page*10 + 1}}</div>
+    <div
+      class="card container col-10 ml-0"
+      :class="{'card__teacher--active':number==active_card}"
+      @click="$emit('teacherCardClicked')"
+    >
+      <div class="one d-flex flex-row">
+        <h2 class="card-title">{{classroom.coursename | capitalize}}</h2>
 
-      <div class="mt-3">
-        <button
-          @click="update_invite(),upload()"
-          :class="{'action-button':invite, 'action-button-pending':pending}"
-        >{{text}}</button>
-        <!-- place holder button -->
-        <!--Place holder [x]  -->
-      </div>
-      <i
-        class="material-icons justify-content-center pt-2 px-3"
-        id="favorite_border"
-      >favorite_border</i>
-    </div>
-
-    <div class="two d-flex flex-row">
-      <div class="four ml-5 mr-3 pb-3 justify-content-start">
-        <h4 class="card-subtitle">Teacher</h4>
-        <h4 class="card-subtitle">Grades</h4>
-        <h4 class="card-subtitle">Class Size</h4>
-        <h4 class="card-subtitle">District</h4>
-        <h4 class="card-subtitle">School</h4>
-        <h4 class="card-subtitle">Address</h4>
-      </div>
-      <div class="five">
-        <h4 class="card-subtitle-text text">
-          <span>{{teacher.first_name | capitalize}}</span>
-          <span>{{" "}}</span>
-          <span>{{teacher.last_name | capitalize}}</span>
-        </h4>
-        <!-- Anthony Keithle -->
-        <div class="container p-0 d-flex flex-row">
-          <h4
-            class="card-subtitle-text text row"
-            v-for="(grade,index) in classroom.Grade"
-            :key="index"
-          >
-            <span>{{grade + 'th'}}</span>
-            <span v-if="index != classroom.Grade.length-1">{{" "}}</span>
-          </h4>
+        <div class="mt-3">
+          <button
+            @click="update_invite(),upload()"
+            :class="{'action-button':invite, 'action-button-pending':pending}"
+          >{{text}}</button>
+          <!-- place holder button -->
+          <!--Place holder [x]  -->
         </div>
-
-        <!-- 9th, 10th, 11th -->
-        <h4 class="card-subtitle-text text">
-          <span>{{classroom.students.min}}</span>
-          <span v-if="classroom.students.max">
-            <span>{{" - "}}</span>
-            <span>{{classroom.students.max}}</span>
-          </span>
-          <span v-else>+</span>
-          <span>{{" Students"}}</span>
-        </h4>
-        <h4 class="card-subtitle-text text">{{teacher.school_district | capitalize}}</h4>
-        <!-- San Leandro Unified -->
-        <h4 class="card-subtitle-text text">{{teacher.school_name | capitalize}}</h4>
-        <h4 class="card-subtitle-text text">
-          <span v-for="(field,index) in Object.keys(teacher.school_address)" :key="index">
-            <span>{{teacher.school_address[field] | capitalize}}</span>
-            <span v-if="index != (Object.keys(teacher.school_address).length-1)">{{", "}}</span>
-          </span>
-        </h4>
-        <!--  2250 Bancroft Avenue, San Leandro, CA 94577 -->
+        <i
+          class="material-icons justify-content-center pt-2 px-3"
+          id="favorite_border"
+        >favorite_border</i>
       </div>
-    </div>
 
-    <div class="three">
-      <hr class="card-line">
-      <div class="container">
-        <span class="d-flex row">
-          <h4
-            placement="bottom"
-            :class="tags[Math.floor(Math.random()*Math.floor(7))]"
-            v-for="(skill,index) in teacher.selected_skills_keywords"
-            :key="index"
-          >{{skill | capitalize}}</h4>
-          <!-- Javascript C++ iOS  Android -->
-        </span>
+      <div class="two d-flex flex-row">
+        <div class="four ml-5 mr-3 pb-3 justify-content-start">
+          <h4 class="card-subtitle">Teacher</h4>
+          <h4 class="card-subtitle">Grades</h4>
+          <h4 class="card-subtitle">Class Size</h4>
+          <h4 class="card-subtitle">District</h4>
+          <h4 class="card-subtitle">School</h4>
+          <h4 class="card-subtitle">Address</h4>
+        </div>
+        <div class="five">
+          <h4 class="card-subtitle-text text">
+            <span>{{teacher.first_name | capitalize}}</span>
+            <span>{{" "}}</span>
+            <span>{{teacher.last_name | capitalize}}</span>
+          </h4>
+          <!-- Anthony Keithle -->
+          <div class="container p-0 d-flex flex-row">
+            <h4
+              class="card-subtitle-text text row"
+              v-for="(grade,index) in classroom.Grade"
+              :key="index"
+            >
+              <span>{{grade + 'th'}}</span>
+              <span v-if="index != classroom.Grade.length-1">{{" "}}</span>
+            </h4>
+          </div>
+
+          <!-- 9th, 10th, 11th -->
+          <h4 class="card-subtitle-text text">
+            <span>{{classroom.students.min}}</span>
+            <span v-if="classroom.students.max">
+              <span>{{" - "}}</span>
+              <span>{{classroom.students.max}}</span>
+            </span>
+            <span v-else>+</span>
+            <span>{{" Students"}}</span>
+          </h4>
+          <h4 class="card-subtitle-text text">{{teacher.school_district | capitalize}}</h4>
+          <!-- San Leandro Unified -->
+          <h4 class="card-subtitle-text text">{{teacher.school_name | capitalize}}</h4>
+          <h4 class="card-subtitle-text text">
+            <span v-for="(field,index) in Object.keys(teacher.school_address)" :key="index">
+              <span>{{teacher.school_address[field] | capitalize}}</span>
+              <span v-if="index != (Object.keys(teacher.school_address).length-1)">{{", "}}</span>
+            </span>
+          </h4>
+          <!--  2250 Bancroft Avenue, San Leandro, CA 94577 -->
+        </div>
+      </div>
+
+      <div class="three">
+        <hr class="card-line">
+        <div class="container">
+          <span class="d-flex row">
+            <h4
+              placement="bottom"
+              :class="tags[Math.floor(Math.random()*Math.floor(7))]"
+              v-for="(skill,index) in teacher.selected_skills_keywords"
+              :key="index"
+            >{{skill | capitalize}}</h4>
+            <!-- Javascript C++ iOS  Android -->
+          </span>
+        </div>
       </div>
     </div>
   </div>
-</div>
 </template>
 
 <script>
@@ -93,8 +97,8 @@ import firebase from "@/firebase/init";
 export default {
   data() {
     return {
-      invite: true,
-      pending: false,
+      // invite: true,
+      // pending: false,
       text: "Invite",
       tags: [
         "tag__skills--red",
@@ -126,15 +130,26 @@ export default {
     active_card: {
       required: true
     },
-    page:{
-      required:true
+    page: {
+      required: true
+    }
+  },
+  computed: {
+    invite() {
+      var in_invite= this.invited.indexOf(this.classroom.uid) == -1
+      if(in_invite)
+        this.text="Invited"
+      return in_invite;
+    },
+    pending() {
+      return !this.invite
     }
   },
   methods: {
     update_invite(event) {
-      this.invite = !this.invite;
-      this.pending = !this.pending;
-      if (this.invite == true) {
+      // this.invite = !this.invite;
+      // this.pending = !this.pending;
+      if (!this.invite) {
         this.text = "Invite";
         this.invited.splice(this.invited.indexOf(this.classroom.uid), 1);
       } else {
@@ -144,16 +159,16 @@ export default {
     },
     upload() {
       var self = this;
-      var payload = {"invited": this.invited}
+      var payload = { invited: this.invited };
       firebase.auth().onAuthStateChanged(user => {
         if (user) {
           const db = firebase.firestore();
           db.collection("employers")
             .doc(user.uid)
-            .set( payload, {merge: true });
+            .set(payload, { merge: true });
         }
       });
-      return true
+      return true;
     },
     check_invited() {}
   },
@@ -162,13 +177,6 @@ export default {
       if (!value) return "";
       value = value.toString();
       return value.charAt(0).toUpperCase() + value.slice(1);
-    }
-  },
-  created() {
-    console.log(this.invited.indexOf(this.classroom.uid))
-    if(this.invited.indexOf(this.classroom.uid) > -1) {
-      this.invite = false;
-      this.pending = true;
     }
   }
 };
