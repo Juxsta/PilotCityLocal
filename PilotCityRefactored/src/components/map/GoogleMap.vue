@@ -109,10 +109,10 @@ export default {
                                         icon: this.marker_icons.teacher
                                       })
             };
-            obj.marker.index = i;
+            obj.marker.key = key; 
             obj.marker.poi = this.markers[i];
             obj.marker.addListener('click', function() {
-              self.$parent.$emit('markerClicked', this.index, this.poi);
+              self.$parent.$emit('markerClicked', this.key, this.poi);
             });
             this.markers_ref.push(obj);
             ht[key] = true;

@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex flex-row">
-  <div class="m-auto p-auto ranking_number">{{number}}</div>
+  <div class="m-auto p-auto ranking_number">{{number + page*10 + 1}}</div>
   <div class="card container col-10 ml-0" :class="{'card__teacher--active':number==active_card}" @click="$emit('teacherCardClicked')">
     <div class="one d-flex flex-row">
       <h2 class="card-title">{{classroom.coursename | capitalize}}</h2>
@@ -126,6 +126,9 @@ export default {
     active_card: {
       required: true
     },
+    page:{
+      required:true
+    }
   },
   methods: {
     update_invite(event) {

@@ -27,6 +27,7 @@ npm <template>
               :key="index"
               :invited="invited"
               :number="index"
+              :page="page"
               :active_card="active_card"
               class="row-12 card-teacher-match"
               @teacherCardClicked="highlight_pin(findbyId(loaded_teachers,classroom.teacher_uid), index)"
@@ -82,7 +83,7 @@ export default {
       gmap_markers: [],
       render: false,
       page: 0,
-      class_size: ["1-10", "11-15", "16-20", "21-25", "26-30"],
+      class_size: ["0-10", "11-15", "16-20", "21-25", "26-30"],
       filtered_class_size: [],
       locations: [
         "Alameda",
@@ -177,9 +178,9 @@ export default {
       }
        if (this.filtered_class_size && this.filtered_class_size.length) {
         key += String(this.filtered_class_size);
-
         // only course name is relavant in this case
-        this.search_options.keys.push("students");
+        this.search_options.keys.push("students.max");
+        this.search_options.keys.push("students.min");
       }
 
       if (this.filtered_courses && this.filtered_courses.length) {
@@ -195,21 +196,21 @@ export default {
       }
       if (this.filtered_locations && this.filtered_locations.length) {
         key += String(this.filtered_locations);
-        this.search_options.keys.push("school_address");
+        this.search_options.keys.push("school_address.city");
         this.search_options.keys.push("school_district");
         this.search_options.keys.push("school_name");
       }
       key = key.replace(/\s,/g, "");
       // if no params is selected from the filter, we return the whil array.
       if (key == "") return this.loaded_classrooms;
-      key = "10";
-      /* ======= Testing Purpose =======
-          console.log(key);
-          console.log(this.search_options.keys)
-      ================================== */
+    
+      // ======= Testing Purpose =======
+        // console.log(key);
+        // console.log(this.search_options.keys)
+      // ==================================
       // fuse.js initialization
       var fuse = new Fuse(this.loaded_classrooms, this.search_options);
-      duplicated_results = fuse.search(key);
+      duplicated_results = fuse.search(key);    
       // uniqueness check
       var ht = {};
       for (var i = 0; i < duplicated_results.length; i++) {
@@ -284,13 +285,20 @@ export default {
 
   created() {
     var self = this;
-    this.$on("markerClicked", function(value, position) {
+    this.$on("markerClicked", function(key, position) {
       self.mapcenter = position;
-      this.page = parseInt(value / 10);
-      var el = document.getElementById(value);
+
+      var index = _.findIndex(this.filter_list, function(cl){
+        return cl.poi == key;
+      })
+      console.log(index)
+      this.page = parseInt(index / 10);
+      var i = index % 10;
+      console.log(i);
+      var el = document.getElementById(i);
       if (el) {
         el.scrollIntoView({ block: "center" });
-        this.active_card = value;
+        this.active_card = i;
       }
     });
     var classIds = [];
@@ -335,7 +343,10 @@ export default {
                     self.loaded_teachers,
                     class_data.teacher_uid
                   ).coordinate;
-
+                  if (class_data["coordinate"] && class_data["coordinate"].lat)
+                    class_data["poi"] = String(class_data["coordinate"]["lat"])
+                      + String(class_data["coordinate"]["lng"]);
+    
                   // console.log(doc.data());
                   self.loaded_classrooms.push(class_data);
                 });
