@@ -1,17 +1,25 @@
 <template>
     <div class="container-fluid mt-5">
         <div class="d-flex justify-content-center">
-            <h1 class="Raleway solutions-picker-label">Do you have a product and/or service?</h1>
+                <h1 class="Raleway solutions-picker-label">Do you have a product and/or service?</h1>
         </div>
-        <div class="d-flex justify-content-center mt-5">
+        <div class="row justify-content-center mt-5">
+            <div class = "col-md-3 col-sm-12 pl-5 pb-4">
                 <button class="btn button-square solutions-picker-btn color-blue" 
                 data-toggle="buttons" 
                 @click="employer_data.isProduct = !employer_data.isProduct"
                 :class="{border_gray:employer_data.isProduct}">Product</button>
-                <button class="btn button-square solutions-picker-btn color-yellow" data-toggle="buttons"
+            </div>
+            <div class = "col-md-3 col-sm-12 pl-5 pb-4">
+                 <button class="btn button-square solutions-picker-btn color-yellow" data-toggle="buttons"
                  @click="employer_data.isService = !employer_data.isService"
                  :class="{border_gray:employer_data.isService}">Service</button>
+            </div>
+                
         </div>
+
+
+        
         <next_button
             route='w_employer_solution_keywords'
             :conditions="conditions"
