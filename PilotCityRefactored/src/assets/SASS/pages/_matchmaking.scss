@@ -1,5 +1,6 @@
 @import "@/assets/SASS/utils/_variables.scss";
-$popover-max-width: 1000px;
+
+$primary: $purple;
 
 .filter__button {
     width: 125px;
@@ -15,11 +16,11 @@ $popover-max-width: 1000px;
     border: solid 1px #dbdcde;
     cursor: pointer;
     &:hover {
-        background-color: $purple;
-        border: solid 1px $purple;
+        background-color: $primary;
+        border: solid 1px $primary;
     }
     &:active {
-      background-color: $purple;
+      background-color: $primary;
       border: none;
   }
   }

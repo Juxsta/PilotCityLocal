@@ -1,62 +1,49 @@
 <template>
   <div v-if="render">
     <!-- random -->
-<<<<<<< HEAD
-    <div class="entire-box d-flex flex-row">
+    <div class="entire-box d-flex flex-row" id="topresult">
       <div class="d-flex col-7 justify-content-center m-0 p-0">
         <div class="leftside justify-content-center flex-column d-flex col-12 p-0 m-0">
-          <div class="filter-bar justify-content-center d-flex flex-row container">
-            <mm_filter :options="courses" :selected_options="filtered_courses" name="Courses"/>
-=======
-    <div class="entire-box d-flex flex-row" >
-      <div class="d-flex col-7 justify-content-center m-0 p-0" >
-      
-        <div class="leftside justify-content-center flex-column d-flex col-12 p-0 m-0" >
           <div class="filter-bar justify-content-center d-flex flex-row">
-            <mm_filter
-              :options="courses"
-              :selected_options="filtered_courses"
-              name="Courses"
-            />
->>>>>>> acbc7b2a61429cb4d9f2d0e06601a65808216571
+            <mm_filter :options="courses" :selected_options="filtered_courses" name="Courses"/>
             <mm_filter :options="skills" :selected_options="filtered_skills" name="Skills"/>
             <mm_filter :options="grades" :selected_options="filtered_grades" name="Grades"/>
             <mm_filter :options="locations" :selected_options="filtered_locations" name="Location"/>
-            <!-- <mm_filter_skills
-              :options="skills"
-              :selected_options="selected_skills"
+            <mm_filter
+              :options="class_size"
+              :selected_options="filtered_class_size"
               name="Class Size"
-            />-->
+            />
           </div>
 
-          <div class="cardstock" >
-            <h2 class="text-classroom-matches">100+ Classrooms Recommended</h2>
+          <div class="cardstock">
+            <h2 class="text-classroom-matches" id>100+ Classrooms Recommended</h2>
             <mm_teacher_card
               v-if="loaded_teachers[index]"
               :invited="invited"
               :classroom="classroom"
               :teacher="findbyId(loaded_teachers,classroom.teacher_uid)"
-              v-for="(classroom,index) in loaded_classrooms"
+              v-for="(classroom,index) in render_class"
               :key="index"
               class="row-12 card-teacher-match"
               @teacherCardClicked="highlight_pin(findbyId(loaded_teachers,classroom.teacher_uid))"
             />
-            <b-btn @click="filter_list" class="prevpage__btn justify-content-start">Previous</b-btn>
-            <b-btn @click="filter_list" class="nextpage__btn justify-content-end">Next</b-btn>
+            <b-btn
+              class="prevpage__btn justify-content-start"
+              @click="page=(page>0)?page-1:page"
+            >Previous</b-btn>
+            <b-btn
+              class="nextpage__btn justify-content-end"
+              @click="page=page+1"
+              v-scroll-to="'#topresult'"
+            >Next</b-btn>
           </div>
         </div>
       </div>
-<<<<<<< HEAD
       <div class="google-maps container col-5 m-0 p-0">
-        <GoogleMap name="test" :addresses="address_arr" :apikey="apikey"></GoogleMap>
-=======
-       <div class="google-maps container col-5 m-0 p-0">
-     
-       <GoogleMap name="test" :map_data=map_data :apikey=apikey :mapcenter=mapcenter> </GoogleMap>
->>>>>>> acbc7b2a61429cb4d9f2d0e06601a65808216571
+        <GoogleMap name="test" :map_data="map_data" :apikey="apikey" :mapcenter="mapcenter"></GoogleMap>
       </div>
     </div>
-    <b-btn @click="filter_list">Refilter</b-btn>
   </div>
 </template>
 
@@ -67,7 +54,6 @@ import _ from "lodash";
 import firebase from "@/firebase/init";
 import mm_filter from "@/components/matchmaking/components/mm_filter.vue";
 import mm_teacher_card from "@/components/matchmaking/components/mm_teacher_card.vue";
-
 import GoogleMap from "@/components/map/GoogleMap";
 import { GEOCODEKEY } from "@/main";
 import "@/assets/SASS/pages/_matchmaking.scss";
@@ -77,16 +63,10 @@ export default {
   data() {
     return {
       apikey: GEOCODEKEY.key,
-<<<<<<< HEAD
-      gmap_prop: {
-        center: { lat: 37.7249, lng: -122.1561 },
-        zoom: 11
-      },
-=======
-      mapcenter: { lat:37.7249, lng:-122.1561 },
->>>>>>> acbc7b2a61429cb4d9f2d0e06601a65808216571
+      mapcenter: { lat: 37.7249, lng: -122.1561 },
       gmap_markers: [],
       render: false,
+      page: 0,
       class_size: ["1-10", "11-15", "16-20", "21-25", "26-30"],
       filtered_class_size: [],
       locations: [
@@ -142,31 +122,24 @@ export default {
       filtered_grades: [],
       filtered_skills: [],
       loaded_classrooms: [],
-      render_classroms: [],
       loaded_teachers: [],
       recmd: [],
-      invited: [],
+      invited: []
     };
   },
   computed: {
-<<<<<<< HEAD
-    address_arr() {
-      var arr = [];
-      var str = "";
-      for (var i = 0; i < this.loaded_teachers.length; i++) {
-        str =
-          this.loaded_teachers[i].school_address.street +
-          "+" +
-          this.loaded_teachers[i].school_address.city +
-          "+" +
-          this.loaded_teachers[i].school_address.state +
-          "+" +
-          this.loaded_teachers[i].school_address.zip;
-        str = str.replace(/\s/g, "+");
-        arr.push(str);
-      }
-      return arr;
-=======
+    render_class() {
+      var to_display = 20; // number of classes to display per page
+      if (
+        this.page * to_display + to_display - this.filter_list.length >
+        to_display
+      )
+        this.page =
+          parseInt((this.filter_list.length - to_display) / to_display) + 1;
+      var min = this.page > 0 ? (this.page - 1) * to_display + to_display : 0;
+      var max = this.page * to_display + to_display;
+      return this.filter_list.slice(min, max);
+    },
     filter_list() {
       var arr_filters = [
         this.filtered_skills,
@@ -193,7 +166,7 @@ export default {
             });
           });
         });
-      })
+      });
     },
     map_data() {
       // the following commented code parse addresses with space to formatted address
@@ -207,9 +180,10 @@ export default {
       //   str = str.replace(/\s/g, '+');
       //   arr.push(str);
       // }
-      var arr = _.filter(this.loaded_teachers, teacher => {return teacher.coordinate});
-      return (arr);
->>>>>>> acbc7b2a61429cb4d9f2d0e06601a65808216571
+      var arr = _.filter(this.loaded_teachers, teacher => {
+        return teacher.coordinate;
+      });
+      return arr;
     }
   },
   components: {
@@ -218,54 +192,6 @@ export default {
     GoogleMap
   },
   methods: {
-    filter_list() {
-      var arr_filters = [
-        this.filtered_skills,
-        this.filtered_locations,
-        this.filtered_courses,
-        this.filtered_grades,
-        this.filtered_class_size
-      ];
-      var self = this;
-      console.log(
-        _.filter(self.loaded_classrooms, clas => {
-          // check through all the classes
-          return arr_filters.every(filter => {
-            // check through each filter
-            return filter.every(item => {
-              //make sure the class has all the filters applied form each filter
-              return (
-                _.some(clas, field => {
-                  if (typeof field == "string")
-                    return field
-                      .trim()
-                      .toLowerCase()
-                      .includes(item.trim().toLowerCase());
-                  return field == item;
-                }) ||
-                _.some(
-                  self.findbyId(self.loaded_teachers, clas.teacher_uid),
-                  field => {
-                    if (typeof field == "string")
-                      return field
-                        .trim()
-                        .toLowerCase()
-                        .includes(item.trim().toLowerCase());
-                    return field == item;
-                    if (field.length || Object.keys(field).length) {
-                      _.some(field, subfield => {
-                        console.log(subfield)
-                        return subfield == item;
-                      });
-                    }
-                  }
-                )
-              );
-            });
-          });
-        })
-      );
-    },
     shuffle(a) {
       for (let i = a.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -278,11 +204,9 @@ export default {
         return obj.uid == uid;
       })[0];
     },
-    highlight_pin(teacher){
-      if (teacher.coordinate)
-        this.mapcenter = teacher.coordinate;
-      else 
-        console.log("This classroom's teacher does not have coordinate!")
+    highlight_pin(teacher) {
+      if (teacher.coordinate) this.mapcenter = teacher.coordinate;
+      else console.log("This classroom's teacher does not have coordinate!");
     }
   },
 
