@@ -4,13 +4,13 @@
   			<router-link to="/">
 				<img id="logo-pilotcity" src="@/assets/images/pilotCitylogo.png" alt="Pilot City Logo">
 		  	</router-link> 
-			<div class="btn-group ml-auto" role="group">
+			<b-navbar-nav class="btn-group ml-auto" role="group">
 				<b-link  :to ="{name : 'ClassPicker'}" v-if="authUser">Wizard</b-link>
 				<b-link :to="{name : 'mm_employer'}" v-if="match_ready">Match</b-link>
 				<Login v-if="!authUser || emailNotVerified" id="component-login" />  
 				<Signup v-if="!authUser || emailNotVerified" id="component-signup" />
 				<Logout  v-if="authUser && !emailNotVerified"/>
-			</div>
+			</b-navbar-nav>
 	</nav>
 </div>
 </template>

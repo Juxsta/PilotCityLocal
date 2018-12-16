@@ -101,40 +101,39 @@ export default {
       ],
       filtered_locations: [],
       courses: [
-        "Computer Science",
-        "Engineering",
-        "Digital Media",
-        "English",
-        "Manufacturing",
-        "Automotive",
-        "Graphic Design",
-        "Videography"
+        // "Computer Science",
+        // "Engineering",
+        // "Digital Media",
+        // "English",
+        // "Manufacturing",
+        // "Automotive",
+        // "Graphic Design",
+        // "Videography"
       ],
       filtered_courses: [],
       skills: [
-        "Manufacturing",
-        "Mapping",
-        "Mixed Reality",
-        "Networking",
-        "Sensors",
-        "Shipping",
-        "Transport",
-        "Virtual Reality",
-        "Country Governance",
-        "Laboratory",
-        "Municipality",
-        "Public Saftey",
-        "Sustainability",
-        "Space",
-        "Artificial Intelligence",
-        "Automotive",
-        "Bioprinting",
-        "Data",
-        "Drones",
-        "Gaming",
-        "Healthcare",
-        "Internet of Things",
-        "Lifestyle"
+        // "Manufacturing",
+        // "Mapping",
+        // "Mixed Reality",
+        // "Networking",
+        // "Sensors",
+        // "Shipping",
+        // "Transport",
+        // "Virtual Reality",
+        // "Country Governance",
+        // "Laboratory",
+        // "Municipality",
+        // "Public Saftey",
+        // "Sustainability",
+        // "Space",
+        // "Artificial Intelligence",
+        // "Automotive",
+        // "Bioprinting",
+        // "Data",
+        // "Drones",
+        // "Gaming",
+        // "Healthcare",
+        // "Internet of Things",
       ],
       filtered_courses: [],
       grades: ["9th Grade", "10th Grade", "11th Grade", "12th Grade"],
@@ -277,7 +276,7 @@ export default {
   created() {
     var self = this;
     this.$on("markerClicked", function(value, position) {
-      console.log(value);
+      // console.log(value);
       self.mapcenter = position;
       this.page = parseInt(value / 10);
       var el = document.getElementById(value);
@@ -297,6 +296,7 @@ export default {
             teacher_querySnapshot.forEach(doc => {
               var teacher_data = doc.data();
               teacher_data["uid"] = doc.id;
+              self.skills.push(teacher_data.selected_skills_keywords)
               self.loaded_teachers.push(teacher_data);
             });
             db.collection("classroom")
@@ -330,6 +330,7 @@ export default {
                   ).coordinate;
 
                   // console.log(doc.data());
+                  self.courses.push(class_data.coursename)
                   self.loaded_classrooms.push(class_data);
                 });
                 var promises = [];
@@ -378,6 +379,13 @@ export default {
                     });
                   self.shuffle(self.loaded_classrooms);
                   self.render = true;
+                  self.skills = _.flattenDeep(self.skills)
+                  self.skills = _.uniq(self.skills)
+                  self.skills = self.skills.filter((skill) => skill)
+                  self.skills = self.skills.sort()
+                  self.courses = _.uniq(self.courses)
+                  self.courses = self.courses.sort()
+                  // console.log(self.skills)
                 });
               });
           });
