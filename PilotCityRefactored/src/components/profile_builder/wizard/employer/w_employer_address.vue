@@ -47,10 +47,10 @@ export default {
         return {
             employer_data: {
                 address: {
-                    street: "",
-                    city: "",
-                    state: "",
-                    zip: "",
+                    street: null,
+                    city: null,
+                    state: null,
+                    zip: null,
                 },
             },
             collection: ['employers']

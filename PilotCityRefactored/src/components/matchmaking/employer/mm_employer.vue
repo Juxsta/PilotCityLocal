@@ -17,7 +17,10 @@ npm <template>
           </div>
 
           <div class="cardstock">
-            <h2 class="text-classroom-matches" id>100+ Classrooms Recommended</h2>
+            <h2 class="text-classroom-matches" id>
+              <span>{{filter_list.length}}</span>
+              <span>+ Classrooms Recommended</span>
+            </h2>
             <mm_teacher_card
               :id="index"
               v-if="loaded_teachers[index]"
@@ -205,8 +208,8 @@ export default {
       if (key == "") return this.loaded_classrooms;
     
       // ======= Testing Purpose =======
-        // console.log(key);
-        // console.log(this.search_options.keys)
+      // console.log(key);
+      // console.log(this.search_options.keys)
       // ==================================
       // fuse.js initialization
       var fuse = new Fuse(this.loaded_classrooms, this.search_options);
