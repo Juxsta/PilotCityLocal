@@ -19,6 +19,7 @@ npm <template>
           <div class="cardstock">
             <h2 class="text-classroom-matches" id>100+ Classrooms Recommended</h2>
             <mm_teacher_card
+              :id="index"
               v-if="loaded_teachers[index]"
               :classroom="classroom"
               :teacher="findbyId(loaded_teachers,classroom.teacher_uid)"
@@ -26,7 +27,8 @@ npm <template>
               :key="index"
               :invited="invited"
               class="row-12 card-teacher-match"
-              @teacherCardClicked="highlight_pin(findbyId(loaded_teachers,classroom.teacher_uid))"
+              :class="{'card__teacher--active':index==active_card}"
+              @teacherCardClicked="highlight_pin(findbyId(loaded_teachers,classroom.teacher_uid), index)"
             />
             <b-btn
               class="prevpage__btn justify-content-start"
@@ -58,18 +60,20 @@ import GoogleMap from "@/components/map/GoogleMap";
 import { GEOCODEKEY } from "@/main";
 import "@/assets/SASS/pages/_matchmaking.scss";
 import Fuse from "fuse.js";
+import { createECDH } from 'crypto';
 export default {
   name: "mm_employer",
   data() {
     return {
       allClasses: null,
+      active_card: null,
       apikey: GEOCODEKEY.key,
       search_options: {
         shouldSort: true,
         threshold: 0.6,
         location: 0,
         distance: 100,
-        maxPatternLength: 32,
+        maxPatternLength: 40,
         minMatchCharLength: 1,
         keys: []
       },
@@ -257,14 +261,29 @@ export default {
         return obj.uid == uid;
       })[0];
     },
-    highlight_pin(teacher) {
+    highlight_pin(teacher, index) {
+      if (this.active_card == index)
+        this.active_card = -1;
+      else
+        this.active_card = index;
       if (teacher.coordinate) this.mapcenter = teacher.coordinate;
       else console.log("This classroom's teacher does not have coordinate!");
     }
   },
 
   created() {
+
     var self = this;
+    this.$on("markerClicked", function(value, position){
+      self.mapcenter = position;
+      this.page = parseInt(value / 10);
+      var el = document.getElementById(value)
+      if (el)
+      {
+        el.scrollIntoView();
+        this.active_card = value;
+      }
+    });
     var classIds = [];
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
@@ -364,5 +383,9 @@ export default {
 </script>
 
 
-<style lang="scss">
+<style >
+
+body{
+  overflow: hidden;
+}
 </style>

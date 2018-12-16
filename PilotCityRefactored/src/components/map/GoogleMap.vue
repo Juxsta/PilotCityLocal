@@ -93,12 +93,14 @@ export default {
         var pin_promises = [];
         var key;
         this.markers_ref = [];
+        var self = this;
         for (var i = 0; i < this.markers.length; i++)
         {
           key = String(this.markers[i].lat) + String(this.markers[i].lng);
           if(!ht[key])
           {
             var obj = {
+              index: i,
               key: key,
               marker: 
               new google.maps.Marker({  position: this.markers[i],
@@ -107,6 +109,11 @@ export default {
                                         icon: this.marker_icons.teacher
                                       })
             };
+            obj.marker.index = i;
+            obj.marker.poi = this.markers[i];
+            obj.marker.addListener('click', function() {
+              self.$parent.$emit('markerClicked', this.index, this.poi);
+            });
             this.markers_ref.push(obj);
             ht[key] = true;
           } else {

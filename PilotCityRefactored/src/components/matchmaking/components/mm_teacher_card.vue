@@ -114,7 +114,7 @@ export default {
     invited: {
       required: false,
       type: Array
-    }
+    },
   },
   methods: {
     update_invite(event) {
