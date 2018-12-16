@@ -1,4 +1,4 @@
-<template>
+npm <template>
   <div v-if="render">
     <!-- random -->
     <div class="entire-box d-flex flex-row" >
