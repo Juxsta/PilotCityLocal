@@ -1,12 +1,9 @@
 <template>
   <div class="card container" @click="$emit('teacherCardClicked')">
     <div class="one d-flex flex-row h-25">
-      <i
-        class="material-icons justify-content-center pt-2 px-3"
-        id="favorite_border"
-      >favorite_border</i>
       <h2 class="card-title">{{classroom.coursename | capitalize}}</h2>
-      <div class="mt-4">
+
+      <div class="mt-3">
         <button
           @click="hover=false;update_invite()"
           :class="{'action-button':invite, 'action-button-pending':pending}"
@@ -14,6 +11,7 @@
         <!-- place holder button -->
         <!--Place holder [x]  -->
       </div>
+      <i class="material-icons justify-content-center pt-2 px-3" id="favorite_border">favorite_border</i>
     </div>
 
     <div class="two d-flex flex-row">

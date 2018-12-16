@@ -89,7 +89,7 @@ export default {
         "Engineering",
         "Digital Media",
         "English",
-        "Manufcturing",
+        "Manufacturing",
         "Automotive",
         "Graphic Design",
         "Videography"
@@ -108,7 +108,7 @@ export default {
         "Laboratory",
         "Municipality",
         "Public Saftey",
-        "Sustainibility",
+        "Sustainability",
         "Space",
         "Artificial Intelligence",
         "Automotive",
