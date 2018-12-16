@@ -6,9 +6,11 @@
         id="favorite_border"
       >favorite_border</i>
       <h2 class="card-title">{{classroom.coursename | capitalize}}</h2>
-      <div class="card-buttons">
-        <i class="material-icons justify-content-center pt-2 px-3" id="email">email</i>
-        <button @click="message()" class="action-button mt-3">Accept</button>
+      <div class="mt-4">
+        <button
+          @click="hover=false;update_invite()"
+          :class="{'action-button':invite, 'action-button-pending':pending}"
+        >{{text}}</button>
         <!-- place holder button -->
         <!--Place holder [x]  -->
       </div>
@@ -36,7 +38,7 @@
             v-for="(grade,index) in classroom.Grade"
             :key="index"
           >
-            <li>{{grade + 'th'}}</li>
+            <span>{{grade + 'th'}}</span>
             <span v-if="index != classroom.Grade.length-1">{{" "}}</span>
           </h4>
         </div>
@@ -81,11 +83,14 @@
 </template>
 
 <script>
-
+import "@/assets/SASS/components/_mm_teacher_card.scss";
 // import tagging from @/components
 export default {
   data() {
     return {
+      invite: true,
+      pending: false,
+      text: "Invite",
       tags: [ "tag__skills--red",
 "tag__skills--green",
 "tag__skills--orange",
@@ -93,14 +98,35 @@ export default {
 "tag__skills--purple",
 "tag__skills--pink",
 "tag__skills--blue"]
-    }
+    };
   },
+      
   props: {
     classroom: {
       required: true
     },
     teacher: {
       required: true
+    },
+    invited: {
+      required: true,
+      type: Array
+    }
+  },
+  methods: {
+    update_invite(event) {
+      this.invite = !this.invite;
+      this.pending = !this.pending;
+      if (this.invite == true) {
+        this.text = "Invite";
+        this.invited.splice(this.invited.indexOf(this.classroom.uid),1);
+      } else {
+        this.text = "Invited";
+        this.invited.push(this.classroom.uid);
+      }
+    },
+    check_invited(){
+      
     }
   },
   methods:{
@@ -115,21 +141,6 @@ export default {
       return value.charAt(0).toUpperCase() + value.slice(1);
     }
   },
-  created(){
-
-  }
+  created() {}
 };
 </script>
-
-<style lang="scss" scoped>
-
-
-// temporarily
-li {
-  display: inline-block;
-}
-
-// .card-buttons{
-//   padding-left: 125px
-// }
-</style>
