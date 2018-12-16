@@ -145,32 +145,37 @@ export default {
       this.search_options.keys = [];
         // pull all the parameters from the filter, concatenate them into a string called 'key' //
         // only search for relavant keys based on the difference of params 
+      if (this.filtered_grades && this.filtered_grades.length)
+      {
+        key +=  String(this.filtered_grades);
+        this.search_options.keys.push("Grade");
+        key = key.replace(/th/g, '');
+        key = key.replace(/Grade/g, '');
+      }
       if (this.filtered_courses && this.filtered_courses.length){
         key += String(this.filtered_courses);
         // only course name is relavant in this case
         this.search_options.keys.push("coursename");  
       }
-      if (this.filtered_grades && this.filtered_grades.length)
-      {
-        key += " " + String(this.filtered_grades);
-        this.search_options.keys.push("Grade");
-      }
+      
       if (this.filtered_skills && this.filtered_skills.length)
       {
-         key += " " + String(this.filtered_skills);
+         key += String(this.filtered_skills);
         this.search_options.keys.push("selected_skills_keywords");
         this.search_options.keys.push("selected_industry_keywords");
       }
       if (this.filtered_locations && this.filtered_locations.length)
       {
-        key += " " + String(this.filtered_locations);
+        key += String(this.filtered_locations);
         this.search_options.keys.push("school_address");
         this.search_options.keys.push("school_district");
         this.search_options.keys.push("school_name");
       }
+      key = key.replace(/\s,/g, '')
       // if no params is selected from the filter, we return the whil array.
       if (key == "")
         return (this.loaded_classrooms);
+
       /* ======= Testing Purpose =======
           console.log(key);
           console.log(this.search_options.keys)
@@ -211,7 +216,7 @@ export default {
       //   str = str.replace(/\s/g, '+');
       //   arr.push(str);
       // }
-      var arr = _.filter(this.loaded_teachers, teacher => {return teacher.coordinate});
+      var arr = _.filter(this.filter_list, teacher => {return teacher.coordinate});
       return (arr);
     }
   },
@@ -314,6 +319,8 @@ export default {
                   class_data["school_name"]=self.findbyId(self.loaded_teachers,class_data.teacher_uid).school_name
                   class_data["selected_industry_keywords"]=self.findbyId(self.loaded_teachers,class_data.teacher_uid).selected_industry_keywords
                   class_data["selected_skills_keywords"]=self.findbyId(self.loaded_teachers,class_data.teacher_uid).selected_skills_keywords
+                   class_data["coordinate"]=self.findbyId(self.loaded_teachers,class_data.teacher_uid).coordinate;
+                  
                   // console.log(doc.data());
                   self.loaded_classrooms.push(class_data);
                 });
