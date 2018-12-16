@@ -10,7 +10,6 @@
         <i class="material-icons justify-content-center pt-2 px-3" id="email">email</i>
         <button @click="message()" class="action-button mt-3">Accept</button>
         <!-- place holder button -->
-        <i class="material-icons action-button-decline pl-3">clear</i>
         <!--Place holder [x]  -->
       </div>
     </div>

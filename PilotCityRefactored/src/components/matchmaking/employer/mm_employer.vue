@@ -5,7 +5,7 @@
       <div class="d-flex col-7 justify-content-center m-0 p-0" >
       
         <div class="leftside justify-content-center flex-column d-flex col-12 p-0 m-0" >
-          <div class="filter-bar justify-content-center d-flex flex-row container">
+          <div class="filter-bar justify-content-center d-flex flex-row">
             <mm_filter
               :options="courses"
               :selected_options="filtered_courses"
@@ -25,8 +25,8 @@
             />-->
           </div>
 
-          <div class="cardstock container" >
-            <h2 class="text-classroom-matches row">100+ Classrooms Recommended</h2>
+          <div class="cardstock" >
+            <h2 class="text-classroom-matches">100+ Classrooms Recommended</h2>
             <mm_teacher_card
               v-if="loaded_teachers[index]"
               :classroom="classroom"
@@ -138,8 +138,25 @@ export default {
         this.filtered_grades,
         this.filtered_class_size
       ];
-     return
-      
+      var self = this;
+
+      return _.filter(self.loaded_classrooms, clas => {
+        // check through all the classes
+        return arr_filters.every(filter => {
+          // check through each filter
+          return filter.every(item => {
+            //make sure the class has all the filters applied form each filter
+            return _.some(clas, field => {
+              if (typeof field == "string")
+                return field
+                  .trim()
+                  .toLowerCase()
+                  .includes(item.trim().toLowerCase());
+              else return field == item;
+            });
+          });
+        });
+      })
     },
     map_data() {
       // the following commented code parse addresses with space to formatted address

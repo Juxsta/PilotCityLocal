@@ -1,13 +1,7 @@
 <template>
   <div>
-<<<<<<< HEAD
     <b-btn class="filter__button" :id="'PopoverFilter' + name">{{name}}</b-btn>
     <b-popover :target="'PopoverFilter' + name" placement="bottom">
-=======
-    <b-btn class="filter__button" :id="'PopoverFilter' + Name">{{Name}}</b-btn>
-
-    <b-popover :target="'PopoverFilter' + Name" placement="bottom">
->>>>>>> 74fdb585153e25342df94f1f00da9b3b93c9509d
       <div class="container">
         <b-form-group label>
           <b-form-checkbox-group
@@ -16,7 +10,7 @@
             @input="updateSelected"
             name="filter"
             :options="options"
-            :style="{'overflow-y':'auto'}"
+            :style="{'overflow-y':'hidden'}"
           ></b-form-checkbox-group>
         </b-form-group>
       </div>

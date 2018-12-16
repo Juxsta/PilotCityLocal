@@ -30,6 +30,7 @@ $popover-max-width: 1000px;
   color: #939597;
   font-weight: 700;
   margin: 30px auto 15px auto;
+  text-align: center;
 }
 
 .tag__skills {
@@ -241,7 +242,7 @@ $popover-max-width: 1000px;
 }
 
 .leftside {
-  background-color: #fdd25a;
+  background-color: white;
   height: 100vh;
 //   overflow: scroll;
 }
@@ -249,12 +250,29 @@ $popover-max-width: 1000px;
 .filter-bar {
   background-color: #ffffff;
   height: 75px;
+  z-index: 2;
+  -moz-box-shadow:0px 3px 2px lightgrey;
+  -webkit-box-shadow:0px 3px 2px lightgrey;
+  box-shadow:0px 2px 2px lightgrey;
 }
 
 .cardstock {
+  width: 100%;
   background-color: #ffffff;
   height: 100%;
   overflow: scroll;
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+  }
+  &::-webkit-scrollbar-thumb {
+    background: rgb(207, 207, 207); 
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    background: rgb(167, 167, 167); 
+  }  
 }
 
 .card {
@@ -317,13 +335,6 @@ $popover-max-width: 1000px;
   background-color: #3c9ccc;
 }
 
-<<<<<<< HEAD
-//bootstrap imports
-
-.card-teacher-match{
-  cursor: pointer;
-}
-=======
 .nextpage__btn {
   width: 150px;
   height:50px;
@@ -349,4 +360,3 @@ $popover-max-width: 1000px;
 }
 
 //bootstrap imports
->>>>>>> 74fdb585153e25342df94f1f00da9b3b93c9509d

@@ -12,6 +12,7 @@ export default {
           map: null,
           markers: null,
           markers_ref: null,
+          last_marker: null
       }
   },
   watch:{
@@ -20,12 +21,10 @@ export default {
       var key = String(this.mapcenter.lat) + String(this.mapcenter.lng)
 
       var i = _.findIndex(this.markers_ref, ref => {return ref.key == key});
-      // for ( var i = 0; i < this.markers_ref.length; i++)
-      // {
-      //   if (this.markers_ref[i].key == key)
-      //     console.log(i);
-      // }
-      console.log(i);
+      if (this.last_marker)
+        this.last_marker.setIcon('https://firebasestorage.googleapis.com/v0/b/pilotcity-firestore.appspot.com/o/add-label-button.png?alt=media&token=5f3e240e-1b9d-41dc-92bb-aaf6baac24e2')
+      this.markers_ref[i].marker.setIcon('https://firebasestorage.googleapis.com/v0/b/pilotcity-firestore.appspot.com/o/active_marker%20(1).png?alt=media&token=72a11cb1-c853-41d7-bcbe-a9e75aeb8104')
+      this.last_marker = this.markers_ref[i].marker;
     }
   },
   mounted: function () {
