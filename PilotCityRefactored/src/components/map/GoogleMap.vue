@@ -10,11 +10,29 @@ export default {
   props: ['name', 'map_data', 'apikey', 'mapcenter'],
   data() {
       return{
+          mapname: this.name + "-map",
           map: null,
           markers: null,
           markers_ref: null,
           last_marker: null,
-          e_marker: null
+          e_marker: null,
+          marker_icons: {
+            selected: { url: 'https://firebasestorage.googleapis.com/v0/b/pilotcity-firestore.appspot.com/o/Asset%208%20(1).svg?alt=media&token=17b78b70-ed65-4dc3-8932-6629b7a5b627',
+                        labelOrigin: new google.maps.Point(25, 19),
+                        scaledSize: new google.maps.Size(50, 50)},
+            teacher_home: {  url: 'https://firebasestorage.googleapis.com/v0/b/pilotcity-firestore.appspot.com/o/Asset%2010.svg?alt=media&token=db53f2dd-1f93-4e44-8304-c3d5199f06f1',
+                        labelOrigin: new google.maps.Point(25, 19),
+                        scaledSize: new google.maps.Size(50, 50)},
+            teacher: {  url: 'https://firebasestorage.googleapis.com/v0/b/pilotcity-firestore.appspot.com/o/Asset%2011.svg?alt=media&token=6294fa37-a527-4ff5-a5cb-a73d6f351d41',
+                        labelOrigin: new google.maps.Point(25, 19),
+                        scaledSize: new google.maps.Size(50, 50)},
+            employer: { url: 'https://firebasestorage.googleapis.com/v0/b/pilotcity-firestore.appspot.com/o/Asset%2012.svg?alt=media&token=d0ccdb03-d05e-44c0-83af-d5d7e296048f',
+                        labelOrigin: new google.maps.Point(25, 19),
+                        scaledSize: new google.maps.Size(50, 50)},
+            employer_home: { url: 'https://firebasestorage.googleapis.com/v0/b/pilotcity-firestore.appspot.com/o/Asset%209.svg?alt=media&token=8abd1ed4-5b61-4d2e-8730-47103a472dc3',
+                        labelOrigin: new google.maps.Point(25, 19),
+                        scaledSize: new google.maps.Size(50, 50)},                                   
+          }
       }
   },
   watch:{
@@ -24,8 +42,8 @@ export default {
 
       var i = _.findIndex(this.markers_ref, ref => {return ref.key == key});
       if (this.last_marker)
-        this.last_marker.setIcon('https://firebasestorage.googleapis.com/v0/b/pilotcity-firestore.appspot.com/o/add-label-button.png?alt=media&token=5f3e240e-1b9d-41dc-92bb-aaf6baac24e2')
-      this.markers_ref[i].marker.setIcon('https://firebasestorage.googleapis.com/v0/b/pilotcity-firestore.appspot.com/o/active_marker%20(1).png?alt=media&token=72a11cb1-c853-41d7-bcbe-a9e75aeb8104')
+        this.last_marker.setIcon(this.marker_icons.teacher);
+      this.markers_ref[i].marker.setIcon(this.marker_icons.selected)
       this.last_marker = this.markers_ref[i].marker;
     },
     map_data: function(){
@@ -54,19 +72,19 @@ export default {
     }
     this.map = new google.maps.Map(element, options);
     this.pinAllClassroomsOnMap(this.map);
-        db.firestore().collection('employers').doc(db.auth().currentUser.uid).get().then(res => {
-        console.log(db.auth().currentUser.uid)
-        var coordinate;
-        if (res.data())
-          coordinate = res.data().coordinate;
-        if (coordinate){
-          self.e_marker = new google.maps.Marker({  position: coordinate,
-                                        map: this.map,
-                                        icon: 'https://firebasestorage.googleapis.com/v0/b/pilotcity-firestore.appspot.com/o/active_marker.png?alt=media&token=369977bd-2457-4f4d-9f7f-2c9a0b60030b'
-                                      });
-        } else {
-          console.log("Looks like you are homeless ; (");
-        }
+      db.firestore().collection('employers').doc(db.auth().currentUser.uid).get().then(res => {
+      //console.log(db.auth().currentUser.uid)
+      var coordinate;
+      if (res.data())
+        coordinate = res.data().coordinate;
+      if (coordinate){
+        self.e_marker = new google.maps.Marker({  position: coordinate,
+                                      map: this.map,
+                                      icon: this.marker_icons.employer_home
+                                    });
+      } else {
+        console.log("Looks like you are homeless ; (");
+      }
     });
   },
    methods:{
@@ -85,8 +103,8 @@ export default {
               marker: 
               new google.maps.Marker({  position: this.markers[i],
                                         map: map,
-                                        label: {text: (i + 1) + "", color: "white"},
-                                        icon: 'https://firebasestorage.googleapis.com/v0/b/pilotcity-firestore.appspot.com/o/add-label-button.png?alt=media&token=5f3e240e-1b9d-41dc-92bb-aaf6baac24e2'
+                                        label: {text: (i + 1) + "", color: "white", fontWeight: 'bold'},
+                                        icon: this.marker_icons.teacher
                                       })
             };
             this.markers_ref.push(obj);
@@ -129,12 +147,6 @@ export default {
       });
     }
    }
-  ,
-  data: function () {
-    return {
-      mapname: this.name + "-map",
-    }
-  }
 };
 </script>
 <style scoped>
