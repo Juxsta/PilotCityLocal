@@ -5,13 +5,16 @@
 
       <div class="mt-3">
         <button
-          @click="hover=false;update_invite()"
+          @click="update_invite()"
           :class="{'action-button':invite, 'action-button-pending':pending}"
         >{{text}}</button>
         <!-- place holder button -->
         <!--Place holder [x]  -->
       </div>
-      <i class="material-icons justify-content-center pt-2 px-3" id="favorite_border">favorite_border</i>
+      <i
+        class="material-icons justify-content-center pt-2 px-3"
+        id="favorite_border"
+      >favorite_border</i>
     </div>
 
     <div class="two d-flex flex-row">
@@ -82,23 +85,25 @@
 
 <script>
 import "@/assets/SASS/components/_mm_teacher_card.scss";
-// import tagging from @/components
+
 export default {
   data() {
     return {
       invite: true,
       pending: false,
       text: "Invite",
-      tags: [ "tag__skills--red",
-              "tag__skills--green",
-              "tag__skills--orange",
-              "tag__skills--yellow",
-              "tag__skills--purple",
-              "tag__skills--pink",
-              "tag__skills--blue"]
+      tags: [
+        "tag__skills--red",
+        "tag__skills--green",
+        "tag__skills--orange",
+        "tag__skills--yellow",
+        "tag__skills--purple",
+        "tag__skills--pink",
+        "tag__skills--blue"
+      ]
     };
   },
-      
+
   props: {
     classroom: {
       required: true
@@ -117,20 +122,13 @@ export default {
       this.pending = !this.pending;
       if (this.invite == true) {
         this.text = "Invite";
-        this.invited.splice(this.invited.indexOf(this.classroom.uid),1);
+        this.invited.splice(this.invited.indexOf(this.classroom.uid), 1);
       } else {
         this.text = "Invited";
         this.invited.push(this.classroom.uid);
       }
     },
-    check_invited(){
-      
-    }
-  },
-  methods:{
-    message(){
-
-    }
+    check_invited() {}
   },
   filters: {
     capitalize: function(value) {
