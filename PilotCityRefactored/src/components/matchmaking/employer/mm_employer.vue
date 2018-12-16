@@ -26,8 +26,10 @@ npm <template>
               v-for="(classroom,index) in render_class"
               :key="index"
               :invited="invited"
+              :number="index"
+              :page="page"
+              :active_card="active_card"
               class="row-12 card-teacher-match"
-              :class="{'card__teacher--active':index==active_card}"
               @teacherCardClicked="highlight_pin(findbyId(loaded_teachers,classroom.teacher_uid), index)"
             />
             <b-btn
@@ -189,10 +191,10 @@ export default {
       // if no params is selected from the filter, we return the whil array.
       if (key == "") return this.loaded_classrooms;
 
-      /* ======= Testing Purpose =======
+      // ======= Testing Purpose =======
           console.log(key);
           console.log(this.search_options.keys)
-      ================================== */
+      // ==================================
       // fuse.js initialization
       var fuse = new Fuse(this.loaded_classrooms, this.search_options);
       duplicated_results = fuse.search(key);
@@ -272,6 +274,7 @@ export default {
   created() {
     var self = this;
     this.$on("markerClicked", function(value, position) {
+      console.log(value);
       self.mapcenter = position;
       this.page = parseInt(value / 10);
       var el = document.getElementById(value);

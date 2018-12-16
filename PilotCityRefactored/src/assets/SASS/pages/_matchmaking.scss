@@ -32,6 +32,10 @@ $primary: $purple;
     }
   }
   
+  .card__teacher--active {
+    border: solid 2px $primary!important;
+    box-sizing: border-box;
+  }
   @mixin scrollbar__fancy {
     &::-webkit-scrollbar {
       width: 8px;
