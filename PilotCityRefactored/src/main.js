@@ -5,11 +5,13 @@ import swal from 'sweetalert'
 import BootstrapVue from "bootstrap-vue"
 //import * as VueGoogleMaps from 'vue2-google-maps'
 import { store } from './store/store'
-
 import "bootstrap-vue/dist/bootstrap-vue.css"
+import vueScrollto from 'vue-scrollto'
 
+Vue.use(vueScrollto)
 Vue.use(BootstrapVue)
 Vue.config.productionTip = false
+
 
 export const GEOCODEKEY = {key: "AIzaSyDfuNr3RaCZkituTfoB7b7pR2u2rWuraWE"}; 
 export const bus = new Vue();
