@@ -64,8 +64,6 @@ export default {
     return {
       allClasses: null,
       apikey: GEOCODEKEY.key,
-<<<<<<< HEAD
-=======
       search_options: {
         shouldSort: true,
         threshold: 0.6,
@@ -75,7 +73,6 @@ export default {
         minMatchCharLength: 1,
         keys: []
       },
->>>>>>> 20ec66f54f1f67114da1d087740f4ac4101cdb8f
       mapcenter: { lat:37.7249, lng:-122.1561 },
       gmap_markers: [],
       render: false,
