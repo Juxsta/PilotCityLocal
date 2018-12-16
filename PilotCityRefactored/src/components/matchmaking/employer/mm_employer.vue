@@ -280,7 +280,7 @@ export default {
       var el = document.getElementById(value)
       if (el)
       {
-        el.scrollIntoView();
+        el.scrollIntoView({block: "center"});
         this.active_card = value;
       }
     });
