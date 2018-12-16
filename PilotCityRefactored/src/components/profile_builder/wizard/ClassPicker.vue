@@ -1,12 +1,18 @@
 <template>
   <div class="container-fluid mt-5">
-    <div class="d-flex justify-content-center">
+    <div class="d-flex justify-content-center pb-5">
       <h1 class="Raleway class-picker-label">Who are you?</h1>
     </div>
-    <div class="d-flex justify-content-center mt-5">
-      <button class="btn button-square class-picker-btn color-pink" @click="pickRole(0)">Teacher</button>
-      <button class="btn button-square class-picker-btn color-purple" @click="pickRole(1)">Employer</button>
-      <button class="btn button-square class-picker-btn" @click="pickRole(2)">Student</button>
+    <div class="row justify-content-center ">
+      <div class = "col-md-3 col-sm-12 pb-3">
+        <button class="btn button-square class-picker-btn color-pink" @click="pickRole(0)">Teacher</button>
+      </div>
+      <div class = "col-md-3 col-sm-12 pb-3" >
+        <button class="btn button-square class-picker-btn color-purple" @click="pickRole(1)">Employer</button>
+      </div>
+      <div class = "col-md-3 col-sm-12 pb-3">
+        <button class="btn button-square class-picker-btn" @click="pickRole(2)">Student</button>
+      </div>
     </div>
   </div>
 </template>
@@ -63,8 +69,7 @@ export default {
           this.$router.push({ name: "w_employer_story" });
           break;
         case 2:
-          Prompter().failed("", "Coming Soon");
-          break;
+          
           this.userdata.isEmployer = false;
           this.userdata.isStudent = true;
           this.userdata.isTeacher = false;
@@ -118,4 +123,5 @@ export default {
   border-color: rgb(222, 223, 224) !important;
   outline: none !important;
 }
+
 </style>

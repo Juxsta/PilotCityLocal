@@ -165,4 +165,31 @@ input:focus{
 input.badge-pill.pc-button {
     border:none;
 }
+
+@media only screen and (max-width: 700px){
+#the_best_next_button {
+    position: absolute;
+  bottom: 35px;
+  right: 15px;
+  height: 45px;
+  width: 165px;
+  font-size: 2.5vh;
+  
+}
+}
+@media only screen and (max-width: 700px){
+.prevbtn{
+      position: absolute;
+  bottom: 35px;
+  right: 15px;
+  height: 45px;
+  width: 165px;
+  font-size: 2.5vh;
+
+}
+}
+
+
+
+
 </style>

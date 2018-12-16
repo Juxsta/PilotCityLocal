@@ -3,11 +3,11 @@
             <div id="w_department" class="container mt-5 pt-5">
                 <div class="form-row" v-for="department in employer_data.departments" :key="department.uid">
                     <!-- <i class="material-icons font-weight-bold mr-2" id="delete_department" :class="{first_trash:departments.indexOf(department)==0}" @click="rmThisDepartment(department.uid)">clear</i> -->
-                    <div class="col">
+                    <div class="col-md-9 col-sm-12">
                         <label for="Department_Name" v-if="employer_data.departments.indexOf(department)==0">Department Name</label>
                         <input  type="text" class="form-control" placeholder="Department Name" v-model="department.name">
                     </div>
-                    <div class="col-3">
+                    <div class="col-md-3 col-sm-12">
                         <label for="Team_Size" v-if="employer_data.departments.indexOf(department)==0">Team Size</label>
                         <select class="custom-select" id="select_team" @change ="variableSelect($event,department.team_size)">
                             <option selected value='' v-if="!department.team_size.min">Select</option>
@@ -311,6 +311,7 @@ input::placeholder {
 .dropdown-placeholder{
     font-weight:300;
 }
+
 
 
 </style>
