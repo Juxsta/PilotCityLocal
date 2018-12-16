@@ -22,6 +22,11 @@ $popover-max-width: 1000px;
       background-color: $purple;
       border: none;
   }
+    &:focus {
+      outline: 0;
+      box-shadow: none;
+      -webkit-box-shadow:none;
+    }
   }
   
 .text-classroom-matches {
@@ -31,6 +36,7 @@ $popover-max-width: 1000px;
   font-weight: 700;
   margin: 30px auto 15px auto;
   text-align: center;
+
 
 }
 
@@ -117,9 +123,9 @@ $popover-max-width: 1000px;
   color: #6eba7f;
   font-family: "Raleway";
   font-weight: 700;
-  font-size: 11px;
+  font-size: 12px;
   margin: auto;
-  padding-top: 3px;
+  padding-top: 1px;
 }
 
 .action-button:hover {
@@ -131,9 +137,9 @@ $popover-max-width: 1000px;
   color: #ffffff;
   font-family: "Raleway";
   font-weight: 700;
-  font-size: 11px;
+  font-size: 12px;
   margin: auto;
-  padding-top: 3px;
+  padding-top: 1px;
 }
 
 .action-button:active {
@@ -145,9 +151,9 @@ $popover-max-width: 1000px;
   color: #ffffff;
   font-family: "Raleway";
   font-weight: 700;
-  font-size: 11px;
+  font-size: 12px;
   margin: auto;
-  padding-top: 3px;
+  padding-top: 1px;
 }
 
 .action-button-decline {
@@ -158,9 +164,9 @@ $popover-max-width: 1000px;
   border: 0px;
   margin: auto 20px auto auto;
   color: #ffffff;
-  font-size: 80%;
+  font-size: 12px;
   text-align: center;
-  padding-top: 3px;
+  padding-top: 1px;
   font-weight: 700;
   cursor: pointer;
 }
@@ -171,6 +177,7 @@ $popover-max-width: 1000px;
   height: 17px;
   background-color: #bb3e40;
   border: 0px;
+  font-size: 12px;
   margin: auto 20px auto auto;
 }
 
@@ -180,6 +187,7 @@ $popover-max-width: 1000px;
   height: 17px;
   background-color: #ea6763;
   border: 0px;
+  font-size: 12px;
   margin: auto 20px auto auto;
 }
 
