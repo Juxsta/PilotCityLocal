@@ -33,7 +33,10 @@ npm <template>
               :page="page"
               :active_card="active_card"
               class="row-12 card-teacher-match"
+              :role="role"
+              :flavoredlist="flavored_cards"
               @teacherCardClicked="highlight_pin(findbyId(loaded_teachers,classroom.teacher_uid), index)"
+              @newFlavoredCardAction="doNewFlavoredCardAction"
             />
             <div class="d-flex mm__pagination--row" >
               <b-btn
@@ -72,8 +75,10 @@ export default {
   name: "mm_employer",
   data() {
     return {
+      role: "employers", 
       allClasses: null,
       active_card: null,
+      flavored_cards: [],
       apikey: GEOCODEKEY.key,
       search_options: {
         shouldSort: true,
@@ -267,6 +272,12 @@ export default {
     GoogleMap
   },
   methods: {
+    doNewFlavoredCardAction(uid){
+      if (_.includes(this.flavored_cards, uid))
+        this.flavored_cards = _.filter( this.flavored_cards, card_uid => { return card_uid!= uid})
+      else
+        this.flavored_cards.push(uid);
+    },
     shuffle(a) {
       for (let i = a.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -288,6 +299,9 @@ export default {
   },
 
   created() {
+
+
+
     var self = this;
     this.$on("markerClicked", function(key, position) {
       self.mapcenter = position;
@@ -309,6 +323,10 @@ export default {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         const db = firebase.firestore();
+        db.collection(this.role).doc(user.uid).get().then(doc => {
+          this.flavored_cards = doc.data()["match_making"]["flavored_cards"];
+        });
+
         // console.log(user.uid)
         db.collection("teachers")
           .get()

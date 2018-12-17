@@ -17,9 +17,12 @@
           <!-- place holder button -->
           <!--Place holder [x]  -->
         </div>
+          <!-- stupid heart -->
         <i
           class="material-icons justify-content-center pt-2 px-3"
           id="favorite_border"
+          @click="likeThisCard"
+          :style="{ color : amIFlavored ? '#eca0be' : '#dedfe0'}"
         >favorite_border</i>
       </div>
 
@@ -132,6 +135,13 @@ export default {
     },
     page: {
       required: true
+    },
+    role: {
+      required: true,
+      type: String
+    },
+    flavoredlist: {
+      required: true,
     }
   },
   computed: {
@@ -143,9 +153,34 @@ export default {
     },
     pending() {
       return !this.invite
+    },
+    amIFlavored(){
+      return _.includes(this.flavoredlist, this.classroom.uid);
     }
   },
   methods: {
+    likeThisCard(){
+        var db = firebase.firestore();
+        var self = this;
+        var user_id = firebase.auth().currentUser.uid;
+        var flavored_cards = [];
+        db.collection(this.role).doc(user_id).get().then( doc => {
+          var data = doc.data();
+          flavored_cards = data["match_making"]["flavored_cards"] ;
+          // check if that doc exits or not;
+          if (!Array.isArray(flavored_cards))
+            flavored_cards = []; // if not, intialized it as an array.
+          if (!_.includes(flavored_cards, this.classroom.uid))
+            flavored_cards.push(this.classroom.uid);
+          else
+            flavored_cards = _.filter( flavored_cards, card => { return card != this.classroom.uid})
+  
+          data["match_making"]["flavored_cards"] = flavored_cards;
+          db.collection(this.role).doc(user_id).update(data).then( ()=> {
+            self.$emit('newFlavoredCardAction', self.classroom.uid);
+          });
+        });
+    },
     update_invite(event) {
       // this.invite = !this.invite;
       // this.pending = !this.pending;
