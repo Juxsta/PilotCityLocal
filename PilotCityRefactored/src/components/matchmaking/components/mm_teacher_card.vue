@@ -174,9 +174,11 @@ export default {
             flavored_cards = _.filter( flavored_cards, card => { return card != this.classroom.uid})
   
           data["match_making"]["flavored_cards"] = flavored_cards;
-          db.collection("employers").doc(user_id).update(data).then( ()=> {
+          self.$emit('newFlavoredCardAction', self.classroom.uid);
+          db.collection("employers").doc(user_id).update(data).catch(err => {
             self.$emit('newFlavoredCardAction', self.classroom.uid);
-          });
+            alert(err.message);
+          })
         });
     },
     update_invite(event) {
