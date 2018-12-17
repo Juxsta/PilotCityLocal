@@ -324,7 +324,8 @@ export default {
       if (user) {
         const db = firebase.firestore();
         db.collection(this.role).doc(user.uid).get().then(doc => {
-          this.flavored_cards = doc.data()["match_making"]["flavored_cards"];
+          this.flavored_cards = doc.data()["match_making"]["flavored_cards"]
+          ? doc.data()["match_making"]["flavored_cards"] : [];
         });
 
         // console.log(user.uid)
