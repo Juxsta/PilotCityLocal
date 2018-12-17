@@ -166,10 +166,13 @@ export default {
         var flavored_cards = [];
         db.collection(this.role).doc(user_id).get().then( doc => {
           var data = doc.data();
-          flavored_cards = data["match_making"]["flavored_cards"] ;
-          // check if that doc exits or not;
-          if (!Array.isArray(flavored_cards))
-            flavored_cards = []; // if not, intialized it as an array.
+          if (data &&  data["match_making"] &&  data["match_making"]["flavored_cards"])
+            flavored_cards = data["match_making"]["flavored_cards"] ;
+          else 
+          {
+            flavored_cards = [];
+            data["match_making"] = {}
+          }
           if (!_.includes(flavored_cards, this.classroom.uid))
             flavored_cards.push(this.classroom.uid);
           else
