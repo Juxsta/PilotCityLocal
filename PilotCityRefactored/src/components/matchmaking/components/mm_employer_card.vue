@@ -1,15 +1,15 @@
 <template>
   <div class="d-flex flex-row">
-    <div class="m-auto p-auto ranking_number">{{number + page*10 + 1  }}</div>
+    <div class="m-auto p-auto ranking_number">{{number + page*10 + 1 }}</div>
     <div
       class="card container col-10 ml-0"
       :class="{'card__teacher--active':number==active_card}"
       @click="$emit('teacherCardClicked')"
     >
       <div class="one d-flex flex-row">
-        <h2 class="card-title">{{classroom.coursename | capitalize}}</h2>
+        <h2 class="card-title">{{employer.company_name | capitalize}}</h2>
 
-        <div class="mt-3">
+        <div class="mt-3 ml-auto">
           <button
             @click="update_invite(),upload()"
             :class="{'action-button':invite, 'action-button-pending':pending}"
@@ -25,48 +25,37 @@
 
       <div class="two d-flex flex-row">
         <div class="four ml-5 mr-3 pb-3 justify-content-start">
-          <h4 class="card-subtitle">Teacher</h4>
-          <h4 class="card-subtitle">Grades</h4>
-          <h4 class="card-subtitle">Class Size</h4>
-          <h4 class="card-subtitle">District</h4>
-          <h4 class="card-subtitle">School</h4>
+          <h4 class="card-subtitle">Liason</h4>
+          <h4 class="card-subtitle">Industry</h4>
+          <h4 class="card-subtitle">Sector</h4>
           <h4 class="card-subtitle">Address</h4>
         </div>
         <div class="five">
           <h4 class="card-subtitle-text text">
-            <span>{{teacher.first_name | capitalize}}</span>
+            <span>{{employer.first_name | capitalize}}</span>
             <span>{{" "}}</span>
-            <span>{{teacher.last_name | capitalize}}</span>
+            <span>{{employer.last_name | capitalize}}</span>
           </h4>
-          <!-- Anthony Keithle -->
           <div class="container p-0 d-flex flex-row">
             <h4
               class="card-subtitle-text text row"
-              v-for="(grade,index) in classroom.Grade"
+              v-for="(industry,index) in employer.selected_industry_keywords"
               :key="index"
             >
-              <span>{{grade + 'th'}}</span>
-              <span v-if="index != classroom.Grade.length-1">{{" "}}</span>
+              <span>{{industry}}</span>
+              <span v-if="index != employer.selected_industry_keywords.length-1">{{", "}}</span>
+            </h4>
+          </div>
+          <div>
+            <h4 class="card-subtitle-text text">
+              <span>{{employer.sector | capitalize}}</span>
             </h4>
           </div>
 
-          <!-- 9th, 10th, 11th -->
           <h4 class="card-subtitle-text text">
-            <span>{{classroom.students.min}}</span>
-            <span v-if="classroom.students.max">
-              <span>{{" - "}}</span>
-              <span>{{classroom.students.max}}</span>
-            </span>
-            <span v-else>+</span>
-            <span>{{" Students"}}</span>
-          </h4>
-          <h4 class="card-subtitle-text text">{{teacher.school_district | capitalize}}</h4>
-          <!-- San Leandro Unified -->
-          <h4 class="card-subtitle-text text">{{teacher.school_name | capitalize}}</h4>
-          <h4 class="card-subtitle-text text">
-            <span v-for="(field,index) in Object.keys(teacher.school_address)" :key="index">
-              <span>{{teacher.school_address[field] | capitalize}}</span>
-              <span v-if="index != (Object.keys(teacher.school_address).length-1)">{{", "}}</span>
+            <span v-for="(field,index) in Object.keys(employer.address)" :key="index">
+              <span>{{employer.address[field] | capitalize}}</span>
+              <span v-if="index != (Object.keys(employer.address).length-1)">{{", "}}</span>
             </span>
           </h4>
           <!--  2250 Bancroft Avenue, San Leandro, CA 94577 -->
@@ -80,9 +69,9 @@
             <h4
               placement="bottom"
               :class="tags[Math.floor(Math.random()*Math.floor(7))]"
-              v-for="(skill,index) in teacher.selected_skills_keywords"
+              v-for="(solution,index) in solutions"
               :key="index"
-            >{{skill | capitalize}}</h4>
+            >{{solution | capitalize}}</h4>
             <!-- Javascript C++ iOS  Android -->
           </span>
         </div>
@@ -113,14 +102,12 @@ export default {
   },
 
   props: {
-    classroom: {
-      required: true
-    },
-    teacher: {
-      required: true
+    employer: {
+      required: true,
+      type: Object
     },
     invited: {
-      required: false,
+      required: true,
       type: Array
     },
     number: {
@@ -136,13 +123,21 @@ export default {
   },
   computed: {
     invite() {
-      var in_invite= this.invited.indexOf(this.classroom.uid) == -1
-      if(in_invite)
-        this.text="Invited"
+      var in_invite = this.invited.indexOf(this.employer.uid) == -1;
+      if (in_invite) this.text = "Invited";
       return in_invite;
     },
     pending() {
-      return !this.invite
+      return !this.invite;
+    },
+    solutions() {
+      var arr = [];
+      let employer = this.employer;
+      arr.push(employer.selected_service_keywords);
+      arr.push(employer.selected_product_keywords);
+      arr = _.flattenDeep(arr);
+      arr = _.uniq(arr);
+      return arr;
     }
   },
   methods: {
@@ -151,10 +146,10 @@ export default {
       // this.pending = !this.pending;
       if (!this.invite) {
         this.text = "Invite";
-        this.invited.splice(this.invited.indexOf(this.classroom.uid), 1);
+        this.invited.splice(this.invited.indexOf(this.employer.uid), 1);
       } else {
         this.text = "Invited";
-        this.invited.push(this.classroom.uid);
+        this.invited.push(this.employer.uid);
       }
     },
     upload() {
@@ -163,7 +158,7 @@ export default {
       firebase.auth().onAuthStateChanged(user => {
         if (user) {
           const db = firebase.firestore();
-          db.collection("employers")
+          db.collection("teachers")
             .doc(user.uid)
             .set(payload, { merge: true });
         }

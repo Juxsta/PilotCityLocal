@@ -36,6 +36,7 @@ import w_student_demographic from '@/components/profile_builder/wizard/student/w
 
 import matchmaking from '@/components/matchmaking/matchmaking.vue'
 import mm_employer from '@/components/matchmaking/employer/mm_employer.vue'
+import mm_teacher from '@/components/matchmaking/teacher/mm_teacher.vue'
 Vue.use(Router)
 
 const router = new Router({
@@ -244,6 +245,11 @@ const router = new Router({
           path: 'employer',
           name: 'mm_employer',
           component: mm_employer
+        },
+        {
+          path: 'teacher',
+          name:'mm_teacher',
+          component:mm_teacher
         }
       ]
     }

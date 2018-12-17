@@ -1,6 +1,6 @@
 @import "@/assets/SASS/utils/_variables.scss";
 
-$primary: $purple;
+$primary: $purple !default;
 
 .filter__button {
     width: 125px;
