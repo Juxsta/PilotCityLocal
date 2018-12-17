@@ -4,7 +4,7 @@
     <div
       class="card container col-10 ml-0"
       :class="{'card__teacher--active':number==active_card}"
-      @click="$emit('teacherCardClicked')"
+      @click="$emit('employerCardClicked')"
     >
       <div class="one d-flex flex-row">
         <h2 class="card-title">{{employer.company_name | capitalize}}</h2>

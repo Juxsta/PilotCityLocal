@@ -20,7 +20,7 @@
               <span>+ Classrooms Recommended</span>
             </h2>
             <mm_employer_card
-              v-for="(employer,index) in loaded_employers"
+              v-for="(employer,index) in filter_list"
               :key="index"
               :employer="employer"
               :invited="invited"
@@ -28,6 +28,7 @@
               :page="page"
               :active_card="active_card"
               class="row-12 card-teacher-match"
+              @employerCardClicked="highlight_pin(findbyId(loaded_employers,employer.uid), index)"
             />
             <b-btn
               class="prevpage__btn justify-content-start"
@@ -77,7 +78,6 @@ export default {
         keys: []
       },
       mapcenter: { lat: 37.7249, lng: -122.1561 },
-      gmap_markers: [],
       render: false,
       page: 0,
       industry: ["stuff", "placeholder"],
@@ -109,59 +109,44 @@ export default {
     filter_list() {
       // definition of an unique class array: elements' coursename can't be duplicated, teacher_uid is Ok.
       var key = ""; // the key we use to search, consist of params from filter.
-      var duplicated_results = []; // the result may be duplicate since we have industry with different periods
-      var filtered_result = []; // the final array we return, all classrooms here are unique
+     // var duplicated_results = []; // the result may be duplicate since we have industry with different periods
+     // var filtered_result = []; // the final array we return, all classrooms here are unique
       this.search_options.keys = [];
       // pull all the parameters from the filter, concatenate them into a string called 'key' //
       // only search for relavant keys based on the difference of params
-      if (this.filtered_grades && this.filtered_grades.length) {
-        key += String(this.filtered_grades);
-        this.search_options.keys.push("Grade");
-        key = key.replace(/th/g, "");
-        key = key.replace(/Grade/g, "");
-      }
-
+      
       if (this.filtered_industry && this.filtered_industry.length) {
         key += String(this.filtered_industry);
         // only course name is relavant in this case
-        this.search_options.keys.push("coursename");
-      }
-      if (this.filtered_class_size && this.filtered_class_size.length) {
-        key += String(this.filtered_class_size);
-        // only course name is relavant in this case
-        this.search_options.keys.push("students.max");
-        this.search_options.keys.push("students.min");
-      }
-
-      if (this.filtered_industry && this.filtered_industry.length) {
-        key += String(this.filtered_industry);
-        // only course name is relavant in this case
-        this.search_options.keys.push("coursename");
-      }
-
-      if (this.filtered_skills && this.filtered_skills.length) {
-        key += String(this.filtered_skills);
-        this.search_options.keys.push("selected_skills_keywords");
         this.search_options.keys.push("selected_industry_keywords");
       }
-      if (this.filtered_locations && this.filtered_locations.length) {
-        key += String(this.filtered_locations);
-        this.search_options.keys.push("school_address.city");
-        this.search_options.keys.push("school_district");
-        this.search_options.keys.push("school_name");
+      if (this.filtered_location && this.filtered_location.length) {
+        key += String(this.filtered_location);
+        // only course name is relavant in this case
+        this.search_options.keys.push("address.city");
+      }
+      if (this.filtered_sector  && this.filtered_sector.length) {
+        key += String(this.filtered_sector);
+        this.search_options.keys.push("sector");
+      }
+      if (this.filtered_solutions && this.filtered_solutions.length) {
+        key += String(this.filtered_solutions);
+        this.search_options.keys.push("selected_service_keywords");
+        this.search_options.keys.push("selected_product_keywords");
       }
       key = key.replace(/\s,/g, "");
       // if no params is selected from the filter, we return the whil array.
-      if (key == "") return this.loaded_classrooms;
+      if (key == "") return this.loaded_employers;
 
       // ======= Testing Purpose =======
       // console.log(key);
       // console.log(this.search_options.keys)
       // ==================================
       // fuse.js initialization
-      var fuse = new Fuse(this.loaded_classrooms, this.search_options);
-      duplicated_results = fuse.search(key);
+      var fuse = new Fuse(this.loaded_employers, this.search_options);
+      // employers are unque
       // uniqueness check
+      /*
       var ht = {};
       for (var i = 0; i < duplicated_results.length; i++) {
         if (
@@ -186,8 +171,8 @@ export default {
           );
         }
       }
-
-      return filtered_result;
+      */
+      return fuse.search(key);
     },
     map_data() {
       // the following commented code parse addresses with space to formatted address
@@ -225,11 +210,11 @@ export default {
         return obj.uid == uid;
       })[0];
     },
-    highlight_pin(teacher, index) {
+    highlight_pin(employer, index) {
       if (this.active_card == index) this.active_card = -1;
       else this.active_card = index;
-      if (teacher.coordinate) this.mapcenter = teacher.coordinate;
-      else console.log("This classroom's teacher does not have coordinate!");
+      if (employer.coordinate) this.mapcenter = employer.coordinate;
+      else console.log("This employer does not have coordinate!");
     }
   },
 
@@ -237,7 +222,6 @@ export default {
     var self = this;
     this.$on("markerClicked", function(key, position) {
       self.mapcenter = position;
-
       var index = _.findIndex(this.filter_list, function(cl) {
         return cl.poi == key;
       });

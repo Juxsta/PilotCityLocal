@@ -191,12 +191,6 @@ export default {
         this.search_options.keys.push("students.min");
       }
 
-      if (this.filtered_courses && this.filtered_courses.length) {
-        key += String(this.filtered_courses);
-        // only course name is relavant in this case
-        this.search_options.keys.push("coursename");
-      }
-
       if (this.filtered_skills && this.filtered_skills.length) {
         key += String(this.filtered_skills);
         this.search_options.keys.push("selected_skills_keywords");
@@ -304,7 +298,6 @@ export default {
     var self = this;
     this.$on("markerClicked", function(key, position) {
       self.mapcenter = position;
-
       var index = _.findIndex(this.filter_list, function(cl){
         return cl.poi == key;
       })

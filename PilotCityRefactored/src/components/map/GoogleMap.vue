@@ -82,7 +82,7 @@ export default {
       if (coordinate){
         self.e_marker = new google.maps.Marker({  position: coordinate,
                                       map: self.map,
-                                      icon: (self.role == 'employer') ? self.marker_icons.employer_home : self.marker_icons.teacher_home_home
+                                      icon: (self.role == 'employer') ? self.marker_icons.employer_home : self.marker_icons.teacher_home
                                     });
       } else {
         console.log("Looks like you are homeless ; ( [you dont have an address in our database]");
