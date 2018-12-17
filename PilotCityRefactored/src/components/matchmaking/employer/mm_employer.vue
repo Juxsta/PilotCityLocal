@@ -33,17 +33,22 @@ npm <template>
               :page="page"
               :active_card="active_card"
               class="row-12 card-teacher-match"
+              :role="role"
+              :flavoredlist="flavored_cards"
               @teacherCardClicked="highlight_pin(findbyId(loaded_teachers,classroom.teacher_uid), index)"
+              @newFlavoredCardAction="doNewFlavoredCardAction"
             />
-            <b-btn
+            <div class="d-flex mm__pagination--row" >
+              <b-btn
               class="prevpage__btn justify-content-start"
               @click="page=(page>0)?page-1:page"
             >Previous</b-btn>
             <b-btn
-              class="nextpage__btn justify-content-end"
+              class="nextpage__btn ml-auto"
               @click="page=page+1"
               v-scroll-to="'#topresult'"
             >Next</b-btn>
+            </div>
           </div>
         </div>
       </div>
@@ -70,8 +75,10 @@ export default {
   name: "mm_employer",
   data() {
     return {
+      role: "employers", 
       allClasses: null,
       active_card: null,
+      flavored_cards: [],
       apikey: GEOCODEKEY.key,
       search_options: {
         shouldSort: true,
@@ -89,15 +96,16 @@ export default {
       class_size: ["0-10", "11-15", "16-20", "21-25", "26-30"],
       filtered_class_size: [],
       locations: [
-        "Alameda",
-        "Emeryville",
-        "Fremont",
-        "Hayward",
-        "Mill Valley",
-        "Oakland",
-        "Richmond",
-        "San Leandro",
-        "San Lorenzo"
+        "Alameda, CA",
+        "Berkeley, CA",
+        "Emeryville, CA",
+        "Fremont, CA",
+        "Hayward, CA",
+        "Mill Valley, CA",
+        "Oakland, CA",
+        "Richmond, CA",
+        "San Leandro, CA",
+        "San Lorenzo, CA"
       ],
       filtered_locations: [],
       courses: [
@@ -265,6 +273,12 @@ export default {
     GoogleMap
   },
   methods: {
+    doNewFlavoredCardAction(uid){
+      if (_.includes(this.flavored_cards, uid))
+        this.flavored_cards = _.filter( this.flavored_cards, card_uid => { return card_uid!= uid})
+      else
+        this.flavored_cards.push(uid);
+    },
     shuffle(a) {
       for (let i = a.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -286,6 +300,9 @@ export default {
   },
 
   created() {
+
+
+
     var self = this;
     this.$on("markerClicked", function(key, position) {
       self.mapcenter = position;
@@ -307,6 +324,14 @@ export default {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         const db = firebase.firestore();
+        db.collection(this.role).doc(user.uid).get().then(doc => {
+          if (doc.data() && doc.data()["match_making"] &&
+          doc.data()["match_making"]["flavored_cards"])
+           this.flavored_cards = doc.data()["match_making"]["flavored_cards"];
+          else 
+            this.flavored_cards = [];
+        });
+
         // console.log(user.uid)
         db.collection("teachers")
           .get()

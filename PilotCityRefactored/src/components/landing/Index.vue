@@ -73,6 +73,8 @@ export default {
     #index-btn-employers:hover{
         border: solid 1px white;
     }
+
+
 #index-btn-employers {
         font-family: "Raleway";
         font-size: 20px;
@@ -91,6 +93,8 @@ export default {
     #index-btn-teachers:hover{
         border: solid 1px white;
     }
+
+
     #canvas{
         height:calc(100% - 66px);
         width: 100%;
