@@ -17,30 +17,29 @@
                 <div class="col-auto form-margin">
                     <div class="input-group mb-2 padding">
                         <div class="input-group-prepend">
-                        <div class="input-group-text icon-green">
+                        <div>
                             <i class="material-icons" id="account_circle_login">account_circle</i>
                         </div>
                         </div>
-                        <input type="email" class="form-control form-rounded padding form-active" id="login-input-username" placeholder="Email" v-model="login_input_username">
+                        <input type="email" class="form-active form_active_login" id="login-input-username" placeholder="Enter Email" v-model="login_input_username">
                     </div>
                 </div>
                 <div class="col-auto form-margin">
                     <label class="sr-only" for="inlineFormInputGroup">Password</label>
                     <div class="input-group padding">
                         <div class="input-group-prepend">
-                            <div class="input-group-text icon-green">
+                            <div>
                             <i class="large material-icons" id="lock_login">lock</i>
                             </div>
                         </div>
-                        <input type="password" class="form-control form-rounded padding form-active" id="login-input-password" placeholder="Password" v-model="login_input_password">
+                        <input type="password" class="form-active form_active_login" id="login-input-password" placeholder="Enter Password" v-model="login_input_password">
                     </div>
-                    <div>
-                        <i class="far fa-dizzy mr-auto" style="cursor:pointer" @click="forgotPassword"></i>
-                    </div>
+                   
+                    <div class="forgot_password" style="cursor:pointer" @click="forgotPassword">Forgot Password?</div>
 
                 </div>
                 <div class="d-flex justify-content-center">
-                    <button type="submit" @click.prevent="login" class="btn btn-primary button-regular pc-green model-btn-login">Login</button>    
+                    <button type="submit" @click.prevent="login" class="model-btn-login">Login</button>    
                 </div>
                 <div class="d-flex justify-content-center">
                         <small class="text-danger ml-auto mr-auto" v-if="errormsg">{{errormsg}}</small>

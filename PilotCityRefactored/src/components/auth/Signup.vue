@@ -18,27 +18,27 @@
 
                     <div class="input-group mb-2 padding">
                         <div class="input-group-prepend">
-                        <div class="input-group-text icon-blue">
+                        <div>
                             <i class="material-icons" id="account_circle_signup">account_circle</i>
                         </div>
                         </div>
-                        <input type="email" class="form-control form-rounded padding form-active" id="signup-input-username"  placeholder="Email" v-model="signup_input_username">
+                        <input type="email" class="form-active form_active_signup" id="signup-input-username"  placeholder="Enter Email" v-model="signup_input_username">
                     </div>
                 </div>
                 <div class="col-auto form-margin">
                     <label class="sr-only" for="inlineFormInputGroup">Password</label>
                     <div class="input-group mb-2 padding">
                         <div class="input-group-prepend">
-                            <div class="input-group-text icon-blue">
+                            <div>
                             <i class="large material-icons" id="lock_signup">lock</i>
                             </div>
                         </div>
-                        <input type="password" class="form-control form-rounded padding form-active" id="signup-input-password" placeholder="Password" v-model="signup_input_password">
+                        <input type="password" class="form-active form_active_signup" id="signup-input-password" placeholder="Enter Password" v-model="signup_input_password">
                     </div>
                       <small class="text-danger pl-3" v-if="errorMessage">{{errorMessage}}</small>
                 </div>
                 <div class="d-flex justify-content-center">
-                    <button type="submit" @click.prevent="signup" class="btn btn-primary button-regular pc-blue model-btn-signup">Sign-up</button>
+                    <button type="submit" @click.prevent="signup" class="model-btn-signup">Sign-up</button>
                 </div>
                 </form>
             </div>
