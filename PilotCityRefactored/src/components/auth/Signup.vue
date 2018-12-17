@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- Button trigger modal -->
-        <button  type="button" class="btn btn-primary btn-lg active Raleway float-right active" data-toggle="modal" data-target="#signup-modal" id=SignupBtn>
+        <button  type="button" id="navbar_signup_button" data-toggle="modal" data-target="#signup-modal" >
         Sign-up
         </button>
 
@@ -52,6 +52,7 @@
 import firebase from '@/firebase/init'
 import { bus } from '@/main'
 import { Prompter } from '@/main'
+import "@/assets/SASS/utils/_navbar.scss";
 
 export default {
     name: 'Signup',
@@ -84,149 +85,6 @@ export default {
 </script>
 <style>
 
-.navbar-btn {
-	border-radius: 50px;
-	background-color: #404041 !important;
-	border: solid 1px #404041 !important;
-	padding-left : 30px !important;
-    padding-right: 30px !important;
-    transition: border 0.5s;
-    margin: auto 5px !important;
-
-}
-
-#SignupBtn {
-    border-radius: 100px;
-	border: solid 1px #ffffff;
-    font-size: 15px;
-    background-color: #404041;
-    font-family: "Raleway";
-    font-weight: 700;
-    cursor:pointer !important;
-    transition: border 0.5s;
-    padding-left : 40px;
-	padding-right: 40px;
-    margin-left:10px;
-    margin-right:50px;
-    text-align: center;
-    letter-spacing: .5px;
-}
-
-#SignupBtn:hover {
-	background-color: #939597;
-    
-}
-
-.navbar-btn:hover{
-    transition: border 1s;
-	background: #939597 !important;
-}
-#btn-login .active {
-    transition: border 0.5s;
-}
-#btn-login  .active:hover {
-  transition: border 1s;
-	border: solid 1px #ffffff !important;
-}
-#btn-login:focus, #btn-signup:focus{
-    outline: none;
-}
-
-.modal-content  {
-    -webkit-border-radius: 30px !important;
-    -moz-border-radius: 30px !important;
-    border-radius: 30px !important; 
-}
-
-#Handlogo{
-    padding: 20px;
-    height: 100px;
-    width: 120px;
-    margin-top:15px;
-}
-.form-rounded {
-    border-radius: 50px;
-    background-color: #414042 !important;
-    color: #ffffff;
-
-}
-.form-active:focus-within {
-    color: #000000 !important;
-}
-
-.icon-blue{
-    background-color: #3c9ccc;
-}
-
-#account_circle_signup {
-    color:white;
-}
-
-#lock_signup {
-    color:white;
-}
-
-
-.form-margin {
-    margin: 2px 0 2px 0;
-}
-.button-regular {
-    width:150px;
-    border-radius: 50px;
-    font-size: 18px;
-    font-family: 'Raleway';
-    color: white;
-    text-align: center;
-    margin:15px;
-}
-
-.pc-blue {
-    background-color:#3C93CD;
-}
-
-.pc-light-gray{
-    background-color: #58595b;
-}
-#btn-login{
-	cursor:pointer !important;
-}
-
-#login-modal{
-    transition: all 0.7s;
-}
-
-.form-active:focus{
-    background-color:#414042;
-
-}
-.form-active{
-    color: #939598 !important;
-}
-
-.form-active:focus{
-    color: #939598 !important;
-}
-
-.model-btn-signup{
-    height: 45px !important;
-    width: 175px !important;
-    border-color: #3c9ccc;
-    background-color: #3c9ccc !important;
-    margin-bottom:25px !important;
-    margin-top:20px !important;
-}
-.model-btn-signup:hover, .model-btn-signup:focus{
-    background-color: #3c9ccc;
-    border-color: white;
-}
-
-#signup-input-username{
-    font-weight: 500;
-}
-
-#signup-input-password{
-    font-weight: 500;
-}
 
 </style>
 

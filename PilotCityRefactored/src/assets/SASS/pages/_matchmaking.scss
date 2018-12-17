@@ -294,7 +294,7 @@ $primary: $purple;
 
 .leftside {
   background-color: white;
-  height: 100vh;
+  height: 92vh;
 
 //   overflow: scroll;
 }
@@ -423,19 +423,20 @@ $primary: $purple;
   }
 }
 
-.custom-control {
-  width: 200px;
-  height: 30px;
-  margin: 0px;
-  padding-left: 15px;
 
-
-}
 
 .custom-control-label {
   color: #939597;
 
 
+}
+
+.custom-control {
+  height: 30px;
+  margin: 0px;
+  padding-left: 15px;
+  width: 500px;
+  
 }
 
 .popover-body {
@@ -447,15 +448,18 @@ $primary: $purple;
   @include scrollbar__fancy();
 }
 
-.custom-checkbox {
+.popover {
+  max-width: 400px;
+}
 
+.custom-checkbox {
 }
 
 .checkbox {
-  border: solid 1px #3c9ccc;
 }
 
-
+#PopoverFilter {
+}
 
 .label {
 

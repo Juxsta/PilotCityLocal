@@ -5,8 +5,9 @@
 				<img id="logo-pilotcity" src="@/assets/images/pilotCitylogo.png" alt="Pilot City Logo">
 		  	</router-link> 
 			<b-navbar-nav class="btn-group ml-auto" role="group">
-				<b-link  :to ="{name : 'ClassPicker'}" v-if="authUser">Wizard</b-link>
-				<b-link :to="{name : 'mm_employer'}" v-if="match_ready">Match</b-link>
+				<b-link class="navbar_dashboard_button" v-if="authUser"></b-link>
+				<b-link class="navbar_match_button" :to="{name : 'mm_employer'}" v-if="match_ready">Match</b-link>
+				<b-link class="navbar_profile_button"  :to ="{name : 'ClassPicker'}" v-if="authUser">Profile</b-link>
 				<Login v-if="!authUser || emailNotVerified" id="component-login" />  
 				<Signup v-if="!authUser || emailNotVerified" id="component-signup" />
 				<Logout  v-if="authUser && !emailNotVerified"/>
@@ -89,6 +90,14 @@ export default {
 .navbar {
     background-color: #404041;
 }
+
+
+
+
+
+
+
+
 </style>
 
 

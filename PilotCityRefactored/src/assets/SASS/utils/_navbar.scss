@@ -1,0 +1,537 @@
+/* NAVBAR BUTTONS */
+
+#navbar_login_button {
+    width: 138px;
+    height: 40px;
+    font-family: "Raleway";
+    font-weight: 700;
+    letter-spacing: .5px;
+    color: #ffffff;
+    border-radius: 50px;
+
+    background-color: #4d4d4f;
+    border: none;
+
+    margin: 0px 10px 0px 10px;
+
+    &:hover{
+    background-color: #939597;
+    cursor: pointer;
+    }
+
+    &:focus{
+    outline: none;
+        }
+}
+
+#navbar_signup_button {
+    width: 138px;
+    height: 40px;
+    font-family: "Raleway";
+    font-weight: 700;
+    letter-spacing: .5px;
+    color: #ffffff;
+    border-radius: 50px;
+
+    background-color:transparent;
+    border: solid 1px #ffffff;
+
+    margin: 0px 10px 0px 10px;
+
+    &:hover{
+    background-color: #939597;
+    cursor: pointer;
+    }
+
+    &:focus{
+    outline: none;
+    }
+
+}
+
+#navbar_logout_button {
+    width: 138px;
+    height: 40px;
+    font-family: "Raleway";
+    font-weight: 700;
+    letter-spacing: .5px;
+    color: #ffffff;
+    border-radius: 50px;
+
+    background-color:transparent;
+    border: solid 1px #ffffff;
+
+    margin: 0px 10px 0px 10px;
+
+    &:hover{
+    background-color: #939597;
+    cursor: pointer;
+    }
+
+    &:focus{
+    outline: none;
+    }
+}
+
+.navbar_profile_button {
+    width: 138px;
+    height: 40px;
+    font-family: "Raleway";
+    font-weight: 700;
+    letter-spacing: .5px;
+    color: #ffffff;
+    border-radius: 50px;
+
+    background-color: #4d4d4f;
+    border: none;
+
+    margin: 0px 10px 0px 10px;
+
+    text-align: center;
+    padding-top:8px;
+
+    &:hover{
+    background-color: #fdd25a;
+    cursor: pointer;
+    text-decoration: none;
+    color: #ffffff;
+    }
+
+    &:focus{
+    outline: none;
+        }
+}
+
+.navbar_match_button {
+    width: 138px;
+    height: 40px;
+    font-family: "Raleway";
+    font-weight: 700;
+    letter-spacing: .5px;
+    color: #ffffff;
+    border-radius: 50px;
+
+    background-color: #4d4d4f;
+    border: none;
+
+    margin: 0px 10px 0px 10px;
+
+    text-align: center;
+    padding-top:8px;
+
+    &:hover{
+    background-color: #f79960;
+    cursor: pointer;
+    text-decoration: none;
+    color: #ffffff;
+    }
+
+    &:focus{
+    outline: none;
+        }
+}
+
+.navbar_dashboard_button {
+    width: 138px;
+    height: 40px;
+    font-family: "Raleway";
+    font-weight: 700;
+    letter-spacing: .5px;
+    color: #ffffff;
+    border-radius: 50px;
+
+    border: dashed 1px #4d4d4f;
+
+    margin: 0px 10px 0px 10px;
+
+    text-align: center;
+    padding-top:8px;
+
+    &:hover{
+    cursor: pointer;
+    }
+
+    &:focus{
+    outline: none;
+        }
+}
+
+
+
+
+
+
+
+/* .wizard-btn {
+    color: #ffffff;
+    text-decoration: none;
+    background-color: transparent;
+    width: 150px;
+    text-align: center;
+    &:hover{
+        border: solid 1px #ffffff;
+        border-radius: 50px;
+        padding: 7px 0px 7px 0px;
+        color: #ffffff;
+        text-decoration: none;
+    }
+
+} */
+
+
+
+/* .match-btn {
+    color: #ffffff;
+    text-decoration: none;
+    background-color: transparent;
+    width: 150px;
+    text-align: center;
+    &:hover{
+        border: solid 1px #ffffff;
+        border-radius: 50px;
+        padding: 7px 0px 7px 0px;
+        color: #ffffff;
+        text-decoration: none;
+    }
+} */
+
+
+
+/* #navbar_logout_button {
+    color: #ffffff;
+    text-decoration: none;
+    background-color:#939597;
+    width: 150px;
+    text-align: center;
+    border: solid 1px #ffffff !important;
+    &:hover{
+        border-radius: 50px;
+        padding: 7px 0px 7px 0px;
+        color: #ffffff;
+        text-decoration: none;
+    }
+} */
+
+
+/* .navbar-btn {
+    border-radius: 50px;
+    background-color: #404041 !important;
+    border: solid 1px #404041;
+    font-size: 15px;
+    font-family: "Raleway";
+    font-weight: 600;
+    cursor:pointer;
+    transition: border 0.5s;
+    margin: auto 5px;
+    padding-left: 30px;
+    padding-right: 30px;
+    text-align: center;
+    letter-spacing: .5px;
+    &:hover {
+        transition: border 1s;
+        background: #939597;
+    }
+
+} */
+
+/* #navbar_signup_button {
+    border-radius: 100px;
+    border: solid 1px #ffffff;
+    font-size: 15px;
+    background-color: #404041;
+    font-family: "Raleway";
+    font-weight: 700;
+    cursor:pointer !important;
+    transition: border 0.5s;
+    padding-left : 40px;
+    padding-right: 40px;
+    margin-left:10px;
+    margin-right:50px;
+    text-align: center;
+    letter-spacing: .5px;
+    &:hover{
+        background-color: #939597;
+    }
+    &:focus{
+        outline: none;
+    }
+} */
+
+/* #navbar_login_button {
+    width: 138px;
+    background-color: #4d4d4f !important;
+    cursor:pointer !important;
+    &:active{
+        transition: border 0.5s;
+        &:hover {
+            transition: border 1s;
+            border: solid 1px #ffffff !important;
+        }
+    }
+    &:focus{
+        outline: none;
+    }
+    &:hover {
+        background-color: #939597 !important;
+    }
+} */
+
+
+
+
+/* FROM SIGNUP.VUE PAGE PREVIOUSLY */
+
+
+
+
+
+
+
+
+    .modal-content  {
+        -webkit-border-radius: 30px !important;
+        -moz-border-radius: 30px !important;
+        border-radius: 30px !important; 
+    }
+    
+    #Handlogo{
+        padding: 20px;
+        height: 100px;
+        width: 120px;
+        margin-top:15px;
+    }
+    .form-rounded {
+        border-radius: 50px;
+        background-color: #414042 !important;
+        color: #ffffff;
+    
+    }
+
+    
+    .icon-blue{
+        background-color: #3c9ccc;
+    }
+    
+    #account_circle_signup {
+        color:white;
+    }
+    
+    #lock_signup {
+        color:white;
+    }
+    
+    
+    .form-margin {
+        margin: 2px 0 2px 0;
+    }
+    .button-regular {
+        width:150px;
+        border-radius: 50px;
+        font-size: 18px;
+        font-family: 'Raleway';
+        color: white;
+        text-align: center;
+        margin:15px;
+    }
+    
+    .pc-blue {
+        background-color:#3C93CD;
+    }
+    
+    .pc-light-gray{
+        background-color: #58595b;
+    }
+   
+    
+    #login-modal{
+        transition: all 0.7s;
+    }
+    
+
+    
+    .model-btn-signup{
+        height: 45px !important;
+        width: 175px !important;
+        border-color: #3c9ccc;
+        background-color: #3c9ccc !important;
+        margin-bottom:25px !important;
+        margin-top:20px !important;
+    }
+    .model-btn-signup:hover, .model-btn-signup:focus{
+        background-color: #3c9ccc;
+        border-color: white;
+    }
+    
+    #signup-input-username{
+        font-weight: 500;
+    }
+    
+    #signup-input-password{
+        font-weight: 500;
+    }
+
+
+/*     FROM LOGIN.VUE PREVIOUSLY */
+
+
+
+.modal-body{
+    padding:25px;
+}
+
+.Raleway {
+	font-family: 'Raleway';
+	font-weight:800;
+}
+
+.modal-content  {
+    -webkit-border-radius: 30px !important;
+    -moz-border-radius: 30px !important;
+    border-radius: 30px !important; 
+}
+#Heartlogo{
+    padding-bottom: 20px;
+    height: 100px;
+    width: 80px;
+    margin-top:25px;
+}
+
+.input-group-text {
+    border-radius:50px;
+    border: solid 1px #939597;
+    padding: 10px 10px 10px 10px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    height:50px;
+
+}
+
+.form-active{
+    font-size: 15px;
+    font-weight:300;
+    font-family: 'Raleway';
+    color: #ffffff;
+    border-radius: 50px;
+    background-color: #414042;
+    border: solid 1px #939597;
+    padding: 10px 10px 10px 10px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    height:50px;
+    font-color: #ffffff;
+}
+
+.form-active:focus{
+    background-color:#414042;
+}
+
+.form-active:focus{
+    background-color:#414042;
+
+}
+.form-active{
+    color: #939598 !important;
+}
+
+.form-active:focus{
+    color: #939598 !important;
+}
+
+.form-active:focus-within {
+    color: #000000 !important;
+}
+
+
+
+
+.icon-blue{
+    background-color: #3c9ccc;
+}
+
+.icon-green{
+    background-color: #6eba7f;
+}
+
+#account_circle_login {
+    color:white;
+}
+
+#lock_login {
+    color:white;
+}
+
+.form-margin {
+    margin: 2px 0 2px 0;
+}
+.button-regular {
+    width:300px;
+    font-weight:700;
+    border-radius: 50px;
+    font-size: 20px;
+    font-family: 'Raleway';
+    color: white;
+    text-align: center;
+    margin:15px;
+}
+
+.pc-green {
+    background-color: #6eba7f;
+    color: white;
+}
+.pc-light-gray{
+    background-color: rgba(65, 64, 66, .95) !important;
+}
+
+#login-modal{
+    transition: all 0.7s;
+}
+
+
+
+
+.model-btn-login{
+    height: 45px !important;
+    width: 175px !important;
+    border-color: #6eba7f;
+    background-color: #6eba7f !important;
+    margin-bottom:25px !important;
+    margin-top:20px !important;
+    &:hover{
+        background-color: #6eba7f !important;
+        border-color: white !important;
+    }
+    &:focus{
+        background-color: #6eba7f !important;
+        border-color: white !important;   
+    }
+}
+
+
+
+
+.fa-dizzy {
+    color:#939597;
+    font-size: 15px;
+    text-align: center;
+    margin-top:0px;
+    padding-left: 375px;
+    padding-right:100px;
+}
+
+.text-danger {
+    font-family:raleway;
+
+}
+
+.text-success {
+    font-family:raleway; 
+}
+
+#login-input-username{
+    font-weight: 500;
+
+}
+
+#login-input-password{
+    font-weight: 500;
+}

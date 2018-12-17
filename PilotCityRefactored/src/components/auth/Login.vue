@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- Button trigger modal -->
-        <button type="button" id="btn-login" class="navbar-btn btn-primary btn-lg active Raleway float-right active" data-toggle="modal" data-target="#login-modal">
+        <button type="button" id="navbar_login_button" data-toggle="modal" data-target="#login-modal">
         Login
         </button>
 
@@ -58,6 +58,7 @@
 import firebase from '@/firebase/init'
 import { bus } from '@/main'
 import ClassPickerVue from '../profile_builder/wizard/ClassPicker.vue';
+import "@/assets/SASS/utils/_navbar.scss";
 
 export default {
     name: 'Login',
@@ -108,162 +109,6 @@ export default {
 <style>
 @import url('https://fonts.googleapis.com/css?family=Raleway');
 
-.modal-body{
-    padding:25px;
-}
-
-.Raleway {
-	font-family: 'Raleway';
-	font-weight:800;
-}
-
-.navbar-btn {
-	border-radius: 100px;
-	background-color: #404041 !important;
-	border: solid 1px #404041;
-    font-size: 15px;
-    font-family: "Raleway";
-    font-weight: 600;
-    cursor:pointer !important;
-    transition: border 0.5s;
-    margin: auto 20px;
-    text-align: center;
-    letter-spacing: .5px;
-}
-
-.modal-content  {
-    -webkit-border-radius: 30px !important;
-    -moz-border-radius: 30px !important;
-    border-radius: 30px !important; 
-}
-#Heartlogo{
-    padding-bottom: 20px;
-    height: 100px;
-    width: 80px;
-    margin-top:25px;
-}
-
-.input-group-text {
-    border-radius:50px;
-    border: solid 1px #939597;
-    padding: 10px 10px 10px 10px;
-    margin-top: 15px;
-    margin-bottom: 15px;
-    height:50px;
-
-}
-
-.form-active{
-    font-size: 15px;
-    font-weight:300;
-    font-family: 'Raleway';
-    color: #ffffff;
-    border-radius: 50px;
-    background-color: #414042;
-    border: solid 1px #939597;
-    padding: 10px 10px 10px 10px;
-    margin-top: 15px;
-    margin-bottom: 15px;
-    height:50px;
-    font-color: #ffffff;
-}
-
-.form-active:focus{
-    background-color:#414042;
-}
-
-.icon-blue{
-    background-color: #3c9ccc;
-}
-
-.icon-green{
-    background-color: #6eba7f;
-}
-
-#account_circle_login {
-    color:white;
-}
-
-#lock_login {
-    color:white;
-}
-
-.form-margin {
-    margin: 2px 0 2px 0;
-}
-.button-regular {
-    width:300px;
-    font-weight:700;
-    border-radius: 50px;
-    font-size: 20px;
-    font-family: 'Raleway';
-    color: white;
-    text-align: center;
-    margin:15px;
-}
-
-.pc-green {
-    background-color: #6eba7f;
-    color: white;
-}
-.pc-light-gray{
-    background-color: rgba(65, 64, 66, .95) !important;
-}
-
-#login-modal{
-    transition: all 0.7s;
-}
-
-#btn-login {
-    width: 138px;
-    background-color: #4d4d4f !important;
-
-}
-
-#btn-login:hover{
-    background-color: #939597 !important;
-}
-
-
-.model-btn-login{
-    height: 45px !important;
-    width: 175px !important;
-    border-color: #6eba7f;
-    background-color: #6eba7f !important;
-    margin-bottom:25px !important;
-    margin-top:20px !important;
-}
-.model-btn-login:hover, .model-btn-login:focus{
-    background-color: #6eba7f !important;
-    border-color: white !important;
-}
-
-.fa-dizzy {
-    color:#939597;
-    font-size: 15px;
-    text-align: center;
-    margin-top:0px;
-    padding-left: 375px;
-    padding-right:100px;
-}
-
-.text-danger {
-    font-family:raleway;
-
-}
-
-.text-success {
-    font-family:raleway; 
-}
-
-#login-input-username{
-    font-weight: 500;
-
-}
-
-#login-input-password{
-    font-weight: 500;
-}
 
 
 </style>
