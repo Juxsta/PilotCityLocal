@@ -55,7 +55,7 @@ $primary: $purple;
 .text-classroom-matches {
   font-family: "Raleway";
   font-size: 25px;
-  color: #dbdcde;
+  color: #c7c9cb;
   font-weight: 700;
   margin: 40px auto 15px auto;
   text-align: center;
@@ -421,6 +421,7 @@ $primary: $purple;
   background-color:#c6c8ca;
   font-size: 20px;
   border: none;
+  margin-left: 65px;
   //margin: 25px 5px 50px 25px;
   &:focus {
     color: #ffffff;
