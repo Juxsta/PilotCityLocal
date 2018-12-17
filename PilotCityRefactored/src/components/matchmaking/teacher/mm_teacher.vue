@@ -83,7 +83,7 @@ export default {
       industry: ["stuff", "placeholder"],
       filtered_industry: [],
       sector: ["Industry", "Government", "Education", "Industry"],
-      fitlered_sector: [],
+      filtered_sector: [],
       solutions: [],
       filtered_solutions: [],
       location: [],
@@ -338,5 +338,4 @@ body {
   overflow: hidden;
 }
 @import "@/assets/SASS/pages/_matchmaking.scss";
-
 </style>

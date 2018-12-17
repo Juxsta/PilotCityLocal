@@ -26,6 +26,7 @@
             route='w_employer_sector'
             :conditions="conditions"
             :collection="collection"
+            :pass=pass
             />
         <router-link :to="{ name: 'w_employer_story' }" 
             class="prev_button btn btn-secondary btn-lg">
@@ -63,7 +64,9 @@ export default {
         conditions(){
             return [this.employer_data]
         },
-
+        pass() {
+            return this.employer_data.address.every(val => val)
+        }
     },
    
         created(){
