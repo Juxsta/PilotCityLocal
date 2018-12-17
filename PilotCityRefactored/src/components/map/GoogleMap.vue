@@ -53,6 +53,7 @@ export default {
       for (var i = 0; i < this.map_data.length; i++)
         this.markers.push(this.map_data[i].coordinate);
       this.pinAllClassroomsOnMap(this.map);
+      this.map.setCenter(this.markers[0]);
     }
   },
   mounted: function () {
