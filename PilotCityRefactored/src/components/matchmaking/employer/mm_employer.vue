@@ -52,7 +52,7 @@ npm <template>
         </div>
       </div>
       <div class="google-maps container col-4 m-0 p-0">
-        <GoogleMap name="test" :map_data="map_data" :apikey="apikey" :mapcenter="mapcenter"></GoogleMap>
+        <GoogleMap name="employer_gm" :map_data="map_data" :apikey="apikey" :mapcenter="mapcenter" role="employer"></GoogleMap>
       </div>
     </div>
   </div>
