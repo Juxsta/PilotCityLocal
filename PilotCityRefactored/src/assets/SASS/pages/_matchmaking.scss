@@ -145,40 +145,27 @@ $primary: $purple;
   color: #6eba7f;
   font-family: "Raleway";
   font-weight: 700;
-  font-size: 12px;
+  font-size: 11px;
   margin: auto;
   padding-top: 1px;
+
   &:focus {
-    outline: none !important;
     box-shadow: none !important;
     -webkit-box-shadow:none !important;
     -moz-box-shadow:none !important;
+    outline: none !important;
   }
   &:hover{
-    width: 125px;
-    height: 25px;
-    border-radius: 50px;
     background-color: #6eba7f;
     border: 0px;
     color: #ffffff;
-    font-family: "Raleway";
-    font-weight: 700;
-    font-size: 12px;
-    margin: auto;
-    padding-top: 1px;
+    cursor: pointer;
   }
   &:active{
-    width: 125px;
-    height: 25px;
-    border-radius: 50px;
     background-color: #408b54;
     border: 0px;
     color: #ffffff;
-    font-family: "Raleway";
-    font-weight: 700;
-    font-size: 12px;
-    margin: auto;
-    padding-top: 1px;
+    
   }
 }
 
@@ -196,11 +183,11 @@ $primary: $purple;
   font-weight: 700;
   cursor: pointer;
   &:focus {
-    outline: none !important;
     box-shadow: none !important;
     -webkit-box-shadow:none !important;
     -moz-box-shadow:none !important;
-  }
+    outline: none !important;
+    }
 &:hover {
   border-radius: 5px;
   width: 17px;
@@ -209,6 +196,8 @@ $primary: $purple;
   border: 0px;
   font-size: 12px;
   margin: auto 20px auto auto;
+  outline: none !important;
+  cursor: pointer;
 }
 &:active {
   border-radius: 5px;
@@ -218,8 +207,17 @@ $primary: $purple;
   border: 0px;
   font-size: 12px;
   margin: auto 20px auto auto;
-
+  outline: none !important;
 }
+}
+
+.action-button-pending {
+  &:hover{
+    cursor: pointer;
+  }
+  &:focus {
+      outline: none !important;
+    }
 }
 
 
