@@ -96,15 +96,16 @@ export default {
       class_size: ["0-10", "11-15", "16-20", "21-25", "26-30"],
       filtered_class_size: [],
       locations: [
-        "Alameda",
-        "Emeryville",
-        "Fremont",
-        "Hayward",
-        "Mill Valley",
-        "Oakland",
-        "Richmond",
-        "San Leandro",
-        "San Lorenzo"
+        "Alameda, CA",
+        "Berkeley, CA",
+        "Emeryville, CA",
+        "Fremont, CA",
+        "Hayward, CA",
+        "Mill Valley, CA",
+        "Oakland, CA",
+        "Richmond, CA",
+        "San Leandro, CA",
+        "San Lorenzo, CA"
       ],
       filtered_locations: [],
       courses: [
