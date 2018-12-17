@@ -2,6 +2,7 @@
 
 $primary: $purple;
 
+
 .filter__button {
     width: 125px;
     height: 45px;
@@ -294,7 +295,7 @@ $primary: $purple;
 
 .leftside {
   background-color: white;
-  height: 92vh;
+  height: 95vh;
 
 //   overflow: scroll;
 }
@@ -386,6 +387,12 @@ $primary: $purple;
   background-color: #3c9ccc;
 }
 
+.mm__pagination--row{
+  height: 100px;
+  padding: 20px 5% 20px 5%;
+  margin-bottom: 50px;
+}
+
 .nextpage__btn {
   width: 150px;
   height:50px;
@@ -395,7 +402,7 @@ $primary: $purple;
   background-color:#c6c8ca;
   font-size: 20px;
   border: none;
-  margin: 25px 5px 50px 15px;
+  //margin: 25px 5px 50px 15px;
   &:focus {
     color: #ffffff;
     outline: 0;
@@ -414,7 +421,7 @@ $primary: $purple;
   background-color:#c6c8ca;
   font-size: 20px;
   border: none;
-  margin: 25px 5px 50px 25px;
+  //margin: 25px 5px 50px 25px;
   &:focus {
     color: #ffffff;
     outline: 0;
