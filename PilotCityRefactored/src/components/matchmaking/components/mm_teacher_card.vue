@@ -14,8 +14,6 @@
             @click="update_invite(),upload()"
             :class="{'action-button':invite, 'action-button-pending':pending}"
           >{{text}}</button>
-          <!-- place holder button -->
-          <!--Place holder [x]  -->
         </div>
           <!-- stupid heart -->
         <i
@@ -146,9 +144,10 @@ export default {
   },
   computed: {
     invite() {
+      this.text="Invited"
       var in_invite= this.invited.indexOf(this.classroom.uid) == -1
       if(in_invite)
-        this.text="Invited"
+        this.text="Invite"
       return in_invite;
     },
     pending() {
@@ -188,10 +187,10 @@ export default {
       // this.invite = !this.invite;
       // this.pending = !this.pending;
       if (!this.invite) {
-        this.text = "Invite";
+        //this.text = "Invite";
         this.invited.splice(this.invited.indexOf(this.classroom.uid), 1);
       } else {
-        this.text = "Invited";
+        //this.text = "Invited";
         this.invited.push(this.classroom.uid);
       }
     },
