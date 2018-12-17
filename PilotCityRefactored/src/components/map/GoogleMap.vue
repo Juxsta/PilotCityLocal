@@ -84,7 +84,7 @@ export default {
                                       icon: this.marker_icons.employer_home
                                     });
       } else {
-        console.log("Looks like you are homeless ; (");
+        console.log("Looks like you are homeless ; ( [you dont have an address in our database]");
       }
     });
   },
@@ -117,11 +117,16 @@ export default {
             });
             this.markers_ref.push(obj);
             ht[key] = true;
-          } else {
+          } 
+            // else
             //console.log("same address : ) [" + key + "]");
             //console.log(JSON.stringify(this.map_data[i]))
-          }
         }
+        var bounds = new google.maps.LatLngBounds();
+        for (var i = 0; i < this.markers_ref.length; i++) {
+          bounds.extend(this.markers_ref[i].marker.getPosition());
+        }
+        map.fitBounds(bounds);
         //
         // The following code accepts an array of formatted address(with space replaced by '+') and make ajax request to the 
         // google geolocation api and retrieves coordinates, use those coordinates as the position of the markers
@@ -141,7 +146,7 @@ export default {
         //                                     });
         //     }
         // });
-    },
+    },/*
     getLink(address){
       var api_link = "https://maps.googleapis.com/maps/api/geocode/json?address=";
       var key = "&key=" + this.apikey;
@@ -153,7 +158,7 @@ export default {
       }).catch( error => {
           console.log(error.message);
       });
-    }
+    }*/
    }
 };
 </script>
