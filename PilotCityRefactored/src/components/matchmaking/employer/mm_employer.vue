@@ -33,7 +33,6 @@ npm <template>
               :page="page"
               :active_card="active_card"
               class="row-12 card-teacher-match"
-              :role="role"
               :flavoredlist="flavored_cards"
               @teacherCardClicked="highlight_pin(findbyId(loaded_teachers,classroom.teacher_uid), index)"
               @newFlavoredCardAction="doNewFlavoredCardAction"
@@ -75,7 +74,6 @@ export default {
   name: "mm_employer",
   data() {
     return {
-      role: "employers", 
       allClasses: null,
       active_card: null,
       flavored_cards: [],
@@ -324,7 +322,7 @@ export default {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         const db = firebase.firestore();
-        db.collection(this.role).doc(user.uid).get().then(doc => {
+        db.collection("employers").doc(user.uid).get().then(doc => {
           if (doc.data() && doc.data()["match_making"] &&
           doc.data()["match_making"]["flavored_cards"])
            this.flavored_cards = doc.data()["match_making"]["flavored_cards"];

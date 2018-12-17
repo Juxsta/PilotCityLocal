@@ -134,10 +134,6 @@ export default {
     page: {
       required: true
     },
-    role: {
-      required: true,
-      type: String
-    },
     flavoredlist: {
       required: true,
     }
@@ -163,7 +159,7 @@ export default {
         var self = this;
         var user_id = firebase.auth().currentUser.uid;
         var flavored_cards = [];
-        db.collection(this.role).doc(user_id).get().then( doc => {
+        db.collection("employers").doc(user_id).get().then( doc => {
           var data = doc.data();
           if (data &&  data["match_making"] &&  data["match_making"]["flavored_cards"])
             flavored_cards = data["match_making"]["flavored_cards"] ;
@@ -178,7 +174,7 @@ export default {
             flavored_cards = _.filter( flavored_cards, card => { return card != this.classroom.uid})
   
           data["match_making"]["flavored_cards"] = flavored_cards;
-          db.collection(this.role).doc(user_id).update(data).then( ()=> {
+          db.collection("employers").doc(user_id).update(data).then( ()=> {
             self.$emit('newFlavoredCardAction', self.classroom.uid);
           });
         });
