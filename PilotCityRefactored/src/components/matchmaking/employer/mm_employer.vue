@@ -35,15 +35,17 @@ npm <template>
               class="row-12 card-teacher-match"
               @teacherCardClicked="highlight_pin(findbyId(loaded_teachers,classroom.teacher_uid), index)"
             />
-            <b-btn
+            <div class="d-flex mm__pagination--row" >
+              <b-btn
               class="prevpage__btn justify-content-start"
               @click="page=(page>0)?page-1:page"
             >Previous</b-btn>
             <b-btn
-              class="nextpage__btn justify-content-end"
+              class="nextpage__btn ml-auto"
               @click="page=page+1"
               v-scroll-to="'#topresult'"
             >Next</b-btn>
+            </div>
           </div>
         </div>
       </div>
