@@ -12,6 +12,7 @@
             name="filter"
             :options="options"
             :style="{'overflow-x':'hidden', 'text-transform':'capitalize'}"
+            :show="name==show?true:false"
           ></b-form-checkbox-group>
         </b-form-group>
       </div>
@@ -41,6 +42,9 @@ export default {
     selected_options: {
       required: true,
       type: Array
+    },
+    show:{
+      required:true
     }
   },
   methods: {

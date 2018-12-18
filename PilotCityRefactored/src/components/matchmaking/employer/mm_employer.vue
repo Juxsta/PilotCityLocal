@@ -415,7 +415,7 @@ export default {
                             user_data.last_name;
                         })
                     );
-                  }, 100);
+                  }, 300);
                 }
                 Promise.all(promises).then(val => { // timeout to stop firebase from overloading with requests
                   db.collection("employers")

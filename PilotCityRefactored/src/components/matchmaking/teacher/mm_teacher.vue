@@ -5,23 +5,21 @@
       <div class="d-flex col-8 justify-content-center m-0 p-0">
         <div class="leftside justify-content-center flex-column d-flex col-12 p-0 m-0">
           <div class="filter-bar justify-content-center d-flex flex-row">
-            <mm_filter :options="industry" :selected_options="filtered_industry" name="Industry"/>
-            <mm_filter :options="sector" :selected_options="filtered_sector" name="Sector"/>
+            <mm_filter :options="industry" :selected_options="filtered_industry" @click="show='Industry'" :show="show" name="Industry"/>
+            <mm_filter :options="sector" :selected_options="filtered_sector" onclick="show='Sector'" :show="show" name="Sector"/>
             <mm_filter
               :options="solutions"
               :selected_options="filtered_solutions"
+              @click="show='Solutions'"
+              :show="show"
               name="Solutions"
             />
-            <mm_filter :options="location" :selected_options="filtered_location" name="Location"/>
+            <mm_filter :options="location" :selected_options="filtered_location" @click="show='Location'" :show="show" name="Location"/>
           </div>
           <div class="cardstock">
             <h2 class="text-classroom-matches" id>
               <!-- <span>{{filter_list.length}}</span> -->
-<<<<<<< HEAD
-              <span>{{filter_list.length}}+ Classrooms Recommended</span>
-=======
-              <span>+ Employers Recommended</span>
->>>>>>> 8deab20c0a20833fd456bb102b7530b7bb6e1abf
+              <span>{{filter_list.length}}+ Employers Recommended</span>
             </h2>
             <mm_employer_card
               v-for="(employer,index) in filter_list"
@@ -100,10 +98,13 @@ export default {
       solutions: [],
       filtered_solutions: [],
       location: [],
+      interests: [],
+      filtered_interests: [],
       filtered_location: [],
       loaded_employers: [],
       recmd: [],
-      invited: []
+      invited: [],
+      show: null
     };
   },
   computed: {
@@ -279,13 +280,22 @@ export default {
           .get()
           .then(employer_querySnapshot => {
             employer_querySnapshot.forEach(doc => {
-              var employer_data = doc.data();
-              employer_data["uid"] = doc.id;
-              self.industry.push(employer_data.selected_industry_keywords);
-              self.solutions.push(employer_data.selected_service_keywords);
-              self.solutions.push(employer_data.selected_product_keywords);
-              self.location.push(employer_data.address.city);
-              self.loaded_employers.push(employer_data);
+              if (
+                doc.data().selected_challenge_keywords &&
+                doc.data().selected_challenge_keywords.length
+              ) {
+                var employer_data = doc.data();
+                employer_data["uid"] = doc.id;
+                self.industry.push(employer_data.selected_industry_keywords);
+                self.solutions.push(employer_data.selected_service_keywords);
+                self.solutions.push(employer_data.selected_product_keywords);
+                self.location.push(employer_data.address.city);
+                self.interests.push(employer_data.selected_challenge_keywords);
+                self.interests.push(
+                  employer_data.selected_bottom_line_keywords
+                );
+                self.loaded_employers.push(employer_data);
+              }
             });
             console.log("hi");
             self.solutions = _.flattenDeep(self.solutions);
@@ -308,6 +318,7 @@ export default {
             ) {
               console.log("waiting");
               setTimeout(function() {
+                // timeout to stop firebase from overloading with requests
                 promises.push(
                   db
                     .collection("Users")
