@@ -5,6 +5,7 @@
       <div class="container">
         <b-form-group label>
           <b-form-checkbox-group
+          class = "my-buttons"
             stacked
             v-model="local_selected"
             @input="updateSelected"
@@ -70,5 +71,9 @@ export default {
 </script>
 
 <style>
-
+.my-buttons .active {
+    color: #fff !important;
+    background-color: #28a745 !important;
+    border-color: #28a745 !important;
+  }
 </style>

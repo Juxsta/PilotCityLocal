@@ -12,16 +12,26 @@
         <div class="mt-3 ml-auto">
           <button
             @click="update_invite(),upload()"
-            :class="{'action-button':invite, 'action-button-pending':pending}"
+            @mouseenter="temp = text, text = invite?text:'Cancel'"
+            @mouseleave="text=temp"
+            :class="{'action-button':invite, 'action-button-pending':pending, }"
           >{{text}}</button>
         </div>
-          <!-- stupid heart -->
-        <i
-          class="material-icons justify-content-center pt-2 px-3"
-          id="favorite_border"
-          @click="likeThisCard"
-          :style="{ color : amIFlavored ? '#eca0be' : '#dedfe0'}"
-        >favorite_border</i>
+        <!-- stupid heart -->
+        <span id="favorite_border">
+          <i
+            class="material-icons justify-content-center pt-2 px-3"
+            @click="likeThisCard"
+            :id="classroom.uid"
+            :style="{ color : amIFlavored ? '#eca0be' : '#dedfe0'}"
+          >favorite_border</i>
+          <b-popover
+            class="favorite_popover"
+            :target="'#'+classroom.uid"
+            placement="topleft"
+            triggers="hover"
+          >Favorite this class!</b-popover>
+        </span>
       </div>
 
       <div class="two d-flex flex-row">
@@ -98,9 +108,9 @@ import firebase from "@/firebase/init";
 export default {
   data() {
     return {
-      // invite: true,
-      // pending: false,
+      hover: false,
       text: "Invite",
+      temp: "",
       tags: [
         "tag__skills--red",
         "tag__skills--green",
@@ -139,58 +149,64 @@ export default {
       type: String
     },
     flavoredlist: {
-      required: true,
+      required: true
     }
   },
   computed: {
     invite() {
-      this.text="Invited"
-      var in_invite= this.invited.indexOf(this.classroom.uid) == -1
-      if(in_invite)
-        this.text="Invite"
+      this.text = "Invited";
+      var in_invite = this.invited.indexOf(this.classroom.uid) == -1;
+      if (in_invite) this.text = "Invite";
       return in_invite;
     },
     pending() {
-      return !this.invite
+      return !this.invite;
     },
-    amIFlavored(){
+    amIFlavored() {
       return _.includes(this.flavoredlist, this.classroom.uid);
     }
   },
   methods: {
-    likeThisCard(){
-        var db = firebase.firestore();
-        var self = this;
-        var user_id = firebase.auth().currentUser.uid;
-        var flavored_cards = [];
-        db.collection(this.role).doc(user_id).get().then( doc => {
+    likeThisCard() {
+      var db = firebase.firestore();
+      var self = this;
+      var user_id = firebase.auth().currentUser.uid;
+      var flavored_cards = [];
+      db.collection(this.role)
+        .doc(user_id)
+        .get()
+        .then(doc => {
           var data = doc.data();
-          if (data &&  data["match_making"] &&  data["match_making"]["flavored_cards"])
-            flavored_cards = data["match_making"]["flavored_cards"] ;
-          else 
-          {
+          if (
+            data &&
+            data["match_making"] &&
+            data["match_making"]["flavored_cards"]
+          )
+            flavored_cards = data["match_making"]["flavored_cards"];
+          else {
             flavored_cards = [];
-            data["match_making"] = {}
+            data["match_making"] = {};
           }
           if (!_.includes(flavored_cards, this.classroom.uid))
             flavored_cards.push(this.classroom.uid);
           else
-            flavored_cards = _.filter( flavored_cards, card => { return card != this.classroom.uid})
-  
+            flavored_cards = _.filter(flavored_cards, card => {
+              return card != this.classroom.uid;
+            });
+
           data["match_making"]["flavored_cards"] = flavored_cards;
-          db.collection(this.role).doc(user_id).update(data).then( ()=> {
-            self.$emit('newFlavoredCardAction', self.classroom.uid);
-          });
+          db.collection(this.role)
+            .doc(user_id)
+            .update(data)
+            .then(() => {
+              self.$emit("newFlavoredCardAction", self.classroom.uid);
+            });
         });
     },
     update_invite(event) {
-      // this.invite = !this.invite;
-      // this.pending = !this.pending;
       if (!this.invite) {
-        //this.text = "Invite";
         this.invited.splice(this.invited.indexOf(this.classroom.uid), 1);
       } else {
-        //this.text = "Invited";
         this.invited.push(this.classroom.uid);
       }
     },
@@ -206,8 +222,7 @@ export default {
         }
       });
       return true;
-    },
-    check_invited() {}
+    }
   },
   filters: {
     capitalize: function(value) {
@@ -218,3 +233,10 @@ export default {
   }
 };
 </script>
+
+<style>
+.favorite_popover{
+  justify-content: left,
+
+}
+</style>
