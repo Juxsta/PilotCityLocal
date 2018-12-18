@@ -62,6 +62,9 @@ import GoogleMap from "@/components/map/GoogleMap";
 import { GEOCODEKEY } from "@/main";
 import Fuse from "fuse.js";
 import { createECDH } from "crypto";
+import { Promise } from 'q';
+import { resolve } from 'path';
+import { rejects } from 'assert';
 
 export default {
   name: "mm_teacher",
@@ -205,6 +208,15 @@ export default {
     GoogleMap
   },
   methods: {
+    getGeo(address){
+      var api_link = "https://maps.googleapis.com/maps/api/geocode/json?address=";
+      var key = "&key=" + this.GEOCODEKEY;
+      return new Promise(function(resolve, reject){
+         axios.get(api_link + address + key).then( response => {
+          resolve (response.data.results[0].geometry.location);
+        })
+      })
+    },
     doNewlikedCardAction(uid){
       if (_.includes(this.liked_cards, uid))
         this.liked_cards = _.filter( this.liked_cards, card_uid => { return card_uid!= uid})
@@ -323,6 +335,24 @@ export default {
                     new_arr = _.flattenDeep(new_arr);
                     //console.log(new_arr);
                     self.loaded_employers = new_arr;
+                    /*
+                    for (var i = 0; i < this.filter_list; i++){
+                      console.log(i)
+                      if (!this.loaded_employers[i].coordinate)
+                      {
+                        var address;
+                        if (this.loaded_employers[i].address)
+                        {
+                            address += this.loaded_employers[i].address.street;
+                            address += this.loaded_employers[i].address.city;
+                            address += this.loaded_employers[i].address.state;
+                        }
+                        if (address)
+                          this.getGeo(address).then( coordinate => {
+                            this.loaded_employers[i].coordinate = coordinate;
+                          });
+                      }
+                    }*/
                     self.render = true;
                   });
               });
@@ -330,7 +360,7 @@ export default {
           });
       }
     });
-  }
+  },
 };
 </script>
 
