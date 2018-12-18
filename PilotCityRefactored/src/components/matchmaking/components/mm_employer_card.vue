@@ -79,7 +79,7 @@
           <span class="d-flex row">
             <h4
               placement="bottom"
-              :class="tags[Math.floor(Math.random()*Math.floor(7))]"
+              :class="randColor(index)"
               v-for="(solution,index) in solutions"
               :key="index"
             >{{solution | capitalize}}</h4>
@@ -159,6 +159,9 @@ export default {
     }
   },
   methods: {
+     randColor(index) {
+      return this.tags[index%7]
+    },
     likeThisCard() {
       var db = firebase.firestore();
       var self = this;
