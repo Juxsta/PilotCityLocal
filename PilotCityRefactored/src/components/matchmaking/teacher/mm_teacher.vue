@@ -17,7 +17,7 @@
           <div class="cardstock">
             <h2 class="text-classroom-matches" id>
               <!-- <span>{{filter_list.length}}</span> -->
-              <span>+ Classrooms Recommended</span>
+              <span>{{filter_list.length}}+ Classrooms Recommended</span>
             </h2>
             <mm_employer_card
               v-for="(employer,index) in filter_list"
@@ -45,7 +45,13 @@
         </div>
       </div>
       <div class="google-maps container col-4 m-0 p-0">
-        <GoogleMap name="teacher_gm" :map_data="map_data" :apikey="apikey" :mapcenter="mapcenter" role="teacher"></GoogleMap>
+        <GoogleMap
+          name="teacher_gm"
+          :map_data="map_data"
+          :apikey="apikey"
+          :mapcenter="mapcenter"
+          role="teacher"
+        ></GoogleMap>
       </div>
     </div>
   </div>
@@ -110,17 +116,21 @@ export default {
       return this.filter_list.slice(min, max);
     },
     filter_list() {
-      if (this.filtered_location.length == 0 && this.filtered_industry.length == 0
-       && this.filtered_solutions.length == 0 && this.filtered_sector.length == 0)
-        return (this.loaded_employers);
+      if (
+        this.filtered_location.length == 0 &&
+        this.filtered_industry.length == 0 &&
+        this.filtered_solutions.length == 0 &&
+        this.filtered_sector.length == 0
+      )
+        return this.loaded_employers;
       // definition of an unique class array: elements' coursename can't be duplicated, teacher_uid is Ok.
       var key = ""; // the key we use to search, consist of params from filter.
-     // var duplicated_results = []; // the result may be duplicate since we have industry with different periods
-     // var filtered_result = []; // the final array we return, all classrooms here are unique
+      // var duplicated_results = []; // the result may be duplicate since we have industry with different periods
+      // var filtered_result = []; // the final array we return, all classrooms here are unique
       this.search_options.keys = [];
       // pull all the parameters from the filter, concatenate them into a string called 'key' //
       // only search for relavant keys based on the difference of params
-      
+
       var target = _.cloneDeep(this.loaded_employers);
 
       if (this.filtered_location && this.filtered_location.length) {
@@ -135,7 +145,7 @@ export default {
         key += String(this.filtered_industry);
         this.search_options.keys.push("selected_industry_keywords");
       }
-      if (this.filtered_sector  && this.filtered_sector.length) {
+      if (this.filtered_sector && this.filtered_sector.length) {
         key += String(this.filtered_sector);
         this.search_options.keys.push("sector");
       }
@@ -205,11 +215,12 @@ export default {
     GoogleMap
   },
   methods: {
-    doNewlikedCardAction(uid){
+    doNewlikedCardAction(uid) {
       if (_.includes(this.liked_cards, uid))
-        this.liked_cards = _.filter( this.liked_cards, card_uid => { return card_uid!= uid})
-      else
-        this.liked_cards.push(uid);
+        this.liked_cards = _.filter(this.liked_cards, card_uid => {
+          return card_uid != uid;
+        });
+      else this.liked_cards.push(uid);
     },
     shuffle(a) {
       for (let i = a.length - 1; i > 0; i--) {
@@ -252,13 +263,13 @@ export default {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         const db = firebase.firestore();
-        db.collection("teachers").doc(user.uid).get().then(doc => {
-          if (doc.data() && doc.data()["match_making"] &&
-          doc.data()["match_making"]["liked_cards"])
-           self.liked_cards = doc.data()["match_making"]["liked_cards"];
-          else 
-            self.liked_cards = [];
-        });
+        // db.collection("teachers").doc(user.uid).get().then(doc => {
+        //   if (doc.data() && doc.data()["match_making"] &&
+        //   doc.data()["match_making"]["liked_cards"])
+        //    self.liked_cards = doc.data()["match_making"]["liked_cards"];
+        //   else
+        //     self.liked_cards = [];
+        // });
         // console.log(user.uid)
         db.collection("employers")
           .get()
@@ -269,63 +280,84 @@ export default {
               self.industry.push(employer_data.selected_industry_keywords);
               self.solutions.push(employer_data.selected_service_keywords);
               self.solutions.push(employer_data.selected_product_keywords);
-              self.solutions = _.flattenDeep(self.solutions);
               self.location.push(employer_data.address.city);
-              var filters = [self.industry, self.location, self.solutions];
-              self.industry = _.flattenDeep(self.industry);
-              self.industry = _.uniq(self.industry).sort();
-              self.industry = self.industry.filter(field => field);
-              self.location = _.flattenDeep(self.location);
-              self.location = _.uniq(self.location).sort();
-              self.location = self.location.filter(field => field);
-              self.solutions = _.flattenDeep(self.solutions);
-              self.solutions = _.uniq(self.solutions).sort();
-              self.solutions = self.solutions.filter(field => field);
               self.loaded_employers.push(employer_data);
-              var promises = [];
-              for (let employer in self.loaded_employers) {
+            });
+            console.log("hi");
+            self.solutions = _.flattenDeep(self.solutions);
+            var filters = [self.industry, self.location, self.solutions];
+            self.industry = _.flattenDeep(self.industry);
+            self.industry = _.uniq(self.industry).sort();
+            self.industry = self.industry.filter(field => field);
+            self.location = _.flattenDeep(self.location);
+            self.location = _.uniq(self.location).sort();
+            self.location = self.location.filter(field => field);
+            self.solutions = _.flattenDeep(self.solutions);
+            self.solutions = _.uniq(self.solutions).sort();
+            self.solutions = self.solutions.filter(field => field);
+            console.log("here");
+            var promises = [];
+            for (
+              let employer = 0;
+              employer < self.loaded_employers.length;
+              employer++
+            ) {
+              console.log("waiting");
+              setTimeout(function() {
                 promises.push(
                   db
                     .collection("Users")
-                    .doc(self.loaded_employers[employer].uid)
+                    .doc(self.loaded_employers[employer]["uid"])
                     .get()
                     .then(doc => {
+                      console.log("got it");
                       var user_data = doc.data();
-                      //   console.log(user_data);
                       self.loaded_employers[employer]["first_name"] =
                         user_data.first_name;
                       self.loaded_employers[employer]["last_name"] =
                         user_data.last_name;
                     })
                 );
-              }
-              Promise.all(promises).then(val => {
-                db.collection("teachers")
-                  .doc(user.uid)
-                  .get()
-                  .then(doc => {
-                    self.invited = doc.data().invited
-                      ? doc.data().invited
-                      : self.invited;
-                    var to_move = _.filter(self.loaded_employers, employer => {
-                      return _.some(self.invited, uid => {
-                        return employer.uid == uid;
-                      });
+              }, 300);
+            }
+            Promise.all(promises).then(val => {
+              db.collection("teachers")
+                .doc(user.uid)
+                .get()
+                .then(doc => {
+                  //
+                  if (
+                    doc.data() &&
+                    doc.data()["match_making"] &&
+                    doc.data()["match_making"]["liked_cards"]
+                  )
+                    self.liked_cards = doc.data()["match_making"][
+                      "liked_cards"
+                    ];
+                  else self.liked_cards = [];
+                  console.log("hi");
+                  // moved here
+                  self.invited = doc.data().invited
+                    ? doc.data().invited
+                    : self.invited;
+                  var to_move = _.filter(self.loaded_employers, employer => {
+                    return _.some(self.invited, uid => {
+                      return employer.uid == uid;
                     });
-                    for (let employer of to_move) {
-                      self.loaded_employers.splice(
-                        self.loaded_employers.indexOf(employer),
-                        1
-                      );
-                    }
-                    var new_arr = [];
-                    new_arr.push(to_move, self.loaded_employers);
-                    new_arr = _.flattenDeep(new_arr);
-                    //console.log(new_arr);
-                    self.loaded_employers = new_arr;
-                    self.render = true;
                   });
-              });
+                  for (let employer of to_move) {
+                    self.loaded_employers.splice(
+                      self.loaded_employers.indexOf(employer),
+                      1
+                    );
+                  }
+                  var new_arr = [];
+                  new_arr.push(to_move, self.loaded_employers);
+                  new_arr = _.flattenDeep(new_arr);
+                  //console.log(new_arr);
+                  self.loaded_employers = new_arr;
+                  self.render = true;
+                });
             });
           });
       }
