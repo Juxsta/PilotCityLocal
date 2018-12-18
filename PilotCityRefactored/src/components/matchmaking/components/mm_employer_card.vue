@@ -46,11 +46,11 @@
               class="card-subtitle-text text row"
               v-for="(industry,index) in employer.selected_industry_keywords"
               :key="index"
-              v-if="index <=5"
+              v-if="index <=4"
             >
               <span>{{industry}}</span>
               <span
-                v-if="index != employer.selected_industry_keywords.length-1 && index != 5"
+                v-if="index != employer.selected_industry_keywords.length-1 && index != 4"
               >{{", "}}</span>
             </h4>
           </div>
