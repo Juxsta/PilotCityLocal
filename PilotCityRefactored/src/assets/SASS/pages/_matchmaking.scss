@@ -326,12 +326,10 @@ $primary: $purple !default;
   margin-bottom: 20px;
   &:hover {
     background-color: #f8f8f8;
-    cursor: pointer;
   }
 
   &:active {
     background-color: #ededee;
-    cursor: pointer;
   }
 
 }
@@ -488,11 +486,28 @@ text-align: center;
   text-align: center;
 }
 
-.element.style {
+.bs-popover-top {
   font-family: "Raleway";
-  font-size: 10px;
-  color: #3c9ccc;
-  text-align: center;
+  font-weight: 600;
+  font-size: 15px;
+  max-width: 100px;
+  background: none;
+  border: none;
+  margin: 20px;
+  color: #c47e9b;
+}
+
+.arrow {
+  border:none !important;
+  background: none !important;
+  color: transparent !important;
+
+  &::after{
+  }
+
+  &::before{
+
+  }
 }
 
 
