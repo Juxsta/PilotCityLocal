@@ -40,7 +40,7 @@
               <span>{{filter_list.length}}+ Employers Recommended</span>
             </h2>
             <mm_employer_card
-              v-for="(employer,index) in filter_list"
+              v-for="(employer,index) in render_class"
               v-if="employer.first_name"
               :key="index"
               :employer="employer"
