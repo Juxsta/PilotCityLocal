@@ -239,15 +239,9 @@ export default {
     GoogleMap
   },
   methods: {
-<<<<<<< HEAD
-      changeShow(name) {
-      console.log("show changede")
-      this.show = name;
-=======
     changeshow(towhat) {
       this.show = towhat;
       console.log(show);
->>>>>>> 7800b3c4915eb95661f486497f1699eb3a22b008
     },
     doNewlikedCardAction(uid) {
       if (_.includes(this.liked_cards, uid))

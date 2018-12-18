@@ -18,40 +18,6 @@ npm <template>
             />
           </div>
 
-<<<<<<< Updated upstream
-          <div class="cardstock">
-            <h2 class="text-classroom-matches" id>
-              <span>{{filter_list.length}}</span>
-              <span>+ Classrooms Recommended</span>
-            </h2>
-            <mm_teacher_card
-              :id="index"
-              v-if="loaded_teachers[index]"
-              :classroom="classroom"
-              :teacher="findbyId(loaded_teachers,classroom.teacher_uid)"
-              v-for="(classroom,index) in render_class"
-              :key="index"
-              :invited="invited"
-              :number="index"
-              :page="page"
-              :active_card="active_card"
-              class="row-12 card-teacher-match"
-              :likedlist="liked_cards"
-              @teacherCardClicked="highlight_pin(findbyId(loaded_teachers,classroom.teacher_uid), index)"
-              @newlikedCardAction="doNewlikedCardAction"
-            />
-            <div class="d-flex mm__pagination--row">
-              <b-btn
-                class="prevpage__btn justify-content-start"
-                @click="page=(page>0)?page-1:page"
-              >Previous</b-btn>
-              <b-btn
-                class="nextpage__btn ml-auto"
-                @click="page=page+1"
-                v-scroll-to="'#topresult'"
-              >Next</b-btn>
-            </div>
-=======
           <div class="cardstock d-flex flex-column row-12 container">
             <h2 class="text-classroom-matches">100+ Classrooms Recommended</h2>
             <mm_teacher_card
@@ -59,7 +25,6 @@ npm <template>
               :classroom="loaded_classrooms[2]"
               :teacher="loaded_teachers[2]"
             />
->>>>>>> Stashed changes
           </div>
         </div>
       </div>
@@ -379,7 +344,7 @@ export default {
               .get()
               .then(classroom_querySnapshot => {
                 classroom_querySnapshot.forEach(doc => {
-<<<<<<< HEAD
+
                   if(class_data && findbyId(
                     self.loaded_teachers,
                     doc.data().teacher_uid
@@ -420,10 +385,7 @@ export default {
                   // console.log(doc.data());
                   self.courses.push(class_data.coursename);
                   self.loaded_classrooms.push(class_data);
-<<<<<<< Updated upstream
-                }})
-=======
-=======
+
                   if (
                     self.findbyId(
                       self.loaded_teachers,
@@ -469,62 +431,11 @@ export default {
                     self.courses.push(class_data.coursename);
                     self.loaded_classrooms.push(class_data);
                   }
->>>>>>> 7800b3c4915eb95661f486497f1699eb3a22b008
                 });
->>>>>>> Stashed changes
+                });
+                });
+                });
                 var promises = [];
-                for (
-                  let teacher = 0;
-                  teacher < self.loaded_teachers.length;
-                  teacher++
-                ) {
-<<<<<<< Updated upstream
-                  setTimeout(function() {
-                    promises.push(
-                      db
-                        .collection("Users")
-                        .doc(self.loaded_teachers[teacher]["uid"])
-                        .get()
-                        .then(doc => {
-                          var user_data = doc.data();
-                          self.loaded_teachers[teacher]["first_name"] =
-                            user_data.first_name;
-                          self.loaded_teachers[teacher]["last_name"] =
-                            user_data.last_name;
-                        })
-                    );
-                  }, 300);
-                }
-                Promise.all(promises).then(val => {
-                  // timeout to stop firebase from overloading with requests
-                  db.collection("employers")
-                    .doc(user.uid)
-                    .get()
-                    .then(doc => {
-                      console.log(doc.data())
-                      self.invited = (doc.data()&& doc.data().invited)?doc.data().invited:self.invited
-                      var to_move = _.filter(self.loaded_classrooms, clas => {
-                        return _.some(self.invited, uid => {
-                          return clas.uid == uid;
-                        });
-                      });
-                      for (let clas of to_move) {
-                        self.loaded_classrooms.splice(
-                          self.loaded_classrooms.indexOf(clas),
-                          1
-                        );
-                      }
-                      var new_arr = [];
-                      new_arr.push(to_move, self.loaded_classrooms);
-                      new_arr = _.flattenDeep(new_arr);
-                      //console.log(new_arr);
-                      self.loaded_classrooms = new_arr;
-                    });
-                  self.shuffle(self.loaded_classrooms);
-                  self.render = true;
-                  self.skills = _.flattenDeep(self.skills);
-                  self.skills = _.uniq(self.skills);
-                  self.skills = self.skills.filter(skill => skill);
                   self.skills = self.skills.sort();
                   self.courses = _.uniq(self.courses);
                   self.courses = self.courses.sort();
@@ -543,16 +454,13 @@ export default {
                         self.loaded_teachers[teacher]["last_name"] =
                           user_data.last_name;
                       })
-                  );
-                }
-                Promise.all(promises).then(val => {
+                })
+                })
                   for(let teacher of self.loaded_teachers){
                     console.log(teacher.first_name, teacher.last_name)
                   }
                   console.log("I aint waiting for nuthin")
-                })
                 
->>>>>>> Stashed changes
               });
           });
       }
