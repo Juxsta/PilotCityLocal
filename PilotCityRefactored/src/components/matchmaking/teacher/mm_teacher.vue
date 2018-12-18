@@ -300,10 +300,12 @@ export default {
                 );
               }
               Promise.all(promises).then(val => {
+                console.log("hi")
                 db.collection("teachers")
                   .doc(user.uid)
                   .get()
                   .then(doc => {
+                    console.log(doc.data())
                     self.invited = doc.data().invited
                       ? doc.data().invited
                       : self.invited;

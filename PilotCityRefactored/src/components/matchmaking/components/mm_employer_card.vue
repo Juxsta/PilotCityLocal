@@ -22,12 +22,12 @@
         <i
             class="material-icons justify-content-center pt-2 px-3"
             @click="likeThisCard"
-            :id="classroom.uid"
+            :id="employer.uid"
             :style="{ color : amIliked ? '#eca0be' : '#dedfe0'}"
           >favorite_border</i>
           <b-popover
             class="favorite_popover"
-            :target="'#'+classroom.uid"
+            :target="'#'+employer.uid"
             placement="topleft"
             triggers="hover"
           >Save</b-popover>
