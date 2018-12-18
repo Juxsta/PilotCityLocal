@@ -16,21 +16,30 @@
             @mouseleave="text=temp"
             :class="{'action-button':invite, 'action-button-pending':pending}"
           >{{text}}</button>
-          <!-- place holder button -->
-          <!--Place holder [x]  -->
         </div>
+        <span id="favorite_border">
         <i
+<<<<<<< HEAD
             class="material-icons justify-content-center pt-2 px-3"
             @click="likeThisCard"
-            :id="classroom.uid"
+            :id="employer.uid"
             :style="{ color : amIliked ? '#eca0be' : '#dedfe0'}"
           >favorite_border</i>
-          <b-popover
-            class="favorite_popover"
-            :target="'#'+classroom.uid"
-            placement="topleft"
-            triggers="hover"
-          >Save</b-popover>
+
+        </span>
+=======
+          class="material-icons justify-content-center pt-2 px-3"
+          @click="likeThisCard"
+          :id="employer.uid"
+          :style="{ color : amIliked ? '#eca0be' : '#dedfe0'}"
+        >favorite_border</i>
+        <b-popover
+          class="favorite_popover"
+          :target="'#'+employer.uid"
+          placement="topleft"
+          triggers="hover"
+        >Save</b-popover>
+>>>>>>> cb2c57760c92935aee5283733c0645ebf5f053eb
       </div>
 
       <div class="two d-flex flex-row">
@@ -66,10 +75,13 @@
           </div>
 
           <h4 class="card-subtitle-text text">
-            <span v-for="(field,index) in Object.keys(employer.address)" :key="index">
-              <span>{{employer.address[field] | capitalize}}</span>
-              <span v-if="index != (Object.keys(employer.address).length-1)">{{", "}}</span>
-            </span>
+            <span>{{employer.address.street | capitalize}}</span>
+            <span>{{", "}}</span>
+            <span>{{employer.address.city | capitalize}}</span>
+            <span>{{", "}}</span>
+            <span>{{employer.address.state | capitalize}}</span>
+            <span>{{", "}}</span>
+            <span>{{employer.address.zip | capitalize}}</span>
           </h4>
           <!--  2250 Bancroft Avenue, San Leandro, CA 94577 -->
         </div>
