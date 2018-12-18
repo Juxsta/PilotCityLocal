@@ -20,19 +20,6 @@
           <!--Place holder [x]  -->
         </div>
         <i
-<<<<<<< HEAD
-            class="material-icons justify-content-center pt-2 px-3"
-            @click="likeThisCard"
-            :id="employer.uid"
-            :style="{ color : amIliked ? '#eca0be' : '#dedfe0'}"
-          >favorite_border</i>
-          <b-popover
-            class="favorite_popover"
-            :target="'#'+employer.uid"
-            placement="topleft"
-            triggers="hover"
-          >Save</b-popover>
-=======
           class="material-icons justify-content-center pt-2 px-3"
           @click="likeThisCard"
           :id="employer.uid"
@@ -44,7 +31,6 @@
           placement="topleft"
           triggers="hover"
         >Save</b-popover>
->>>>>>> fdc95a3602bade25b4d71adee253b40f0e7048e6
       </div>
 
       <div class="two d-flex flex-row">
