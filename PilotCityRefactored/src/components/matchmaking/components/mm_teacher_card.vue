@@ -12,16 +12,26 @@
         <div class="mt-3">
           <button
             @click="update_invite(),upload()"
-            :class="{'action-button':invite, 'action-button-pending':pending}"
+            @mouseenter="temp = text, text = invite?text:'Cancel'"
+            @mouseleave="text=temp"
+            :class="{'action-button':invite, 'action-button-pending':pending, }"
           >{{text}}</button>
         </div>
-          <!-- stupid heart -->
-        <i
-          class="material-icons justify-content-center pt-2 px-3"
-          id="favorite_border"
-          @click="likeThisCard"
-          :style="{ color : amIliked ? '#eca0be' : '#dedfe0'}"
-        >favorite_border</i>
+        <!-- stupid heart -->
+        <span id="favorite_border">
+          <i
+            class="material-icons justify-content-center pt-2 px-3"
+            @click="likeThisCard"
+            :id="classroom.uid"
+            :style="{ color : amIliked ? '#eca0be' : '#dedfe0'}"
+          >favorite_border</i>
+          <b-popover
+            class="favorite_popover"
+            :target="'#'+classroom.uid"
+            placement="topleft"
+            triggers="hover"
+          >Favorite this class!</b-popover>
+        </span>
       </div>
 
       <div class="two d-flex flex-row">
@@ -98,9 +108,9 @@ import firebase from "@/firebase/init";
 export default {
   data() {
     return {
-      // invite: true,
-      // pending: false,
+      hover: false,
       text: "Invite",
+      temp: "",
       tags: [
         "tag__skills--red",
         "tag__skills--green",
@@ -140,14 +150,13 @@ export default {
   },
   computed: {
     invite() {
-      this.text="Invited"
-      var in_invite= this.invited.indexOf(this.classroom.uid) == -1
-      if(in_invite)
-        this.text="Invite"
+      this.text = "Invited";
+      var in_invite = this.invited.indexOf(this.classroom.uid) == -1;
+      if (in_invite) this.text = "Invite";
       return in_invite;
     },
     pending() {
-      return !this.invite
+      return !this.invite;
     },
     amIliked(){
       return _.includes(this.likedlist, this.classroom.uid);
@@ -182,13 +191,9 @@ export default {
         });
     },
     update_invite(event) {
-      // this.invite = !this.invite;
-      // this.pending = !this.pending;
       if (!this.invite) {
-        //this.text = "Invite";
         this.invited.splice(this.invited.indexOf(this.classroom.uid), 1);
       } else {
-        //this.text = "Invited";
         this.invited.push(this.classroom.uid);
       }
     },
@@ -204,8 +209,7 @@ export default {
         }
       });
       return true;
-    },
-    check_invited() {}
+    }
   },
   filters: {
     capitalize: function(value) {
@@ -216,3 +220,10 @@ export default {
   }
 };
 </script>
+
+<style>
+.favorite_popover{
+  justify-content: left,
+
+}
+</style>

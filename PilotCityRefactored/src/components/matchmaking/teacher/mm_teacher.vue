@@ -110,6 +110,9 @@ export default {
       return this.filter_list.slice(min, max);
     },
     filter_list() {
+      if (this.filtered_location.length == 0 && this.filtered_industry.length == 0
+       && this.filtered_solutions.length == 0 && this.filtered_sector.length == 0)
+        return (this.loaded_employers);
       // definition of an unique class array: elements' coursename can't be duplicated, teacher_uid is Ok.
       var key = ""; // the key we use to search, consist of params from filter.
      // var duplicated_results = []; // the result may be duplicate since we have industry with different periods
@@ -118,15 +121,19 @@ export default {
       // pull all the parameters from the filter, concatenate them into a string called 'key' //
       // only search for relavant keys based on the difference of params
       
-      if (this.filtered_industry && this.filtered_industry.length) {
-        key += String(this.filtered_industry);
-        // only course name is relavant in this case
-        this.search_options.keys.push("selected_industry_keywords");
-      }
+      var target = _.cloneDeep(this.loaded_employers);
+
       if (this.filtered_location && this.filtered_location.length) {
         key += String(this.filtered_location);
-        // only course name is relavant in this case
         this.search_options.keys.push("address.city");
+        this.search_options.matchAllTokens = true;
+        fuse = new Fuse(target, this.search_options);
+        target = fuse.search(key);
+        this.search_options.matchAllTokens = false;
+      }
+      if (this.filtered_industry && this.filtered_industry.length) {
+        key += String(this.filtered_industry);
+        this.search_options.keys.push("selected_industry_keywords");
       }
       if (this.filtered_sector  && this.filtered_sector.length) {
         key += String(this.filtered_sector);
@@ -137,16 +144,13 @@ export default {
         this.search_options.keys.push("selected_service_keywords");
         this.search_options.keys.push("selected_product_keywords");
       }
-      key = key.replace(/\s,/g, "");
-      // if no params is selected from the filter, we return the whil array.
-      if (key == "") return this.loaded_employers;
 
       // ======= Testing Purpose =======
       // console.log(key);
       // console.log(this.search_options.keys)
       // ==================================
       // fuse.js initialization
-      var fuse = new Fuse(this.loaded_employers, this.search_options);
+      var fuse = new Fuse(target, this.search_options);
       // employers are unque
       // uniqueness check
       /*
