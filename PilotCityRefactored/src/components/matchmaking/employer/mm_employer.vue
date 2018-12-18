@@ -5,14 +5,16 @@ npm <template>
       <div class="d-flex col-8 justify-content-center m-0 p-0">
         <div class="leftside justify-content-center flex-column d-flex col-12 p-0 m-0">
           <div class="filter-bar justify-content-center d-flex flex-row">
-            <mm_filter :options="courses" :selected_options="filtered_courses" name="Courses"/>
-            <mm_filter :options="skills" :selected_options="filtered_skills" name="Skills"/>
-            <mm_filter :options="grades" :selected_options="filtered_grades" name="Grades"/>
-            <mm_filter :options="locations" :selected_options="filtered_locations" name="Location"/>
+            <mm_filter :options="courses" :selected_options="filtered_courses" :show=show @click="changeShow('Courses')" name="Courses"/>
+            <mm_filter :options="skills" :selected_options="filtered_skills" :show=show @click="changeShow('Skills')" name="Skills"/>
+            <mm_filter :options="grades" :selected_options="filtered_grades" :show=show @click="changeShow('Grades')" name="Grades"/>
+            <mm_filter :options="locations" :selected_options="filtered_locations" :show=show  @click="changeShow('Location')" name="Location"/>
             <mm_filter
               :options="class_size"
               :selected_options="filtered_class_size"
               name="Class Size"
+              :show=show
+              @click="changeShow('Class Size')"
             />
           </div>
 
@@ -155,7 +157,8 @@ export default {
       loaded_classrooms: [],
       loaded_teachers: [],
       recmd: [],
-      invited: []
+      invited: [],
+      show:null
     };
   },
   computed: {
@@ -286,6 +289,9 @@ export default {
     GoogleMap
   },
   methods: {
+    changeShow(name){
+      this.show = name
+    },
     doNewlikedCardAction(uid) {
       if (_.includes(this.liked_cards, uid))
         this.liked_cards = _.filter(this.liked_cards, card_uid => {
@@ -361,7 +367,14 @@ export default {
               .get()
               .then(classroom_querySnapshot => {
                 classroom_querySnapshot.forEach(doc => {
-                  var class_data = doc.data();
+                  if(class_data && findbyId(
+                    self.loaded_teachers,
+                    doc.data().teacher_uid
+                  ) && findbyId(
+                    self.loaded_teachers,
+                    doc.data().teacher_uid
+                  ).selected_skills_keywords){
+                     var class_data = doc.data();
                   class_data["school_address"] = self.findbyId(
                     self.loaded_teachers,
                     class_data.teacher_uid
@@ -394,7 +407,7 @@ export default {
                   // console.log(doc.data());
                   self.courses.push(class_data.coursename);
                   self.loaded_classrooms.push(class_data);
-                });
+                }})
                 var promises = [];
                 for (
                   let teacher = 0;
@@ -422,8 +435,8 @@ export default {
                     .doc(user.uid)
                     .get()
                     .then(doc => {
-                      // console.log(doc.data())
-                      if (doc.data().invited) self.invited = doc.data().invited;
+                      console.log(doc.data())
+                      self.invited = (doc.data()&& doc.data().invited)?doc.data().invited:self.invited
                       var to_move = _.filter(self.loaded_classrooms, clas => {
                         return _.some(self.invited, uid => {
                           return clas.uid == uid;

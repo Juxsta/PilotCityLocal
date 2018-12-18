@@ -5,16 +5,34 @@
       <div class="d-flex col-8 justify-content-center m-0 p-0">
         <div class="leftside justify-content-center flex-column d-flex col-12 p-0 m-0">
           <div class="filter-bar justify-content-center d-flex flex-row">
-            <mm_filter :options="industry" :selected_options="filtered_industry" @click="show='Industry'" :show="show" name="Industry"/>
-            <mm_filter :options="sector" :selected_options="filtered_sector" onclick="show='Sector'" :show="show" name="Sector"/>
+            <mm_filter
+              :options="industry"
+              :selected_options="filtered_industry"
+              :show="show"
+              @click.native="changeShow('Industry')"
+              name="Industry"
+            />
+            <mm_filter
+              :options="sector"
+              :selected_options="filtered_sector"
+              @click.native="changeShow('Sector')"
+              :show="show"
+              name="Sector"
+            />
             <mm_filter
               :options="solutions"
               :selected_options="filtered_solutions"
-              @click="show='Solutions'"
+              @click.native="changeShow('Solutions')"
               :show="show"
               name="Solutions"
             />
-            <mm_filter :options="location" :selected_options="filtered_location" @click="show='Location'" :show="show" name="Location"/>
+            <mm_filter
+              :options="location"
+              :selected_options="filtered_location"
+              @click.native="changeShow('Location')"
+              :show="show"
+              name="Location"
+            />
           </div>
           <div class="cardstock">
             <h2 class="text-classroom-matches" id>
@@ -23,6 +41,7 @@
             </h2>
             <mm_employer_card
               v-for="(employer,index) in filter_list"
+              v-if="employer.first_name"
               :key="index"
               :employer="employer"
               :invited="invited"
@@ -220,6 +239,10 @@ export default {
     GoogleMap
   },
   methods: {
+      changeShow(name) {
+      console.log("show changede")
+      this.show = name;
+    },
     doNewlikedCardAction(uid) {
       if (_.includes(this.liked_cards, uid))
         this.liked_cards = _.filter(this.liked_cards, card_uid => {
@@ -317,23 +340,24 @@ export default {
               employer++
             ) {
               console.log("waiting");
-              setTimeout(function() {
-                // timeout to stop firebase from overloading with requests
-                promises.push(
-                  db
-                    .collection("Users")
-                    .doc(self.loaded_employers[employer]["uid"])
-                    .get()
-                    .then(doc => {
+
+              // timeout to stop firebase from overloading with requests
+              promises.push(
+                db
+                  .collection("Users")
+                  .doc(self.loaded_employers[employer]["uid"])
+                  .get()
+                  .then(doc => {
+                    
                       console.log("got it");
                       var user_data = doc.data();
+                      // console.log(user_data)
                       self.loaded_employers[employer]["first_name"] =
                         user_data.first_name;
                       self.loaded_employers[employer]["last_name"] =
                         user_data.last_name;
-                    })
-                );
-              }, 300);
+                  })
+              );
             }
             Promise.all(promises).then(val => {
               db.collection("teachers")
@@ -350,7 +374,6 @@ export default {
                       "liked_cards"
                     ];
                   else self.liked_cards = [];
-                  console.log("hi");
                   // moved here
                   self.invited = doc.data().invited
                     ? doc.data().invited
@@ -372,6 +395,7 @@ export default {
                   //console.log(new_arr);
                   self.loaded_employers = new_arr;
                   self.render = true;
+                  console.log("rendered");
                 });
             });
           });

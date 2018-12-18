@@ -5,14 +5,14 @@
       <div class="container">
         <b-form-group label>
           <b-form-checkbox-group
-          class = "my-buttons"
+            class="my-buttons"
             stacked
             v-model="local_selected"
             @input="updateSelected"
             name="filter"
             :options="options"
             :style="{'overflow-x':'hidden', 'text-transform':'capitalize'}"
-            :show="name==show?true:false"
+            :show.sync="showIt"
           ></b-form-checkbox-group>
         </b-form-group>
       </div>
@@ -43,8 +43,13 @@ export default {
       required: true,
       type: Array
     },
-    show:{
-      required:true
+    show: {
+      required: true
+    }
+  },
+  computed: {
+    showIt() {
+      return this.name == this.show ? false : true;
     }
   },
   methods: {
@@ -76,8 +81,8 @@ export default {
 
 <style>
 .my-buttons .active {
-    color: #fff !important;
-    background-color: #28a745 !important;
-    border-color: #28a745 !important;
-  }
+  color: #fff !important;
+  background-color: #28a745 !important;
+  border-color: #28a745 !important;
+}
 </style>
