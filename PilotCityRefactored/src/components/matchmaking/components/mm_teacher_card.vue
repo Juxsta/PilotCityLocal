@@ -19,7 +19,7 @@
         </div>
         <!-- stupid heart -->
         <span id="favorite_border">
-          <!-- <i
+          <i
             class="material-icons justify-content-center pt-2 px-3"
             @click="likeThisCard"
             :id="classroom.uid"
@@ -30,7 +30,7 @@
             :target="'#'+classroom.uid"
             placement="topleft"
             triggers="hover"
-          >Save</b-popover> -->
+          >Save</b-popover>
         </span>
       </div>
 

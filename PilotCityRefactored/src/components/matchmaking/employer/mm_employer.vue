@@ -352,48 +352,62 @@ export default {
           .get()
           .then(teacher_querySnapshot => {
             teacher_querySnapshot.forEach(doc => {
-              var teacher_data = doc.data();
-              teacher_data["uid"] = doc.id;
-              self.skills.push(teacher_data.selected_skills_keywords);
-              self.loaded_teachers.push(teacher_data);
+              if (doc.data() && doc.data().selected_skills_keywords) {
+                var teacher_data = doc.data();
+                teacher_data["uid"] = doc.id;
+                self.skills.push(teacher_data.selected_skills_keywords);
+                self.loaded_teachers.push(teacher_data);
+              }
             });
             db.collection("classroom")
               .get()
               .then(classroom_querySnapshot => {
                 classroom_querySnapshot.forEach(doc => {
-                  var class_data = doc.data();
-                  class_data["school_address"] = self.findbyId(
-                    self.loaded_teachers,
-                    class_data.teacher_uid
-                  ).school_address;
-                  class_data["school_district"] = self.findbyId(
-                    self.loaded_teachers,
-                    class_data.teacher_uid
-                  ).school_district;
-                  class_data["school_name"] = self.findbyId(
-                    self.loaded_teachers,
-                    class_data.teacher_uid
-                  ).school_name;
-                  class_data["selected_industry_keywords"] = self.findbyId(
-                    self.loaded_teachers,
-                    class_data.teacher_uid
-                  ).selected_industry_keywords;
-                  class_data["selected_skills_keywords"] = self.findbyId(
-                    self.loaded_teachers,
-                    class_data.teacher_uid
-                  ).selected_skills_keywords;
-                  class_data["coordinate"] = self.findbyId(
-                    self.loaded_teachers,
-                    class_data.teacher_uid
-                  ).coordinate;
-                  if (class_data["coordinate"] && class_data["coordinate"].lat)
-                    class_data["poi"] =
-                      String(class_data["coordinate"]["lat"]) +
-                      String(class_data["coordinate"]["lng"]);
+                  if (
+                    self.findbyId(
+                      self.loaded_teachers,
+                      doc.data().teacher_uid
+                    ) &&
+                    self.findbyId(self.loaded_teachers, doc.data().teacher_uid)
+                      .selected_skills_keywords
+                  ) {
+                    var class_data = doc.data();
+                    class_data["school_address"] = self.findbyId(
+                      self.loaded_teachers,
+                      class_data.teacher_uid
+                    ).school_address;
+                    class_data["school_district"] = self.findbyId(
+                      self.loaded_teachers,
+                      class_data.teacher_uid
+                    ).school_district;
+                    class_data["school_name"] = self.findbyId(
+                      self.loaded_teachers,
+                      class_data.teacher_uid
+                    ).school_name;
+                    class_data["selected_industry_keywords"] = self.findbyId(
+                      self.loaded_teachers,
+                      class_data.teacher_uid
+                    ).selected_industry_keywords;
+                    class_data["selected_skills_keywords"] = self.findbyId(
+                      self.loaded_teachers,
+                      class_data.teacher_uid
+                    ).selected_skills_keywords;
+                    class_data["coordinate"] = self.findbyId(
+                      self.loaded_teachers,
+                      class_data.teacher_uid
+                    ).coordinate;
+                    if (
+                      class_data["coordinate"] &&
+                      class_data["coordinate"].lat
+                    )
+                      class_data["poi"] =
+                        String(class_data["coordinate"]["lat"]) +
+                        String(class_data["coordinate"]["lng"]);
 
-                  // console.log(doc.data());
-                  self.courses.push(class_data.coursename);
-                  self.loaded_classrooms.push(class_data);
+                    // console.log(doc.data());
+                    self.courses.push(class_data.coursename);
+                    self.loaded_classrooms.push(class_data);
+                  }
                 });
                 var promises = [];
                 for (
@@ -417,7 +431,8 @@ export default {
                     );
                   }, 100);
                 }
-                Promise.all(promises).then(val => { // timeout to stop firebase from overloading with requests
+                Promise.all(promises).then(val => {
+                  // timeout to stop firebase from overloading with requests
                   db.collection("employers")
                     .doc(user.uid)
                     .get()

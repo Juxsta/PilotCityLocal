@@ -17,11 +17,7 @@
           <div class="cardstock">
             <h2 class="text-classroom-matches" id>
               <!-- <span>{{filter_list.length}}</span> -->
-<<<<<<< HEAD
-              <span>{{filter_list.length}}+ Classrooms Recommended</span>
-=======
               <span>+ Employers Recommended</span>
->>>>>>> 8deab20c0a20833fd456bb102b7530b7bb6e1abf
             </h2>
             <mm_employer_card
               v-for="(employer,index) in filter_list"
@@ -322,23 +318,6 @@ export default {
                         user_data.last_name;
                     })
                 );
-<<<<<<< HEAD
-              }
-              Promise.all(promises).then(val => {
-                console.log("hi")
-                db.collection("teachers")
-                  .doc(user.uid)
-                  .get()
-                  .then(doc => {
-                    console.log(doc.data())
-                    self.invited = doc.data().invited
-                      ? doc.data().invited
-                      : self.invited;
-                    var to_move = _.filter(self.loaded_employers, employer => {
-                      return _.some(self.invited, uid => {
-                        return employer.uid == uid;
-                      });
-=======
               }, 300);
             }
             Promise.all(promises).then(val => {
@@ -364,7 +343,6 @@ export default {
                   var to_move = _.filter(self.loaded_employers, employer => {
                     return _.some(self.invited, uid => {
                       return employer.uid == uid;
->>>>>>> 0898a3b8874778f27a77c1c19a981a8420a415da
                     });
                   });
                   for (let employer of to_move) {
