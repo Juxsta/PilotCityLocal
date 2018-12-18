@@ -239,15 +239,9 @@ export default {
     GoogleMap
   },
   methods: {
-<<<<<<< HEAD
       changeShow(name) {
       console.log("show changede")
       this.show = name;
-=======
-    changeshow(towhat) {
-      this.show = towhat;
-      console.log(show);
->>>>>>> 7800b3c4915eb95661f486497f1699eb3a22b008
     },
     doNewlikedCardAction(uid) {
       if (_.includes(this.liked_cards, uid))
@@ -326,7 +320,7 @@ export default {
                 self.loaded_employers.push(employer_data);
               }
             });
-            console.log("hi");
+            // console.log("hi");
             self.solutions = _.flattenDeep(self.solutions);
             var filters = [self.industry, self.location, self.solutions];
             self.industry = _.flattenDeep(self.industry);
@@ -338,14 +332,14 @@ export default {
             self.solutions = _.flattenDeep(self.solutions);
             self.solutions = _.uniq(self.solutions).sort();
             self.solutions = self.solutions.filter(field => field);
-            console.log("here");
+            // console.log("here");
             var promises = [];
             for (
               let employer = 0;
               employer < self.loaded_employers.length;
               employer++
             ) {
-              console.log("waiting");
+              // console.log("waiting");
 
               // timeout to stop firebase from overloading with requests
               promises.push(
