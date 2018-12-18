@@ -79,6 +79,7 @@ export default {
       liked_cards: [],
       apikey: GEOCODEKEY.key,
       search_options: {
+        tokenize: true,
         shouldSort: true,
         threshold: 0.6,
         location: 0,
@@ -165,20 +166,35 @@ export default {
       return this.filter_list.slice(min, max);
     },
     filter_list() {
+      if (this.filtered_locations.length == 0 && this.filtered_grades.length == 0
+      && this.filtered_class_size.length == 0 && this.filtered_skills.length == 0)
+        return (this.loaded_classrooms);
       // definition of an unique class array: elements' coursename can't be duplicated, teacher_uid is Ok.
       var key = ""; // the key we use to search, consist of params from filter.
       var duplicated_results = []; // the result may be duplicate since we have courses with different periods
       var filtered_result = []; // the final array we return, all classrooms here are unique
       this.search_options.keys = [];
+      var target = _.cloneDeep(this.loaded_classrooms);
+      var fuse;
       // pull all the parameters from the filter, concatenate them into a string called 'key' //
       // only search for relavant keys based on the difference of params
+       if (this.filtered_locations && this.filtered_locations.length) {
+        key += String(this.filtered_locations);
+        this.search_options.keys.push("school_address.city");
+        this.search_options.keys.push("school_district");
+        this.search_options.keys.push("school_name");
+        this.search_options.matchAllTokens = true;
+        fuse = new Fuse(target, this.search_options);
+        target = fuse.search(key);
+        this.search_options.matchAllTokens = false;
+      }
+      
       if (this.filtered_grades && this.filtered_grades.length) {
         key += String(this.filtered_grades);
         this.search_options.keys.push("Grade");
         key = key.replace(/th/g, "");
         key = key.replace(/Grade/g, "");
       }
-
       if (this.filtered_courses && this.filtered_courses.length) {
         key += String(this.filtered_courses);
         // only course name is relavant in this case
@@ -196,22 +212,17 @@ export default {
         this.search_options.keys.push("selected_skills_keywords");
         this.search_options.keys.push("selected_industry_keywords");
       }
-      if (this.filtered_locations && this.filtered_locations.length) {
-        key += String(this.filtered_locations);
-        this.search_options.keys.push("school_address.city");
-        this.search_options.keys.push("school_district");
-        this.search_options.keys.push("school_name");
-      }
+     
       key = key.replace(/\s,/g, "");
       // if no params is selected from the filter, we return the whil array.
-      if (key == "") return this.loaded_classrooms;
+      if (key == "") return target;
     
       // ======= Testing Purpose =======
       // console.log(key);
       // console.log(this.search_options.keys)
       // ==================================
       // fuse.js initialization
-      var fuse = new Fuse(this.loaded_classrooms, this.search_options);
+      fuse = new Fuse(target, this.search_options);
       duplicated_results = fuse.search(key);    
       // uniqueness check
       var ht = {};
