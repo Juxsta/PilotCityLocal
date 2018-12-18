@@ -17,11 +17,7 @@
           <div class="cardstock">
             <h2 class="text-classroom-matches" id>
               <!-- <span>{{filter_list.length}}</span> -->
-<<<<<<< HEAD
-              <span>{{filter_list.length}}+ Classrooms Recommended</span>
-=======
               <span>+ Employers Recommended</span>
->>>>>>> 8deab20c0a20833fd456bb102b7530b7bb6e1abf
             </h2>
             <mm_employer_card
               v-for="(employer,index) in filter_list"
