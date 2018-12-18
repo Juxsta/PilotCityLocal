@@ -16,7 +16,6 @@ npm <template>
             />
           </div>
 
-<<<<<<< HEAD
           <div class="cardstock">
             <h2 class="text-classroom-matches" id>
               <span>{{filter_list.length}}</span>
@@ -49,15 +48,6 @@ npm <template>
               v-scroll-to="'#topresult'"
             >Next</b-btn>
             </div>
-=======
-          <div class="cardstock d-flex flex-column row-12 container">
-            <h2 class="text-classroom-matches">100+ Classrooms Recommended</h2>
-            <mm_teacher_card
-              v-if="loaded_classrooms.length && loaded_teachers.length"
-              :classroom="loaded_classrooms[2]"
-              :teacher="loaded_teachers[2]"
-            />
->>>>>>> c7b846da24efad57fcf44edd699f1c6789ca3d4c
           </div>
         </div>
       </div>
@@ -353,19 +343,7 @@ export default {
               .get()
               .then(classroom_querySnapshot => {
                 classroom_querySnapshot.forEach(doc => {
-<<<<<<< HEAD
                   var class_data = doc.data();
-=======
-
-                  if(class_data && findbyId(
-                    self.loaded_teachers,
-                    doc.data().teacher_uid
-                  ) && findbyId(
-                    self.loaded_teachers,
-                    doc.data().teacher_uid
-                  ).selected_skills_keywords){
-                     var class_data = doc.data();
->>>>>>> c7b846da24efad57fcf44edd699f1c6789ca3d4c
                   class_data["school_address"] = self.findbyId(
                     self.loaded_teachers,
                     class_data.teacher_uid
@@ -397,7 +375,6 @@ export default {
                   // console.log(doc.data());
                   self.courses.push(class_data.coursename)
                   self.loaded_classrooms.push(class_data);
-<<<<<<< HEAD
                 });
                 var promises = [];
                 // async getNames(){
@@ -456,84 +433,6 @@ export default {
                   self.courses = self.courses.sort()
                   // console.log(self.skills)
                 });
-=======
-
-                  if (
-                    self.findbyId(
-                      self.loaded_teachers,
-                      doc.data().teacher_uid
-                    ) &&
-                    self.findbyId(self.loaded_teachers, doc.data().teacher_uid)
-                      .selected_skills_keywords
-                  ) {
-                    var class_data = doc.data();
-                    class_data["school_address"] = self.findbyId(
-                      self.loaded_teachers,
-                      class_data.teacher_uid
-                    ).school_address;
-                    class_data["school_district"] = self.findbyId(
-                      self.loaded_teachers,
-                      class_data.teacher_uid
-                    ).school_district;
-                    class_data["school_name"] = self.findbyId(
-                      self.loaded_teachers,
-                      class_data.teacher_uid
-                    ).school_name;
-                    class_data["selected_industry_keywords"] = self.findbyId(
-                      self.loaded_teachers,
-                      class_data.teacher_uid
-                    ).selected_industry_keywords;
-                    class_data["selected_skills_keywords"] = self.findbyId(
-                      self.loaded_teachers,
-                      class_data.teacher_uid
-                    ).selected_skills_keywords;
-                    class_data["coordinate"] = self.findbyId(
-                      self.loaded_teachers,
-                      class_data.teacher_uid
-                    ).coordinate;
-                    if (
-                      class_data["coordinate"] &&
-                      class_data["coordinate"].lat
-                    )
-                      class_data["poi"] =
-                        String(class_data["coordinate"]["lat"]) +
-                        String(class_data["coordinate"]["lng"]);
-
-                    // console.log(doc.data());
-                    self.courses.push(class_data.coursename);
-                    self.loaded_classrooms.push(class_data);
-                  }
-                });
-                });
-                });
-                });
-                var promises = [];
-                  self.skills = self.skills.sort();
-                  self.courses = _.uniq(self.courses);
-                  self.courses = self.courses.sort();
-                  // console.log(self.skills)
-                });
-=======
-                  promises.push(
-                    db
-                      .collection("Users")
-                      .doc(self.loaded_teachers[teacher]["uid"])
-                      .get()
-                      .then(doc => {
-                        var user_data = doc.data();
-                        self.loaded_teachers[teacher]["first_name"] =
-                          user_data.first_name;
-                        self.loaded_teachers[teacher]["last_name"] =
-                          user_data.last_name;
-                      })
-                })
-                })
-                  for(let teacher of self.loaded_teachers){
-                    console.log(teacher.first_name, teacher.last_name)
-                  }
-                  console.log("I aint waiting for nuthin")
-                
->>>>>>> c7b846da24efad57fcf44edd699f1c6789ca3d4c
               });
           });
       }
