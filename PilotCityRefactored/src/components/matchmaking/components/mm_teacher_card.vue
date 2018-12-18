@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex flex-row">
-    <div class="m-auto p-auto ranking_number">{{number + page*10 + 1}}</div>
+    <div class="m-auto p-auto ranking_number">{{number + page*10 + 1  }}</div>
     <div
       class="card container col-10 ml-0"
       :class="{'card__teacher--active':number==active_card}"
@@ -9,7 +9,7 @@
       <div class="one d-flex flex-row">
         <h2 class="card-title">{{classroom.coursename | capitalize}}</h2>
 
-        <div class="mt-3 ml-auto">
+        <div class="mt-3">
           <button
             @click="update_invite(),upload()"
             @mouseenter="temp = text, text = invite?text:'Cancel'"
@@ -23,7 +23,7 @@
             class="material-icons justify-content-center pt-2 px-3"
             @click="likeThisCard"
             :id="classroom.uid"
-            :style="{ color : amIFlavored ? '#eca0be' : '#dedfe0'}"
+            :style="{ color : amIliked ? '#eca0be' : '#dedfe0'}"
           >favorite_border</i>
           <b-popover
             class="favorite_popover"
@@ -144,12 +144,8 @@ export default {
     page: {
       required: true
     },
-    role: {
+    likedlist: {
       required: true,
-      type: String
-    },
-    flavoredlist: {
-      required: true
     }
   },
   computed: {
@@ -162,45 +158,36 @@ export default {
     pending() {
       return !this.invite;
     },
-    amIFlavored() {
-      return _.includes(this.flavoredlist, this.classroom.uid);
+    amIliked(){
+      return _.includes(this.likedlist, this.classroom.uid);
     }
   },
   methods: {
-    likeThisCard() {
-      var db = firebase.firestore();
-      var self = this;
-      var user_id = firebase.auth().currentUser.uid;
-      var flavored_cards = [];
-      db.collection(this.role)
-        .doc(user_id)
-        .get()
-        .then(doc => {
+    likeThisCard(){
+        var db = firebase.firestore();
+        var self = this;
+        var user_id = firebase.auth().currentUser.uid;
+        var liked_cards = [];
+        db.collection("employers").doc(user_id).get().then( doc => {
           var data = doc.data();
-          if (
-            data &&
-            data["match_making"] &&
-            data["match_making"]["flavored_cards"]
-          )
-            flavored_cards = data["match_making"]["flavored_cards"];
-          else {
-            flavored_cards = [];
-            data["match_making"] = {};
+          if (data &&  data["match_making"] &&  data["match_making"]["liked_cards"])
+            liked_cards = data["match_making"]["liked_cards"] ;
+          else 
+          {
+            liked_cards = [];
+            data["match_making"] = {}
           }
-          if (!_.includes(flavored_cards, this.classroom.uid))
-            flavored_cards.push(this.classroom.uid);
+          if (!_.includes(liked_cards, this.classroom.uid))
+            liked_cards.push(this.classroom.uid);
           else
-            flavored_cards = _.filter(flavored_cards, card => {
-              return card != this.classroom.uid;
-            });
-
-          data["match_making"]["flavored_cards"] = flavored_cards;
-          db.collection(this.role)
-            .doc(user_id)
-            .update(data)
-            .then(() => {
-              self.$emit("newFlavoredCardAction", self.classroom.uid);
-            });
+            liked_cards = _.filter( liked_cards, card => { return card != this.classroom.uid})
+  
+          data["match_making"]["liked_cards"] = liked_cards;
+          self.$emit('newlikedCardAction', self.classroom.uid);
+          db.collection("employers").doc(user_id).update(data).catch(err => {
+            self.$emit('newlikedCardAction', self.classroom.uid);
+            alert(err.message);
+          })
         });
     },
     update_invite(event) {
