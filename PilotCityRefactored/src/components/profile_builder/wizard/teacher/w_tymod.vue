@@ -32,11 +32,10 @@ export default {
     },
     methods:{
         out: function(){
-            firebase.auth().signOut().then(() => {
-                this.$router.push({name: 'Index'})
+            
+                this.$router.push({name: 'mm_teacher'})
                 $('#teacher-thankyou-modal').modal('hide');
-                bus.$emit('re-render')
-            })
+        
         }
     }
 }

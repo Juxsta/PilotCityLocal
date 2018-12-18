@@ -37,22 +37,28 @@ npm <template>
               @teacherCardClicked="highlight_pin(findbyId(loaded_teachers,classroom.teacher_uid), index)"
               @newlikedCardAction="doNewlikedCardAction"
             />
-            <div class="d-flex mm__pagination--row" >
+            <div class="d-flex mm__pagination--row">
               <b-btn
-              class="prevpage__btn justify-content-start"
-              @click="page=(page>0)?page-1:page"
-            >Previous</b-btn>
-            <b-btn
-              class="nextpage__btn ml-auto"
-              @click="page=page+1"
-              v-scroll-to="'#topresult'"
-            >Next</b-btn>
+                class="prevpage__btn justify-content-start"
+                @click="page=(page>0)?page-1:page"
+              >Previous</b-btn>
+              <b-btn
+                class="nextpage__btn ml-auto"
+                @click="page=page+1"
+                v-scroll-to="'#topresult'"
+              >Next</b-btn>
             </div>
           </div>
         </div>
       </div>
       <div class="google-maps container col-4 m-0 p-0">
-        <GoogleMap name="employer_gm" :map_data="map_data" :apikey="apikey" :mapcenter="mapcenter" role="employer"></GoogleMap>
+        <GoogleMap
+          name="employer_gm"
+          :map_data="map_data"
+          :apikey="apikey"
+          :mapcenter="mapcenter"
+          role="employer"
+        ></GoogleMap>
       </div>
     </div>
   </div>
@@ -166,9 +172,13 @@ export default {
       return this.filter_list.slice(min, max);
     },
     filter_list() {
-      if (this.filtered_locations.length == 0 && this.filtered_grades.length == 0
-      && this.filtered_class_size.length == 0 && this.filtered_skills.length == 0)
-        return (this.loaded_classrooms);
+      if (
+        this.filtered_locations.length == 0 &&
+        this.filtered_grades.length == 0 &&
+        this.filtered_class_size.length == 0 &&
+        this.filtered_skills.length == 0
+      )
+        return this.loaded_classrooms;
       // definition of an unique class array: elements' coursename can't be duplicated, teacher_uid is Ok.
       var key = ""; // the key we use to search, consist of params from filter.
       var duplicated_results = []; // the result may be duplicate since we have courses with different periods
@@ -178,7 +188,7 @@ export default {
       var fuse;
       // pull all the parameters from the filter, concatenate them into a string called 'key' //
       // only search for relavant keys based on the difference of params
-       if (this.filtered_locations && this.filtered_locations.length) {
+      if (this.filtered_locations && this.filtered_locations.length) {
         key += String(this.filtered_locations);
         this.search_options.keys.push("school_address.city");
         this.search_options.keys.push("school_district");
@@ -188,7 +198,7 @@ export default {
         target = fuse.search(key);
         this.search_options.matchAllTokens = false;
       }
-      
+
       if (this.filtered_grades && this.filtered_grades.length) {
         key += String(this.filtered_grades);
         this.search_options.keys.push("Grade");
@@ -200,7 +210,7 @@ export default {
         // only course name is relavant in this case
         this.search_options.keys.push("coursename");
       }
-       if (this.filtered_class_size && this.filtered_class_size.length) {
+      if (this.filtered_class_size && this.filtered_class_size.length) {
         key += String(this.filtered_class_size);
         // only course name is relavant in this case
         this.search_options.keys.push("students.max");
@@ -212,18 +222,18 @@ export default {
         this.search_options.keys.push("selected_skills_keywords");
         this.search_options.keys.push("selected_industry_keywords");
       }
-     
+
       key = key.replace(/\s,/g, "");
       // if no params is selected from the filter, we return the whil array.
       if (key == "") return target;
-    
+
       // ======= Testing Purpose =======
       // console.log(key);
       // console.log(this.search_options.keys)
       // ==================================
       // fuse.js initialization
       fuse = new Fuse(target, this.search_options);
-      duplicated_results = fuse.search(key);    
+      duplicated_results = fuse.search(key);
       // uniqueness check
       var ht = {};
       for (var i = 0; i < duplicated_results.length; i++) {
@@ -276,11 +286,12 @@ export default {
     GoogleMap
   },
   methods: {
-    doNewlikedCardAction(uid){
+    doNewlikedCardAction(uid) {
       if (_.includes(this.liked_cards, uid))
-        this.liked_cards = _.filter( this.liked_cards, card_uid => { return card_uid!= uid})
-      else
-        this.liked_cards.push(uid);
+        this.liked_cards = _.filter(this.liked_cards, card_uid => {
+          return card_uid != uid;
+        });
+      else this.liked_cards.push(uid);
     },
     shuffle(a) {
       for (let i = a.length - 1; i > 0; i--) {
@@ -303,15 +314,12 @@ export default {
   },
 
   created() {
-
-
-
     var self = this;
     this.$on("markerClicked", function(key, position) {
       self.mapcenter = position;
-      var index = _.findIndex(this.filter_list, function(cl){
+      var index = _.findIndex(this.filter_list, function(cl) {
         return cl.poi == key;
-      })
+      });
       // console.log(index)
       this.page = parseInt(index / 10);
       var i = index % 10;
@@ -326,13 +334,18 @@ export default {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         const db = firebase.firestore();
-        db.collection("employers").doc(user.uid).get().then(doc => {
-          if (doc.data() && doc.data()["match_making"] &&
-          doc.data()["match_making"]["liked_cards"])
-           this.liked_cards = doc.data()["match_making"]["liked_cards"];
-          else 
-            this.liked_cards = [];
-        });
+        db.collection("employers")
+          .doc(user.uid)
+          .get()
+          .then(doc => {
+            if (
+              doc.data() &&
+              doc.data()["match_making"] &&
+              doc.data()["match_making"]["liked_cards"]
+            )
+              this.liked_cards = doc.data()["match_making"]["liked_cards"];
+            else this.liked_cards = [];
+          });
 
         // console.log(user.uid)
         db.collection("teachers")
@@ -341,7 +354,7 @@ export default {
             teacher_querySnapshot.forEach(doc => {
               var teacher_data = doc.data();
               teacher_data["uid"] = doc.id;
-              self.skills.push(teacher_data.selected_skills_keywords)
+              self.skills.push(teacher_data.selected_skills_keywords);
               self.loaded_teachers.push(teacher_data);
             });
             db.collection("classroom")
@@ -374,11 +387,12 @@ export default {
                     class_data.teacher_uid
                   ).coordinate;
                   if (class_data["coordinate"] && class_data["coordinate"].lat)
-                    class_data["poi"] = String(class_data["coordinate"]["lat"])
-                      + String(class_data["coordinate"]["lng"]);
-    
+                    class_data["poi"] =
+                      String(class_data["coordinate"]["lat"]) +
+                      String(class_data["coordinate"]["lng"]);
+
                   // console.log(doc.data());
-                  self.courses.push(class_data.coursename)
+                  self.courses.push(class_data.coursename);
                   self.loaded_classrooms.push(class_data);
                 });
                 var promises = [];
@@ -387,21 +401,23 @@ export default {
                   teacher < self.loaded_teachers.length;
                   teacher++
                 ) {
-                  promises.push(
-                    db
-                      .collection("Users")
-                      .doc(self.loaded_teachers[teacher]["uid"])
-                      .get()
-                      .then(doc => {
-                        var user_data = doc.data();
-                        self.loaded_teachers[teacher]["first_name"] =
-                          user_data.first_name;
-                        self.loaded_teachers[teacher]["last_name"] =
-                          user_data.last_name;
-                      })
-                  );
+                  setTimeout(function() {
+                    promises.push(
+                      db
+                        .collection("Users")
+                        .doc(self.loaded_teachers[teacher]["uid"])
+                        .get()
+                        .then(doc => {
+                          var user_data = doc.data();
+                          self.loaded_teachers[teacher]["first_name"] =
+                            user_data.first_name;
+                          self.loaded_teachers[teacher]["last_name"] =
+                            user_data.last_name;
+                        })
+                    );
+                  }, 100);
                 }
-                Promise.all(promises).then(val => {
+                Promise.all(promises).then(val => { // timeout to stop firebase from overloading with requests
                   db.collection("employers")
                     .doc(user.uid)
                     .get()
@@ -427,12 +443,12 @@ export default {
                     });
                   self.shuffle(self.loaded_classrooms);
                   self.render = true;
-                  self.skills = _.flattenDeep(self.skills)
-                  self.skills = _.uniq(self.skills)
-                  self.skills = self.skills.filter((skill) => skill)
-                  self.skills = self.skills.sort()
-                  self.courses = _.uniq(self.courses)
-                  self.courses = self.courses.sort()
+                  self.skills = _.flattenDeep(self.skills);
+                  self.skills = _.uniq(self.skills);
+                  self.skills = self.skills.filter(skill => skill);
+                  self.skills = self.skills.sort();
+                  self.courses = _.uniq(self.courses);
+                  self.courses = self.courses.sort();
                   // console.log(self.skills)
                 });
               });
