@@ -5,25 +5,39 @@
       <div class="d-flex col-8 justify-content-center m-0 p-0">
         <div class="leftside justify-content-center flex-column d-flex col-12 p-0 m-0">
           <div class="filter-bar justify-content-center d-flex flex-row">
-            <mm_filter :options="industry" :selected_options="filtered_industry" @click="show='Industry'" :show="show" name="Industry"/>
-            <mm_filter :options="sector" :selected_options="filtered_sector" onclick="show='Sector'" :show="show" name="Sector"/>
+            <mm_filter
+              :options="industry"
+              :selected_options="filtered_industry"
+              @click="this.show='Industry'"
+              :show="show"
+              name="Industry"
+            />
+            <mm_filter
+              :options="sector"
+              :selected_options="filtered_sector"
+              @click="this.show='Sector'"
+              :show="show"
+              name="Sector"
+            />
             <mm_filter
               :options="solutions"
               :selected_options="filtered_solutions"
-              @click="show='Solutions'"
+              @click="this.show='Solutions'"
               :show="show"
               name="Solutions"
             />
-            <mm_filter :options="location" :selected_options="filtered_location" @click="show='Location'" :show="show" name="Location"/>
+            <mm_filter
+              :options="location"
+              :selected_options="filtered_location"
+              @click="this.show='Location'"
+              :show="show"
+              name="Location"
+            />
           </div>
           <div class="cardstock">
             <h2 class="text-classroom-matches" id>
               <!-- <span>{{filter_list.length}}</span> -->
-<<<<<<< HEAD
-              <span>+ Employers Recommended</span>
-=======
               <span>{{filter_list.length}}+ Employers Recommended</span>
->>>>>>> fdc95a3602bade25b4d71adee253b40f0e7048e6
             </h2>
             <mm_employer_card
               v-for="(employer,index) in filter_list"
@@ -97,7 +111,7 @@ export default {
       page: 0,
       industry: ["stuff", "placeholder"],
       filtered_industry: [],
-      sector: ["Industry", "Government", "Education", "Industry"],
+      sector: ["Industry", "Government", "Education", "Community"],
       filtered_sector: [],
       solutions: [],
       filtered_solutions: [],
@@ -224,6 +238,10 @@ export default {
     GoogleMap
   },
   methods: {
+    changeshow(towhat) {
+      this.show = towhat;
+      console.log(show);
+    },
     doNewlikedCardAction(uid) {
       if (_.includes(this.liked_cards, uid))
         this.liked_cards = _.filter(this.liked_cards, card_uid => {
