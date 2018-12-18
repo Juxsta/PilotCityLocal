@@ -33,10 +33,9 @@ npm <template>
               :page="page"
               :active_card="active_card"
               class="row-12 card-teacher-match"
-              :role="role"
-              :flavoredlist="flavored_cards"
+              :likedlist="liked_cards"
               @teacherCardClicked="highlight_pin(findbyId(loaded_teachers,classroom.teacher_uid), index)"
-              @newFlavoredCardAction="doNewFlavoredCardAction"
+              @newlikedCardAction="doNewlikedCardAction"
             />
             <div class="d-flex mm__pagination--row" >
               <b-btn
@@ -53,7 +52,7 @@ npm <template>
         </div>
       </div>
       <div class="google-maps container col-4 m-0 p-0">
-        <GoogleMap name="test" :map_data="map_data" :apikey="apikey" :mapcenter="mapcenter"></GoogleMap>
+        <GoogleMap name="employer_gm" :map_data="map_data" :apikey="apikey" :mapcenter="mapcenter" role="employer"></GoogleMap>
       </div>
     </div>
   </div>
@@ -75,10 +74,9 @@ export default {
   name: "mm_employer",
   data() {
     return {
-      role: "employers", 
       allClasses: null,
       active_card: null,
-      flavored_cards: [],
+      liked_cards: [],
       apikey: GEOCODEKEY.key,
       search_options: {
         shouldSort: true,
@@ -193,12 +191,6 @@ export default {
         this.search_options.keys.push("students.min");
       }
 
-      if (this.filtered_courses && this.filtered_courses.length) {
-        key += String(this.filtered_courses);
-        // only course name is relavant in this case
-        this.search_options.keys.push("coursename");
-      }
-
       if (this.filtered_skills && this.filtered_skills.length) {
         key += String(this.filtered_skills);
         this.search_options.keys.push("selected_skills_keywords");
@@ -273,11 +265,11 @@ export default {
     GoogleMap
   },
   methods: {
-    doNewFlavoredCardAction(uid){
-      if (_.includes(this.flavored_cards, uid))
-        this.flavored_cards = _.filter( this.flavored_cards, card_uid => { return card_uid!= uid})
+    doNewlikedCardAction(uid){
+      if (_.includes(this.liked_cards, uid))
+        this.liked_cards = _.filter( this.liked_cards, card_uid => { return card_uid!= uid})
       else
-        this.flavored_cards.push(uid);
+        this.liked_cards.push(uid);
     },
     shuffle(a) {
       for (let i = a.length - 1; i > 0; i--) {
@@ -306,7 +298,6 @@ export default {
     var self = this;
     this.$on("markerClicked", function(key, position) {
       self.mapcenter = position;
-
       var index = _.findIndex(this.filter_list, function(cl){
         return cl.poi == key;
       })
@@ -324,12 +315,12 @@ export default {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         const db = firebase.firestore();
-        db.collection(this.role).doc(user.uid).get().then(doc => {
+        db.collection("employers").doc(user.uid).get().then(doc => {
           if (doc.data() && doc.data()["match_making"] &&
-          doc.data()["match_making"]["flavored_cards"])
-           this.flavored_cards = doc.data()["match_making"]["flavored_cards"];
+          doc.data()["match_making"]["liked_cards"])
+           this.liked_cards = doc.data()["match_making"]["liked_cards"];
           else 
-            this.flavored_cards = [];
+            this.liked_cards = [];
         });
 
         // console.log(user.uid)

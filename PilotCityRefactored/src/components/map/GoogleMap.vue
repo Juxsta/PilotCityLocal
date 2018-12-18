@@ -7,7 +7,7 @@ import * as firebase from 'firebase';
 import db from "@/firebase/init";
 export default {
   name: 'GoogleMap',
-  props: ['name', 'map_data', 'apikey', 'mapcenter'],
+  props: ['name', 'map_data', 'apikey', 'mapcenter', 'role'],
   data() {
       return{
           mapname: this.name + "-map",
@@ -42,9 +42,10 @@ export default {
 
       var i = _.findIndex(this.markers_ref, ref => {return ref.key == key});
       if (this.last_marker)
-        this.last_marker.setIcon(this.marker_icons.teacher);
+        this.last_marker.setIcon((this.role == 'employer') ? this.marker_icons.teacher : this.marker_icons.employer);
       this.markers_ref[i].marker.setIcon(this.marker_icons.selected)
       this.last_marker = this.markers_ref[i].marker;
+      this.map.setZoom(12);
     },
     map_data: function(){
       for (var i = 0; i < this.markers_ref.length; i++)
@@ -80,11 +81,11 @@ export default {
         coordinate = res.data().coordinate;
       if (coordinate){
         self.e_marker = new google.maps.Marker({  position: coordinate,
-                                      map: this.map,
-                                      icon: this.marker_icons.employer_home
+                                      map: self.map,
+                                      icon: (self.role == 'employer') ? self.marker_icons.employer_home : self.marker_icons.teacher_home
                                     });
       } else {
-        console.log("Looks like you are homeless ; (");
+        console.log("Looks like you are homeless ; ( [you dont have an address in our database]");
       }
     });
   },
@@ -107,7 +108,7 @@ export default {
               new google.maps.Marker({  position: this.markers[i],
                                         map: map,
                                         label: {text: (i + 1) + "", color: "white", fontWeight: 'bold'},
-                                        icon: this.marker_icons.teacher
+                                        icon: (self.role == 'employer') ? self.marker_icons.teacher : self.marker_icons.employer
                                       })
             };
             obj.marker.key = key; 
@@ -117,11 +118,16 @@ export default {
             });
             this.markers_ref.push(obj);
             ht[key] = true;
-          } else {
+          } 
+            // else
             //console.log("same address : ) [" + key + "]");
             //console.log(JSON.stringify(this.map_data[i]))
-          }
         }
+        var bounds = new google.maps.LatLngBounds();
+        for (var i = 0; i < this.markers_ref.length; i++) {
+          bounds.extend(this.markers_ref[i].marker.getPosition());
+        }
+        map.fitBounds(bounds);
         //
         // The following code accepts an array of formatted address(with space replaced by '+') and make ajax request to the 
         // google geolocation api and retrieves coordinates, use those coordinates as the position of the markers
@@ -141,7 +147,7 @@ export default {
         //                                     });
         //     }
         // });
-    },
+    },/*
     getLink(address){
       var api_link = "https://maps.googleapis.com/maps/api/geocode/json?address=";
       var key = "&key=" + this.apikey;
@@ -153,7 +159,7 @@ export default {
       }).catch( error => {
           console.log(error.message);
       });
-    }
+    }*/
    }
 };
 </script>
