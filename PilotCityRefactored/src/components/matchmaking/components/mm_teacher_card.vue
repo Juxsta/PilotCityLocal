@@ -19,7 +19,11 @@
         </div>
         <!-- stupid heart -->
         <span id="favorite_border">
+<<<<<<< HEAD
           <i
+=======
+            <i
+>>>>>>> 8e88661735213b67c49ca34916367ed998d86f00
             class="material-icons justify-content-center pt-2 px-3"
             @click="likeThisCard"
             :id="classroom.uid"
