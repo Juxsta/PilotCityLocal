@@ -112,7 +112,7 @@ export default {
       page: 0,
       industry: ["stuff", "placeholder"],
       filtered_industry: [],
-      sector: ["Industry", "Government", "Education", "Industry"],
+      sector: ["Industry", "Government", "Education", "Community"],
       filtered_sector: [],
       solutions: [],
       filtered_solutions: [],
@@ -239,9 +239,15 @@ export default {
     GoogleMap
   },
   methods: {
+<<<<<<< HEAD
       changeShow(name) {
       console.log("show changede")
       this.show = name;
+=======
+    changeshow(towhat) {
+      this.show = towhat;
+      console.log(show);
+>>>>>>> 7800b3c4915eb95661f486497f1699eb3a22b008
     },
     doNewlikedCardAction(uid) {
       if (_.includes(this.liked_cards, uid))
