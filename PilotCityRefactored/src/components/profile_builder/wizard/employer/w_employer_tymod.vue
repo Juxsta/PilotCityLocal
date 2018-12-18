@@ -19,7 +19,7 @@
         </div>
     </div>
 </template>
-
+git 
 <script>
 import firebase from '@/firebase/init'
 import { bus } from '@/main'
