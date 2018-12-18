@@ -137,9 +137,9 @@ export default {
     page: {
       required: true
     },
-    likedlist: {
-      required: true,
-    }
+    // likedlist: {
+    //   required: true,
+    // }
   },
   computed: {
     invite() {

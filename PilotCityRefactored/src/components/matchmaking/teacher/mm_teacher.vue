@@ -241,8 +241,8 @@ export default {
     GoogleMap
   },
   methods: {
-      changeShow(name) {
-      console.log("show changede")
+    changeShow(name) {
+      console.log("show changede");
       this.show = name;
     },
     doNewlikedCardAction(uid) {
@@ -345,20 +345,23 @@ export default {
 
               // timeout to stop firebase from overloading with requests
               promises.push(
-                db
-                  .collection("Users")
-                  .doc(self.loaded_employers[employer]["uid"])
-                  .get()
-                  .then(doc => {
-                    
-                      console.log("got it");
-                      var user_data = doc.data();
-                      // console.log(user_data)
-                      self.loaded_employers[employer]["first_name"] =
-                        user_data.first_name;
-                      self.loaded_employers[employer]["last_name"] =
-                        user_data.last_name;
-                  })
+                new Promise(function(resolve, reject) {
+                  setTimeout(() => {
+                    db.collection("Users")
+                      .doc(self.loaded_employers[employer]["uid"])
+                      .get()
+                      .then(doc => {
+                        console.log("got it");
+                        var user_data = doc.data();
+                        // console.log(user_data)
+                        self.loaded_employers[employer]["first_name"] =
+                          user_data.first_name;
+                        self.loaded_employers[employer]["last_name"] =
+                          user_data.last_name;
+                        return resolve()
+                      });
+                  }, 300);
+                })
               );
             }
             Promise.all(promises).then(val => {
