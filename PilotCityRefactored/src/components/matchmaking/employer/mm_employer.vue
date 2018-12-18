@@ -33,9 +33,9 @@ npm <template>
               :page="page"
               :active_card="active_card"
               class="row-12 card-teacher-match"
-              :flavoredlist="flavored_cards"
+              :likedlist="liked_cards"
               @teacherCardClicked="highlight_pin(findbyId(loaded_teachers,classroom.teacher_uid), index)"
-              @newFlavoredCardAction="doNewFlavoredCardAction"
+              @newlikedCardAction="doNewlikedCardAction"
             />
             <div class="d-flex mm__pagination--row" >
               <b-btn
@@ -76,7 +76,7 @@ export default {
     return {
       allClasses: null,
       active_card: null,
-      flavored_cards: [],
+      liked_cards: [],
       apikey: GEOCODEKEY.key,
       search_options: {
         shouldSort: true,
@@ -265,11 +265,11 @@ export default {
     GoogleMap
   },
   methods: {
-    doNewFlavoredCardAction(uid){
-      if (_.includes(this.flavored_cards, uid))
-        this.flavored_cards = _.filter( this.flavored_cards, card_uid => { return card_uid!= uid})
+    doNewlikedCardAction(uid){
+      if (_.includes(this.liked_cards, uid))
+        this.liked_cards = _.filter( this.liked_cards, card_uid => { return card_uid!= uid})
       else
-        this.flavored_cards.push(uid);
+        this.liked_cards.push(uid);
     },
     shuffle(a) {
       for (let i = a.length - 1; i > 0; i--) {
@@ -317,10 +317,10 @@ export default {
         const db = firebase.firestore();
         db.collection("employers").doc(user.uid).get().then(doc => {
           if (doc.data() && doc.data()["match_making"] &&
-          doc.data()["match_making"]["flavored_cards"])
-           this.flavored_cards = doc.data()["match_making"]["flavored_cards"];
+          doc.data()["match_making"]["liked_cards"])
+           this.liked_cards = doc.data()["match_making"]["liked_cards"];
           else 
-            this.flavored_cards = [];
+            this.liked_cards = [];
         });
 
         // console.log(user.uid)

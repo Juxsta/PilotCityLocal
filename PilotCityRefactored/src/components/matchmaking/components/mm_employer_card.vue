@@ -145,24 +145,24 @@ export default {
         var db = firebase.firestore();
         var self = this;
         var user_id = firebase.auth().currentUser.uid;
-        var flavored_cards = [];
+        var liked_cards = [];
         db.collection("employers").doc(user_id).get().then( doc => {
           var data = doc.data();
-          if (data &&  data["match_making"] &&  data["match_making"]["flavored_cards"])
-            flavored_cards = data["match_making"]["flavored_cards"] ;
+          if (data &&  data["match_making"] &&  data["match_making"]["liked_cards"])
+            liked_cards = data["match_making"]["liked_cards"] ;
           else 
           {
-            flavored_cards = [];
+            liked_cards = [];
             data["match_making"] = {}
           }
-          if (!_.includes(flavored_cards, self.employer.uid))
-            flavored_cards.push(self.employer.uid);
+          if (!_.includes(liked_cards, self.employer.uid))
+            liked_cards.push(self.employer.uid);
           else
-            flavored_cards = _.filter( flavored_cards, card => { return card != self.employer.uid})
+            liked_cards = _.filter( liked_cards, card => { return card != self.employer.uid})
   
-          data["match_making"]["flavored_cards"] = flavored_cards;
+          data["match_making"]["liked_cards"] = liked_cards;
           db.collection("employers").doc(user_id).update(data).then( ()=> {
-            self.$emit('newFlavoredCardAction', self.employer.uid);
+            self.$emit('newlikedCardAction', self.employer.uid);
           });
         });
     },
