@@ -12,17 +12,25 @@
         <div class="mt-3 ml-auto">
           <button
             @click="update_invite(),upload()"
+            @mouseenter="temp = text, text = invite?text:'Cancel'"
+            @mouseleave="text=temp"
             :class="{'action-button':invite, 'action-button-pending':pending}"
           >{{text}}</button>
           <!-- place holder button -->
           <!--Place holder [x]  -->
         </div>
         <i
-          class="material-icons justify-content-center pt-2 px-3"
-          id="favorite_border"
-          @click="likeThisCard"
-          :style="{ color : amIliked ? '#eca0be' : '#dedfe0'}"
-        >favorite_border</i>
+            class="material-icons justify-content-center pt-2 px-3"
+            @click="likeThisCard"
+            :id="classroom.uid"
+            :style="{ color : amIliked ? '#eca0be' : '#dedfe0'}"
+          >favorite_border</i>
+          <b-popover
+            class="favorite_popover"
+            :target="'#'+classroom.uid"
+            placement="topleft"
+            triggers="hover"
+          >Save</b-popover>
       </div>
 
       <div class="two d-flex flex-row">
@@ -46,7 +54,9 @@
               v-if="index <=5"
             >
               <span>{{industry}}</span>
-              <span v-if="index != employer.selected_industry_keywords.length-1 && index != 5">{{", "}}</span>
+              <span
+                v-if="index != employer.selected_industry_keywords.length-1 && index != 5"
+              >{{", "}}</span>
             </h4>
           </div>
           <div>
@@ -124,13 +134,14 @@ export default {
       required: true
     },
     likedlist: {
-      required: true,
+      required: true
     }
   },
   computed: {
     invite() {
+      this.text = "Invited";
       var in_invite = this.invited.indexOf(this.employer.uid) == -1;
-      if (in_invite) this.text = "Invited";
+      if (in_invite) this.text = "Invite";
       return in_invite;
     },
     pending() {
@@ -145,34 +156,45 @@ export default {
       arr = _.uniq(arr);
       return arr;
     },
-    amIliked(){
+    amIliked() {
       return _.includes(this.likedlist, this.employer.uid);
     }
   },
   methods: {
-        likeThisCard(){
-        var db = firebase.firestore();
-        var self = this;
-        var user_id = firebase.auth().currentUser.uid;
-        var liked_cards = [];
-        db.collection("teachers").doc(user_id).get().then( doc => {
+    likeThisCard() {
+      var db = firebase.firestore();
+      var self = this;
+      var user_id = firebase.auth().currentUser.uid;
+      var liked_cards = [];
+      db.collection("teachers")
+        .doc(user_id)
+        .get()
+        .then(doc => {
           var data = doc.data();
-          if (data &&  data["match_making"] &&  data["match_making"]["liked_cards"])
-            liked_cards = data["match_making"]["liked_cards"] ;
-          else 
-          {
+          if (
+            data &&
+            data["match_making"] &&
+            data["match_making"]["liked_cards"]
+          )
+            liked_cards = data["match_making"]["liked_cards"];
+          else {
             liked_cards = [];
-            data["match_making"] = {}
+            data["match_making"] = {};
           }
           if (!_.includes(liked_cards, self.employer.uid))
             liked_cards.push(self.employer.uid);
           else
-            liked_cards = _.filter( liked_cards, card => { return card != self.employer.uid})
-  
+            liked_cards = _.filter(liked_cards, card => {
+              return card != self.employer.uid;
+            });
+
           data["match_making"]["liked_cards"] = liked_cards;
-          db.collection("teachers").doc(user_id).update(data).then( ()=> {
-            self.$emit('newlikedCardAction', self.employer.uid);
-          });
+          db.collection("teachers")
+            .doc(user_id)
+            .update(data)
+            .then(() => {
+              self.$emit("newlikedCardAction", self.employer.uid);
+            });
         });
     },
     update_invite(event) {

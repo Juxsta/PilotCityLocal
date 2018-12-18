@@ -85,6 +85,7 @@ export default {
                     self.login_input_password = "";
                     $('#login-modal').modal('hide');
                     this.$router.push({name: 'ClassPicker'})
+                    bus.$emit("re-render nav");
                 }
 
             }).catch(err => {
