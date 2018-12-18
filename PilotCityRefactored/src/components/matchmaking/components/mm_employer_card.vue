@@ -19,7 +19,6 @@
         </div>
         <span id="favorite_border">
         <i
-<<<<<<< HEAD
             class="material-icons justify-content-center pt-2 px-3"
             @click="likeThisCard"
             :id="employer.uid"
@@ -27,19 +26,6 @@
           >favorite_border</i>
 
         </span>
-=======
-          class="material-icons justify-content-center pt-2 px-3"
-          @click="likeThisCard"
-          :id="employer.uid"
-          :style="{ color : amIliked ? '#eca0be' : '#dedfe0'}"
-        >favorite_border</i>
-        <b-popover
-          class="favorite_popover"
-          :target="'#'+employer.uid"
-          placement="topleft"
-          triggers="hover"
-        >Save</b-popover>
->>>>>>> cb2c57760c92935aee5283733c0645ebf5f053eb
       </div>
 
       <div class="two d-flex flex-row">
