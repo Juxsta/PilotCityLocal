@@ -28,7 +28,9 @@
               :page="page"
               :active_card="active_card"
               class="row-12 card-teacher-match"
+              :likedlist="liked_cards"
               @employerCardClicked="highlight_pin(findbyId(loaded_employers,employer.uid), index)"
+              @newlikedCardAction="doNewlikedCardAction"
             />
             <b-btn
               class="prevpage__btn justify-content-start"
@@ -67,6 +69,7 @@ export default {
     return {
       allClasses: null,
       active_card: null,
+      liked_cards: [],
       apikey: GEOCODEKEY.key,
       search_options: {
         shouldSort: true,
@@ -198,6 +201,12 @@ export default {
     GoogleMap
   },
   methods: {
+    doNewlikedCardAction(uid){
+      if (_.includes(this.liked_cards, uid))
+        this.liked_cards = _.filter( this.liked_cards, card_uid => { return card_uid!= uid})
+      else
+        this.liked_cards.push(uid);
+    },
     shuffle(a) {
       for (let i = a.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -239,6 +248,13 @@ export default {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         const db = firebase.firestore();
+        db.collection("teachers").doc(user.uid).get().then(doc => {
+          if (doc.data() && doc.data()["match_making"] &&
+          doc.data()["match_making"]["liked_cards"])
+           self.liked_cards = doc.data()["match_making"]["liked_cards"];
+          else 
+            self.liked_cards = [];
+        });
         // console.log(user.uid)
         db.collection("employers")
           .get()
