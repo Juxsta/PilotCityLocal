@@ -18,6 +18,7 @@ npm <template>
             />
           </div>
 
+<<<<<<< Updated upstream
           <div class="cardstock">
             <h2 class="text-classroom-matches" id>
               <span>{{filter_list.length}}</span>
@@ -50,6 +51,15 @@ npm <template>
                 v-scroll-to="'#topresult'"
               >Next</b-btn>
             </div>
+=======
+          <div class="cardstock d-flex flex-column row-12 container">
+            <h2 class="text-classroom-matches">100+ Classrooms Recommended</h2>
+            <mm_teacher_card
+              v-if="loaded_classrooms.length && loaded_teachers.length"
+              :classroom="loaded_classrooms[2]"
+              :teacher="loaded_teachers[2]"
+            />
+>>>>>>> Stashed changes
           </div>
         </div>
       </div>
@@ -407,13 +417,18 @@ export default {
                   // console.log(doc.data());
                   self.courses.push(class_data.coursename);
                   self.loaded_classrooms.push(class_data);
+<<<<<<< Updated upstream
                 }})
+=======
+                });
+>>>>>>> Stashed changes
                 var promises = [];
                 for (
                   let teacher = 0;
                   teacher < self.loaded_teachers.length;
                   teacher++
                 ) {
+<<<<<<< Updated upstream
                   setTimeout(function() {
                     promises.push(
                       db
@@ -464,6 +479,29 @@ export default {
                   self.courses = self.courses.sort();
                   // console.log(self.skills)
                 });
+=======
+                  promises.push(
+                    db
+                      .collection("Users")
+                      .doc(self.loaded_teachers[teacher]["uid"])
+                      .get()
+                      .then(doc => {
+                        var user_data = doc.data();
+                        self.loaded_teachers[teacher]["first_name"] =
+                          user_data.first_name;
+                        self.loaded_teachers[teacher]["last_name"] =
+                          user_data.last_name;
+                      })
+                  );
+                }
+                Promise.all(promises).then(val => {
+                  for(let teacher of self.loaded_teachers){
+                    console.log(teacher.first_name, teacher.last_name)
+                  }
+                  console.log("I aint waiting for nuthin")
+                })
+                
+>>>>>>> Stashed changes
               });
           });
       }
