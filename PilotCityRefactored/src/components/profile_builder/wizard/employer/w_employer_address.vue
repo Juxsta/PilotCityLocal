@@ -65,7 +65,7 @@ export default {
             return [this.employer_data]
         },
         pass() {
-            return this.employer_data.address.every(val => val)
+            return _.every(this.employer_data.address,Boolean)
         }
     },
    
