@@ -16,35 +16,16 @@
             @mouseleave="text=temp"
             :class="{'action-button':invite, 'action-button-pending':pending}"
           >{{text}}</button>
-          <!-- place holder button -->
-          <!--Place holder [x]  -->
         </div>
+        <span id="favorite_border">
         <i
-<<<<<<< HEAD
             class="material-icons justify-content-center pt-2 px-3"
             @click="likeThisCard"
             :id="employer.uid"
             :style="{ color : amIliked ? '#eca0be' : '#dedfe0'}"
           >favorite_border</i>
-          <b-popover
-            class="favorite_popover"
-            :target="'#'+employer.uid"
-            placement="topleft"
-            triggers="hover"
-          >Save</b-popover>
-=======
-          class="material-icons justify-content-center pt-2 px-3"
-          @click="likeThisCard"
-          :id="employer.uid"
-          :style="{ color : amIliked ? '#eca0be' : '#dedfe0'}"
-        >favorite_border</i>
-        <b-popover
-          class="favorite_popover"
-          :target="'#'+employer.uid"
-          placement="topleft"
-          triggers="hover"
-        >Save</b-popover>
->>>>>>> fdc95a3602bade25b4d71adee253b40f0e7048e6
+
+        </span>
       </div>
 
       <div class="two d-flex flex-row">

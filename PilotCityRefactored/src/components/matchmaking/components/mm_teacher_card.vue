@@ -17,7 +17,6 @@
             :class="{'action-button':invite, 'action-button-pending':pending, }"
           >{{text}}</button>
         </div>
-        <!-- stupid heart -->
         <span id="favorite_border">
             <i
             class="material-icons justify-content-center pt-2 px-3"
@@ -25,12 +24,6 @@
             :id="classroom.uid"
             :style="{ color : amIliked ? '#eca0be' : '#dedfe0'}"
           >favorite_border</i>
-          <b-popover
-            class="favorite_popover"
-            :target="'#'+classroom.uid"
-            placement="topleft"
-            triggers="hover"
-          >Save</b-popover>
         </span>
       </div>
 
