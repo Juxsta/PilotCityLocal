@@ -20,7 +20,7 @@
           class="material-icons justify-content-center pt-2 px-3"
           id="favorite_border"
           @click="likeThisCard"
-          :style="{ color : amIFlavored ? '#eca0be' : '#dedfe0'}"
+          :style="{ color : amIliked ? '#eca0be' : '#dedfe0'}"
         >favorite_border</i>
       </div>
 
@@ -134,7 +134,7 @@ export default {
     page: {
       required: true
     },
-    flavoredlist: {
+    likedlist: {
       required: true,
     }
   },
@@ -149,8 +149,8 @@ export default {
     pending() {
       return !this.invite
     },
-    amIFlavored(){
-      return _.includes(this.flavoredlist, this.classroom.uid);
+    amIliked(){
+      return _.includes(this.likedlist, this.classroom.uid);
     }
   },
   methods: {
@@ -158,25 +158,27 @@ export default {
         var db = firebase.firestore();
         var self = this;
         var user_id = firebase.auth().currentUser.uid;
-        var flavored_cards = [];
+        var liked_cards = [];
         db.collection("employers").doc(user_id).get().then( doc => {
           var data = doc.data();
-          if (data &&  data["match_making"] &&  data["match_making"]["flavored_cards"])
-            flavored_cards = data["match_making"]["flavored_cards"] ;
+          if (data &&  data["match_making"] &&  data["match_making"]["liked_cards"])
+            liked_cards = data["match_making"]["liked_cards"] ;
           else 
           {
-            flavored_cards = [];
+            liked_cards = [];
             data["match_making"] = {}
           }
-          if (!_.includes(flavored_cards, this.classroom.uid))
-            flavored_cards.push(this.classroom.uid);
+          if (!_.includes(liked_cards, this.classroom.uid))
+            liked_cards.push(this.classroom.uid);
           else
-            flavored_cards = _.filter( flavored_cards, card => { return card != this.classroom.uid})
+            liked_cards = _.filter( liked_cards, card => { return card != this.classroom.uid})
   
-          data["match_making"]["flavored_cards"] = flavored_cards;
-          db.collection("employers").doc(user_id).update(data).then( ()=> {
-            self.$emit('newFlavoredCardAction', self.classroom.uid);
-          });
+          data["match_making"]["liked_cards"] = liked_cards;
+          self.$emit('newlikedCardAction', self.classroom.uid);
+          db.collection("employers").doc(user_id).update(data).catch(err => {
+            self.$emit('newlikedCardAction', self.classroom.uid);
+            alert(err.message);
+          })
         });
     },
     update_invite(event) {
