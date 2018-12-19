@@ -37,13 +37,13 @@ npm <template>
             />
           </div>
 
-          <div class="cardstock">
-            <h2 class="text-classroom-matches" id>
+          <div class="cardstock" id='results'>
+            <h2 class="text-classroom-matches" >
               <span>{{filter_list.length}}</span>
               <span>+ Classrooms Recommended</span>
             </h2>
             <mm_teacher_card
-              :id="index"
+              :id="(index==0)?'topresult':index"
               v-if="loaded_teachers[index]"
               :classroom="classroom"
               :teacher="findbyId(loaded_teachers,classroom.teacher_uid)"
@@ -54,7 +54,6 @@ npm <template>
               :page="page"
               :active_card="active_card"
               class="row-12 card-teacher-match"
-            
               :flavoredlist="flavored_cards"
               @teacherCardClicked="highlight_pin(findbyId(loaded_teachers,classroom.teacher_uid), index)"
               @newFlavoredCardAction="doNewFlavoredCardAction"
@@ -64,11 +63,12 @@ npm <template>
               <b-btn
                 class="prevpage__btn justify-content-start"
                 @click="page=(page>0)?page-1:page"
+                v-scroll-to="{el:'#topresult',container:'#results'}"
               >Previous</b-btn>
               <b-btn
                 class="nextpage__btn ml-auto"
                 @click="page=page+1"
-                v-scroll-to="'#topresult'"
+                v-scroll-to="{el:'#topresult',container:'#results'}"
               >Next</b-btn>
             </div>
           </div>

@@ -34,7 +34,7 @@
               name="Location"
             />
           </div>
-          <div class="cardstock">
+          <div class="cardstock" id="results">
             <h2 class="text-classroom-matches" id>
               <!-- <span>{{filter_list.length}}</span> -->
               <span>{{filter_list.length}}+ Employers Recommended</span>
@@ -42,6 +42,7 @@
             <mm_employer_card
               v-for="(employer,index) in render_class"
               v-if="employer.first_name"
+              :id="(index==0)?'topresult':index"
               :key="index"
               :employer="employer"
               :invited="invited"
@@ -53,15 +54,18 @@
               @employerCardClicked="highlight_pin(findbyId(loaded_employers,employer.uid), index)"
               @newlikedCardAction="doNewlikedCardAction"
             />
-            <b-btn
-              class="prevpage__btn justify-content-start"
-              @click="page=(page>0)?page-1:page"
-            >Previous</b-btn>
-            <b-btn
-              class="nextpage__btn justify-content-end"
-              @click="page=page+1"
-              v-scroll-to="'#topresult'"
-            >Next</b-btn>
+            <div class="d-flex mm__pagination--row">
+              <b-btn
+                class="prevpage__btn justify-content-start"
+                @click="page=(page>0)?page-1:page"
+                v-scroll-to="{el:'#topresult',container:'#results'}"
+              >Previous</b-btn>
+              <b-btn
+                class="nextpage__btn ml-auto"
+                @click="page=page+1"
+                v-scroll-to="{el:'#topresult',container:'#results'}"
+              >Next</b-btn>
+            </div>
           </div>
         </div>
       </div>
@@ -361,7 +365,7 @@ export default {
                           user_data.first_name;
                         self.loaded_employers[employer]["last_name"] =
                           user_data.last_name;
-                        return resolve()
+                        return resolve();
                       });
                   }, 300);
                 })
