@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 <template>
   <div v-if="render">
     <!-- random -->
@@ -419,4 +417,3 @@ body {
 }
 @import "@/assets/SASS/pages/_matchmaking.scss";
 </style>
->>>>>>> 40d74788cfd8dc39ff4504b69e6942415290299d
