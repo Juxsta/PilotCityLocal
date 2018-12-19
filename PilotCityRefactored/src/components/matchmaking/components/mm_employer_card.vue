@@ -12,8 +12,8 @@
         <div class="mt-3 ml-auto">
           <button
             @click="update_invite(),upload()"
-            @mouseenter="text == 'invited'?temp = text : text = 'Cancel'"
-            @mouseleave="invite?temp = text : temp = text"
+            @mouseenter="invite? temp = text : text = 'Cancel'"
+            @mouseleave="invite? text = 'Invite' : text = 'Invited'"
             :class="{'action-button':invite, 'action-button-pending':pending}"
           >{{text}}</button>
         </div>
