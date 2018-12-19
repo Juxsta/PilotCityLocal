@@ -435,6 +435,7 @@ export default {
                               user_data.last_name;
                             return resolve();
                           });
+                          // console.log("timeout")
                       }, 300);
                     })
                   );
@@ -473,7 +474,7 @@ export default {
                   self.skills = self.skills.sort();
                   self.courses = _.uniq(self.courses);
                   self.courses = self.courses.sort();
-                  // console.log(self.skills)
+                  // console.log("rendered")
                 });
               });
           });
