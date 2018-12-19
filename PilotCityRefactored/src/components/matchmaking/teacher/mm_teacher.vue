@@ -53,15 +53,17 @@
               @employerCardClicked="highlight_pin(findbyId(loaded_employers,employer.uid), index)"
               @newlikedCardAction="doNewlikedCardAction"
             />
-            <b-btn
-              class="prevpage__btn justify-content-start"
-              @click="page=(page>0)?page-1:page"
-            >Previous</b-btn>
-            <b-btn
-              class="nextpage__btn justify-content-end"
-              @click="page=page+1"
-              v-scroll-to="'#topresult'"
-            >Next</b-btn>
+            <div>
+              <b-btn
+                class="prevpage__btn justify-content-start"
+                @click="page=(page>0)?page-1:page"
+              >Previous</b-btn>
+              <b-btn
+                class="nextpage__btn justify-content-end"
+                @click="page=page+1"
+                v-scroll-to="'#topresult'"
+              >Next</b-btn>
+            </div>
           </div>
         </div>
       </div>
@@ -356,7 +358,7 @@ export default {
                           user_data.first_name;
                         self.loaded_employers[employer]["last_name"] =
                           user_data.last_name;
-                        return resolve()
+                        return resolve();
                       });
                   }, 300);
                 })

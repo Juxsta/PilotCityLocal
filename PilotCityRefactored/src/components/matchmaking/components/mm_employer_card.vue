@@ -12,19 +12,18 @@
         <div class="mt-3 ml-auto">
           <button
             @click="update_invite(),upload()"
-            @mouseenter="temp = text, text = invite?text:'Cancel'"
-            @mouseleave="text=temp"
+            @mouseenter="text == 'invited'?temp = text : text = 'Cancel'"
+            @mouseleave="invite?temp = text : temp = text"
             :class="{'action-button':invite, 'action-button-pending':pending}"
           >{{text}}</button>
         </div>
         <span id="favorite_border">
-        <i
+          <i
             class="material-icons justify-content-center pt-2 px-3"
             @click="likeThisCard"
             :id="employer.uid"
             :style="{ color : amIliked ? '#eca0be' : '#dedfe0'}"
           >favorite_border</i>
-
         </span>
       </div>
 
@@ -97,8 +96,7 @@ import firebase from "@/firebase/init";
 export default {
   data() {
     return {
-      // invite: true,
-      // pending: false,
+      hover: true,
       text: "Invite",
       tags: [
         "tag__skills--red",
@@ -137,10 +135,15 @@ export default {
   },
   computed: {
     invite() {
-      this.text = "Invited";
-      var in_invite = this.invited.indexOf(this.employer.uid) == -1;
-      if (in_invite) this.text = "Invite";
-      return in_invite;
+      var not_invite = this.invited.indexOf(this.employer.uid) == -1;
+      if (not_invite) {
+        this.text = "Invite";
+        // is invited
+      } else {
+        this.text = "Invited";
+        // if (hover == true) this.text = "Cancel";
+      }
+      return not_invite;
     },
     pending() {
       return !this.invite;
@@ -159,8 +162,8 @@ export default {
     }
   },
   methods: {
-     randColor(index) {
-      return this.tags[index%7]
+    randColor(index) {
+      return this.tags[index % 7];
     },
     likeThisCard() {
       var db = firebase.firestore();
@@ -202,10 +205,8 @@ export default {
       // this.invite = !this.invite;
       // this.pending = !this.pending;
       if (!this.invite) {
-        this.text = "Invite";
         this.invited.splice(this.invited.indexOf(this.employer.uid), 1);
       } else {
-        this.text = "Invited";
         this.invited.push(this.employer.uid);
       }
     },
