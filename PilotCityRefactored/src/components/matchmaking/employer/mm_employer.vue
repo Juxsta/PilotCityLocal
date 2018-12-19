@@ -430,8 +430,8 @@ export default {
                     // console.log(doc.data());
                     self.courses.push(class_data.coursename);
                     self.loaded_classrooms.push(class_data);
-                  }
-                });
+
+                ;
                 });
                 });
                 });
@@ -441,7 +441,6 @@ export default {
                   self.courses = self.courses.sort();
                   // console.log(self.skills)
                 });
-=======
                   promises.push(
                     db
                       .collection("Users")
