@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import Index from '@/components/landing/Index'
 import firebase from 'firebase'
 
-import test from '@/views/test'
+//import test from '@/views/test'
 import camitest from '@/views/camitest'
 
 import wizard from '@/components/profile_builder/wizard/wizard.vue'
@@ -37,6 +37,8 @@ import w_student_demographic from '@/components/profile_builder/wizard/student/w
 import matchmaking from '@/components/matchmaking/matchmaking.vue'
 import mm_employer from '@/components/matchmaking/employer/mm_employer.vue'
 import mm_teacher from '@/components/matchmaking/teacher/mm_teacher.vue'
+
+import Admin from '@/pages/testing_page/Admin.vue'
 Vue.use(Router)
 
 const router = new Router({
@@ -46,7 +48,7 @@ const router = new Router({
     {
       path: '/test',
       name: 'test',
-      component: test,
+      component: Admin,
       children: [
         {
           path: 'cami',

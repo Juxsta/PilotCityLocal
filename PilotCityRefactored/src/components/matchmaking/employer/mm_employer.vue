@@ -99,6 +99,9 @@ import { GEOCODEKEY } from "@/main";
 import "@/assets/SASS/pages/_matchmaking.scss";
 import Fuse from "fuse.js";
 import { createECDH } from "crypto";
+
+import axios from 'axios'
+
 export default {
   name: "mm_employer",
   data() {
@@ -301,6 +304,10 @@ export default {
     GoogleMap
   },
   methods: {
+    getMuddersResult(uid){
+      var MUDDERSLINK = "http://35.197.64.87:5000/matchmaker/classroomranking?employer_id="  
+      return axios.get(MUDDERSLINK + uid);
+    },
     doNewFlavoredCardAction(uid) {
       if (_.includes(this.flavored_cards, uid))
         this.flavored_cards = _.filter(this.flavored_cards, card_uid => {
