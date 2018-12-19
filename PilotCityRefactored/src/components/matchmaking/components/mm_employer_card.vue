@@ -19,7 +19,6 @@
         </div>
         <span id="favorite_border">
         <i
-<<<<<<< HEAD
             class="material-icons justify-content-center pt-2 px-3"
             @click="likeThisCard"
             :id="employer.uid"
@@ -27,19 +26,6 @@
           >favorite_border</i>
 
         </span>
-=======
-          class="material-icons justify-content-center pt-2 px-3"
-          @click="likeThisCard"
-          :id="employer.uid"
-          :style="{ color : amIliked ? '#eca0be' : '#dedfe0'}"
-        >favorite_border</i>
-        <b-popover
-          class="favorite_popover"
-          :target="'#'+employer.uid"
-          placement="topleft"
-          triggers="hover"
-        >Save</b-popover>
->>>>>>> cb2c57760c92935aee5283733c0645ebf5f053eb
       </div>
 
       <div class="two d-flex flex-row">
@@ -60,11 +46,11 @@
               class="card-subtitle-text text row"
               v-for="(industry,index) in employer.selected_industry_keywords"
               :key="index"
-              v-if="index <=5"
+              v-if="index <=4"
             >
               <span>{{industry}}</span>
               <span
-                v-if="index != employer.selected_industry_keywords.length-1 && index != 5"
+                v-if="index != employer.selected_industry_keywords.length-1 && index != 4"
               >{{", "}}</span>
             </h4>
           </div>
@@ -93,7 +79,7 @@
           <span class="d-flex row">
             <h4
               placement="bottom"
-              :class="tags[Math.floor(Math.random()*Math.floor(7))]"
+              :class="randColor(index)"
               v-for="(solution,index) in solutions"
               :key="index"
             >{{solution | capitalize}}</h4>
@@ -173,6 +159,9 @@ export default {
     }
   },
   methods: {
+     randColor(index) {
+      return this.tags[index%7]
+    },
     likeThisCard() {
       var db = firebase.firestore();
       var self = this;

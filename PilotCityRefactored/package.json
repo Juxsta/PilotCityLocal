@@ -17,6 +17,7 @@
     "dependencies": "0.0.1",
     "event-stream": "^4.0.1",
     "firebase": "^5.5.8",
+    "firebase-tools": "^6.1.2",
     "fuse.js": "^3.3.0",
     "google-maps": "^3.3.0",
     "graphql": "^14.0.2",

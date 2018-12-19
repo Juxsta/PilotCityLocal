@@ -9,7 +9,7 @@
       <div class="one d-flex flex-row">
         <h2 class="card-title">{{classroom.coursename | capitalize}}</h2>
 
-        <div class="mt-3">
+        <div class="mt-3 ml-auto">
           <button
             @click="update_invite(),upload()"
             @mouseenter="temp = text, text = invite?text:'Cancel'"
@@ -83,7 +83,7 @@
           <span class="d-flex row">
             <h4
               placement="bottom"
-              :class="tags[Math.floor(Math.random()*Math.floor(7))]"
+              :class="randColor(index)"
               v-for="(skill,index) in teacher.selected_skills_keywords"
               :key="index"
             >{{skill | capitalize}}</h4>
@@ -137,9 +137,9 @@ export default {
     page: {
       required: true
     },
-    likedlist: {
-      required: true,
-    }
+    // likedlist: {
+    //   required: true,
+    // }
   },
   computed: {
     invite() {
@@ -156,6 +156,9 @@ export default {
     }
   },
   methods: {
+    randColor(index) {
+      return this.tags[index%7]
+    },
     likeThisCard(){
         var db = firebase.firestore();
         var self = this;

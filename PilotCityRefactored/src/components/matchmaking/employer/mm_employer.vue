@@ -5,26 +5,72 @@ npm <template>
       <div class="d-flex col-8 justify-content-center m-0 p-0">
         <div class="leftside justify-content-center flex-column d-flex col-12 p-0 m-0">
           <div class="filter-bar justify-content-center d-flex flex-row">
-            <mm_filter :options="courses" :selected_options="filtered_courses" :show=show @click="changeShow('Courses')" name="Courses"/>
-            <mm_filter :options="skills" :selected_options="filtered_skills" :show=show @click="changeShow('Skills')" name="Skills"/>
-            <mm_filter :options="grades" :selected_options="filtered_grades" :show=show @click="changeShow('Grades')" name="Grades"/>
-            <mm_filter :options="locations" :selected_options="filtered_locations" :show=show  @click="changeShow('Location')" name="Location"/>
+            <mm_filter
+              :options="courses"
+              :selected_options="filtered_courses"
+              :show="show"
+              name="Courses"
+            />
+            <mm_filter
+              :options="skills"
+              :selected_options="filtered_skills"
+              :show="show"
+              name="Skills"
+            />
+            <mm_filter
+              :options="grades"
+              :selected_options="filtered_grades"
+              :show="show"
+              name="Grades"
+            />
+            <mm_filter
+              :options="locations"
+              :selected_options="filtered_locations"
+              :show="show"
+              name="Location"
+            />
             <mm_filter
               :options="class_size"
               :selected_options="filtered_class_size"
-              name="Class Size"
               :show=show
-              @click="changeShow('Class Size')"
+              name="Class Size"
             />
           </div>
 
-          <div class="cardstock d-flex flex-column row-12 container">
-            <h2 class="text-classroom-matches">100+ Classrooms Recommended</h2>
+          <div class="cardstock">
+            <h2 class="text-classroom-matches" id>
+              <span>{{filter_list.length}}</span>
+              <span>+ Classrooms Recommended</span>
+            </h2>
             <mm_teacher_card
-              v-if="loaded_classrooms.length && loaded_teachers.length"
-              :classroom="loaded_classrooms[2]"
-              :teacher="loaded_teachers[2]"
+              :id="index"
+              v-if="loaded_teachers[index]"
+              :classroom="classroom"
+              :teacher="findbyId(loaded_teachers,classroom.teacher_uid)"
+              v-for="(classroom,index) in render_class"
+              :key="index"
+              :invited="invited"
+              :number="index"
+              :page="page"
+              :active_card="active_card"
+              class="row-12 card-teacher-match"
+            
+              :flavoredlist="flavored_cards"
+              @teacherCardClicked="highlight_pin(findbyId(loaded_teachers,classroom.teacher_uid), index)"
+              @newFlavoredCardAction="doNewFlavoredCardAction"
             />
+              <!-- :likedlist=likedlist -->
+            <div class="d-flex mm__pagination--row">
+              <b-btn
+                class="prevpage__btn justify-content-start"
+                @click="page=(page>0)?page-1:page"
+              >Previous</b-btn>
+              <b-btn
+                class="nextpage__btn ml-auto"
+                @click="page=page+1"
+                v-scroll-to="'#topresult'"
+              >Next</b-btn>
+            </div>
           </div>
         </div>
       </div>
@@ -59,10 +105,9 @@ export default {
     return {
       allClasses: null,
       active_card: null,
-      liked_cards: [],
+      flavored_cards: [],
       apikey: GEOCODEKEY.key,
       search_options: {
-        tokenize: true,
         shouldSort: true,
         threshold: 0.6,
         location: 0,
@@ -77,6 +122,7 @@ export default {
       page: 0,
       class_size: ["0-10", "11-15", "16-20", "21-25", "26-30"],
       filtered_class_size: [],
+      show: null,
       locations: [
         "Alameda, CA",
         "Berkeley, CA",
@@ -132,8 +178,7 @@ export default {
       loaded_classrooms: [],
       loaded_teachers: [],
       recmd: [],
-      invited: [],
-      show:null
+      invited: []
     };
   },
   computed: {
@@ -150,39 +195,20 @@ export default {
       return this.filter_list.slice(min, max);
     },
     filter_list() {
-      if (
-        this.filtered_locations.length == 0 &&
-        this.filtered_grades.length == 0 &&
-        this.filtered_class_size.length == 0 &&
-        this.filtered_skills.length == 0
-      )
-        return this.loaded_classrooms;
       // definition of an unique class array: elements' coursename can't be duplicated, teacher_uid is Ok.
       var key = ""; // the key we use to search, consist of params from filter.
       var duplicated_results = []; // the result may be duplicate since we have courses with different periods
       var filtered_result = []; // the final array we return, all classrooms here are unique
       this.search_options.keys = [];
-      var target = _.cloneDeep(this.loaded_classrooms);
-      var fuse;
       // pull all the parameters from the filter, concatenate them into a string called 'key' //
       // only search for relavant keys based on the difference of params
-      if (this.filtered_locations && this.filtered_locations.length) {
-        key += String(this.filtered_locations);
-        this.search_options.keys.push("school_address.city");
-        this.search_options.keys.push("school_district");
-        this.search_options.keys.push("school_name");
-        this.search_options.matchAllTokens = true;
-        fuse = new Fuse(target, this.search_options);
-        target = fuse.search(key);
-        this.search_options.matchAllTokens = false;
-      }
-
       if (this.filtered_grades && this.filtered_grades.length) {
         key += String(this.filtered_grades);
         this.search_options.keys.push("Grade");
         key = key.replace(/th/g, "");
         key = key.replace(/Grade/g, "");
       }
+
       if (this.filtered_courses && this.filtered_courses.length) {
         key += String(this.filtered_courses);
         // only course name is relavant in this case
@@ -195,22 +221,33 @@ export default {
         this.search_options.keys.push("students.min");
       }
 
+      if (this.filtered_courses && this.filtered_courses.length) {
+        key += String(this.filtered_courses);
+        // only course name is relavant in this case
+        this.search_options.keys.push("coursename");
+      }
+
       if (this.filtered_skills && this.filtered_skills.length) {
         key += String(this.filtered_skills);
         this.search_options.keys.push("selected_skills_keywords");
         this.search_options.keys.push("selected_industry_keywords");
       }
-
+      if (this.filtered_locations && this.filtered_locations.length) {
+        key += String(this.filtered_locations);
+        this.search_options.keys.push("school_address.city");
+        this.search_options.keys.push("school_district");
+        this.search_options.keys.push("school_name");
+      }
       key = key.replace(/\s,/g, "");
       // if no params is selected from the filter, we return the whil array.
-      if (key == "") return target;
+      if (key == "") return this.loaded_classrooms;
 
       // ======= Testing Purpose =======
       // console.log(key);
       // console.log(this.search_options.keys)
       // ==================================
       // fuse.js initialization
-      fuse = new Fuse(target, this.search_options);
+      var fuse = new Fuse(this.loaded_classrooms, this.search_options);
       duplicated_results = fuse.search(key);
       // uniqueness check
       var ht = {};
@@ -264,15 +301,12 @@ export default {
     GoogleMap
   },
   methods: {
-    changeShow(name){
-      this.show = name
-    },
-    doNewlikedCardAction(uid) {
-      if (_.includes(this.liked_cards, uid))
-        this.liked_cards = _.filter(this.liked_cards, card_uid => {
+    doNewFlavoredCardAction(uid) {
+      if (_.includes(this.flavored_cards, uid))
+        this.flavored_cards = _.filter(this.flavored_cards, card_uid => {
           return card_uid != uid;
         });
-      else this.liked_cards.push(uid);
+      else this.flavored_cards.push(uid);
     },
     shuffle(a) {
       for (let i = a.length - 1; i > 0; i--) {
@@ -295,9 +329,11 @@ export default {
   },
 
   created() {
+    // console.log("hi")
     var self = this;
     this.$on("markerClicked", function(key, position) {
       self.mapcenter = position;
+
       var index = _.findIndex(this.filter_list, function(cl) {
         return cl.poi == key;
       });
@@ -322,10 +358,12 @@ export default {
             if (
               doc.data() &&
               doc.data()["match_making"] &&
-              doc.data()["match_making"]["liked_cards"]
+              doc.data()["match_making"]["flavored_cards"]
             )
-              this.liked_cards = doc.data()["match_making"]["liked_cards"];
-            else this.liked_cards = [];
+              this.flavored_cards = doc.data()["match_making"][
+                "flavored_cards"
+              ];
+            else this.flavored_cards = [];
           });
 
         // console.log(user.uid)
@@ -333,26 +371,16 @@ export default {
           .get()
           .then(teacher_querySnapshot => {
             teacher_querySnapshot.forEach(doc => {
-              if (doc.data() && doc.data().selected_skills_keywords) {
-                var teacher_data = doc.data();
-                teacher_data["uid"] = doc.id;
-                self.skills.push(teacher_data.selected_skills_keywords);
-                self.loaded_teachers.push(teacher_data);
-              }
+              var teacher_data = doc.data();
+              teacher_data["uid"] = doc.id;
+              self.skills.push(teacher_data.selected_skills_keywords);
+              self.loaded_teachers.push(teacher_data);
             });
             db.collection("classroom")
               .get()
               .then(classroom_querySnapshot => {
                 classroom_querySnapshot.forEach(doc => {
-
-                  if(class_data && findbyId(
-                    self.loaded_teachers,
-                    doc.data().teacher_uid
-                  ) && findbyId(
-                    self.loaded_teachers,
-                    doc.data().teacher_uid
-                  ).selected_skills_keywords){
-                     var class_data = doc.data();
+                  var class_data = doc.data();
                   class_data["school_address"] = self.findbyId(
                     self.loaded_teachers,
                     class_data.teacher_uid
@@ -385,6 +413,7 @@ export default {
                   // console.log(doc.data());
                   self.courses.push(class_data.coursename);
                   self.loaded_classrooms.push(class_data);
+<<<<<<< HEAD
 
                   if (
                     self.findbyId(
@@ -434,13 +463,72 @@ export default {
                 ;
                 });
                 });
+=======
+>>>>>>> 7101edc9238e87d239ca2b95c04132410fc1f31b
                 });
                 var promises = [];
+                // async getNames(){
+                for (
+                  let teacher = 0;
+                  teacher < self.loaded_teachers.length;
+                  teacher++
+                ) {
+                  promises.push(
+                    new Promise(function(resolve, reject) {
+                      setTimeout(() => {
+                        db.collection("Users")
+                          .doc(self.loaded_teachers[teacher]["uid"])
+                          .get()
+                          .then(doc => {
+                            var user_data = doc.data();
+                            self.loaded_teachers[teacher]["first_name"] =
+                              user_data.first_name;
+                            self.loaded_teachers[teacher]["last_name"] =
+                              user_data.last_name;
+                            return resolve();
+                          });
+                          // console.log("timeout")
+                      }, 300);
+                    })
+                  );
+                }
+                // }
+
+                Promise.all(promises).then(val => {
+                  db.collection("employers")
+                    .doc(user.uid)
+                    .get()
+                    .then(doc => {
+                      // console.log(doc.data())
+                      if (doc.data().invited) self.invited = doc.data().invited;
+                      var to_move = _.filter(self.loaded_classrooms, clas => {
+                        return _.some(self.invited, uid => {
+                          return clas.uid == uid;
+                        });
+                      });
+                      for (let clas of to_move) {
+                        self.loaded_classrooms.splice(
+                          self.loaded_classrooms.indexOf(clas),
+                          1
+                        );
+                      }
+                      var new_arr = [];
+                      new_arr.push(to_move, self.loaded_classrooms);
+                      new_arr = _.flattenDeep(new_arr);
+                      //console.log(new_arr);
+                      self.loaded_classrooms = new_arr;
+                    });
+                  self.shuffle(self.loaded_classrooms);
+                  self.render = true;
+                  self.skills = _.flattenDeep(self.skills);
+                  self.skills = _.uniq(self.skills);
+                  self.skills = self.skills.filter(skill => skill);
                   self.skills = self.skills.sort();
                   self.courses = _.uniq(self.courses);
                   self.courses = self.courses.sort();
-                  // console.log(self.skills)
+                  // console.log("rendered")
                 });
+<<<<<<< HEAD
                   promises.push(
                     db
                       .collection("Users")
@@ -460,6 +548,8 @@ export default {
                   }
                   console.log("I aint waiting for nuthin")
                 
+=======
+>>>>>>> 7101edc9238e87d239ca2b95c04132410fc1f31b
               });
           });
       }

@@ -40,7 +40,7 @@
               <span>{{filter_list.length}}+ Employers Recommended</span>
             </h2>
             <mm_employer_card
-              v-for="(employer,index) in filter_list"
+              v-for="(employer,index) in render_class"
               v-if="employer.first_name"
               :key="index"
               :employer="employer"
@@ -239,9 +239,9 @@ export default {
     GoogleMap
   },
   methods: {
-    changeshow(towhat) {
-      this.show = towhat;
-      console.log(show);
+    changeShow(name) {
+      console.log("show changede");
+      this.show = name;
     },
     doNewlikedCardAction(uid) {
       if (_.includes(this.liked_cards, uid))
@@ -320,7 +320,7 @@ export default {
                 self.loaded_employers.push(employer_data);
               }
             });
-            console.log("hi");
+            // console.log("hi");
             self.solutions = _.flattenDeep(self.solutions);
             var filters = [self.industry, self.location, self.solutions];
             self.industry = _.flattenDeep(self.industry);
@@ -332,31 +332,34 @@ export default {
             self.solutions = _.flattenDeep(self.solutions);
             self.solutions = _.uniq(self.solutions).sort();
             self.solutions = self.solutions.filter(field => field);
-            console.log("here");
+            // console.log("here");
             var promises = [];
             for (
               let employer = 0;
               employer < self.loaded_employers.length;
               employer++
             ) {
-              console.log("waiting");
+              // console.log("waiting");
 
               // timeout to stop firebase from overloading with requests
               promises.push(
-                db
-                  .collection("Users")
-                  .doc(self.loaded_employers[employer]["uid"])
-                  .get()
-                  .then(doc => {
-                    
-                      console.log("got it");
-                      var user_data = doc.data();
-                      // console.log(user_data)
-                      self.loaded_employers[employer]["first_name"] =
-                        user_data.first_name;
-                      self.loaded_employers[employer]["last_name"] =
-                        user_data.last_name;
-                  })
+                new Promise(function(resolve, reject) {
+                  setTimeout(() => {
+                    db.collection("Users")
+                      .doc(self.loaded_employers[employer]["uid"])
+                      .get()
+                      .then(doc => {
+                        console.log("got it");
+                        var user_data = doc.data();
+                        // console.log(user_data)
+                        self.loaded_employers[employer]["first_name"] =
+                          user_data.first_name;
+                        self.loaded_employers[employer]["last_name"] =
+                          user_data.last_name;
+                        return resolve()
+                      });
+                  }, 300);
+                })
               );
             }
             Promise.all(promises).then(val => {
