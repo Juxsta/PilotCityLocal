@@ -9,9 +9,9 @@
                 <div class="ml-auto mr-auto">
                     <img src='@/assets/images/matchmake_employer.png' alt="Matchmake" id='Matchmake' >
                 </div>
-                    <h2 class="ml-auto mr-auto text-title-notify">We will notify you when your match results are available.</h2>
+                    <h2 class="ml-auto mr-auto text-title-notify">Your match results are now available.</h2>
                 <div class="ml-auto mr-auto">
-                    <button class="btn btn-lg button-over-out-employer" @click=out>Over and out</button>
+                    <button class="btn btn-lg button-over-out-employer" @click=out>View Classrooms</button>
                 </div>
             </div>
             </div>
