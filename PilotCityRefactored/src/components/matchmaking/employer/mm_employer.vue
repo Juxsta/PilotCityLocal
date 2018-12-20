@@ -183,16 +183,17 @@ export default {
   },
   computed: {
     render_class() {
+      var class_list = this.filter_list
       var to_display = 10; // number of classes to display per page
       if (
-        this.page * to_display + to_display - this.filter_list.length >
+        this.page * to_display + to_display - class_list.length >
         to_display
       )
         this.page =
-          parseInt((this.filter_list.length - to_display) / to_display) + 1;
+          parseInt((class_list.length - to_display) / to_display) + 1;
       var min = this.page > 0 ? (this.page - 1) * to_display + to_display : 0;
       var max = this.page * to_display + to_display;
-      return this.filter_list.slice(min, max);
+      return class_list.slice(min, max);
     },
     filter_list() {
       // definition of an unique class array: elements' coursename can't be duplicated, teacher_uid is Ok.
@@ -429,6 +430,8 @@ export default {
                           .get()
                           .then(doc => {
                             var user_data = doc.data();
+                            if(!user_data)
+                            console.log("This ID is broken :( :",self.loaded_teachers[teacher]["uid"])
                             self.loaded_teachers[teacher]["first_name"] =
                               user_data.first_name;
                             self.loaded_teachers[teacher]["last_name"] =

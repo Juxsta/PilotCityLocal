@@ -237,9 +237,6 @@ const router = new Router({
       path: '/matchmaking',
       name: 'matchmaking',
       component: matchmaking,
-      meta: {
-        requiresAuth: true
-      },
       children: [
         {
           path: 'employer',
@@ -256,22 +253,22 @@ const router = new Router({
   ]
 })
 // #region  RouterGuard Implementation to check for user Authentication
-// router.beforeEach((to, from, next) => {
-//   //check to see if router requires auth
-//   if (to.matched.some(rec => rec.meta.requiresAuth)) {
-//     // check auth state of user
-//     let user = firebase.auth().currentUser
-//     if (user) {
-//       //user signed in, proceed
-//       next()
-//     } else {
-//       // no user signed in, redirect to login
-//       next({ name: 'Index' })
-//     }
-//   } else {
-//     next()
-//   }
-// })
+router.beforeEach((to, from, next) => {
+  //check to see if router requires auth
+  if (to.matched.some(rec => rec.meta.requiresAuth)) {
+    // check auth state of user
+    let user = firebase.auth().currentUser
+    if (user) {
+      //user signed in, proceed
+      next()
+    } else {
+      // no user signed in, redirect to login
+      next({ name: 'Index'})
+    }
+  } else {
+    next()
+  }
+})
 //#endregion
 
 export default router
