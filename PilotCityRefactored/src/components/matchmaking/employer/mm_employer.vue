@@ -38,15 +38,18 @@
           </div>
           <div class="cardstock" id="results">
             <h2 class="text-classroom-matches" id="recommended">
-              <span>{{filter_list.length}}</span>
-              <span>+ Classrooms Recommended</span>
+              <span>{{(results=='recommended')?(filter_list.length):(results=='invited')?(invited.length):(liked_cards.length)}}</span>
+              <span>+ Classrooms Listed</span>
               <div class="mt-5 text-center">
-            <b-btn-group>
-              <b-button class="results__btngroup col-4">Recommended</b-button>
-              <b-button class="results__btngroup col-4">Invited</b-button>
-              <b-button class="results__btngroup col-4">Saved</b-button>
-            </b-btn-group>
-          </div>
+                <b-btn-group>
+                  <b-button
+                    @click="results='recommended'"
+                    class="results__btngroup col-4"
+                  >Recommended</b-button>
+                  <b-button @click="results='invited'" class="results__btngroup col-4">Invited</b-button>
+                  <b-button @click="results='saved'" class="results__btngroup col-4">Saved</b-button>
+                </b-btn-group>
+              </div>
             </h2>
             <mm_teacher_card
               :id="classroom.uid"
@@ -114,6 +117,7 @@ export default {
       active_card: null,
       liked_cards: [],
       apikey: GEOCODEKEY.key,
+      results: 'recommended',
       search_options: {
         shouldSort: true,
         threshold: 0.6,
@@ -189,8 +193,36 @@ export default {
     };
   },
   computed: {
+    listByPage() {
+      var class_list = []
+      if ((this.results == "recommended")) class_list = this.filter_list;
+      else if ((this.results == "invited")) {
+        for (let uid of this.invited) {
+          class_list.push(this.findbyId(this.loaded_classrooms, uid));
+        }
+      } else if ((this.results == "saved")) {
+        for (let uid of this.liked_cards)
+          class_list.push(this.findbyId(this.loaded_classrooms, uid));
+      }
+      var big_arr = [];
+      var i = -1;
+      do {
+        i++;
+        big_arr.push(this.page_uids(i));
+      } while (this.page_uids(i) != this.page_uids(i + 1));
+      return big_arr;
+    },
     render_class() {
-      var class_list = this.filter_list;
+      var class_list =[]
+      if ((this.results == "recommended")) class_list = this.filter_list;
+      else if ((this.results == "invited")) {
+        for (let uid of this.invited) {
+          class_list.push(this.findbyId(this.loaded_classrooms, uid));
+        }
+      } else if ((this.results == "saved")) {
+        for (let uid of this.liked_cards)
+          class_list.push(this.findbyId(this.loaded_classrooms, uid));
+      }
       var to_display = 10; // number of classes to display per page
       if (this.page * to_display + to_display - class_list.length > to_display)
         this.page = parseInt((class_list.length - to_display) / to_display) + 1;
@@ -199,13 +231,13 @@ export default {
       return class_list.slice(min, max);
     },
     listByPage() {
-      var big_arr = []
-      var i = -1
-      do{
-        i++
-        big_arr.push(this.page_uids(i))
-      }while(this.page_uids(i)[0] != this.page_uids(i+1)[0])
-      return big_arr
+      var big_arr = [];
+      var i = -1;
+      do {
+        i++;
+        big_arr.push(this.page_uids(i));
+      } while (this.page_uids(i)[0] != this.page_uids(i + 1)[0]);
+      return big_arr;
     },
     filter_list() {
       // definition of an unique class array: elements' coursename can't be duplicated, teacher_uid is Ok.
@@ -303,38 +335,39 @@ export default {
     GoogleMap
   },
   methods: {
-      scrollToThatCard(uid){
-        var self = this;
-        for (let i = 0; i < self.listByPage.length; i++)
-        if (_.includes(self.listByPage[i], uid))
-            this.page = i;
-        var el = document.getElementById(uid);
-        if (el) {
-          el.scrollIntoView({ block: "center" });
-          this.active_card = uid;
-          return true;
-        }
-        return false;
-      },
-     page_uids(page) {
-            var to_display = 10; // number of classes to display per page
-      if (
-        page * to_display + to_display - this.filter_list.length >
-        to_display
-      )
+    scrollToThatCard(uid) {
+      var self = this;
+      for (let i = 0; i < self.listByPage.length; i++)
+        if (_.includes(self.listByPage[i], uid)) this.page = i;
+      var el = document.getElementById(uid);
+      if (el) {
+        el.scrollIntoView({ block: "center" });
+        this.active_card = uid;
+        return true;
+      }
+      return false;
+    },
+    page_uids(page,arr) {
+      var to_display = 10; // number of classes to display per page
+      if (page * to_display + to_display - arr.length > to_display)
         page =
-          parseInt((this.filter_list.length - to_display) / to_display) + 1;
+          parseInt((arr.length - to_display) / to_display) + 1;
       var min = page > 0 ? (page - 1) * to_display + to_display : 0;
       var max = page * to_display + to_display;
-      var temp_list = this.filter_list.slice(min, max);
-      return temp_list.map((obj) => {
-        return obj.uid
-      })
+      var temp_list = arr.slice(min, max);
+      return temp_list.map(obj => {
+        return obj.uid;
+      });
     },
-    getMuddersResult(uid) {
-      var MUDDERSLINK =
-        "http://35.197.64.87:5000/matchmaker/classroomranking?employer_id=";
-      return axios.get(MUDDERSLINK + uid);
+    getMuddersResult(uid, user) {
+      // var MUDDERSLINK =
+      //   "http://35.197.64.87:5000/matchmaker/classroomranking?employer_id=";
+      // return axios.get(MUDDERSLINK + uid);
+      return firebase
+        .firestore()
+        .collection("rankings")
+        .doc(user.uid)
+        .get();
     },
     doNewLikedCardAction(uid) {
       if (_.includes(this.liked_cards, uid))
@@ -378,14 +411,13 @@ export default {
           // console.log(self.liked_cards)
         });
     },
-    getClassrooms(classes){
-      if(!classes) {
-        return db.collection("classroom").get()
-      }
-      else
-        return new Promise(function(resolve,reject) {
-          resolve(classes)
-        })
+    getClassrooms(classes) {
+      if (!classes) {
+        return db.collection("classroom").get();
+      } else
+        return new Promise(function(resolve, reject) {
+          resolve(classes);
+        });
     },
     retrievedTheWholeList(user, classes) {
       var self = this;
@@ -400,7 +432,7 @@ export default {
           });
           self.getClassrooms(classes).then(classroom_querySnapshot => {
             classroom_querySnapshot.forEach(doc => {
-              var class_data = (typeof doc.data == 'function')?doc.data():doc
+              var class_data = typeof doc.data == "function" ? doc.data() : doc;
               class_data["school_address"] = self.findbyId(
                 self.loaded_teachers,
                 class_data.teacher_uid
@@ -425,6 +457,11 @@ export default {
                 self.loaded_teachers,
                 class_data.teacher_uid
               ).coordinate;
+              if (class_data["coordinate"] && class_data["coordinate"].lat)
+                class_data["poi"] =
+                  String(class_data["coordinate"]["lat"]) +
+                  String(class_data["coordinate"]["lng"]);
+
               // console.log(doc.data());
               self.courses.push(class_data.coursename);
               self.loaded_classrooms.push(class_data);
@@ -485,22 +522,22 @@ export default {
         });
     },
     retrievedCardsWithMudderUIDS(user, uids) {
-      var self = this, db = firebase.firestore();
+      var self = this,
+        db = firebase.firestore();
       db.collection("classroom")
         .get()
         .then(ss => {
-          var filter_arr = [], all = [];
+          var filter_arr = [],
+            all = [];
           ss.forEach(doc => {
             all.push(doc.data());
           });
           var temp;
-          for (let i = 0; i < uids.length; i++)
-          {
+          for (let i = 0; i < uids.length; i++) {
             temp = _.find(all, arr => {
               return arr.uid == uids[i];
             });
-            if (temp)
-              filter_arr.push(temp);
+            if (temp) filter_arr.push(temp);
           }
           self.retrievedTheWholeList(user, filter_arr);
         });
@@ -511,14 +548,16 @@ export default {
     this.$on("markerClicked", function(uid, position) {
       self.mapcenter = position;
       self.scrollToThatCard(uid);
-      setTimeout(() => {self.scrollToThatCard(uid);}, 500);
+      setTimeout(() => {
+        self.scrollToThatCard(uid);
+      }, 500);
     });
   },
   created() {
     // console.log("hi")
     var self = this;
     firebase.auth().onAuthStateChanged(user => {
-     if (user) {
+      if (user) {
         var uid = "GZ9T2h4u6DhX4DWcbk5z6oFtkmC2" || user.uid; // since the test account is not working correctly we use a temp uid,
         // for production environment, just remove the uid to null or set uid = user.uid
         try {
@@ -535,21 +574,21 @@ export default {
               self.retrievedCardsWithMudderUIDS(user, ret_arr); // this is just temporarily purpose
             }
           });
+        } catch (err) {
+          db.collection("rankings")
+            .doc(uid)
+            .get()
+            .then(doc => {
+              var ret_arr = [];
+              if (doc.data() && doc.data().rankings) {
+                ret_arr = doc.data().rankings;
+              }
+              if (ret_arr.length)
+                self.retrievedCardsWithMudderUIDS(user, ret_arr);
+              else self.retrievedTheWholeList(user);
+            });
         }
-        catch (err){
-          db.collection("rankings").doc(uid).get().then(doc => {
-            var ret_arr = [];
-            if (doc.data() && doc.data().rankings){
-              ret_arr = doc.data().rankings;
-            }
-            if (ret_arr.length)
-              self.retrievedCardsWithMudderUIDS(user, ret_arr);
-            else 
-              self.retrievedTheWholeList(user);
-          })
-        }
-    
-        
+
         self.retrieveLikedCard(user.uid);
       }
     });
