@@ -212,7 +212,7 @@ const router = new Router({
               component: w_student_demographic
             },
           ],
-          //#region RouteGuard for student class
+          // #region RouteGuard for student class
           beforeEnter: (to, from, next) => {
             const db = firebase.firestore()
             let user = firebase.auth().currentUser
@@ -227,7 +227,7 @@ const router = new Router({
             else
               next({ name: 'ClassPicker' })
           },
-          //#endregion
+          // #endregion
         },
       ]
     },

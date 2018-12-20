@@ -102,8 +102,6 @@
   </div>
 </template>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDfuNr3RaCZkituTfoB7b7pR2u2rWuraWE&callback=initMap"
-async defer></script>
 <script>
 import _ from "lodash";
 import firebase from "@/firebase/init";

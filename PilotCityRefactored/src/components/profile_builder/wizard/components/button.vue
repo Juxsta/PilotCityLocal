@@ -41,44 +41,94 @@ export default {
         from: {
             type: String,
             default: ""
+        },
+        callback: {
+            type: Function
         }
     },
     methods: {
         pushRoute() {
-            var self = this
-            if(self.conditions.length == self.collection.length) {
-                firebase.auth().onAuthStateChanged((user)=> {
-                    if(user) {
-                        if (self.force_pass || (self.pass && self.conditions.every((condition) => {
-                            return Object.values(condition).every((data) => {
-                                return ((data != null && data != false) || data === false)
-                                })
-                        }))) {
-                            for(let i in self.conditions){
-                                const db = firebase.firestore()
-                                db.collection(self.collection[i]).doc(user.uid).set(self.conditions[i],
-                                {merge:true}).then(() => {
-                                    if (self.route == 'teacher-thankyou-modal'){
-                                        bus.$emit('teacher_finish')
+            var self = this;
+            if (this.callback)
+            {
+                ((this.callback)()).then(ret => {
+                    self.conditions[0].coordinate = ret.data.results[0].geometry.location;
+                    if(self.conditions.length == self.collection.length)
+                    {
+                        firebase.auth().onAuthStateChanged((user)=> {
+                            if(user) {
+                                if (self.force_pass || (self.pass && self.conditions.every((condition) => {
+                                    return Object.values(condition).every((data) => {
+                                        return ((data != null && data != false) || data === false)
+                                        })
+                                }))) {
+                                    for(let i in self.conditions){
+                                        const db = firebase.firestore()
+                                        db.collection(self.collection[i]).doc(user.uid).set(self.conditions[i],
+                                        {merge:true}).then(() => {
+                                            if (self.route == 'teacher-thankyou-modal'){
+                                                bus.$emit('teacher_finish')
+                                            }
+                                            else if(self.route =='employer-thankyou-modal')
+                                                bus.$emit('employer_finish')
+                                            else
+                                                self.$router.push({name: self.route})  
+                                        })
                                     }
-                                    else if(self.route =='employer-thankyou-modal')
-                                        bus.$emit('employer_finish')
+                                }
+                                else{
+                                    if(self.errormsg)
+                                        Prompter().failed(self.errormsg,"Hey there,")
                                     else
-                                        self.$router.push({name: self.route})  
-                                })
+                                        Prompter().failed("You're missing a few things","Hey there,")
+                                }
                             }
-                        }
-                        else{
-                            if(self.errormsg)
-                                Prompter().failed(self.errormsg,"Hey there,")
-                            else
-                                Prompter().failed("You're missing a few things","Hey there,")
-                        }
+                        })
                     }
-                })
+                    else 
+                        Prompter().failed("Length of Conditions and collections must match")
+                }).catch(err => {
+                    Prompter().failed(err.message)
+                });
             }
             else 
-                Prompter().failed("Length of Conditions and collections must match")
+            {
+                if(self.conditions.length == self.collection.length)
+                {
+                    firebase.auth().onAuthStateChanged((user)=> {
+                        if(user) {
+                            if (self.force_pass || (self.pass && self.conditions.every((condition) => {
+                                return Object.values(condition).every((data) => {
+                                    return ((data != null && data != false) || data === false)
+                                    })
+                            }))) {
+                                for(let i in self.conditions){
+                                    const db = firebase.firestore()
+                                    db.collection(self.collection[i]).doc(user.uid).set(self.conditions[i],
+                                    {merge:true}).then(() => {
+                                        if (self.route == 'teacher-thankyou-modal'){
+                                            bus.$emit('teacher_finish')
+                                        }
+                                        else if(self.route =='employer-thankyou-modal')
+                                            bus.$emit('employer_finish')
+                                        else
+                                            self.$router.push({name: self.route})  
+                                    })
+                                }
+                            }
+                            else{
+                                if(self.errormsg)
+                                    Prompter().failed(self.errormsg,"Hey there,")
+                                else
+                                    Prompter().failed("You're missing a few things","Hey there,")
+                            }
+                        }
+                    })
+                }
+                else 
+                    Prompter().failed("Length of Conditions and collections must match")
+            }
+           
         }
     }
 }
