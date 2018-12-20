@@ -112,20 +112,20 @@ const router = new Router({
             }
           ],
           //#region RouteGuard for teacher class
-          // beforeEnter: (to, from, next) => {
-          //   const db = firebase.firestore()
-          //   let user = firebase.auth().currentUser
-          //   if (user) {
-          //     db.collection("Users").doc(user.uid).get().then((doc) => {
-          //       if (doc.data().isTeacher)
-          //         next()
-          //       else
-          //         next({ name: 'ClassPicker' })
-          //     })
-          //   }
-          //   else
-          //     next({ name: 'ClassPicker' })
-          // },
+          beforeEnter: (to, from, next) => {
+            const db = firebase.firestore()
+            let user = firebase.auth().currentUser
+            if (user) {
+              db.collection("Users").doc(user.uid).get().then((doc) => {
+                if (doc.data().isTeacher)
+                  next()
+                else
+                  next({ name: 'ClassPicker' })
+              })
+            }
+            else
+              next({ name: 'ClassPicker' })
+          },
           //#endregion
         },
         {
@@ -180,20 +180,20 @@ const router = new Router({
             }
           ],
           //#region RouteGuard for employer class
-          // beforeEnter: (to, from, next) => {
-          //   const db = firebase.firestore()
-          //   let user = firebase.auth().currentUser
-          //   if (user) {
-          //     db.collection("Users").doc(user.uid).get().then((doc) => {
-          //       if (doc.data().isEmployer)
-          //         next()
-          //       else
-          //         next({ name: 'ClassPicker' })
-          //     })
-          //   }
-          //   else
-          //     next({ name: 'ClassPicker' })
-          // },
+          beforeEnter: (to, from, next) => {
+            const db = firebase.firestore()
+            let user = firebase.auth().currentUser
+            if (user) {
+              db.collection("Users").doc(user.uid).get().then((doc) => {
+                if (doc.data().isEmployer)
+                  next()
+                else
+                  next({ name: 'ClassPicker' })
+              })
+            }
+            else
+              next({ name: 'ClassPicker' })
+          },
           //#endregion
         },
         {
@@ -212,22 +212,22 @@ const router = new Router({
               component: w_student_demographic
             },
           ],
-          //#region RouteGuard for student class
-          // beforeEnter: (to, from, next) => {
-          //   const db = firebase.firestore()
-          //   let user = firebase.auth().currentUser
-          //   if (user) {
-          //     db.collection("Users").doc(user.uid).get().then((doc) => {
-          //       if (doc.data().isStudent)
-          //         next()
-          //       else
-          //         next({ name: 'ClassPicker' })
-          //     })
-          //   }
-          //   else
-          //     next({ name: 'ClassPicker' })
-          // },
-          //#endregion
+          // #region RouteGuard for student class
+          beforeEnter: (to, from, next) => {
+            const db = firebase.firestore()
+            let user = firebase.auth().currentUser
+            if (user) {
+              db.collection("Users").doc(user.uid).get().then((doc) => {
+                if (doc.data().isStudent)
+                  next()
+                else
+                  next({ name: 'ClassPicker' })
+              })
+            }
+            else
+              next({ name: 'ClassPicker' })
+          },
+          // #endregion
         },
       ]
     },
@@ -255,22 +255,22 @@ const router = new Router({
   ]
 })
 // #region  RouterGuard Implementation to check for user Authentication
-// router.beforeEach((to, from, next) => {
-//   //check to see if router requires auth
-//   if (to.matched.some(rec => rec.meta.requiresAuth)) {
-//     // check auth state of user
-//     let user = firebase.auth().currentUser
-//     if (user) {
-//       //user signed in, proceed
-//       next()
-//     } else {
-//       // no user signed in, redirect to login
-//       next({ name: 'Index'})
-//     }
-//   } else {
-//     next()
-//   }
-// })
+router.beforeEach((to, from, next) => {
+  //check to see if router requires auth
+  if (to.matched.some(rec => rec.meta.requiresAuth)) {
+    // check auth state of user
+    let user = firebase.auth().currentUser
+    if (user) {
+      //user signed in, proceed
+      next()
+    } else {
+      // no user signed in, redirect to login
+      next({ name: 'Index'})
+    }
+  } else {
+    next()
+  }
+})
 //#endregion
 
 export default router
