@@ -20,7 +20,7 @@ export default {
     created(){
         var self = this;
          firebase.auth().onAuthStateChanged(user => {
-             if (user)
+             if (false && "this makesure everyone in employers has a coordinate")
              {
                 const db = firebase.firestore();
                 db.collection("employers").get()
@@ -29,14 +29,28 @@ export default {
                     qs.forEach(doc => {
                         arr.push(doc)
                     });
-                    var link = "https://www.googleapis.com/geolocation/v1/geolocate?key="
-                    for (let i = 0; i < arr.length(); i++)
+                    var link = "https://maps.googleapis.com/maps/api/geocode/json?address="
+                    var address;
+                    var key = "&key=AIzaSyDfuNr3RaCZkituTfoB7b7pR2u2rWuraWE"
+                    for (let i = 0; i < arr.length; i++)
                     {
-                        if (!arr[i].data().coordinate)
+                        if (!arr[i].data().coordinate && arr[i].data().address)
                         {
-                            arr[i].data().coordinate 
+
+                            console.log(arr[i].data())
+                            console.log("doesnt have coordinate");
+                            address = arr[i].data().address.street + '+' + arr[i].data().address.city + '+'
+                            + arr[i].data().address.state;
+                            address = address.split(' ').join('+');
+                            console.log(link + address + key);
+                            axios.get(link + address + key).then(ret => {
+                                db.collection("employers").doc(arr[i].id).update({ coordinate: ret.data.results[0].geometry.location}).then( ()=> {
+                                    console.log("OK")
+                                })
+                            })
+                            
                         }
-                        
+                    
                     }
                     
                    

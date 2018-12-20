@@ -475,7 +475,6 @@ export default {
     });
   },
   created() {
-    console.log("a")
     const db = firebase.firestore();
     var self = this;
     firebase.auth().onAuthStateChanged(user => {
