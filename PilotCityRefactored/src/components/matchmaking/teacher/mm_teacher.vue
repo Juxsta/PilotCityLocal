@@ -142,15 +142,6 @@ export default {
       var max = this.page * to_display + to_display;
       return this.filter_list.slice(min, max);
     },
-    listByPage() {
-      var big_arr = []
-      var i = -1
-      do{
-        i++
-        big_arr.push(this.page_uids(i))
-      }while(this.page_uids(i)[0] != this.page_uids(i+1)[0])
-      return big_arr
-    },
     filter_list() {
       if (
         this.filtered_location.length == 0 &&
@@ -251,34 +242,6 @@ export default {
     GoogleMap
   },
   methods: {
-    scrollToThatCard(uid){
-      var self = this;
-      for (let i = 0; i < self.listByPage.length; i++)
-      if (_.includes(self.listByPage[i], uid))
-          this.page = i;
-      var el = document.getElementById(uid);
-      if (el) {
-        el.scrollIntoView({ block: "center" });
-        this.active_card = uid;
-        return true;
-      }
-      return false;
-    },
-    page_uids(page) {
-            var to_display = 10; // number of classes to display per page
-      if (
-        page * to_display + to_display - this.filter_list.length >
-        to_display
-      )
-        page =
-          parseInt((this.filter_list.length - to_display) / to_display) + 1;
-      var min = page > 0 ? (page - 1) * to_display + to_display : 0;
-      var max = page * to_display + to_display;
-      var temp_list = this.filter_list.slice(min, max);
-      return temp_list.map((obj) => {
-        return obj.uid
-      })
-    },
     getMuddersResult(uid) {
       var MUDDERSLINK =
         "http://35.197.64.87:5000/matchmaker/employerranking?classroom_id=";
