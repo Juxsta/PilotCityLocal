@@ -69,7 +69,8 @@ export default {
           this.$router.push({ name: "w_employer_story" });
           break;
         case 2:
-          
+        alert("Coming Soon")
+        break
           this.userdata.isEmployer = false;
           this.userdata.isStudent = true;
           this.userdata.isTeacher = false;

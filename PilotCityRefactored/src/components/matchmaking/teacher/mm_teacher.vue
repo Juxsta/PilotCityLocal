@@ -37,7 +37,8 @@
           <div class="cardstock" id="results">
             <h2 class="text-classroom-matches" id="recommended">
               <!-- <span>{{filter_list.length}}</span> -->
-              <span>{{filter_list.length}}+ Employers Listed</span>
+              <span>{{(results=='recommended')?(filter_list.length):(results=='invited')?(invited.length):(liked_cards.length)}}</span>
+              <span>+ Employers Listed</span>
               <div class="mt-4 text-center">
                 <b-btn-group>
                   <b-button
@@ -145,14 +146,14 @@ export default {
       filtered_interests: [],
       filtered_location: [],
       loaded_employers: [],
-      results:'recommended',
+      results: "recommended",
       recmd: [],
       invited: [],
       show: null
     };
   },
   computed: {
-      render_class() {
+    render_class() {
       var display_list = [];
       var to_move = [];
       if (this.results == "recommended") {
@@ -484,8 +485,8 @@ export default {
               )
                 self.liked_cards = doc.data()["match_making"]["liked_cards"];
               else self.liked_cards = [];
-              // moved here
-              if (doc.data()) self.invited = doc.data().invited;
+              if (doc.data() && doc.data().invited)
+                self.invited = doc.data().invited;
               self.render = true;
               //console.log("rendered");
             });
@@ -517,6 +518,7 @@ export default {
             if (doc.data()) {
               uid = doc.data().classes[0].uid;
               try {
+                throw "there was a problem with the server";
                 self.getMuddersResult(uid).then(result => {
                   var ret_arr = result.data.result || [];
                   // if the status is not 200 then there's something wrong, since we got no result from the mudder,
@@ -554,9 +556,9 @@ export default {
 </script>
 
 
-<style lang='scss'>
+<style lang='scss' scoped>
 @import "@/assets/SASS/utils/_variables.scss";
-$primary: $pink;
+$primary: $purple;
 body {
   overflow: hidden;
 }
