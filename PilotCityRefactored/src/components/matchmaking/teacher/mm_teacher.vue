@@ -248,22 +248,22 @@ export default {
       return axios.get(MUDDERSLINK + uid);
     },
     retrievedCardsWithMudderUIDS(user, uids) {
-      var self = this, db = firebase.firestore();
+      var self = this,
+        db = firebase.firestore();
       db.collection("employers")
         .get()
         .then(ss => {
-          var filter_arr = [], all = [];
+          var filter_arr = [],
+            all = [];
           ss.forEach(doc => {
             all.push(doc.data());
           });
           var temp;
-          for (let i = 0; i < uids.length; i++)
-          {
+          for (let i = 0; i < uids.length; i++) {
             temp = _.find(all, arr => {
               return arr.uid == uids[i];
             });
-            if (temp)
-              filter_arr.push(temp);
+            if (temp) filter_arr.push(temp);
           }
           self.retrivedTheWholeList(user, filter_arr);
         });
@@ -298,136 +298,128 @@ export default {
       else console.log("This employer does not have coordinate!");
     }
   },
-  getEmployers(employers){
-      if(!employers) {
-        return db.collection("classroom").get()
-      }
-      else
-      {
-        console.log(employers)
-        return new Promise(function(resolve,reject) {
-          resolve(employers)
-        })
-      }
-    },
-  retrievedTheWholeList(user,employers) {
-            db.collection("employers")
-          .get()
-          .then(employer_querySnapshot => {
-            employer_querySnapshot.forEach(doc => {
-              var employer_data = (doc.data === 'function')?doc.data():doc
-              if (
-                employer_data.selected_challenge_keywords &&
-                employer_data.selected_challenge_keywords.length
-              ) {
-                
-                employer_data["uid"] = doc.id;
-                if (employer_data["coordinate"] && employer_data["coordinate"].lat)
-                  employer_data["poi"] =
-                  String(employer_data["coordinate"]["lat"]) +
-                  String(employer_data["coordinate"]["lng"]);
-                self.industry.push(employer_data.selected_industry_keywords);
-                self.solutions.push(employer_data.selected_service_keywords);
-                self.solutions.push(employer_data.selected_product_keywords);
-                self.location.push(employer_data.address.city);
-                self.interests.push(employer_data.selected_challenge_keywords);
-                self.interests.push(
-                  employer_data.selected_bottom_line_keywords
-                );
-                self.loaded_employers.push(employer_data);
-              }
-            });
-            // console.log("hi");
-            self.solutions = _.flattenDeep(self.solutions);
-            var filters = [self.industry, self.location, self.solutions];
-            self.industry = _.flattenDeep(self.industry);
-            self.industry = _.uniq(self.industry).sort();
-            self.industry = self.industry.filter(field => field);
-            self.location = _.flattenDeep(self.location);
-            self.location = _.uniq(self.location).sort();
-            self.location = self.location.filter(field => field);
-            self.solutions = _.flattenDeep(self.solutions);
-            self.solutions = _.uniq(self.solutions).sort();
-            self.solutions = self.solutions.filter(field => field);
-            // console.log("here");
-            var promises = [];
-            for (
-              let employer = 0;
-              employer < self.loaded_employers.length;
-              employer++
-            ) {
-              // console.log("waiting");
+  getEmployers(employers) {
+    if (!employers) {
+      return db.collection("classroom").get();
+    } else {
+      console.log(employers);
+      return new Promise(function(resolve, reject) {
+        resolve(employers);
+      });
+    }
+  },
+  retrievedTheWholeList(user, employers) {
+    var self = this;
+    self.getEmployers(employers)
+      .get()
+      .then(employer_querySnapshot => {
+        employer_querySnapshot.forEach(doc => {
+          var employer_data = doc.data === "function" ? doc.data() : doc;
+          if (
+            employer_data.selected_challenge_keywords &&
+            employer_data.selected_challenge_keywords.length
+          ) {
+            employer_data["uid"] = doc.id;
+            if (employer_data["coordinate"] && employer_data["coordinate"].lat)
+              employer_data["poi"] =
+                String(employer_data["coordinate"]["lat"]) +
+                String(employer_data["coordinate"]["lng"]);
+            self.industry.push(employer_data.selected_industry_keywords);
+            self.solutions.push(employer_data.selected_service_keywords);
+            self.solutions.push(employer_data.selected_product_keywords);
+            self.location.push(employer_data.address.city);
+            self.interests.push(employer_data.selected_challenge_keywords);
+            self.interests.push(employer_data.selected_bottom_line_keywords);
+            self.loaded_employers.push(employer_data);
+          }
+        });
+        // console.log("hi");
+        self.solutions = _.flattenDeep(self.solutions);
+        var filters = [self.industry, self.location, self.solutions];
+        self.industry = _.flattenDeep(self.industry);
+        self.industry = _.uniq(self.industry).sort();
+        self.industry = self.industry.filter(field => field);
+        self.location = _.flattenDeep(self.location);
+        self.location = _.uniq(self.location).sort();
+        self.location = self.location.filter(field => field);
+        self.solutions = _.flattenDeep(self.solutions);
+        self.solutions = _.uniq(self.solutions).sort();
+        self.solutions = self.solutions.filter(field => field);
+        // console.log("here");
+        var promises = [];
+        for (
+          let employer = 0;
+          employer < self.loaded_employers.length;
+          employer++
+        ) {
+          // console.log("waiting");
 
-              // timeout to stop firebase from overloading with requests
-              promises.push(
-                new Promise(function(resolve, reject) {
-                  setTimeout(() => {
-                    db.collection("Users")
-                      .doc(self.loaded_employers[employer]["uid"])
-                      .get()
-                      .then(doc => {
-                        console.log("got it");
-                        var user_data = doc.data();
-                        // console.log(user_data)
-                        if (user_data)
-                        {
-                          self.loaded_employers[employer]["first_name"] =
-                            user_data.first_name;
-                          self.loaded_employers[employer]["last_name"] =
-                            user_data.last_name;
-                        }
-                        return resolve();
-                      });
-                  }, 300);
-                })
-              );
-            }
-            Promise.all(promises).then(val => {
-              db.collection("teachers")
-                .doc(user.uid)
-                .get()
-                .then(doc => {
-                  //
-                  if (
-                    doc.data() &&
-                    doc.data()["match_making"] &&
-                    doc.data()["match_making"]["liked_cards"]
-                  )
-                    self.liked_cards = doc.data()["match_making"][
-                      "liked_cards"
-                    ];
-                  else self.liked_cards = [];
-                  // moved here
-                  if (doc.data())
-                    self.invited = doc.data().invited
-                      ? doc.data().invited
-                      : self.invited;
-                  var to_move = _.filter(self.loaded_employers, employer => {
-                    return _.some(self.invited, uid => {
-                      return employer.uid == uid;
-                    });
+          // timeout to stop firebase from overloading with requests
+          promises.push(
+            new Promise(function(resolve, reject) {
+              setTimeout(() => {
+                db.collection("Users")
+                  .doc(self.loaded_employers[employer]["uid"])
+                  .get()
+                  .then(doc => {
+                    console.log("got it");
+                    var user_data = doc.data();
+                    // console.log(user_data)
+                    if (user_data) {
+                      self.loaded_employers[employer]["first_name"] =
+                        user_data.first_name;
+                      self.loaded_employers[employer]["last_name"] =
+                        user_data.last_name;
+                    }
+                    return resolve();
                   });
-                  for (let employer of to_move) {
-                    self.loaded_employers.splice(
-                      self.loaded_employers.indexOf(employer),
-                      1
-                    );
-                  }
-                  var new_arr = [];
-                  new_arr.push(to_move, self.loaded_employers);
-                  new_arr = _.flattenDeep(new_arr);
-                  //console.log(new_arr);
-                  self.loaded_employers = new_arr;
-                  self.render = true;
-                  console.log("rendered");
+              }, 200);
+            })
+          );
+        }
+        Promise.all(promises).then(val => {
+          db.collection("teachers")
+            .doc(user.uid)
+            .get()
+            .then(doc => {
+              //
+              if (
+                doc.data() &&
+                doc.data()["match_making"] &&
+                doc.data()["match_making"]["liked_cards"]
+              )
+                self.liked_cards = doc.data()["match_making"]["liked_cards"];
+              else self.liked_cards = [];
+              // moved here
+              if (doc.data())
+                self.invited = doc.data().invited
+                  ? doc.data().invited
+                  : self.invited;
+              var to_move = _.filter(self.loaded_employers, employer => {
+                return _.some(self.invited, uid => {
+                  return employer.uid == uid;
                 });
+              });
+              for (let employer of to_move) {
+                self.loaded_employers.splice(
+                  self.loaded_employers.indexOf(employer),
+                  1
+                );
+              }
+              var new_arr = [];
+              new_arr.push(to_move, self.loaded_employers);
+              new_arr = _.flattenDeep(new_arr);
+              //console.log(new_arr);
+              self.loaded_employers = new_arr;
+              self.render = true;
+              console.log("rendered");
             });
-          });
+        });
+      });
   },
   created() {
     var self = this;
     this.$on("markerClicked", function(key, position) {
- 
       self.mapcenter = position;
       var index = _.findIndex(this.filter_list, function(cl) {
         return cl.poi == key;
@@ -445,17 +437,9 @@ export default {
     var classIds = [];
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
-        console.log(user.uid)
+        console.log(user.uid);
         const db = firebase.firestore();
-        // db.collection("teachers").doc(user.uid).get().then(doc => {
-        //   if (doc.data() && doc.data()["match_making"] &&
-        //   doc.data()["match_making"]["liked_cards"])
-        //    self.liked_cards = doc.data()["match_making"]["liked_cards"];
-        //   else
-        //     self.liked_cards = [];
-        // });
-        // console.log(user.uid)
-
+        self.retrievedTheWholeList(user);
       }
     });
   }
