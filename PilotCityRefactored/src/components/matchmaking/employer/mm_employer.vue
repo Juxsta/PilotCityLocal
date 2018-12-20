@@ -40,14 +40,23 @@
             <h2 class="text-classroom-matches" id="recommended">
               <span>{{(results=='recommended')?(filter_list.length):(results=='invited')?(invited.length):(liked_cards.length)}}</span>
               <span>+ Classrooms Listed</span>
-              <div class="mt-5 text-center">
+              <div class="mt-4 text-center">
                 <b-btn-group>
                   <b-button
-                    @click="results='recommended'"
+                    @click="results='recommended',page=0"
                     class="results__btngroup col-4"
+                    :class="{'results__btngroup--active':results=='recommended'}"
                   >Recommended</b-button>
-                  <b-button @click="results='invited'" class="results__btngroup col-4">Invited</b-button>
-                  <b-button @click="results='saved'" class="results__btngroup col-4">Saved</b-button>
+                  <b-button
+                    @click="results='invited',page=0"
+                    class="results__btngroup col-4"
+                    :class="{'results__btngroup--active':results=='invited'}"
+                  >Invited</b-button>
+                  <b-button
+                    @click="results='saved',page=0"
+                    class="results__btngroup col-4"
+                    :class="{'results__btngroup--active':results=='saved'}"
+                  >Saved</b-button>
                 </b-btn-group>
               </div>
             </h2>
@@ -117,7 +126,7 @@ export default {
       active_card: null,
       liked_cards: [],
       apikey: GEOCODEKEY.key,
-      results: 'recommended',
+      results: "recommended",
       search_options: {
         shouldSort: true,
         threshold: 0.6,
@@ -194,13 +203,13 @@ export default {
   },
   computed: {
     listByPage() {
-      var class_list = []
-      if ((this.results == "recommended")) class_list = this.filter_list;
-      else if ((this.results == "invited")) {
+      var class_list = [];
+      if (this.results == "recommended") class_list = this.filter_list;
+      else if (this.results == "invited") {
         for (let uid of this.invited) {
           class_list.push(this.findbyId(this.loaded_classrooms, uid));
         }
-      } else if ((this.results == "saved")) {
+      } else if (this.results == "saved") {
         for (let uid of this.liked_cards)
           class_list.push(this.findbyId(this.loaded_classrooms, uid));
       }
@@ -208,18 +217,18 @@ export default {
       var i = -1;
       do {
         i++;
-        big_arr.push(this.page_uids(i));
-      } while (this.page_uids(i) != this.page_uids(i + 1));
+        big_arr.push(this.page_uids(i,class_list));
+      } while (this.page_uids(i,class_list) != this.page_uids(i + 1,class_list));
       return big_arr;
     },
     render_class() {
-      var class_list =[]
-      if ((this.results == "recommended")) class_list = this.filter_list;
-      else if ((this.results == "invited")) {
+      var class_list = [];
+      if (this.results == "recommended") class_list = this.filter_list;
+      else if (this.results == "invited") {
         for (let uid of this.invited) {
           class_list.push(this.findbyId(this.loaded_classrooms, uid));
         }
-      } else if ((this.results == "saved")) {
+      } else if (this.results == "saved") {
         for (let uid of this.liked_cards)
           class_list.push(this.findbyId(this.loaded_classrooms, uid));
       }
@@ -347,11 +356,10 @@ export default {
       }
       return false;
     },
-    page_uids(page,arr) {
+    page_uids(page, arr) {
       var to_display = 10; // number of classes to display per page
       if (page * to_display + to_display - arr.length > to_display)
-        page =
-          parseInt((arr.length - to_display) / to_display) + 1;
+        page = parseInt((arr.length - to_display) / to_display) + 1;
       var min = page > 0 ? (page - 1) * to_display + to_display : 0;
       var max = page * to_display + to_display;
       var temp_list = arr.slice(min, max);

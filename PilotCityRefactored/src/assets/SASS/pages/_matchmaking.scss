@@ -49,7 +49,9 @@ $primary: $purple !default;
       border: solid 1px #dbdcde;
     }
     &:focus {
-      border: solid 1px #dbdcde;
+      outline: 0;
+      box-shadow: none;
+      -webkit-box-shadow:none;
     }
     &:active{
       border: solid 1px #dbdcde;
