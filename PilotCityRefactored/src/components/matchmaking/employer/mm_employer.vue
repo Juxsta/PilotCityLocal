@@ -308,6 +308,19 @@ export default {
     GoogleMap
   },
   methods: {
+      scrollToThatCard(uid){
+        var self = this;
+        for (let i = 0; i < self.listByPage.length; i++)
+        if (_.includes(self.listByPage[i], uid))
+            this.page = i;
+        var el = document.getElementById(uid);
+        if (el) {
+          el.scrollIntoView({ block: "center" });
+          this.active_card = uid;
+          return true;
+        }
+        return false;
+      },
      page_uids(page) {
             var to_display = 10; // number of classes to display per page
       if (
@@ -507,15 +520,8 @@ export default {
     var self = this;
     this.$on("markerClicked", function(uid, position) {
       self.mapcenter = position;
-      for (let i = 0; i < self.listByPage.length; i++)
-        if (_.includes(self.listByPage[i], uid))
-          this.page = i;
-      var el = document.getElementById(uid);
-      if (el) {
-        el.scrollIntoView({ block: "center" });
-        this.active_card = uid;
-      }
-      return ;
+      self.scrollToThatCard(uid);
+      setTimeout(() => {self.scrollToThatCard(uid);}, 500);
     });
   },
   created() {
