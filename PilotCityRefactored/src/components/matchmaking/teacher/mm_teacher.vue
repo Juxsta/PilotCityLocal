@@ -361,10 +361,13 @@ export default {
                         console.log("got it");
                         var user_data = doc.data();
                         // console.log(user_data)
-                        self.loaded_employers[employer]["first_name"] =
-                          user_data.first_name;
-                        self.loaded_employers[employer]["last_name"] =
-                          user_data.last_name;
+                        if ( user_data)
+                        {
+                          self.loaded_employers[employer]["first_name"] =
+                            user_data.first_name;
+                          self.loaded_employers[employer]["last_name"] =
+                            user_data.last_name;
+                        }
                         return resolve();
                       });
                   }, 300);
@@ -387,9 +390,10 @@ export default {
                     ];
                   else self.liked_cards = [];
                   // moved here
-                  self.invited = doc.data().invited
-                    ? doc.data().invited
-                    : self.invited;
+                  if (doc.data())
+                    self.invited = doc.data().invited
+                      ? doc.data().invited
+                      : self.invited;
                   var to_move = _.filter(self.loaded_employers, employer => {
                     return _.some(self.invited, uid => {
                       return employer.uid == uid;
