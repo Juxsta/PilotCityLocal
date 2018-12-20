@@ -93,6 +93,8 @@ import GoogleMap from "@/components/map/GoogleMap";
 import { GEOCODEKEY } from "@/main";
 import Fuse from "fuse.js";
 import { createECDH } from "crypto";
+
+import axios from "axios";
 export default {
   name: "mm_teacher",
   data() {
@@ -242,6 +244,30 @@ export default {
     GoogleMap
   },
   methods: {
+     doNewLikedCardAction(uid) {
+      if (_.includes(this.liked_cards, uid))
+        this.liked_cards = _.filter(this.liked_cards, card_uid => {
+          return card_uid != uid;
+        });
+      else this.liked_cards.push(uid);
+    },
+    retrieveLikedCard(uid) {
+      var self = this;
+      const db = firebase.firestore();
+      db.collection("teachers")
+        .doc(uid)
+        .get()
+        .then(doc => {
+          if (
+            doc.data() &&
+            doc.data()["match_making"] &&
+            doc.data()["match_making"]["liked_cards"]
+          )
+            self.liked_cards = doc.data()["match_making"]["liked_cards"];
+          else self.liked_cards = [];
+          // console.log(self.liked_cards)
+        });
+    },
     getMuddersResult(uid) {
       var MUDDERSLINK =
         "http://35.197.64.87:5000/matchmaker/employerranking?classroom_id=";
@@ -409,13 +435,24 @@ export default {
     });
   },
   created() {
-    var self = this;
-    var classIds = [];
+     var self = this;
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
-        console.log(user.uid);
-        const db = firebase.firestore();
-        self.retrievedTheWholeList(user);
+        var uid = "AdzkWoSjonQBrl67hHdl1TSPpwi1" || user.uid; // since the test account is not working correctly we use a temp uid,
+        // for production environment, just remove the uid to null or set uid = user.uid
+        self.getMuddersResult(uid).then(result => {
+          var ret_arr = result.data.result || [];
+          // if the status is not 200 then there's something wrong, since we got no result from the mudder,
+          // we just go an fetch the whole list
+          if (result.status != 200 || ret_arr.length == 0)
+            self.retrievedTheWholeList(user);
+          // Eric's original code
+          // if we do have the result from mudder, we do retrievedCardsWithMudderUIDS
+          else {
+            self.retrievedCardsWithMudderUIDS(user, ret_arr); // this is just temporarily purpose
+          }
+        });
+        self.retrieveLikedCard(user.uid);
       }
     });
   }
