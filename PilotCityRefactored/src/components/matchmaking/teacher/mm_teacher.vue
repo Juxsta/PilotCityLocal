@@ -150,17 +150,32 @@ export default {
     };
   },
   computed: {
-    render_class() {
+     render_class() {
+      var display_list =[]
+      var to_move =[]
+      if(this.results=='invited'){
+        to_move = _.filter(this.loaded_employers,(obj => {
+          return _.find(this.invited, (invitee)=> invitee==obj.uid)
+        }))
+      }
+      else if(this.results=='recommended') {
+        to_move = _.filter(this.loaded_employers,(obj => {
+          return _.find(this.liked_cards,(likee) => likee==obj.uid)
+        }))
+      }
+      display_list.push(to_move,this.loaded_employers)
+      display_list = _.flattenDeep(display_list)
+      display_list = _.uniq(display_list)
       var to_display = 10; // number of classes to display per page
       if (
-        this.page * to_display + to_display - this.filter_list.length >
+        this.page * to_display + to_display - display_list.length >
         to_display
       )
         this.page =
-          parseInt((this.filter_list.length - to_display) / to_display) + 1;
+          parseInt((display_list.length - to_display) / to_display) + 1;
       var min = this.page > 0 ? (this.page - 1) * to_display + to_display : 0;
       var max = this.page * to_display + to_display;
-      return this.filter_list.slice(min, max);
+      return display_list.slice(min, max);
     },
     listByPage() {
       var big_arr = [];
