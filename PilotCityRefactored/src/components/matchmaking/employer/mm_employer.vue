@@ -342,9 +342,13 @@ export default {
         return db.collection("classroom").get()
       }
       else
+      {
+        console.log("hi")
+        console.log(classes)
         return new Promise(function(resolve,reject) {
           resolve(classes)
         })
+      }
     },
     retrivedTheWholeList(user,classes) {
       var self = this;
@@ -448,17 +452,25 @@ export default {
             });
         });
     },
-    retrievedCardsWithMudderUIDS(uids) {
-      var db = firebase.firestore();
+    retrievedCardsWithMudderUIDS(user, uids) {
+      var self = this, db = firebase.firestore();
       db.collection("classroom")
         .get()
         .then(ss => {
-          var filter_arr = [];
+          var filter_arr = [], all = [];
           ss.forEach(doc => {
-            if (_.includes(uids, doc.id)) filter_arr.push(doc.data());
+            all.push(doc.data());
           });
-          console.log(uids);
-          return (filter_arr);
+          var temp;
+          for (let i = 0; i < uids.length; i++)
+          {
+            temp = _.find(all, arr => {
+              return arr.uid == uids[i];
+            });
+            if (temp)
+              filter_arr.push(temp);
+          }
+          self.retrivedTheWholeList(user, filter_arr);
         });
     }
   },
@@ -487,17 +499,18 @@ export default {
       if (user) {
         var uid = "GZ9T2h4u6DhX4DWcbk5z6oFtkmC2" || user.uid; // since the test account is not working correctly we use a temp uid,
         // for production environment, just remove the uid to null or set uid = user.uid
-        console.log(uid);
         self.getMuddersResult(uid).then(result => {
           var ret_arr = result.data.result || [];
           // if the status is not 200 then there's something wrong, since we got no result from the mudder,
           // we just go an fetch the whole list
+          console.log("==")
+          console.log(ret_arr)
           if (result.status != 200 || ret_arr.length == 0)
             self.retrivedTheWholeList(user);
           // Eric's original code
           // if we do have the result from mudder, we do retrievedCardsWithMudderUIDS
           else {
-            self.retrivedTheWholeList(user, self.retrievedCardsWithMudderUIDS(ret_arr)); // this is just temporarily purpose
+            self.retrievedCardsWithMudderUIDS(user, ret_arr); // this is just temporarily purpose
           }
         });
         self.retrieveLikedCard(user.uid);
