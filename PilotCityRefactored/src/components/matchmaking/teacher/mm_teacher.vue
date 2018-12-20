@@ -132,6 +132,15 @@ export default {
     };
   },
   computed: {
+     listByPage() {
+      var big_arr = []
+      var i = -1
+      do{
+        i++
+        big_arr.push(this.page_uids(i))
+      }while(this.page_uids(i) != this.page_uids(i+1))
+      return big_arr
+    },
     render_class() {
       var to_display = 10; // number of classes to display per page
       if (
@@ -244,6 +253,34 @@ export default {
     GoogleMap
   },
   methods: {
+    page_uids(page) {
+       var to_display = 10; // number of classes to display per page
+      if (
+        page * to_display + to_display - this.filter_list.length >
+        to_display
+      )
+        page =
+          parseInt((this.filter_list.length - to_display) / to_display) + 1;
+      var min = page > 0 ? (page - 1) * to_display + to_display : 0;
+      var max = page * to_display + to_display;
+      var temp_list = this.filter_list.slice(min, max);
+      return temp_list.map((obj) => {
+        return obj.uid
+      })
+    },
+    scrollToThatCard(uid){
+        var self = this;
+        for (let i = 0; i < self.listByPage.length; i++)
+        if (_.includes(self.listByPage[i], uid))
+            this.page = i;
+        var el = document.getElementById(uid);
+        if (el) {
+          el.scrollIntoView({ block: "center" });
+          this.active_card = uid;
+          return true;
+        }
+        return false;
+      },
      doNewLikedCardAction(uid) {
       if (_.includes(this.liked_cards, uid))
         this.liked_cards = _.filter(this.liked_cards, card_uid => {
@@ -325,10 +362,10 @@ export default {
     },
     getEmployers(employers) {
       if (!employers) {
-        console.log("retrieve from db")
+        //console.log("retrieve from db")
         return db.collection("employers").get();
       } else {
-        console.log(employers);
+        //console.log(employers);
         return new Promise(function(resolve, reject) {
           resolve(employers);
         });
@@ -346,10 +383,6 @@ export default {
               employer_data.selected_challenge_keywords.length
             ) {
               employer_data["uid"] = doc.id;
-              if (employer_data["coordinate"] && employer_data["coordinate"].lat)
-                employer_data["poi"] =
-                  String(employer_data["coordinate"]["lat"]) +
-                  String(employer_data["coordinate"]["lng"]);
               self.industry.push(employer_data.selected_industry_keywords);
               self.solutions.push(employer_data.selected_service_keywords);
               self.solutions.push(employer_data.selected_product_keywords);
@@ -420,7 +453,7 @@ export default {
                 if (doc.data())
                   self.invited = doc.data().invited
                 self.render = true;
-                console.log("rendered");
+                //console.log("rendered");
               });
           });
         });
@@ -428,7 +461,7 @@ export default {
   },
   mounted(){
     var self = this;
-    this.$on("markerClicked", function(key, position) {
+    this.$on("markerClicked", function(uid, position) {
       self.mapcenter = position;
       self.scrollToThatCard(uid);
       setTimeout(() => {self.scrollToThatCard(uid);}, 500);
