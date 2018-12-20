@@ -221,7 +221,7 @@ export default {
           return _.find(this.invited, (invitee)=> invitee==obj.uid)
         }))
       }
-      else if(this.results=='recommended') {
+      else if(this.results=='saved') {
         to_move = _.filter(this.loaded_classrooms,(obj => {
           return _.find(this.liked_cards,(likee) => likee==obj.uid)
         }))
