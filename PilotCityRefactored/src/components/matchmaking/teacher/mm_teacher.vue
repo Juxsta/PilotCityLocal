@@ -37,7 +37,26 @@
           <div class="cardstock" id="results">
             <h2 class="text-classroom-matches" id="recommended">
               <!-- <span>{{filter_list.length}}</span> -->
-              <span>{{filter_list.length}}+ Employers Recommended</span>
+              <span>{{filter_list.length}}+ Employers Listed</span>
+              <div class="mt-4 text-center">
+                <b-btn-group>
+                  <b-button
+                    @click="results='recommended',page=0"
+                    class="results__btngroup col-4"
+                    :class="{'results__btngroup--active':results=='recommended'}"
+                  >Recommended</b-button>
+                  <b-button
+                    @click="results='invited',page=0"
+                    class="results__btngroup col-4"
+                    :class="{'results__btngroup--active':results=='invited'}"
+                  >Invited</b-button>
+                  <b-button
+                    @click="results='saved',page=0"
+                    class="results__btngroup col-4"
+                    :class="{'results__btngroup--active':results=='saved'}"
+                  >Saved</b-button>
+                </b-btn-group>
+              </div>
             </h2>
             <mm_employer_card
               v-for="(employer,index) in render_class"
@@ -126,41 +145,54 @@ export default {
       filtered_interests: [],
       filtered_location: [],
       loaded_employers: [],
+      results: "recommended",
       recmd: [],
       invited: [],
       show: null
     };
   },
   computed: {
-     listByPage() {
-      var big_arr = []
-      var i = -1
-      do{
-        i++
-        big_arr.push(this.page_uids(i))
-      }while(this.page_uids(i) != this.page_uids(i+1))
-      return big_arr
+    listByPage() {
+      var class_list = [];
+      if (this.results == "recommended") class_list = this.filter_list;
+      else if (this.results == "invited") {
+        for (let uid of this.invited) {
+          class_list.push(this.findbyId(this.loaded_employers, uid));
+        }
+      } else if (this.results == "saved") {
+        for (let uid of this.liked_cards)
+          class_list.push(this.findbyId(this.loaded_employers, uid));
+      }
+      var big_arr = [];
+      var i = -1;
+      do {
+        i++;
+        big_arr.push(this.page_uids(i));
+      } while (this.page_uids(i) != this.page_uids(i + 1));
+      return big_arr;
     },
     render_class() {
+      var class_list = [];
+      if (this.results == "recommended") class_list = this.filter_list;
+      else if (this.results == "invited") {
+        for (let uid of this.invited) {
+          class_list.push(this.findbyId(this.loaded_classrooms, uid));
+        }
+      } else if (this.results == "saved") {
+        for (let uid of this.liked_cards)
+          class_list.push(this.findbyId(this.loaded_classrooms, uid));
+      }
+      
       var to_display = 10; // number of classes to display per page
       if (
-        this.page * to_display + to_display - this.filter_list.length >
+        this.page * to_display + to_display - this.class_list.length >
         to_display
       )
         this.page =
-          parseInt((this.filter_list.length - to_display) / to_display) + 1;
+          parseInt((this.class_list.length - to_display) / to_display) + 1;
       var min = this.page > 0 ? (this.page - 1) * to_display + to_display : 0;
       var max = this.page * to_display + to_display;
-      return this.filter_list.slice(min, max);
-    },
-    listByPage() {
-      var big_arr = []
-      var i = -1
-      do{
-        i++
-        big_arr.push(this.page_uids(i))
-      }while(this.page_uids(i)[0] != this.page_uids(i+1)[0])
-      return big_arr
+      return this.class_list.slice(min, max);
     },
     filter_list() {
       if (
@@ -262,35 +294,30 @@ export default {
     GoogleMap
   },
   methods: {
-    page_uids(page) {
-       var to_display = 10; // number of classes to display per page
-      if (
-        page * to_display + to_display - this.filter_list.length >
-        to_display
-      )
-        page =
-          parseInt((this.filter_list.length - to_display) / to_display) + 1;
+    page_uids(page, arr) {
+      var to_display = 10; // number of classes to display per page
+      if (page * to_display + to_display - arr.length > to_display)
+        page = parseInt((arr.length - to_display) / to_display) + 1;
       var min = page > 0 ? (page - 1) * to_display + to_display : 0;
       var max = page * to_display + to_display;
-      var temp_list = this.filter_list.slice(min, max);
-      return temp_list.map((obj) => {
-        return obj.uid
-      })
+      var temp_list = arr.slice(min, max);
+      return temp_list.map(obj => {
+        return obj.uid;
+      });
     },
-    scrollToThatCard(uid){
-        var self = this;
-        for (let i = 0; i < self.listByPage.length; i++)
-        if (_.includes(self.listByPage[i], uid))
-            this.page = i;
-        var el = document.getElementById(uid);
-        if (el) {
-          el.scrollIntoView({ block: "center" });
-          this.active_card = uid;
-          return true;
-        }
-        return false;
-      },
-     doNewLikedCardAction(uid) {
+    scrollToThatCard(uid) {
+      var self = this;
+      for (let i = 0; i < self.listByPage.length; i++)
+        if (_.includes(self.listByPage[i], uid)) this.page = i;
+      var el = document.getElementById(uid);
+      if (el) {
+        el.scrollIntoView({ block: "center" });
+        this.active_card = uid;
+        return true;
+      }
+      return false;
+    },
+    doNewLikedCardAction(uid) {
       if (_.includes(this.liked_cards, uid))
         this.liked_cards = _.filter(this.liked_cards, card_uid => {
           return card_uid != uid;
@@ -382,98 +409,98 @@ export default {
     },
     retrievedTheWholeList(user, employers) {
       var self = this;
-      self.getEmployers(employers)
-        .then(employer_querySnapshot => {
-          employer_querySnapshot.forEach(doc => {
-            var employer_data = (typeof doc.data == "function") ? doc.data() : doc;
-            // console.log(employer_data)
-            if (
-              employer_data.selected_challenge_keywords &&
-              employer_data.selected_challenge_keywords.length
-            ) {
-              employer_data["uid"] = doc.id;
-              self.industry.push(employer_data.selected_industry_keywords);
-              self.solutions.push(employer_data.selected_service_keywords);
-              self.solutions.push(employer_data.selected_product_keywords);
-              self.location.push(employer_data.address.city);
-              self.interests.push(employer_data.selected_challenge_keywords);
-              self.interests.push(employer_data.selected_bottom_line_keywords);
-              self.loaded_employers.push(employer_data);
-            }
-          });
-          // console.log("hi");
-          self.solutions = _.flattenDeep(self.solutions);
-          var filters = [self.industry, self.location, self.solutions];
-          self.industry = _.flattenDeep(self.industry);
-          self.industry = _.uniq(self.industry).sort();
-          self.industry = self.industry.filter(field => field);
-          self.location = _.flattenDeep(self.location);
-          self.location = _.uniq(self.location).sort();
-          self.location = self.location.filter(field => field);
-          self.solutions = _.flattenDeep(self.solutions);
-          self.solutions = _.uniq(self.solutions).sort();
-          self.solutions = self.solutions.filter(field => field);
-          // console.log("here");
-          var promises = [];
-          for (
-            let employer = 0;
-            employer < self.loaded_employers.length;
-            employer++
+      self.getEmployers(employers).then(employer_querySnapshot => {
+        employer_querySnapshot.forEach(doc => {
+          var employer_data = typeof doc.data == "function" ? doc.data() : doc;
+          // console.log(employer_data)
+          if (
+            employer_data.selected_challenge_keywords &&
+            employer_data.selected_challenge_keywords.length
           ) {
-            // console.log("waiting");
-
-            // timeout to stop firebase from overloading with requests
-            promises.push(
-              new Promise(function(resolve, reject) {
-                setTimeout(() => {
-                  db.collection("Users")
-                    .doc(self.loaded_employers[employer]["uid"])
-                    .get()
-                    .then(doc => {
-                      console.log("got it");
-                      var user_data = doc.data();
-                      // console.log(user_data)
-                      if (user_data) {
-                        self.loaded_employers[employer]["first_name"] =
-                          user_data.first_name;
-                        self.loaded_employers[employer]["last_name"] =
-                          user_data.last_name;
-                      }
-                      return resolve();
-                    });
-                }, 200);
-              })
-            );
+            employer_data["uid"] = doc.id;
+            self.industry.push(employer_data.selected_industry_keywords);
+            self.solutions.push(employer_data.selected_service_keywords);
+            self.solutions.push(employer_data.selected_product_keywords);
+            self.location.push(employer_data.address.city);
+            self.interests.push(employer_data.selected_challenge_keywords);
+            self.interests.push(employer_data.selected_bottom_line_keywords);
+            self.loaded_employers.push(employer_data);
           }
-          Promise.all(promises).then(val => {
-            db.collection("teachers")
-              .doc(user.uid)
-              .get()
-              .then(doc => {
-                //
-                if (
-                  doc.data() &&
-                  doc.data()["match_making"] &&
-                  doc.data()["match_making"]["liked_cards"]
-                )
-                  self.liked_cards = doc.data()["match_making"]["liked_cards"];
-                else self.liked_cards = [];
-                // moved here
-                if (doc.data())
-                  self.invited = doc.data().invited
-                self.render = true;
-                //console.log("rendered");
-              });
-          });
         });
-    },
+        // console.log("hi");
+        self.solutions = _.flattenDeep(self.solutions);
+        var filters = [self.industry, self.location, self.solutions];
+        self.industry = _.flattenDeep(self.industry);
+        self.industry = _.uniq(self.industry).sort();
+        self.industry = self.industry.filter(field => field);
+        self.location = _.flattenDeep(self.location);
+        self.location = _.uniq(self.location).sort();
+        self.location = self.location.filter(field => field);
+        self.solutions = _.flattenDeep(self.solutions);
+        self.solutions = _.uniq(self.solutions).sort();
+        self.solutions = self.solutions.filter(field => field);
+        // console.log("here");
+        var promises = [];
+        for (
+          let employer = 0;
+          employer < self.loaded_employers.length;
+          employer++
+        ) {
+          // console.log("waiting");
+
+          // timeout to stop firebase from overloading with requests
+          promises.push(
+            new Promise(function(resolve, reject) {
+              setTimeout(() => {
+                db.collection("Users")
+                  .doc(self.loaded_employers[employer]["uid"])
+                  .get()
+                  .then(doc => {
+                    console.log("got it");
+                    var user_data = doc.data();
+                    // console.log(user_data)
+                    if (user_data) {
+                      self.loaded_employers[employer]["first_name"] =
+                        user_data.first_name;
+                      self.loaded_employers[employer]["last_name"] =
+                        user_data.last_name;
+                    }
+                    return resolve();
+                  });
+              }, 200);
+            })
+          );
+        }
+        Promise.all(promises).then(val => {
+          db.collection("teachers")
+            .doc(user.uid)
+            .get()
+            .then(doc => {
+              //
+              if (
+                doc.data() &&
+                doc.data()["match_making"] &&
+                doc.data()["match_making"]["liked_cards"]
+              )
+                self.liked_cards = doc.data()["match_making"]["liked_cards"];
+              else self.liked_cards = [];
+              // moved here
+              if (doc.data()) self.invited = doc.data().invited;
+              self.render = true;
+              //console.log("rendered");
+            });
+        });
+      });
+    }
   },
-  mounted(){
+  mounted() {
     var self = this;
     this.$on("markerClicked", function(uid, position) {
       self.mapcenter = position;
       self.scrollToThatCard(uid);
-      setTimeout(() => {self.scrollToThatCard(uid);}, 500);
+      setTimeout(() => {
+        self.scrollToThatCard(uid);
+      }, 500);
     });
   },
   created() {
@@ -483,38 +510,42 @@ export default {
       if (user) {
         var uid = "ZGStpiVL7lVNZWNvOiLVWR4IHXO2" || user.uid; // since the test account is not working correctly we use a temp uid,
         // for production environment, just remove the uid to null or set uid = user.uid
-        db.collection("teachers").doc(uid).get().then( doc => {
-          if (doc.data()){
-            uid = doc.data().classes[0].uid;
-            try {
-              self.getMuddersResult(uid).then(result => {
-                var ret_arr = result.data.result || [];
-                // if the status is not 200 then there's something wrong, since we got no result from the mudder,
-                // we just go an fetch the whole list
-                if (result.status != 200 || ret_arr.length == 0)
-                  self.retrievedTheWholeList(user);
-                // Eric's original code
-                // if we do have the result from mudder, we do retrievedCardsWithMudderUIDS
-                else {
-                  self.retrievedCardsWithMudderUIDS(user, ret_arr); // this is just temporarily purpose
-                }
-              });
+        db.collection("teachers")
+          .doc(uid)
+          .get()
+          .then(doc => {
+            if (doc.data()) {
+              uid = doc.data().classes[0].uid;
+              try {
+                self.getMuddersResult(uid).then(result => {
+                  var ret_arr = result.data.result || [];
+                  // if the status is not 200 then there's something wrong, since we got no result from the mudder,
+                  // we just go an fetch the whole list
+                  if (result.status != 200 || ret_arr.length == 0)
+                    self.retrievedTheWholeList(user);
+                  // Eric's original code
+                  // if we do have the result from mudder, we do retrievedCardsWithMudderUIDS
+                  else {
+                    self.retrievedCardsWithMudderUIDS(user, ret_arr); // this is just temporarily purpose
+                  }
+                });
+              } catch (err) {
+                db.collection("rankings")
+                  .doc(uid)
+                  .get()
+                  .then(doc => {
+                    var ret_arr = [];
+                    if (doc.data() && doc.data().rankings) {
+                      ret_arr = doc.data().rankings;
+                    }
+                    if (ret_arr.length)
+                      self.retrievedCardsWithMudderUIDS(user, ret_arr);
+                    else self.retrievedTheWholeList(user);
+                  });
+              }
             }
-            catch (err){
-              db.collection("rankings").doc(uid).get().then(doc => {
-                var ret_arr = [];
-                if (doc.data() && doc.data().rankings){
-                  ret_arr = doc.data().rankings;
-                }
-                if (ret_arr.length)
-                  self.retrievedCardsWithMudderUIDS(user, ret_arr);
-                else 
-                  self.retrievedTheWholeList(user);
-              })
-            }
-          }
-        });
-        
+          });
+
         self.retrieveLikedCard(user.uid);
       }
     });
