@@ -208,27 +208,30 @@ export default {
       do {
         i++;
         big_arr.push(this.page_uids(i));
-      } while (
-        this.page_uids(i)[0] != this.page_uids(i + 1)[0]
-      );
+      } while (this.page_uids(i)[0] != this.page_uids(i + 1)[0]);
       return big_arr;
     },
     render_class() {
-      var display_list =[]
-      var to_move =[]
-      if(this.results=='invited'){
-        to_move = _.filter(this.loaded_classrooms,(obj => {
-          return _.find(this.invited, (invitee)=> invitee==obj.uid)
-        }))
+      var display_list = [];
+      var to_move = [];
+      if (this.results == "recommended") {
+        display_list = this.filter_list;
+      } else if (this.results == "invited") {
+        to_move = _.filter(this.loaded_classrooms, obj => {
+          return _.find(this.invited, invitee => invitee == obj.uid);
+        });
+        display_list.push(to_move, this.loaded_classrooms);
+        display_list = _.flattenDeep(display_list);
+        display_list = _.uniq(display_list);
+      } else if (this.results == "saved") {
+        to_move = _.filter(this.loaded_classrooms, obj => {
+          return _.find(this.liked_cards, likee => likee == obj.uid);
+        });
+        display_list.push(to_move, this.loaded_classrooms);
+        display_list = _.flattenDeep(display_list);
+        display_list = _.uniq(display_list);
       }
-      else if(this.results=='saved') {
-        to_move = _.filter(this.loaded_classrooms,(obj => {
-          return _.find(this.liked_cards,(likee) => likee==obj.uid)
-        }))
-      }
-      display_list.push(to_move,this.loaded_classrooms)
-      display_list = _.flattenDeep(display_list)
-      display_list = _.uniq(display_list)
+
       var to_display = 10; // number of classes to display per page
       if (
         this.page * to_display + to_display - display_list.length >
@@ -466,7 +469,7 @@ export default {
               // console.log(doc.data());
               self.courses.push(class_data.coursename);
               self.loaded_classrooms.push(class_data);
-              self.recmd=_.cloneDeep(self.loaded_classrooms)
+              self.recmd = _.cloneDeep(self.loaded_classrooms);
             });
             var promises = [];
             // async getNames(){
