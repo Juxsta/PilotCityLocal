@@ -42,7 +42,7 @@
             <mm_employer_card
               v-for="(employer,index) in render_class"
               v-if="employer.first_name"
-              :id="(index==0)?'topresult':index"
+              :id="employer.uid"
               :key="index"
               :employer="employer"
               :invited="invited"
@@ -251,6 +251,19 @@ export default {
     GoogleMap
   },
   methods: {
+    scrollToThatCard(uid){
+      var self = this;
+      for (let i = 0; i < self.listByPage.length; i++)
+      if (_.includes(self.listByPage[i], uid))
+          this.page = i;
+      var el = document.getElementById(uid);
+      if (el) {
+        el.scrollIntoView({ block: "center" });
+        this.active_card = uid;
+        return true;
+      }
+      return false;
+    },
     page_uids(page) {
             var to_display = 10; // number of classes to display per page
       if (
@@ -448,24 +461,16 @@ export default {
             });
           });
   },
+  mounted(){
+    var self = this;
+    this.$on("markerClicked", function(uid, position) {
+      self.mapcenter = position;
+      self.scrollToThatCard(uid);
+      setTimeout(() => {self.scrollToThatCard(uid);}, 500);
+    });
+  },
   created() {
     var self = this;
-    this.$on("markerClicked", function(key, position) {
- 
-      self.mapcenter = position;
-      var index = _.findIndex(this.filter_list, function(cl) {
-        return cl.poi == key;
-      });
-      // console.log(index)
-      this.page = parseInt(index / 10);
-      var i = index % 10;
-      //   console.log(i);
-      var el = document.getElementById(i);
-      if (el) {
-        el.scrollIntoView({ block: "center" });
-        this.active_card = i;
-      }
-    });
     var classIds = [];
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
