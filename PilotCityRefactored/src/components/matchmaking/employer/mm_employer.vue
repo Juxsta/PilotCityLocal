@@ -502,7 +502,7 @@ export default {
           else
           {
             self.retrivedCardsWithMudderUIDS(ret_arr);
-            self.retrivedTheWholeList(user); 
+            self.retrivedTheWholeList(user); // this is just temporarily purpose
           }
         });
         const db = firebase.firestore();
