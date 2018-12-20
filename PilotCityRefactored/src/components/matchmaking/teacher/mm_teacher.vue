@@ -296,134 +296,130 @@ export default {
       else this.active_card = index;
       if (employer.coordinate) this.mapcenter = employer.coordinate;
       else console.log("This employer does not have coordinate!");
-    }
-  },
-  getEmployers(employers) {
-    if (!employers) {
-      return db.collection("classroom").get();
-    } else {
-      console.log(employers);
-      return new Promise(function(resolve, reject) {
-        resolve(employers);
-      });
-    }
-  },
-  retrievedTheWholeList(user, employers) {
-    var self = this;
-    self.getEmployers(employers)
-      .get()
-      .then(employer_querySnapshot => {
-        employer_querySnapshot.forEach(doc => {
-          var employer_data = doc.data === "function" ? doc.data() : doc;
-          if (
-            employer_data.selected_challenge_keywords &&
-            employer_data.selected_challenge_keywords.length
+    },
+    getEmployers(employers) {
+      if (!employers) {
+        return db.collection("classroom").get();
+      } else {
+        console.log(employers);
+        return new Promise(function(resolve, reject) {
+          resolve(employers);
+        });
+      }
+    },
+    retrievedTheWholeList(user, employers) {
+      var self = this;
+      self.getEmployers(employers)
+        .get()
+        .then(employer_querySnapshot => {
+          employer_querySnapshot.forEach(doc => {
+            var employer_data = doc.data === "function" ? doc.data() : doc;
+            if (
+              employer_data.selected_challenge_keywords &&
+              employer_data.selected_challenge_keywords.length
+            ) {
+              employer_data["uid"] = doc.id;
+              if (employer_data["coordinate"] && employer_data["coordinate"].lat)
+                employer_data["poi"] =
+                  String(employer_data["coordinate"]["lat"]) +
+                  String(employer_data["coordinate"]["lng"]);
+              self.industry.push(employer_data.selected_industry_keywords);
+              self.solutions.push(employer_data.selected_service_keywords);
+              self.solutions.push(employer_data.selected_product_keywords);
+              self.location.push(employer_data.address.city);
+              self.interests.push(employer_data.selected_challenge_keywords);
+              self.interests.push(employer_data.selected_bottom_line_keywords);
+              self.loaded_employers.push(employer_data);
+            }
+          });
+          // console.log("hi");
+          self.solutions = _.flattenDeep(self.solutions);
+          var filters = [self.industry, self.location, self.solutions];
+          self.industry = _.flattenDeep(self.industry);
+          self.industry = _.uniq(self.industry).sort();
+          self.industry = self.industry.filter(field => field);
+          self.location = _.flattenDeep(self.location);
+          self.location = _.uniq(self.location).sort();
+          self.location = self.location.filter(field => field);
+          self.solutions = _.flattenDeep(self.solutions);
+          self.solutions = _.uniq(self.solutions).sort();
+          self.solutions = self.solutions.filter(field => field);
+          // console.log("here");
+          var promises = [];
+          for (
+            let employer = 0;
+            employer < self.loaded_employers.length;
+            employer++
           ) {
-            employer_data["uid"] = doc.id;
-            if (employer_data["coordinate"] && employer_data["coordinate"].lat)
-              employer_data["poi"] =
-                String(employer_data["coordinate"]["lat"]) +
-                String(employer_data["coordinate"]["lng"]);
-            self.industry.push(employer_data.selected_industry_keywords);
-            self.solutions.push(employer_data.selected_service_keywords);
-            self.solutions.push(employer_data.selected_product_keywords);
-            self.location.push(employer_data.address.city);
-            self.interests.push(employer_data.selected_challenge_keywords);
-            self.interests.push(employer_data.selected_bottom_line_keywords);
-            self.loaded_employers.push(employer_data);
-          }
-        });
-        // console.log("hi");
-        self.solutions = _.flattenDeep(self.solutions);
-        var filters = [self.industry, self.location, self.solutions];
-        self.industry = _.flattenDeep(self.industry);
-        self.industry = _.uniq(self.industry).sort();
-        self.industry = self.industry.filter(field => field);
-        self.location = _.flattenDeep(self.location);
-        self.location = _.uniq(self.location).sort();
-        self.location = self.location.filter(field => field);
-        self.solutions = _.flattenDeep(self.solutions);
-        self.solutions = _.uniq(self.solutions).sort();
-        self.solutions = self.solutions.filter(field => field);
-        // console.log("here");
-        var promises = [];
-        for (
-          let employer = 0;
-          employer < self.loaded_employers.length;
-          employer++
-        ) {
-          // console.log("waiting");
+            // console.log("waiting");
 
-          // timeout to stop firebase from overloading with requests
-          promises.push(
-            new Promise(function(resolve, reject) {
-              setTimeout(() => {
-                db.collection("Users")
-                  .doc(self.loaded_employers[employer]["uid"])
-                  .get()
-                  .then(doc => {
-                    console.log("got it");
-                    var user_data = doc.data();
-                    // console.log(user_data)
-                    if (user_data) {
-                      self.loaded_employers[employer]["first_name"] =
-                        user_data.first_name;
-                      self.loaded_employers[employer]["last_name"] =
-                        user_data.last_name;
-                    }
-                    return resolve();
+            // timeout to stop firebase from overloading with requests
+            promises.push(
+              new Promise(function(resolve, reject) {
+                setTimeout(() => {
+                  db.collection("Users")
+                    .doc(self.loaded_employers[employer]["uid"])
+                    .get()
+                    .then(doc => {
+                      console.log("got it");
+                      var user_data = doc.data();
+                      // console.log(user_data)
+                      if (user_data) {
+                        self.loaded_employers[employer]["first_name"] =
+                          user_data.first_name;
+                        self.loaded_employers[employer]["last_name"] =
+                          user_data.last_name;
+                      }
+                      return resolve();
+                    });
+                }, 200);
+              })
+            );
+          }
+          Promise.all(promises).then(val => {
+            db.collection("teachers")
+              .doc(user.uid)
+              .get()
+              .then(doc => {
+                //
+                if (
+                  doc.data() &&
+                  doc.data()["match_making"] &&
+                  doc.data()["match_making"]["liked_cards"]
+                )
+                  self.liked_cards = doc.data()["match_making"]["liked_cards"];
+                else self.liked_cards = [];
+                // moved here
+                if (doc.data())
+                  self.invited = doc.data().invited
+                    ? doc.data().invited
+                    : self.invited;
+                var to_move = _.filter(self.loaded_employers, employer => {
+                  return _.some(self.invited, uid => {
+                    return employer.uid == uid;
                   });
-              }, 200);
-            })
-          );
-        }
-        Promise.all(promises).then(val => {
-          db.collection("teachers")
-            .doc(user.uid)
-            .get()
-            .then(doc => {
-              //
-              if (
-                doc.data() &&
-                doc.data()["match_making"] &&
-                doc.data()["match_making"]["liked_cards"]
-              )
-                self.liked_cards = doc.data()["match_making"]["liked_cards"];
-              else self.liked_cards = [];
-              // moved here
-              if (doc.data())
-                self.invited = doc.data().invited
-                  ? doc.data().invited
-                  : self.invited;
-              var to_move = _.filter(self.loaded_employers, employer => {
-                return _.some(self.invited, uid => {
-                  return employer.uid == uid;
                 });
+                for (let employer of to_move) {
+                  self.loaded_employers.splice(
+                    self.loaded_employers.indexOf(employer),
+                    1
+                  );
+                }
+                var new_arr = [];
+                new_arr.push(to_move, self.loaded_employers);
+                new_arr = _.flattenDeep(new_arr);
+                //console.log(new_arr);
+                self.loaded_employers = new_arr;
+                self.render = true;
+                console.log("rendered");
               });
-              for (let employer of to_move) {
-                self.loaded_employers.splice(
-                  self.loaded_employers.indexOf(employer),
-                  1
-                );
-              }
-              var new_arr = [];
-              new_arr.push(to_move, self.loaded_employers);
-              new_arr = _.flattenDeep(new_arr);
-              //console.log(new_arr);
-              self.loaded_employers = new_arr;
-              self.render = true;
-              console.log("rendered");
-            });
+          });
         });
-      });
+    },
   },
   mounted(){
     var self = this;
-<<<<<<< HEAD
-    this.$on("markerClicked", function(uid, position) {
-=======
     this.$on("markerClicked", function(key, position) {
->>>>>>> e8e602fb52f397ce378522d91782fe3b97208832
       self.mapcenter = position;
       self.scrollToThatCard(uid);
       setTimeout(() => {self.scrollToThatCard(uid);}, 500);
