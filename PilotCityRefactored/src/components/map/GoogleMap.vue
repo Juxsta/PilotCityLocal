@@ -52,9 +52,9 @@ export default {
         this.markers_ref[i].marker.setMap(null)
       this.markers = [];
       for (var i = 0; i < this.map_data.length; i++)
-        this.markers.push(this.map_data[i].coordinate);
+        this.markers.push({ coordinate: this.map_data[i].coordinate, uid:  this.map_data[i].uid });
       this.pinAllClassroomsOnMap(this.map);
-      this.map.setCenter(this.markers[0]);
+      this.map.setCenter(this.markers[0].coordinate);
     }
   },
   mounted: function () {
@@ -62,7 +62,7 @@ export default {
 
     this.markers = [];
     for (var i = 0; i < this.map_data.length; i++)
-      this.markers.push(this.map_data[i].coordinate);
+      this.markers.push({coordinate : this.map_data[i].coordinate, uid: this.map_data[i].uid});
     const element = document.getElementById(this.mapname)
     const options = {
       zoom: 12,
@@ -96,25 +96,26 @@ export default {
         var key;
         this.markers_ref = [];
         var self = this;
-        for (var i = 0; i < this.markers.length; i++)
+        for (let i = 0; i < this.markers.length; i++)
         {
-          key = String(this.markers[i].lat) + String(this.markers[i].lng);
+          key = String(this.markers[i].coordinate.lat) + String(this.markers[i].coordinate.lng);
           if(!ht[key])
           {
             var obj = {
               index: i,
               key: key,
               marker: 
-              new google.maps.Marker({  position: this.markers[i],
+              new google.maps.Marker({  position: this.markers[i].coordinate,
                                         map: map,
                                         label: {text: (i + 1) + "", color: "white", fontWeight: 'bold'},
                                         icon: (self.role == 'employer') ? self.marker_icons.teacher : self.marker_icons.employer
                                       })
             };
-            obj.marker.key = key; 
-            obj.marker.poi = this.markers[i];
+            obj.marker._uid = this.markers[i].uid;
+            obj.marker._poi = this.markers[i].coordinate;
+
             obj.marker.addListener('click', function() {
-              self.$parent.$emit('markerClicked', this.key, this.poi);
+              self.$parent.$emit('markerClicked', this._uid, this._poi);
             });
             this.markers_ref.push(obj);
             ht[key] = true;
