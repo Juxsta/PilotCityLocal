@@ -4,7 +4,7 @@ Vue.use(Vuex);
 
 export const store = new Vuex.Store({
 	state: {
-		
+		user:null
 	},
 	getters: {
 		
@@ -13,7 +13,8 @@ export const store = new Vuex.Store({
 		
 	},
 	actions: {
-		
-
+		getUser: context => {
+			context.commit()
+		}
 	}
 });
