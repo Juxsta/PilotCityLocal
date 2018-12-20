@@ -327,27 +327,27 @@ export default {
         .doc(uid)
         .get()
         .then(doc => {
-            if (
-              doc.data() &&
-              doc.data()["match_making"] &&
-              doc.data()["match_making"]["liked_cards"]
-            )
-              self.liked_cards = doc.data()["match_making"]["liked_cards"];
-            else self.liked_cards = [];
-            // console.log(self.liked_cards)
+          if (
+            doc.data() &&
+            doc.data()["match_making"] &&
+            doc.data()["match_making"]["liked_cards"]
+          )
+            self.liked_cards = doc.data()["match_making"]["liked_cards"];
+          else self.liked_cards = [];
+          // console.log(self.liked_cards)
         });
     },
-    getClassrooms(classes){
-      if(!classes) {
-        return db.collection("classroom").get()
-      }
-      else
-        return new Promise(function(resolve,reject) {
-          resolve(classes)
-        })
+    getClassrooms(classes) {
+      if (!classes) {
+        return db.collection("classroom").get();
+      } else
+        return new Promise(function(resolve, reject) {
+          resolve(classes);
+        });
     },
-    retrivedTheWholeList(user,classes) {
+    retrivedTheWholeList(user, classes) {
       var self = this;
+      console.log(classes)
       db.collection("teachers")
         .get()
         .then(teacher_querySnapshot => {
@@ -357,95 +357,95 @@ export default {
             self.skills.push(teacher_data.selected_skills_keywords);
             self.loaded_teachers.push(teacher_data);
           });
-          // if(!classes)
-          self.getClassrooms(classes)
-            .then(classroom_querySnapshot => {
-              
-              classroom_querySnapshot.forEach(doc => {
-                var class_data = doc.data();
-                class_data["school_address"] = self.findbyId(
-                  self.loaded_teachers,
-                  class_data.teacher_uid
-                ).school_address;
-                class_data["school_district"] = self.findbyId(
-                  self.loaded_teachers,
-                  class_data.teacher_uid
-                ).school_district;
-                class_data["school_name"] = self.findbyId(
-                  self.loaded_teachers,
-                  class_data.teacher_uid
-                ).school_name;
-                class_data["selected_industry_keywords"] = self.findbyId(
-                  self.loaded_teachers,
-                  class_data.teacher_uid
-                ).selected_industry_keywords;
-                class_data["selected_skills_keywords"] = self.findbyId(
-                  self.loaded_teachers,
-                  class_data.teacher_uid
-                ).selected_skills_keywords;
-                class_data["coordinate"] = self.findbyId(
-                  self.loaded_teachers,
-                  class_data.teacher_uid
-                ).coordinate;
-                if (class_data["coordinate"] && class_data["coordinate"].lat)
-                  class_data["poi"] =
-                    String(class_data["coordinate"]["lat"]) +
-                    String(class_data["coordinate"]["lng"]);
+          self.getClassrooms(classes).then(classroom_querySnapshot => {
+            classroom_querySnapshot.forEach(doc => {
+              var class_data = doc.data();
+              class_data["school_address"] = self.findbyId(
+                self.loaded_teachers,
+                class_data.teacher_uid
+              ).school_address;
+              class_data["school_district"] = self.findbyId(
+                self.loaded_teachers,
+                class_data.teacher_uid
+              ).school_district;
+              class_data["school_name"] = self.findbyId(
+                self.loaded_teachers,
+                class_data.teacher_uid
+              ).school_name;
+              class_data["selected_industry_keywords"] = self.findbyId(
+                self.loaded_teachers,
+                class_data.teacher_uid
+              ).selected_industry_keywords;
+              class_data["selected_skills_keywords"] = self.findbyId(
+                self.loaded_teachers,
+                class_data.teacher_uid
+              ).selected_skills_keywords;
+              class_data["coordinate"] = self.findbyId(
+                self.loaded_teachers,
+                class_data.teacher_uid
+              ).coordinate;
+              if (class_data["coordinate"] && class_data["coordinate"].lat)
+                class_data["poi"] =
+                  String(class_data["coordinate"]["lat"]) +
+                  String(class_data["coordinate"]["lng"]);
 
-                // console.log(doc.data());
-                self.courses.push(class_data.coursename);
-                self.loaded_classrooms.push(class_data);
-              });
-              var promises = [];
-              // async getNames(){
-              for (
-                let teacher = 0;
-                teacher < self.loaded_teachers.length;
-                teacher++
-              ) {
-                promises.push(
-                  new Promise(function(resolve, reject) {
-                    setTimeout(() => {
-                      db.collection("Users")
-                        .doc(self.loaded_teachers[teacher]["uid"])
-                        .get()
-                        .then(doc => {
-                          var user_data = doc.data();
-                          if (user_data) {
-                            self.loaded_teachers[teacher]["first_name"] =
-                              user_data.first_name;
-                            self.loaded_teachers[teacher]["last_name"] =
-                              user_data.last_name;
-                          }
-                          else console.log("broken id: ",self.loaded_teachers[teacher]["uid"] )
-
-                          return resolve();
-                        });
-                      // console.log("timeout")
-                    }, 300);
-                  })
-                );
-              }
-              // }
-
-              Promise.all(promises).then(val => {
-                db.collection("employers")
-                  .doc(user.uid)
-                  .get()
-                  .then(doc => {
-                    // console.log(doc.data())
-                    if (doc.data().invited) self.invited = doc.data().invited;
-                  });
-                self.render = true;
-                self.skills = _.flattenDeep(self.skills);
-                self.skills = _.uniq(self.skills);
-                self.skills = self.skills.filter(skill => skill);
-                self.skills = self.skills.sort();
-                self.courses = _.uniq(self.courses);
-                self.courses = self.courses.sort();
-                // console.log("rendered")
-              });
+              // console.log(doc.data());
+              self.courses.push(class_data.coursename);
+              self.loaded_classrooms.push(class_data);
             });
+            var promises = [];
+            // async getNames(){
+            for (
+              let teacher = 0;
+              teacher < self.loaded_teachers.length;
+              teacher++
+            ) {
+              promises.push(
+                new Promise(function(resolve, reject) {
+                  setTimeout(() => {
+                    db.collection("Users")
+                      .doc(self.loaded_teachers[teacher]["uid"])
+                      .get()
+                      .then(doc => {
+                        var user_data = doc.data();
+                        if (user_data) {
+                          self.loaded_teachers[teacher]["first_name"] =
+                            user_data.first_name;
+                          self.loaded_teachers[teacher]["last_name"] =
+                            user_data.last_name;
+                        } else
+                          console.log(
+                            "broken id: ",
+                            self.loaded_teachers[teacher]["uid"]
+                          );
+
+                        return resolve();
+                      });
+                    // console.log("timeout")
+                  }, 300);
+                })
+              );
+            }
+            // }
+
+            Promise.all(promises).then(val => {
+              db.collection("employers")
+                .doc(user.uid)
+                .get()
+                .then(doc => {
+                  // console.log(doc.data())
+                  if (doc.data().invited) self.invited = doc.data().invited;
+                });
+              self.render = true;
+              self.skills = _.flattenDeep(self.skills);
+              self.skills = _.uniq(self.skills);
+              self.skills = self.skills.filter(skill => skill);
+              self.skills = self.skills.sort();
+              self.courses = _.uniq(self.courses);
+              self.courses = self.courses.sort();
+              // console.log("rendered")
+            });
+          });
         });
     },
     retrievedCardsWithMudderUIDS(uids) {
@@ -457,8 +457,9 @@ export default {
           ss.forEach(doc => {
             if (_.includes(uids, doc.id)) filter_arr.push(doc.data());
           });
-          console.log(uids);
-          return (filter_arr);
+          // console.log(uids);
+          console.log(filter_arr)
+          return filter_arr;
         });
     }
   },
@@ -497,7 +498,10 @@ export default {
           // Eric's original code
           // if we do have the result from mudder, we do retrievedCardsWithMudderUIDS
           else {
-            self.retrivedTheWholeList(user, self.retrievedCardsWithMudderUIDS(ret_arr)); // this is just temporarily purpose
+            self.retrivedTheWholeList(
+              user,
+              self.retrievedCardsWithMudderUIDS(ret_arr)
+            ); // this is just temporarily purpose
           }
         });
         self.retrieveLikedCard(user.uid);
