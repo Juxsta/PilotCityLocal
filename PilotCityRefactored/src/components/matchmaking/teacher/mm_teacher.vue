@@ -145,54 +145,33 @@ export default {
       filtered_interests: [],
       filtered_location: [],
       loaded_employers: [],
-      results: "recommended",
+      results:'recommended',
       recmd: [],
       invited: [],
       show: null
     };
   },
   computed: {
+    render_class() {
+      var to_display = 10; // number of classes to display per page
+      if (
+        this.page * to_display + to_display - this.filter_list.length >
+        to_display
+      )
+        this.page =
+          parseInt((this.filter_list.length - to_display) / to_display) + 1;
+      var min = this.page > 0 ? (this.page - 1) * to_display + to_display : 0;
+      var max = this.page * to_display + to_display;
+      return this.filter_list.slice(min, max);
+    },
     listByPage() {
-      var class_list = [];
-      if (this.results == "recommended") class_list = this.filter_list;
-      else if (this.results == "invited") {
-        for (let uid of this.invited) {
-          class_list.push(this.findbyId(this.loaded_employers, uid));
-        }
-      } else if (this.results == "saved") {
-        for (let uid of this.liked_cards)
-          class_list.push(this.findbyId(this.loaded_employers, uid));
-      }
       var big_arr = [];
       var i = -1;
       do {
         i++;
         big_arr.push(this.page_uids(i));
-      } while (this.page_uids(i) != this.page_uids(i + 1));
+      } while (this.page_uids(i)[0] != this.page_uids(i + 1)[0]);
       return big_arr;
-    },
-    render_class() {
-      var class_list = [];
-      if (this.results == "recommended") class_list = this.filter_list;
-      else if (this.results == "invited") {
-        for (let uid of this.invited) {
-          class_list.push(this.findbyId(this.loaded_classrooms, uid));
-        }
-      } else if (this.results == "saved") {
-        for (let uid of this.liked_cards)
-          class_list.push(this.findbyId(this.loaded_classrooms, uid));
-      }
-      
-      var to_display = 10; // number of classes to display per page
-      if (
-        this.page * to_display + to_display - this.class_list.length >
-        to_display
-      )
-        this.page =
-          parseInt((this.class_list.length - to_display) / to_display) + 1;
-      var min = this.page > 0 ? (this.page - 1) * to_display + to_display : 0;
-      var max = this.page * to_display + to_display;
-      return this.class_list.slice(min, max);
     },
     filter_list() {
       if (
@@ -294,13 +273,14 @@ export default {
     GoogleMap
   },
   methods: {
-    page_uids(page, arr) {
+    page_uids(page) {
       var to_display = 10; // number of classes to display per page
-      if (page * to_display + to_display - arr.length > to_display)
-        page = parseInt((arr.length - to_display) / to_display) + 1;
+      if (page * to_display + to_display - this.filter_list.length > to_display)
+        page =
+          parseInt((this.filter_list.length - to_display) / to_display) + 1;
       var min = page > 0 ? (page - 1) * to_display + to_display : 0;
       var max = page * to_display + to_display;
-      var temp_list = arr.slice(min, max);
+      var temp_list = this.filter_list.slice(min, max);
       return temp_list.map(obj => {
         return obj.uid;
       });
