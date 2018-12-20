@@ -493,19 +493,21 @@ export default {
     var self = this;
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
-        var uid = "GZ9T2h4u6DhX4DWcbk5z6oFtkmC2" || user.uid;
-        console.log("start getting result[uid: " + uid + "]");
+        var uid = "GZ9T2h4u6DhX4DWcbk5z6oFtkmC2" || user.uid; // since the test account is not working correctly we use a temp uid, 
+        // for production environment, just remove the uid to null or set uid = user.uid
+        console.log(uid);
         self.getMuddersResult(uid).then(result => {
           var ret_arr = result.data.result || [];
-          if (result.status != 200 || ret_arr.length == 0)
+          // if the status is not 200 then there's something wrong, since we got no result from the mudder, 
+          // we just go an fetch the whole list
+          if (result.status != 200 || ret_arr.length == 0) 
             self.retrivedTheWholeList(user); // Eric's original code
-          else
+          else // if we do have the result from mudder, we do retrivedCardsWithMudderUIDS
           {
             self.retrivedCardsWithMudderUIDS(ret_arr);
             self.retrivedTheWholeList(user); // this is just temporarily purpose
           }
         });
-        const db = firebase.firestore();
         self.retrieveLikedCard(uid);
       }
     });
