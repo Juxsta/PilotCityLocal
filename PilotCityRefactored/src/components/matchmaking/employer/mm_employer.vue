@@ -350,7 +350,7 @@ export default {
         })
       }
     },
-    retrivedTheWholeList(user, classes) {
+    retrievedTheWholeList(user, classes) {
       var self = this;
       console.log(classes)
       db.collection("teachers")
@@ -471,7 +471,7 @@ export default {
             if (temp)
               filter_arr.push(temp);
           }
-          self.retrivedTheWholeList(user, filter_arr);
+          self.retrievedTheWholeList(user, filter_arr);
         });
     }
   },
@@ -507,7 +507,7 @@ export default {
           console.log("==")
           console.log(ret_arr)
           if (result.status != 200 || ret_arr.length == 0)
-            self.retrivedTheWholeList(user);
+            self.retrievedTheWholeList(user);
           // Eric's original code
           // if we do have the result from mudder, we do retrievedCardsWithMudderUIDS
           else {

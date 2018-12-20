@@ -272,52 +272,34 @@ export default {
       else console.log("This employer does not have coordinate!");
     }
   },
-
-  created() {
-    var self = this;
-    this.$on("markerClicked", function(key, position) {
- 
-      self.mapcenter = position;
-      var index = _.findIndex(this.filter_list, function(cl) {
-        return cl.poi == key;
-      });
-      // console.log(index)
-      this.page = parseInt(index / 10);
-      var i = index % 10;
-      //   console.log(i);
-      var el = document.getElementById(i);
-      if (el) {
-        el.scrollIntoView({ block: "center" });
-        this.active_card = i;
+  getEmployers(employers){
+      if(!employers) {
+        return db.collection("classroom").get()
       }
-    });
-    var classIds = [];
-    firebase.auth().onAuthStateChanged(user => {
-      if (user) {
-        console.log(user.uid)
-        const db = firebase.firestore();
-        // db.collection("teachers").doc(user.uid).get().then(doc => {
-        //   if (doc.data() && doc.data()["match_making"] &&
-        //   doc.data()["match_making"]["liked_cards"])
-        //    self.liked_cards = doc.data()["match_making"]["liked_cards"];
-        //   else
-        //     self.liked_cards = [];
-        // });
-        // console.log(user.uid)
-        db.collection("employers")
+      else
+      {
+        console.log(employers)
+        return new Promise(function(resolve,reject) {
+          resolve(employers)
+        })
+      }
+    },
+  retrievedTheWholeList(user,employers) {
+            db.collection("employers")
           .get()
           .then(employer_querySnapshot => {
             employer_querySnapshot.forEach(doc => {
+              var employer_data = (doc.data === 'function')?doc.data():doc
               if (
-                doc.data().selected_challenge_keywords &&
-                doc.data().selected_challenge_keywords.length
+                employer_data.selected_challenge_keywords &&
+                employer_data.selected_challenge_keywords.length
               ) {
-                var employer_data = doc.data();
+                
                 employer_data["uid"] = doc.id;
-                if (doc.data()["coordinate"] && doc.data()["coordinate"].lat)
+                if (employer_data["coordinate"] && employer_data["coordinate"].lat)
                   employer_data["poi"] =
-                  String(doc.data()["coordinate"]["lat"]) +
-                  String(doc.data()["coordinate"]["lng"]);
+                  String(employer_data["coordinate"]["lat"]) +
+                  String(employer_data["coordinate"]["lng"]);
                 self.industry.push(employer_data.selected_industry_keywords);
                 self.solutions.push(employer_data.selected_service_keywords);
                 self.solutions.push(employer_data.selected_product_keywords);
@@ -361,7 +343,7 @@ export default {
                         console.log("got it");
                         var user_data = doc.data();
                         // console.log(user_data)
-                        if ( user_data)
+                        if (user_data)
                         {
                           self.loaded_employers[employer]["first_name"] =
                             user_data.first_name;
@@ -415,6 +397,39 @@ export default {
                 });
             });
           });
+  },
+  created() {
+    var self = this;
+    this.$on("markerClicked", function(key, position) {
+ 
+      self.mapcenter = position;
+      var index = _.findIndex(this.filter_list, function(cl) {
+        return cl.poi == key;
+      });
+      // console.log(index)
+      this.page = parseInt(index / 10);
+      var i = index % 10;
+      //   console.log(i);
+      var el = document.getElementById(i);
+      if (el) {
+        el.scrollIntoView({ block: "center" });
+        this.active_card = i;
+      }
+    });
+    var classIds = [];
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        console.log(user.uid)
+        const db = firebase.firestore();
+        // db.collection("teachers").doc(user.uid).get().then(doc => {
+        //   if (doc.data() && doc.data()["match_making"] &&
+        //   doc.data()["match_making"]["liked_cards"])
+        //    self.liked_cards = doc.data()["match_making"]["liked_cards"];
+        //   else
+        //     self.liked_cards = [];
+        // });
+        // console.log(user.uid)
+
       }
     });
   }
