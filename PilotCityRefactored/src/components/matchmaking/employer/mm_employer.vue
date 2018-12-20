@@ -507,7 +507,9 @@ export default {
     var self = this;
     this.$on("markerClicked", function(uid, position) {
       self.mapcenter = position;
-      console.log(self.listByPage)
+      for (let i = 0; i < self.listByPage.length; i++)
+        if (_.includes(self.listByPage[i], uid))
+          this.page = i;
       var el = document.getElementById(uid);
       if (el) {
         el.scrollIntoView({ block: "center" });
