@@ -27,10 +27,11 @@
             </div>
         </form>
         <next_button 
-            route='w_teacher_class'
-            :conditions="conditions"
-            :collection="collection"
-            />
+        route='w_teacher_class'
+        :conditions="conditions"
+        :collection="collection"
+        :callback="convert_address_to_coordinate"
+        />
         <router-link :to="{ name: 'w_teacher_story' }" 
             class="prev_button btn btn-secondary btn-lg">
             Back
@@ -43,6 +44,7 @@ import { bus } from '@/main'
 import { Prompter } from '@/main'
 import firebase from '@/firebase/init'
 import button from '@/components/profile_builder/wizard/components/button.vue'
+import axios from 'axios'
 
 export default {
     name: "w_teacher_address",
@@ -56,8 +58,22 @@ export default {
                     zip: null,
                     },
                 room_number: null,
+                coordinate: null
             },
             collection: ['teachers']
+        }
+    },
+    methods: {
+        convert_address_to_coordinate(){
+            var self = this;
+            var link = "https://maps.googleapis.com/maps/api/geocode/json?address="
+            var address = this.teacher_data.school_address.street
+            + this.teacher_data.school_address.city
+            + this.teacher_data.school_address.state;
+            address = address.split(' ').join('+');
+            var key = "&key=AIzaSyDfuNr3RaCZkituTfoB7b7pR2u2rWuraWE"
+            
+            return (axios.get(link + address + key));
         }
     },
     components: {

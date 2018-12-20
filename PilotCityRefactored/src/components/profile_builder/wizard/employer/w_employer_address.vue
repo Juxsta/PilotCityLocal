@@ -27,6 +27,7 @@
             :conditions="conditions"
             :collection="collection"
             :pass=pass
+            :callback="convert_address_to_coordinate"
             />
         <router-link :to="{ name: 'w_employer_story' }" 
             class="prev_button btn btn-secondary btn-lg">
@@ -41,7 +42,7 @@ import { bus } from '@/main'
 import { Prompter } from '@/main'
 import button from '@/components/profile_builder/wizard/components/button'
 import firebase from '@/firebase/init'
-
+import axios from 'axios'
 export default {
     name: "w_employer_address",
     data(){
@@ -57,6 +58,19 @@ export default {
             collection: ['employers']
         }
     },
+    methods:{
+        convert_address_to_coordinate(){
+            var self = this;
+            var link = "https://maps.googleapis.com/maps/api/geocode/json?address="
+            var address = this.employer_data.address.street
+            + this.employer_data.address.city
+            + this.employer_data.address.state;
+            address = address.split(' ').join('+');
+            var key = "&key=AIzaSyDfuNr3RaCZkituTfoB7b7pR2u2rWuraWE"
+            
+            return (axios.get(link + address + key));
+        }
+    },
     components: {
         next_button:button
     },
@@ -68,8 +82,7 @@ export default {
             return _.every(this.employer_data.address,Boolean)
         }
     },
-   
-        created(){
+   created(){
         var self = this
         let data = [self.employer_data]
         firebase.auth().onAuthStateChanged((user) => {
