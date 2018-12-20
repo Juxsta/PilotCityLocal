@@ -7,11 +7,11 @@ import BootstrapVue from "bootstrap-vue"
 import { store } from './store/store'
 import "bootstrap-vue/dist/bootstrap-vue.css"
 import vueScrollto from 'vue-scrollto'
+import firebase from "@/firebase/init";
 
 Vue.use(vueScrollto)
 Vue.use(BootstrapVue)
 Vue.config.productionTip = false
-
 
 export const GEOCODEKEY = {key: "AIzaSyDfuNr3RaCZkituTfoB7b7pR2u2rWuraWE"}; 
 export const bus = new Vue();
@@ -54,5 +54,8 @@ export const Prompter = () => {
 new Vue({
   router,
   store,
-  render: h => h(App)
+  render: h => h(App),
+  created(){
+      window.db = firebase.firestore();
+  }
 }).$mount('#app')

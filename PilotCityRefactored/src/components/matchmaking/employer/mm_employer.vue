@@ -54,9 +54,9 @@ npm <template>
               :page="page"
               :active_card="active_card"
               class="row-12 card-teacher-match"
-              :flavoredlist="flavored_cards"
+              :likedlist="liked_cards"
               @teacherCardClicked="highlight_pin(findbyId(loaded_teachers,classroom.teacher_uid), index)"
-              @newFlavoredCardAction="doNewFlavoredCardAction"
+              @newLikedCardAction="doNewLikedCardAction"
             />
               <!-- :likedlist=likedlist -->
             <div class="d-flex mm__pagination--row">
@@ -108,7 +108,7 @@ export default {
     return {
       allClasses: null,
       active_card: null,
-      flavored_cards: [],
+      liked_cards: [],
       apikey: GEOCODEKEY.key,
       search_options: {
         shouldSort: true,
@@ -281,17 +281,6 @@ export default {
       return filtered_result;
     },
     map_data() {
-      // the following commented code parse addresses with space to formatted address
-      // var str = "";
-      // for (var i = 0; i < this.loaded_teachers.length;i++)
-      // {
-      //   str = this.loaded_teachers[i].school_address.street + '+' +
-      //         this.loaded_teachers[i].school_address.city   + '+' +
-      //         this.loaded_teachers[i].school_address.state  + '+' +
-      //         this.loaded_teachers[i].school_address.zip;
-      //   str = str.replace(/\s/g, '+');
-      //   arr.push(str);
-      // }
       var arr = _.filter(this.filter_list, teacher => {
         return teacher.coordinate;
       });
@@ -308,12 +297,12 @@ export default {
       var MUDDERSLINK = "http://35.197.64.87:5000/matchmaker/classroomranking?employer_id="  
       return axios.get(MUDDERSLINK + uid);
     },
-    doNewFlavoredCardAction(uid) {
-      if (_.includes(this.flavored_cards, uid))
-        this.flavored_cards = _.filter(this.flavored_cards, card_uid => {
+    doNewLikedCardAction(uid) {
+      if (_.includes(this.liked_cards, uid))
+        this.liked_cards = _.filter(this.liked_cards, card_uid => {
           return card_uid != uid;
         });
-      else this.flavored_cards.push(uid);
+      else this.liked_cards.push(uid);
     },
     shuffle(a) {
       for (let i = a.length - 1; i > 0; i--) {
@@ -332,49 +321,27 @@ export default {
       else this.active_card = index;
       if (teacher.coordinate) this.mapcenter = teacher.coordinate;
       else console.log("This classroom's teacher does not have coordinate!");
-    }
-  },
-
-  created() {
-    // console.log("hi")
-    var self = this;
-    this.$on("markerClicked", function(key, position) {
-      self.mapcenter = position;
-
-      var index = _.findIndex(this.filter_list, function(cl) {
-        return cl.poi == key;
-      });
-      // console.log(index)
-      this.page = parseInt(index / 10);
-      var i = index % 10;
-      console.log(i);
-      var el = document.getElementById(i);
-      if (el) {
-        el.scrollIntoView({ block: "center" });
-        this.active_card = i;
-      }
-    });
-    var classIds = [];
-    firebase.auth().onAuthStateChanged(user => {
-      if (user) {
-        const db = firebase.firestore();
-        db.collection("employers")
-          .doc(user.uid)
-          .get()
-          .then(doc => {
+    },
+    retrieveLikedCard(uid){
+      var self = this;
+      const db = firebase.firestore();
+      db.collection("employers")
+        .doc(uid)
+        .get()
+        .then(doc => {
             if (
               doc.data() &&
               doc.data()["match_making"] &&
-              doc.data()["match_making"]["flavored_cards"]
+              doc.data()["match_making"]["liked_cards"]
             )
-              this.flavored_cards = doc.data()["match_making"][
-                "flavored_cards"
-              ];
-            else this.flavored_cards = [];
-          });
-
-        // console.log(user.uid)
-        db.collection("teachers")
+              self.liked_cards = doc.data()["match_making"]["liked_cards"];
+            else self.liked_cards = [];
+            //console.log(self.liked_cards)
+        });
+    },
+    retrivedTheWholeList(user){
+      var self = this;
+      db.collection("teachers")
           .get()
           .then(teacher_querySnapshot => {
             teacher_querySnapshot.forEach(doc => {
@@ -436,10 +403,14 @@ export default {
                           .get()
                           .then(doc => {
                             var user_data = doc.data();
-                            self.loaded_teachers[teacher]["first_name"] =
-                              user_data.first_name;
-                            self.loaded_teachers[teacher]["last_name"] =
-                              user_data.last_name;
+                            if (user_data)
+                            {
+                              self.loaded_teachers[teacher]["first_name"] =
+                                user_data.first_name;
+                              self.loaded_teachers[teacher]["last_name"] =
+                                user_data.last_name;
+                            }
+                            
                             return resolve();
                           });
                           // console.log("timeout")
@@ -485,6 +456,57 @@ export default {
                 });
               });
           });
+    },
+    retrivedCardsWithMudderUIDS(uids){
+      var db = firebase.firestore();
+      db.collection("classroom").get().then(ss => {
+        var filter_arr = [];
+        ss.forEach(doc => {
+          if (_.includes(uids, doc.id))
+            filter_arr.push(doc.data())
+        })
+        console.log(uids);
+        console.log(filter_arr);
+      })
+    }
+  },
+  mounted(){
+    var self = this;
+    this.$on("markerClicked", function(key, position) {
+      self.mapcenter = position;
+      var index = _.findIndex(this.filter_list, function(cl) {
+        return cl.poi == key;
+      });
+
+      this.page = parseInt(index / 10);
+      var i = index % 10;
+      
+      var el = document.getElementById(i);
+      if (el) {
+        el.scrollIntoView({ block: "center" });
+        this.active_card = i;
+      }
+    });
+  },
+  created() {
+    // console.log("hi")
+    var self = this;
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        var uid = "GZ9T2h4u6DhX4DWcbk5z6oFtkmC2" || user.uid;
+        console.log("start getting result[uid: " + uid + "]");
+        self.getMuddersResult(uid).then(result => {
+          var ret_arr = result.data.result || [];
+          if (result.status != 200 || ret_arr.length == 0)
+            self.retrivedTheWholeList(user); // Eric's original code
+          else
+          {
+            self.retrivedCardsWithMudderUIDS(ret_arr);
+            self.retrivedTheWholeList(user); 
+          }
+        });
+        const db = firebase.firestore();
+        self.retrieveLikedCard(uid);
       }
     });
   }

@@ -137,9 +137,9 @@ export default {
     page: {
       required: true
     },
-    // likedlist: {
-    //   required: true,
-    // }
+    likedlist: {
+      required: true,
+    }
   },
   computed: {
     invite() {
@@ -164,6 +164,7 @@ export default {
         var self = this;
         var user_id = firebase.auth().currentUser.uid;
         var liked_cards = [];
+
         db.collection("employers").doc(user_id).get().then( doc => {
           var data = doc.data();
           if (data &&  data["match_making"] &&  data["match_making"]["liked_cards"])
@@ -177,12 +178,10 @@ export default {
             liked_cards.push(this.classroom.uid);
           else
             liked_cards = _.filter( liked_cards, card => { return card != this.classroom.uid})
-  
           data["match_making"]["liked_cards"] = liked_cards;
-          self.$emit('newlikedCardAction', self.classroom.uid);
+          self.$emit('newLikedCardAction', self.classroom.uid);
           db.collection("employers").doc(user_id).update(data).catch(err => {
-            self.$emit('newlikedCardAction', self.classroom.uid);
-            alert(err.message);
+            self.$emit('newLikedCardAction', self.classroom.uid);
           })
         });
     },
