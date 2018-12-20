@@ -152,22 +152,27 @@ export default {
     };
   },
   computed: {
-     render_class() {
-      var display_list =[]
-      var to_move =[]
-      if(this.results=='invited'){
-        to_move = _.filter(this.loaded_employers,(obj => {
-          return _.find(this.invited, (invitee)=> invitee==obj.uid)
-        }))
+      render_class() {
+      var display_list = [];
+      var to_move = [];
+      if (this.results == "recommended") {
+        display_list = this.filter_list;
+      } else if (this.results == "invited") {
+        to_move = _.filter(this.loaded_employers, obj => {
+          return _.find(this.invited, invitee => invitee == obj.uid);
+        });
+        display_list.push(to_move, this.loaded_employers);
+        display_list = _.flattenDeep(display_list);
+        display_list = _.uniq(display_list);
+      } else if (this.results == "saved") {
+        to_move = _.filter(this.loaded_employers, obj => {
+          return _.find(this.liked_cards, likee => likee == obj.uid);
+        });
+        display_list.push(to_move, this.loaded_employers);
+        display_list = _.flattenDeep(display_list);
+        display_list = _.uniq(display_list);
       }
-      else if(this.results=='saved') {
-        to_move = _.filter(this.loaded_employers,(obj => {
-          return _.find(this.liked_cards,(likee) => likee==obj.uid)
-        }))
-      }
-      display_list.push(to_move,this.loaded_employers)
-      display_list = _.flattenDeep(display_list)
-      display_list = _.uniq(display_list)
+
       var to_display = 10; // number of classes to display per page
       if (
         this.page * to_display + to_display - display_list.length >
