@@ -405,7 +405,7 @@ export default {
           });
           self.getClassrooms(classes).then(classroom_querySnapshot => {
             classroom_querySnapshot.forEach(doc => {
-              var class_data = (doc.data === 'function')?doc.data():doc
+              var class_data = (typeof doc.data == 'function')?doc.data():doc
               class_data["school_address"] = self.findbyId(
                 self.loaded_teachers,
                 class_data.teacher_uid

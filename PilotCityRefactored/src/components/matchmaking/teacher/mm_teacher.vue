@@ -299,7 +299,8 @@ export default {
     },
     getEmployers(employers) {
       if (!employers) {
-        return db.collection("classroom").get();
+        console.log("retrieve from db")
+        return db.collection("employers").get();
       } else {
         console.log(employers);
         return new Promise(function(resolve, reject) {
@@ -312,7 +313,8 @@ export default {
       self.getEmployers(employers)
         .then(employer_querySnapshot => {
           employer_querySnapshot.forEach(doc => {
-            var employer_data = doc.data === "function" ? doc.data() : doc;
+            var employer_data = (typeof doc.data == "function") ? doc.data() : doc;
+            // console.log(employer_data)
             if (
               employer_data.selected_challenge_keywords &&
               employer_data.selected_challenge_keywords.length
@@ -391,24 +393,6 @@ export default {
                 // moved here
                 if (doc.data())
                   self.invited = doc.data().invited
-                    ? doc.data().invited
-                    : self.invited;
-                var to_move = _.filter(self.loaded_employers, employer => {
-                  return _.some(self.invited, uid => {
-                    return employer.uid == uid;
-                  });
-                });
-                for (let employer of to_move) {
-                  self.loaded_employers.splice(
-                    self.loaded_employers.indexOf(employer),
-                    1
-                  );
-                }
-                var new_arr = [];
-                new_arr.push(to_move, self.loaded_employers);
-                new_arr = _.flattenDeep(new_arr);
-                //console.log(new_arr);
-                self.loaded_employers = new_arr;
                 self.render = true;
                 console.log("rendered");
               });
