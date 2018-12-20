@@ -337,7 +337,16 @@ export default {
           //console.log(self.liked_cards)
         });
     },
-    retrivedTheWholeList(user) {
+    getClassrooms(classes){
+      if(!classes) {
+        return db.collection("classroom").get()
+      }
+      else
+        return new Promise(function(resolve,reject) {
+          resolve(classes)
+        })
+    },
+    retrivedTheWholeList(user,classes) {
       var self = this;
       db.collection("teachers")
         .get()
@@ -348,9 +357,10 @@ export default {
             self.skills.push(teacher_data.selected_skills_keywords);
             self.loaded_teachers.push(teacher_data);
           });
-          db.collection("classroom")
-            .get()
+          // if(!classes)
+          self.getClassrooms(classes)
             .then(classroom_querySnapshot => {
+              
               classroom_querySnapshot.forEach(doc => {
                 var class_data = doc.data();
                 class_data["school_address"] = self.findbyId(
@@ -438,7 +448,7 @@ export default {
             });
         });
     },
-    retrivedCardsWithMudderUIDS(uids) {
+    retrievedCardsWithMudderUIDS(uids) {
       var db = firebase.firestore();
       db.collection("classroom")
         .get()
@@ -448,7 +458,7 @@ export default {
             if (_.includes(uids, doc.id)) filter_arr.push(doc.data());
           });
           console.log(uids);
-          console.log(filter_arr);
+          return (filter_arr);
         });
     }
   },
@@ -485,10 +495,9 @@ export default {
           if (result.status != 200 || ret_arr.length == 0)
             self.retrivedTheWholeList(user);
           // Eric's original code
-          // if we do have the result from mudder, we do retrivedCardsWithMudderUIDS
+          // if we do have the result from mudder, we do retrievedCardsWithMudderUIDS
           else {
-            self.retrivedCardsWithMudderUIDS(ret_arr);
-            self.retrivedTheWholeList(user); // this is just temporarily purpose
+            self.retrivedTheWholeList(user, self.retrievedCardsWithMudderUIDS(ret_arr)); // this is just temporarily purpose
           }
         });
         self.retrieveLikedCard(uid);
