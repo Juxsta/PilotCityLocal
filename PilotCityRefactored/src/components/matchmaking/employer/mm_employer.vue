@@ -346,7 +346,7 @@ export default {
           resolve(classes)
         })
     },
-    retrivedTheWholeList(user, classes) {
+    retrievedTheWholeList(user, classes) {
       var self = this;
       db.collection("teachers")
         .get()
@@ -466,7 +466,7 @@ export default {
             if (temp)
               filter_arr.push(temp);
           }
-          self.retrivedTheWholeList(user, filter_arr);
+          self.retrievedTheWholeList(user, filter_arr);
         });
     }
   },
@@ -495,7 +495,7 @@ export default {
           // if the status is not 200 then there's something wrong, since we got no result from the mudder,
           // we just go an fetch the whole list
           if (result.status != 200 || ret_arr.length == 0)
-            self.retrivedTheWholeList(user);
+            self.retrievedTheWholeList(user);
           // Eric's original code
           // if we do have the result from mudder, we do retrievedCardsWithMudderUIDS
           else {
