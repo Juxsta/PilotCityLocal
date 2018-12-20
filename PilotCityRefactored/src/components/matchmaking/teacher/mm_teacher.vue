@@ -132,6 +132,15 @@ export default {
     };
   },
   computed: {
+     listByPage() {
+      var big_arr = []
+      var i = -1
+      do{
+        i++
+        big_arr.push(this.page_uids(i))
+      }while(this.page_uids(i) != this.page_uids(i+1))
+      return big_arr
+    },
     render_class() {
       var to_display = 10; // number of classes to display per page
       if (
@@ -253,8 +262,8 @@ export default {
     GoogleMap
   },
   methods: {
-     page_uids(page) {
-            var to_display = 10; // number of classes to display per page
+    page_uids(page) {
+       var to_display = 10; // number of classes to display per page
       if (
         page * to_display + to_display - this.filter_list.length >
         to_display
@@ -268,6 +277,19 @@ export default {
         return obj.uid
       })
     },
+    scrollToThatCard(uid){
+        var self = this;
+        for (let i = 0; i < self.listByPage.length; i++)
+        if (_.includes(self.listByPage[i], uid))
+            this.page = i;
+        var el = document.getElementById(uid);
+        if (el) {
+          el.scrollIntoView({ block: "center" });
+          this.active_card = uid;
+          return true;
+        }
+        return false;
+      },
      doNewLikedCardAction(uid) {
       if (_.includes(this.liked_cards, uid))
         this.liked_cards = _.filter(this.liked_cards, card_uid => {
@@ -306,16 +328,16 @@ export default {
           var filter_arr = [],
             all = [];
           ss.forEach(doc => {
-            all.push(doc.data());
+            all.push(doc);
           });
           var temp;
           for (let i = 0; i < uids.length; i++) {
             temp = _.find(all, arr => {
-              return arr.uid == uids[i];
+              return arr.id == uids[i];
             });
             if (temp) filter_arr.push(temp);
           }
-          self.retrivedTheWholeList(user, filter_arr);
+          self.retrievedTheWholeList(user, filter_arr);
         });
     },
     changeShow(name) {
@@ -349,10 +371,10 @@ export default {
     },
     getEmployers(employers) {
       if (!employers) {
-        // console.log("retrieve from db")
+        //console.log("retrieve from db")
         return db.collection("employers").get();
       } else {
-        console.log(employers);
+        //console.log(employers);
         return new Promise(function(resolve, reject) {
           resolve(employers);
         });
@@ -370,10 +392,6 @@ export default {
               employer_data.selected_challenge_keywords.length
             ) {
               employer_data["uid"] = doc.id;
-              if (employer_data["coordinate"] && employer_data["coordinate"].lat)
-                employer_data["poi"] =
-                  String(employer_data["coordinate"]["lat"]) +
-                  String(employer_data["coordinate"]["lng"]);
               self.industry.push(employer_data.selected_industry_keywords);
               self.solutions.push(employer_data.selected_service_keywords);
               self.solutions.push(employer_data.selected_product_keywords);
@@ -444,7 +462,7 @@ export default {
                 if (doc.data())
                   self.invited = doc.data().invited
                 self.render = true;
-                console.log("rendered");
+                //console.log("rendered");
               });
           });
         });
@@ -452,30 +470,51 @@ export default {
   },
   mounted(){
     var self = this;
-    this.$on("markerClicked", function(key, position) {
+    this.$on("markerClicked", function(uid, position) {
       self.mapcenter = position;
       self.scrollToThatCard(uid);
       setTimeout(() => {self.scrollToThatCard(uid);}, 500);
     });
   },
   created() {
-     var self = this;
+    const db = firebase.firestore();
+    var self = this;
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
-        var uid = "AdzkWoSjonQBrl67hHdl1TSPpwi1" || user.uid; // since the test account is not working correctly we use a temp uid,
+        var uid = "ZGStpiVL7lVNZWNvOiLVWR4IHXO2" || user.uid; // since the test account is not working correctly we use a temp uid,
         // for production environment, just remove the uid to null or set uid = user.uid
-        self.getMuddersResult(uid).then(result => {
-          var ret_arr = result.data.result || [];
-          // if the status is not 200 then there's something wrong, since we got no result from the mudder,
-          // we just go an fetch the whole list
-          if (result.status != 200 || ret_arr.length == 0)
-            self.retrievedTheWholeList(user);
-          // Eric's original code
-          // if we do have the result from mudder, we do retrievedCardsWithMudderUIDS
-          else {
-            self.retrievedCardsWithMudderUIDS(user, ret_arr); // this is just temporarily purpose
+        db.collection("teachers").doc(uid).get().then( doc => {
+          if (doc.data()){
+            uid = doc.data().classes[0].uid;
+            try {
+              self.getMuddersResult(uid).then(result => {
+                var ret_arr = result.data.result || [];
+                // if the status is not 200 then there's something wrong, since we got no result from the mudder,
+                // we just go an fetch the whole list
+                if (result.status != 200 || ret_arr.length == 0)
+                  self.retrievedTheWholeList(user);
+                // Eric's original code
+                // if we do have the result from mudder, we do retrievedCardsWithMudderUIDS
+                else {
+                  self.retrievedCardsWithMudderUIDS(user, ret_arr); // this is just temporarily purpose
+                }
+              });
+            }
+            catch (err){
+              db.collection("rankings").doc(uid).get().then(doc => {
+                var ret_arr = [];
+                if (doc.data() && doc.data().rankings){
+                  ret_arr = doc.data().rankings;
+                }
+                if (ret_arr.length)
+                  self.retrievedCardsWithMudderUIDS(user, ret_arr);
+                else 
+                  self.retrievedTheWholeList(user);
+              })
+            }
           }
         });
+        
         self.retrieveLikedCard(user.uid);
       }
     });

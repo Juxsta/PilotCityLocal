@@ -74,7 +74,7 @@ export default {
     }
     this.map = new google.maps.Map(element, options);
     this.pinAllClassroomsOnMap(this.map);
-      db.firestore().collection('employers').doc(db.auth().currentUser.uid).get().then(res => {
+      db.firestore().collection(self.role == 'employer'? 'employers' : 'teachers').doc(db.auth().currentUser.uid).get().then(res => {
       //console.log(db.auth().currentUser.uid)
       var coordinate;
       if (res.data())

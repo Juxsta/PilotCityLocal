@@ -191,15 +191,6 @@ export default {
     };
   },
   computed: {
-    listByPage() {
-      var big_arr = []
-      var i = -1
-      do{
-        i++
-        big_arr.push(this.page_uids(i))
-      }while(this.page_uids(i) != this.page_uids(i+1))
-      return big_arr
-    },
     render_class() {
       var class_list = this.filter_list;
       var to_display = 10; // number of classes to display per page
@@ -342,11 +333,10 @@ export default {
         return obj.uid
       })
     },
-    getMuddersResult(uid,user) {
-      // var MUDDERSLINK =
-      //   "http://35.197.64.87:5000/matchmaker/classroomranking?employer_id=";
-      // return axios.get(MUDDERSLINK + uid);
-      return firebase.firestore().collection("rankings").doc(user.uid).get()
+    getMuddersResult(uid) {
+      var MUDDERSLINK =
+        "http://35.197.64.87:5000/matchmaker/classroomranking?employer_id=";
+      return axios.get(MUDDERSLINK + uid);
     },
     doNewLikedCardAction(uid) {
       if (_.includes(this.liked_cards, uid))
@@ -437,11 +427,6 @@ export default {
                 self.loaded_teachers,
                 class_data.teacher_uid
               ).coordinate;
-              if (class_data["coordinate"] && class_data["coordinate"].lat)
-                class_data["poi"] =
-                  String(class_data["coordinate"]["lat"]) +
-                  String(class_data["coordinate"]["lng"]);
-
               // console.log(doc.data());
               self.courses.push(class_data.coursename);
               self.loaded_classrooms.push(class_data);
@@ -535,21 +520,38 @@ export default {
     // console.log("hi")
     var self = this;
     firebase.auth().onAuthStateChanged(user => {
-      if (user) {
+     if (user) {
         var uid = "GZ9T2h4u6DhX4DWcbk5z6oFtkmC2" || user.uid; // since the test account is not working correctly we use a temp uid,
         // for production environment, just remove the uid to null or set uid = user.uid
-        self.getMuddersResult(uid,user).then(result => {
-          var ret_arr = result.data() || [];
-          // if the status is not 200 then there's something wrong, since we got no result from the mudder,
-          // we just go an fetch the whole list
-          if (result.status != 200 || ret_arr.length == 0)
-            self.retrievedTheWholeList(user);
-          // Eric's original code
-          // if we do have the result from mudder, we do retrievedCardsWithMudderUIDS
-          else {
-            self.retrievedCardsWithMudderUIDS(user, ret_arr); // this is just temporarily purpose
-          }
-        });
+        try {
+          self.getMuddersResult(uid).then(result => {
+            var ret_arr = result.data.result || [];
+            // if the status is not 200 then there's something wrong, since we got no result from the mudder,
+            // we just go an fetch the whole list
+            //console.log(ret_arr)
+            if (result.status != 200 || ret_arr.length == 0)
+              self.retrievedTheWholeList(user);
+            // Eric's original code
+            // if we do have the result from mudder, we do retrievedCardsWithMudderUIDS
+            else {
+              self.retrievedCardsWithMudderUIDS(user, ret_arr); // this is just temporarily purpose
+            }
+          });
+        }
+        catch (err){
+          db.collection("rankings").doc(uid).get().then(doc => {
+            var ret_arr = [];
+            if (doc.data() && doc.data().rankings){
+              ret_arr = doc.data().rankings;
+            }
+            if (ret_arr.length)
+              self.retrievedCardsWithMudderUIDS(user, ret_arr);
+            else 
+              self.retrievedTheWholeList(user);
+          })
+        }
+    
+        
         self.retrieveLikedCard(user.uid);
       }
     });
