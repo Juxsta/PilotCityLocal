@@ -160,8 +160,9 @@ export default {
       return this.tags[index%7]
     },
     likeThisCard(){
-        var db = firebase.firestore();
         var self = this;
+        self.$emit('newLikedCardAction', self.classroom.uid);
+        var db = firebase.firestore();
         var user_id = firebase.auth().currentUser.uid;
         var liked_cards = [];
 
@@ -179,7 +180,6 @@ export default {
           else
             liked_cards = _.filter( liked_cards, card => { return card != this.classroom.uid})
           data["match_making"]["liked_cards"] = liked_cards;
-          self.$emit('newLikedCardAction', self.classroom.uid);
           db.collection("employers").doc(user_id).update(data).catch(err => {
             self.$emit('newLikedCardAction', self.classroom.uid);
           })

@@ -168,13 +168,15 @@ export default {
     likeThisCard() {
       var db = firebase.firestore();
       var self = this;
+      self.$emit("newlikedCardAction", self.employer.uid);
       var user_id = firebase.auth().currentUser.uid;
+      console.log(user_id)
       var liked_cards = [];
       db.collection("teachers")
         .doc(user_id)
         .get()
         .then(doc => {
-          var data = doc.data();
+          var data = doc.data() || {};
           if (
             data &&
             data["match_making"] &&
@@ -196,9 +198,9 @@ export default {
           db.collection("teachers")
             .doc(user_id)
             .update(data)
-            .then(() => {
-              self.$emit("newlikedCardAction", self.employer.uid);
-            });
+            .catch(err => {
+            self.$emit('newLikedCardAction', self.employer.uid);
+          });
         });
     },
     update_invite(event) {

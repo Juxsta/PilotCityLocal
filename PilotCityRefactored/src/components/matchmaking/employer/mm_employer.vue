@@ -336,7 +336,7 @@ export default {
             )
               self.liked_cards = doc.data()["match_making"]["liked_cards"];
             else self.liked_cards = [];
-            //console.log(self.liked_cards)
+            console.log(self.liked_cards)
         });
     },
     retrivedTheWholeList(user){
@@ -508,7 +508,7 @@ export default {
             self.retrivedTheWholeList(user); // this is just temporarily purpose
           }
         });
-        self.retrieveLikedCard(uid);
+        self.retrieveLikedCard(user.uid);
       }
     });
   }
