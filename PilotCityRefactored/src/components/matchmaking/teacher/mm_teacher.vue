@@ -144,6 +144,15 @@ export default {
       var max = this.page * to_display + to_display;
       return this.filter_list.slice(min, max);
     },
+    listByPage() {
+      var big_arr = []
+      var i = -1
+      do{
+        i++
+        big_arr.push(this.page_uids(i))
+      }while(this.page_uids(i)[0] != this.page_uids(i+1)[0])
+      return big_arr
+    },
     filter_list() {
       if (
         this.filtered_location.length == 0 &&
@@ -244,6 +253,21 @@ export default {
     GoogleMap
   },
   methods: {
+     page_uids(page) {
+            var to_display = 10; // number of classes to display per page
+      if (
+        page * to_display + to_display - this.filter_list.length >
+        to_display
+      )
+        page =
+          parseInt((this.filter_list.length - to_display) / to_display) + 1;
+      var min = page > 0 ? (page - 1) * to_display + to_display : 0;
+      var max = page * to_display + to_display;
+      var temp_list = this.filter_list.slice(min, max);
+      return temp_list.map((obj) => {
+        return obj.uid
+      })
+    },
      doNewLikedCardAction(uid) {
       if (_.includes(this.liked_cards, uid))
         this.liked_cards = _.filter(this.liked_cards, card_uid => {
@@ -325,7 +349,7 @@ export default {
     },
     getEmployers(employers) {
       if (!employers) {
-        console.log("retrieve from db")
+        // console.log("retrieve from db")
         return db.collection("employers").get();
       } else {
         console.log(employers);
