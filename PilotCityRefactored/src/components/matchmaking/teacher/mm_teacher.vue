@@ -242,6 +242,32 @@ export default {
     GoogleMap
   },
   methods: {
+    getMuddersResult(uid) {
+      var MUDDERSLINK =
+        "http://35.197.64.87:5000/matchmaker/employerranking?classroom_id=";
+      return axios.get(MUDDERSLINK + uid);
+    },
+    retrievedCardsWithMudderUIDS(user, uids) {
+      var self = this, db = firebase.firestore();
+      db.collection("employers")
+        .get()
+        .then(ss => {
+          var filter_arr = [], all = [];
+          ss.forEach(doc => {
+            all.push(doc.data());
+          });
+          var temp;
+          for (let i = 0; i < uids.length; i++)
+          {
+            temp = _.find(all, arr => {
+              return arr.uid == uids[i];
+            });
+            if (temp)
+              filter_arr.push(temp);
+          }
+          self.retrivedTheWholeList(user, filter_arr);
+        });
+    },
     changeShow(name) {
       console.log("show changede");
       this.show = name;
