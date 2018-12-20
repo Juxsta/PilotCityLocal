@@ -32,13 +32,13 @@ npm <template>
             <mm_filter
               :options="class_size"
               :selected_options="filtered_class_size"
-              :show=show
+              :show="show"
               name="Class Size"
             />
           </div>
 
-          <div class="cardstock" id='results'>
-            <h2 class="text-classroom-matches" >
+          <div class="cardstock" id="results">
+            <h2 class="text-classroom-matches">
               <span>{{filter_list.length}}</span>
               <span>+ Classrooms Recommended</span>
             </h2>
@@ -54,11 +54,11 @@ npm <template>
               :page="page"
               :active_card="active_card"
               class="row-12 card-teacher-match"
-              :flavoredlist="flavored_cards"
+              :likedlist="liked_cards"
               @teacherCardClicked="highlight_pin(findbyId(loaded_teachers,classroom.teacher_uid), index)"
-              @newFlavoredCardAction="doNewFlavoredCardAction"
+              @newLikedCardAction="doNewLikedCardAction"
             />
-              <!-- :likedlist=likedlist -->
+            <!-- :likedlist=likedlist -->
             <div class="d-flex mm__pagination--row">
               <b-btn
                 class="prevpage__btn justify-content-start"
@@ -99,13 +99,16 @@ import { GEOCODEKEY } from "@/main";
 import "@/assets/SASS/pages/_matchmaking.scss";
 import Fuse from "fuse.js";
 import { createECDH } from "crypto";
+
+import axios from "axios";
+
 export default {
   name: "mm_employer",
   data() {
     return {
       allClasses: null,
       active_card: null,
-      flavored_cards: [],
+      liked_cards: [],
       apikey: GEOCODEKEY.key,
       search_options: {
         shouldSort: true,
@@ -183,14 +186,10 @@ export default {
   },
   computed: {
     render_class() {
-      var class_list = this.filter_list
+      var class_list = this.filter_list;
       var to_display = 10; // number of classes to display per page
-      if (
-        this.page * to_display + to_display - class_list.length >
-        to_display
-      )
-        this.page =
-          parseInt((class_list.length - to_display) / to_display) + 1;
+      if (this.page * to_display + to_display - class_list.length > to_display)
+        this.page = parseInt((class_list.length - to_display) / to_display) + 1;
       var min = this.page > 0 ? (this.page - 1) * to_display + to_display : 0;
       var max = this.page * to_display + to_display;
       return class_list.slice(min, max);
@@ -279,17 +278,6 @@ export default {
       return filtered_result;
     },
     map_data() {
-      // the following commented code parse addresses with space to formatted address
-      // var str = "";
-      // for (var i = 0; i < this.loaded_teachers.length;i++)
-      // {
-      //   str = this.loaded_teachers[i].school_address.street + '+' +
-      //         this.loaded_teachers[i].school_address.city   + '+' +
-      //         this.loaded_teachers[i].school_address.state  + '+' +
-      //         this.loaded_teachers[i].school_address.zip;
-      //   str = str.replace(/\s/g, '+');
-      //   arr.push(str);
-      // }
       var arr = _.filter(this.filter_list, teacher => {
         return teacher.coordinate;
       });
@@ -302,12 +290,17 @@ export default {
     GoogleMap
   },
   methods: {
-    doNewFlavoredCardAction(uid) {
-      if (_.includes(this.flavored_cards, uid))
-        this.flavored_cards = _.filter(this.flavored_cards, card_uid => {
+    getMuddersResult(uid) {
+      var MUDDERSLINK =
+        "http://35.197.64.87:5000/matchmaker/classroomranking?employer_id=";
+      return axios.get(MUDDERSLINK + uid);
+    },
+    doNewLikedCardAction(uid) {
+      if (_.includes(this.liked_cards, uid))
+        this.liked_cards = _.filter(this.liked_cards, card_uid => {
           return card_uid != uid;
         });
-      else this.flavored_cards.push(uid);
+      else this.liked_cards.push(uid);
     },
     shuffle(a) {
       for (let i = a.length - 1; i > 0; i--) {
@@ -326,161 +319,179 @@ export default {
       else this.active_card = index;
       if (teacher.coordinate) this.mapcenter = teacher.coordinate;
       else console.log("This classroom's teacher does not have coordinate!");
+    },
+    retrieveLikedCard(uid) {
+      var self = this;
+      const db = firebase.firestore();
+      db.collection("employers")
+        .doc(uid)
+        .get()
+        .then(doc => {
+          if (
+            doc.data() &&
+            doc.data()["match_making"] &&
+            doc.data()["match_making"]["liked_cards"]
+          )
+            self.liked_cards = doc.data()["match_making"]["liked_cards"];
+          else self.liked_cards = [];
+          //console.log(self.liked_cards)
+        });
+    },
+    retrivedTheWholeList(user) {
+      var self = this;
+      db.collection("teachers")
+        .get()
+        .then(teacher_querySnapshot => {
+          teacher_querySnapshot.forEach(doc => {
+            var teacher_data = doc.data();
+            teacher_data["uid"] = doc.id;
+            self.skills.push(teacher_data.selected_skills_keywords);
+            self.loaded_teachers.push(teacher_data);
+          });
+          db.collection("classroom")
+            .get()
+            .then(classroom_querySnapshot => {
+              classroom_querySnapshot.forEach(doc => {
+                var class_data = doc.data();
+                class_data["school_address"] = self.findbyId(
+                  self.loaded_teachers,
+                  class_data.teacher_uid
+                ).school_address;
+                class_data["school_district"] = self.findbyId(
+                  self.loaded_teachers,
+                  class_data.teacher_uid
+                ).school_district;
+                class_data["school_name"] = self.findbyId(
+                  self.loaded_teachers,
+                  class_data.teacher_uid
+                ).school_name;
+                class_data["selected_industry_keywords"] = self.findbyId(
+                  self.loaded_teachers,
+                  class_data.teacher_uid
+                ).selected_industry_keywords;
+                class_data["selected_skills_keywords"] = self.findbyId(
+                  self.loaded_teachers,
+                  class_data.teacher_uid
+                ).selected_skills_keywords;
+                class_data["coordinate"] = self.findbyId(
+                  self.loaded_teachers,
+                  class_data.teacher_uid
+                ).coordinate;
+                if (class_data["coordinate"] && class_data["coordinate"].lat)
+                  class_data["poi"] =
+                    String(class_data["coordinate"]["lat"]) +
+                    String(class_data["coordinate"]["lng"]);
+
+                // console.log(doc.data());
+                self.courses.push(class_data.coursename);
+                self.loaded_classrooms.push(class_data);
+              });
+              var promises = [];
+              // async getNames(){
+              for (
+                let teacher = 0;
+                teacher < self.loaded_teachers.length;
+                teacher++
+              ) {
+                promises.push(
+                  new Promise(function(resolve, reject) {
+                    setTimeout(() => {
+                      db.collection("Users")
+                        .doc(self.loaded_teachers[teacher]["uid"])
+                        .get()
+                        .then(doc => {
+                          var user_data = doc.data();
+                          if (user_data) {
+                            self.loaded_teachers[teacher]["first_name"] =
+                              user_data.first_name;
+                            self.loaded_teachers[teacher]["last_name"] =
+                              user_data.last_name;
+                          }
+                          else console.log("broken id: ",self.loaded_teachers[teacher]["uid"] )
+
+                          return resolve();
+                        });
+                      // console.log("timeout")
+                    }, 300);
+                  })
+                );
+              }
+              // }
+
+              Promise.all(promises).then(val => {
+                db.collection("employers")
+                  .doc(user.uid)
+                  .get()
+                  .then(doc => {
+                    // console.log(doc.data())
+                    if (doc.data().invited) self.invited = doc.data().invited;
+                  });
+                self.render = true;
+                self.skills = _.flattenDeep(self.skills);
+                self.skills = _.uniq(self.skills);
+                self.skills = self.skills.filter(skill => skill);
+                self.skills = self.skills.sort();
+                self.courses = _.uniq(self.courses);
+                self.courses = self.courses.sort();
+                // console.log("rendered")
+              });
+            });
+        });
+    },
+    retrivedCardsWithMudderUIDS(uids) {
+      var db = firebase.firestore();
+      db.collection("classroom")
+        .get()
+        .then(ss => {
+          var filter_arr = [];
+          ss.forEach(doc => {
+            if (_.includes(uids, doc.id)) filter_arr.push(doc.data());
+          });
+          console.log(uids);
+          console.log(filter_arr);
+        });
     }
   },
-
-  created() {
-    // console.log("hi")
+  mounted() {
     var self = this;
     this.$on("markerClicked", function(key, position) {
       self.mapcenter = position;
-
       var index = _.findIndex(this.filter_list, function(cl) {
         return cl.poi == key;
       });
-      // console.log(index)
+
       this.page = parseInt(index / 10);
       var i = index % 10;
-      console.log(i);
+
       var el = document.getElementById(i);
       if (el) {
         el.scrollIntoView({ block: "center" });
         this.active_card = i;
       }
     });
-    var classIds = [];
+  },
+  created() {
+    // console.log("hi")
+    var self = this;
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
-        const db = firebase.firestore();
-        db.collection("employers")
-          .doc(user.uid)
-          .get()
-          .then(doc => {
-            if (
-              doc.data() &&
-              doc.data()["match_making"] &&
-              doc.data()["match_making"]["flavored_cards"]
-            )
-              this.flavored_cards = doc.data()["match_making"][
-                "flavored_cards"
-              ];
-            else this.flavored_cards = [];
-          });
-
-        // console.log(user.uid)
-        db.collection("teachers")
-          .get()
-          .then(teacher_querySnapshot => {
-            teacher_querySnapshot.forEach(doc => {
-              var teacher_data = doc.data();
-              teacher_data["uid"] = doc.id;
-              self.skills.push(teacher_data.selected_skills_keywords);
-              self.loaded_teachers.push(teacher_data);
-            });
-            db.collection("classroom")
-              .get()
-              .then(classroom_querySnapshot => {
-                classroom_querySnapshot.forEach(doc => {
-                  var class_data = doc.data();
-                  class_data["school_address"] = self.findbyId(
-                    self.loaded_teachers,
-                    class_data.teacher_uid
-                  ).school_address;
-                  class_data["school_district"] = self.findbyId(
-                    self.loaded_teachers,
-                    class_data.teacher_uid
-                  ).school_district;
-                  class_data["school_name"] = self.findbyId(
-                    self.loaded_teachers,
-                    class_data.teacher_uid
-                  ).school_name;
-                  class_data["selected_industry_keywords"] = self.findbyId(
-                    self.loaded_teachers,
-                    class_data.teacher_uid
-                  ).selected_industry_keywords;
-                  class_data["selected_skills_keywords"] = self.findbyId(
-                    self.loaded_teachers,
-                    class_data.teacher_uid
-                  ).selected_skills_keywords;
-                  class_data["coordinate"] = self.findbyId(
-                    self.loaded_teachers,
-                    class_data.teacher_uid
-                  ).coordinate;
-                  if (class_data["coordinate"] && class_data["coordinate"].lat)
-                    class_data["poi"] =
-                      String(class_data["coordinate"]["lat"]) +
-                      String(class_data["coordinate"]["lng"]);
-
-                  // console.log(doc.data());
-                  self.courses.push(class_data.coursename);
-                  self.loaded_classrooms.push(class_data);
-                });
-                var promises = [];
-                // async getNames(){
-                for (
-                  let teacher = 0;
-                  teacher < self.loaded_teachers.length;
-                  teacher++
-                ) {
-                  promises.push(
-                    new Promise(function(resolve, reject) {
-                      setTimeout(() => {
-                        db.collection("Users")
-                          .doc(self.loaded_teachers[teacher]["uid"])
-                          .get()
-                          .then(doc => {
-                            var user_data = doc.data();
-                            if(!user_data)
-                            console.log("This ID is broken :( :",self.loaded_teachers[teacher]["uid"])
-                            self.loaded_teachers[teacher]["first_name"] =
-                              user_data.first_name;
-                            self.loaded_teachers[teacher]["last_name"] =
-                              user_data.last_name;
-                            return resolve();
-                          });
-                          // console.log("timeout")
-                      }, 300);
-                    })
-                  );
-                }
-                // }
-
-                Promise.all(promises).then(val => {
-                  db.collection("employers")
-                    .doc(user.uid)
-                    .get()
-                    .then(doc => {
-                      // console.log(doc.data())
-                      if (doc.data().invited) self.invited = doc.data().invited;
-                      var to_move = _.filter(self.loaded_classrooms, clas => {
-                        return _.some(self.invited, uid => {
-                          return clas.uid == uid;
-                        });
-                      });
-                      for (let clas of to_move) {
-                        self.loaded_classrooms.splice(
-                          self.loaded_classrooms.indexOf(clas),
-                          1
-                        );
-                      }
-                      var new_arr = [];
-                      new_arr.push(to_move, self.loaded_classrooms);
-                      new_arr = _.flattenDeep(new_arr);
-                      //console.log(new_arr);
-                      self.loaded_classrooms = new_arr;
-                    });
-                  self.shuffle(self.loaded_classrooms);
-                  self.render = true;
-                  self.skills = _.flattenDeep(self.skills);
-                  self.skills = _.uniq(self.skills);
-                  self.skills = self.skills.filter(skill => skill);
-                  self.skills = self.skills.sort();
-                  self.courses = _.uniq(self.courses);
-                  self.courses = self.courses.sort();
-                  // console.log("rendered")
-                });
-              });
-          });
+        var uid = "GZ9T2h4u6DhX4DWcbk5z6oFtkmC2" || user.uid; // since the test account is not working correctly we use a temp uid,
+        // for production environment, just remove the uid to null or set uid = user.uid
+        console.log(uid);
+        self.getMuddersResult(uid).then(result => {
+          var ret_arr = result.data.result || [];
+          // if the status is not 200 then there's something wrong, since we got no result from the mudder,
+          // we just go an fetch the whole list
+          if (result.status != 200 || ret_arr.length == 0)
+            self.retrivedTheWholeList(user);
+          // Eric's original code
+          // if we do have the result from mudder, we do retrivedCardsWithMudderUIDS
+          else {
+            self.retrivedCardsWithMudderUIDS(ret_arr);
+            self.retrivedTheWholeList(user); // this is just temporarily purpose
+          }
+        });
+        self.retrieveLikedCard(uid);
       }
     });
   }

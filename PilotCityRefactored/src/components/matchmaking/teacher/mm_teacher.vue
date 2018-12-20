@@ -93,7 +93,6 @@ import GoogleMap from "@/components/map/GoogleMap";
 import { GEOCODEKEY } from "@/main";
 import Fuse from "fuse.js";
 import { createECDH } from "crypto";
-
 export default {
   name: "mm_teacher",
   data() {
@@ -277,6 +276,7 @@ export default {
   created() {
     var self = this;
     this.$on("markerClicked", function(key, position) {
+ 
       self.mapcenter = position;
       var index = _.findIndex(this.filter_list, function(cl) {
         return cl.poi == key;
@@ -294,6 +294,7 @@ export default {
     var classIds = [];
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
+        console.log(user.uid)
         const db = firebase.firestore();
         // db.collection("teachers").doc(user.uid).get().then(doc => {
         //   if (doc.data() && doc.data()["match_making"] &&
@@ -313,6 +314,10 @@ export default {
               ) {
                 var employer_data = doc.data();
                 employer_data["uid"] = doc.id;
+                if (doc.data()["coordinate"] && doc.data()["coordinate"].lat)
+                  employer_data["poi"] =
+                  String(doc.data()["coordinate"]["lat"]) +
+                  String(doc.data()["coordinate"]["lng"]);
                 self.industry.push(employer_data.selected_industry_keywords);
                 self.solutions.push(employer_data.selected_service_keywords);
                 self.solutions.push(employer_data.selected_product_keywords);
