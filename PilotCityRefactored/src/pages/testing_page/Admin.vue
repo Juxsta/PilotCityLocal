@@ -25,23 +25,21 @@ export default {
                 const db = firebase.firestore();
                 db.collection("employers").get()
                     .then(qs => {
-                    var uid_arr  =[];
-                    qs.forEach(doc => { 
+                    var arr  =[];
+                    qs.forEach(doc => {
+                        arr.push(doc)
                     });
+                    var link = "https://www.googleapis.com/geolocation/v1/geolocate?key="
+                    for (let i = 0; i < arr.length(); i++)
+                    {
+                        if (!arr[i].data().coordinate)
+                        {
+                            arr[i].data().coordinate 
+                        }
+                        
+                    }
                     
-                    // for (let i = 0; i < uid_arr.length; i++){
-                    //     console.log("prosessing...." + uid_arr[i])
-                    //     db.collection("sortedClassroom").doc(uid_arr[i]).get().then(doc => {
-                    //         if (!doc.exists || (doc.data() && !Array.isArray(doc.data().result))){
-                    //             self.getMuddersResult(uid_arr[i]).then(ret => {
-                    //                 console.log("result... is" + ret);
-                    //                 db.collection("sortedClassroom").doc(uid_arr[i]).set({result: ret.data.result}).then(() => {
-                    //                     console.log(uid_arr[i] + ".....done.")
-                    //                 }).catch(err => {console.log(err.message)});
-                    //             }).catch(err => {console.log(err.message)});
-                    //         }
-                    //     })
-                    // }
+                   
                 });
              }
 
