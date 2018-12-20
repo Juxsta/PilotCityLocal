@@ -36,11 +36,17 @@
               name="Class Size"
             />
           </div>
-
           <div class="cardstock" id="results">
             <h2 class="text-classroom-matches" id="recommended">
               <span>{{filter_list.length}}</span>
               <span>+ Classrooms Recommended</span>
+              <div class="mt-5 text-center">
+            <b-btn-group>
+              <b-button class="results__btngroup col-4">Recommended</b-button>
+              <b-button class="results__btngroup col-4">Invited</b-button>
+              <b-button class="results__btngroup col-4">Saved</b-button>
+            </b-btn-group>
+          </div>
             </h2>
             <mm_teacher_card
               :id="classroom.uid"

@@ -33,6 +33,33 @@ $primary: $purple !default;
     }
   }
   
+  .results__btngroup {
+    border-radius: 100px;
+    width:150px;
+    color:#939597;
+    font-size:12px;
+    height:26px;
+    padding-top:3px;
+    background-color: white;
+    font-weight:700;
+    border: solid 1px #dbdcde;
+    &:hover{
+      background-color: $primary;
+      color:white;
+      border: solid 1px #dbdcde;
+    }
+    &:focus {
+      border: solid 1px #dbdcde;
+    }
+    &:active{
+      border: solid 1px #dbdcde;
+    }
+  }
+  .results__btngroup--active {
+    background-color: $primary;
+    color:white;
+    border: solid 1px #dbdcde;
+  }
   .card__teacher--active {
     border: solid 1px #d1d3d4 !important;
     background-color: #f8f8f8;
