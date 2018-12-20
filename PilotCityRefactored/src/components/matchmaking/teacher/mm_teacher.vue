@@ -310,7 +310,6 @@ export default {
     retrievedTheWholeList(user, employers) {
       var self = this;
       self.getEmployers(employers)
-        .get()
         .then(employer_querySnapshot => {
           employer_querySnapshot.forEach(doc => {
             var employer_data = doc.data === "function" ? doc.data() : doc;
