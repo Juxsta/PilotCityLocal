@@ -148,7 +148,7 @@ export default {
       do{
         i++
         big_arr.push(this.page_uids(i))
-      }while(this.page_uids(i) != this.page_uids(i+1))
+      }while(this.page_uids(i)[0] != this.page_uids(i+1)[0])
       return big_arr
     },
     filter_list() {
