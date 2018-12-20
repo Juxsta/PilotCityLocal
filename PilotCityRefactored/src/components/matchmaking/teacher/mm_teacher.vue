@@ -282,16 +282,16 @@ export default {
           var filter_arr = [],
             all = [];
           ss.forEach(doc => {
-            all.push(doc.data());
+            all.push(doc);
           });
           var temp;
           for (let i = 0; i < uids.length; i++) {
             temp = _.find(all, arr => {
-              return arr.uid == uids[i];
+              return arr.id == uids[i];
             });
             if (temp) filter_arr.push(temp);
           }
-          self.retrivedTheWholeList(user, filter_arr);
+          self.retrievedTheWholeList(user, filter_arr);
         });
     },
     changeShow(name) {
@@ -435,23 +435,44 @@ export default {
     });
   },
   created() {
-     var self = this;
+    const db = firebase.firestore();
+    var self = this;
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
-        var uid = "AdzkWoSjonQBrl67hHdl1TSPpwi1" || user.uid; // since the test account is not working correctly we use a temp uid,
+        var uid = "ZGStpiVL7lVNZWNvOiLVWR4IHXO2" || user.uid; // since the test account is not working correctly we use a temp uid,
         // for production environment, just remove the uid to null or set uid = user.uid
-        self.getMuddersResult(uid).then(result => {
-          var ret_arr = result.data.result || [];
-          // if the status is not 200 then there's something wrong, since we got no result from the mudder,
-          // we just go an fetch the whole list
-          if (result.status != 200 || ret_arr.length == 0)
-            self.retrievedTheWholeList(user);
-          // Eric's original code
-          // if we do have the result from mudder, we do retrievedCardsWithMudderUIDS
-          else {
-            self.retrievedCardsWithMudderUIDS(user, ret_arr); // this is just temporarily purpose
+        db.collection("teachers").doc(uid).get().then( doc => {
+          if (doc.data()){
+            uid = doc.data().classes[0].uid;
+            try {
+              self.getMuddersResult(uid).then(result => {
+                var ret_arr = result.data.result || [];
+                // if the status is not 200 then there's something wrong, since we got no result from the mudder,
+                // we just go an fetch the whole list
+                if (result.status != 200 || ret_arr.length == 0)
+                  self.retrievedTheWholeList(user);
+                // Eric's original code
+                // if we do have the result from mudder, we do retrievedCardsWithMudderUIDS
+                else {
+                  self.retrievedCardsWithMudderUIDS(user, ret_arr); // this is just temporarily purpose
+                }
+              });
+            }
+            catch (err){
+              db.collection("rankings").doc(uid).get().then(doc => {
+                var ret_arr = [];
+                if (doc.data() && doc.data().rankings){
+                  ret_arr = doc.data().rankings;
+                }
+                if (ret_arr.length)
+                  self.retrievedCardsWithMudderUIDS(user, ret_arr);
+                else 
+                  self.retrievedTheWholeList(user);
+              })
+            }
           }
         });
+        
         self.retrieveLikedCard(user.uid);
       }
     });
