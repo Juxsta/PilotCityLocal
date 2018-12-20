@@ -4,7 +4,7 @@ npm <template>
     <div class="entire-box d-flex flex-row">
       <div class="d-flex col-8 justify-content-center m-0 p-0">
         <div class="leftside justify-content-center flex-column d-flex col-12 p-0 m-0">
-          <div class="filter-bar justify-content-center d-flex flex-row">
+          <div class="filter-bar justify-content-center d-flex flex-row" id="m-filter-bar">
             <mm_filter
               :options="courses"
               :selected_options="filtered_courses"
@@ -38,12 +38,12 @@ npm <template>
           </div>
 
           <div class="cardstock" id="results">
-            <h2 class="text-classroom-matches">
+            <h2 class="text-classroom-matches" id="recommended">
               <span>{{filter_list.length}}</span>
               <span>+ Classrooms Recommended</span>
             </h2>
             <mm_teacher_card
-              :id="(index==0)?'topresult':index"
+              :id="classroom.uid"
               v-if="loaded_teachers[index]"
               :classroom="classroom"
               :teacher="findbyId(loaded_teachers,classroom.teacher_uid)"
@@ -63,12 +63,12 @@ npm <template>
               <b-btn
                 class="prevpage__btn justify-content-start"
                 @click="page=(page>0)?page-1:page"
-                v-scroll-to="{el:'#topresult',container:'#results'}"
+                v-scroll-to="{el:'#recommended',container:'#results'}"
               >Previous</b-btn>
               <b-btn
                 class="nextpage__btn ml-auto"
                 @click="page=page+1"
-                v-scroll-to="{el:'#topresult',container:'#results'}"
+                v-scroll-to="{el:'#recommended',container:'#results'}"
               >Next</b-btn>
             </div>
           </div>
@@ -342,17 +342,12 @@ export default {
         return db.collection("classroom").get()
       }
       else
-      {
-        console.log("hi")
-        console.log(classes)
         return new Promise(function(resolve,reject) {
           resolve(classes)
         })
-      }
     },
     retrivedTheWholeList(user, classes) {
       var self = this;
-      console.log(classes)
       db.collection("teachers")
         .get()
         .then(teacher_querySnapshot => {
@@ -477,20 +472,15 @@ export default {
   },
   mounted() {
     var self = this;
-    this.$on("markerClicked", function(key, position) {
+    this.$on("markerClicked", function(uid, position) {
       self.mapcenter = position;
-      var index = _.findIndex(this.filter_list, function(cl) {
-        return cl.poi == key;
-      });
-
-      this.page = parseInt(index / 10);
-      var i = index % 10;
-
-      var el = document.getElementById(i);
+      console.log(uid)
+      var el = document.getElementById(uid);
       if (el) {
         el.scrollIntoView({ block: "center" });
-        this.active_card = i;
+        this.active_card = uid;
       }
+      return ;
     });
   },
   created() {
@@ -504,8 +494,6 @@ export default {
           var ret_arr = result.data.result || [];
           // if the status is not 200 then there's something wrong, since we got no result from the mudder,
           // we just go an fetch the whole list
-          console.log("==")
-          console.log(ret_arr)
           if (result.status != 200 || ret_arr.length == 0)
             self.retrivedTheWholeList(user);
           // Eric's original code

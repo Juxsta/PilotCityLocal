@@ -35,7 +35,7 @@
             />
           </div>
           <div class="cardstock" id="results">
-            <h2 class="text-classroom-matches" id>
+            <h2 class="text-classroom-matches" id="recommended">
               <!-- <span>{{filter_list.length}}</span> -->
               <span>{{filter_list.length}}+ Employers Recommended</span>
             </h2>
@@ -58,12 +58,12 @@
               <b-btn
                 class="prevpage__btn justify-content-start"
                 @click="page=(page>0)?page-1:page"
-                v-scroll-to="{el:'#topresult',container:'#results'}"
+                v-scroll-to="{el:'#recommended',container:'#results'}"
               >Previous</b-btn>
               <b-btn
                 class="nextpage__btn ml-auto"
                 @click="page=page+1"
-                v-scroll-to="{el:'#topresult',container:'#results'}"
+                v-scroll-to="{el:'#recommended',container:'#results'}"
               >Next</b-btn>
             </div>
           </div>
