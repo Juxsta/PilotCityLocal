@@ -336,10 +336,11 @@ export default {
         return obj.uid
       })
     },
-    getMuddersResult(uid) {
-      var MUDDERSLINK =
-        "http://35.197.64.87:5000/matchmaker/classroomranking?employer_id=";
-      return axios.get(MUDDERSLINK + uid);
+    getMuddersResult(uid,user) {
+      // var MUDDERSLINK =
+      //   "http://35.197.64.87:5000/matchmaker/classroomranking?employer_id=";
+      // return axios.get(MUDDERSLINK + uid);
+      return firebase.firestore().collection("rankings").doc(user.uid).get()
     },
     doNewLikedCardAction(uid) {
       if (_.includes(this.liked_cards, uid))
@@ -531,20 +532,11 @@ export default {
       if (user) {
         var uid = "GZ9T2h4u6DhX4DWcbk5z6oFtkmC2" || user.uid; // since the test account is not working correctly we use a temp uid,
         // for production environment, just remove the uid to null or set uid = user.uid
-      try{
-          self.getMuddersResult(uid).then(result => {
-            var ret_arr = result.data.result || [];
-            // if the status is not 200 then there's something wrong, since we got no result from the mudder,
-            // we just go an fetch the whole list
-            if (result.status != 200 || ret_arr.length == 0)
-              self.retrievedTheWholeList(user);
-            // Eric's original code
-            // if we do have the result from mudder, we do retrievedCardsWithMudderUIDS
-            else {
-              self.retrievedCardsWithMudderUIDS(user, ret_arr); // this is just temporarily purpose
-            }
-          });
-        }catch(err){
+        self.getMuddersResult(uid,user).then(result => {
+          var ret_arr = result.data() || [];
+          // if the status is not 200 then there's something wrong, since we got no result from the mudder,
+          // we just go an fetch the whole list
+          if (result.status != 200 || ret_arr.length == 0)
             self.retrievedTheWholeList(user);
         }
         self.retrieveLikedCard(user.uid);
