@@ -55,6 +55,7 @@ export const store = new Vuex.Store({
 							.doc(user.uid)
 							.get()
 							.then(doc => {
+								console.log(doc)
 								commit('setClassData', doc.data())
 							});
 					})
