@@ -28,6 +28,7 @@ import Signup from "@/components/auth/Signup";
 import matchmaking from "@/components/matchmaking/matchmaking";
 import { mapActions } from 'vuex'
 import { bus } from '@/main'
+import { mapGetters } from 'vuex'
 export default {
   name: "Navbar",
   components: {
@@ -40,16 +41,14 @@ export default {
     return {
       authUser: null,
       emailNotVerified: false,
-      class_data: null
     };
   },
   computed: {
-    match_ready() {
-		return this.$store.getters.match_ready
-	},
-	user_data() {
-		return this.$store.getters.class_data
-	},
+	  ...mapGetters([
+		  'match_ready',
+		  'class_data',
+		  'user_data'
+	  ]),
     getMatch() {
       return this.$store.getters.user_data.isEmployer
         ? "mm_employer"
