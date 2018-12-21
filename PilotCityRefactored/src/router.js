@@ -38,7 +38,9 @@ import matchmaking from '@/components/matchmaking/matchmaking.vue'
 import mm_employer from '@/components/matchmaking/employer/mm_employer.vue'
 import mm_teacher from '@/components/matchmaking/teacher/mm_teacher.vue'
 
-import Admin from '@/pages/testing_page/Admin.vue'
+// import Admin from '@/pages/testing_page/Admin.vue'
+import Settings from '@/components/settings/Settings'
+
 Vue.use(Router)
 
 const router = new Router({
@@ -48,7 +50,7 @@ const router = new Router({
     {
       path: '/test',
       name: 'test',
-      component: Admin,
+      component: Settings,
       children: [
         {
           path: 'cami',
