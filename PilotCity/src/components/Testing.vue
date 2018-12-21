@@ -1,6 +1,6 @@
 <template>
     <div>
-        <build />
+        <challenge />
     </div>
 </template>
 <script>
