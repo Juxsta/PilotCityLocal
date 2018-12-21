@@ -1,5 +1,5 @@
 const getters = {
-    match_ready: (rootGetters) => {
+    match_ready: (state,getters,rootState,rootGetters) => {
         var collection = rootGetters.collection
         return rootGetters.user_data &&
             collection &&

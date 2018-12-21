@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Index from '@/components/landing/Index'
 import firebase from 'firebase'
-
+import { store } from '@/store/store'
 //import test from '@/views/test'
 import camitest from '@/views/camitest'
 
@@ -59,9 +59,9 @@ const router = new Router({
           component: Settings
         },
         {
-          path:'wall',
-          name:'wall',
-          component:wall
+          path: 'wall',
+          name: 'wall',
+          component: wall
         }
       ]
     },
@@ -123,16 +123,18 @@ const router = new Router({
           beforeEnter: (to, from, next) => {
             const db = firebase.firestore()
             let user = firebase.auth().currentUser
-            if (user) {
-              db.collection("Users").doc(user.uid).get().then((doc) => {
-                if (doc.data().isTeacher)
-                  next()
-                else
-                  next({ name: 'ClassPicker' })
-              })
+            if (store.state.test) {
+              if (user) {
+                db.collection("Users").doc(user.uid).get().then((doc) => {
+                  if (doc.data().isTeacher)
+                    next()
+                  else
+                    next({ name: 'ClassPicker' })
+                })
+              }
+              else
+                next({ name: 'ClassPicker' })
             }
-            else
-              next({ name: 'ClassPicker' })
           },
           //#endregion
         },
@@ -191,16 +193,18 @@ const router = new Router({
           beforeEnter: (to, from, next) => {
             const db = firebase.firestore()
             let user = firebase.auth().currentUser
-            if (user) {
-              db.collection("Users").doc(user.uid).get().then((doc) => {
-                if (doc.data().isEmployer)
-                  next()
-                else
-                  next({ name: 'ClassPicker' })
-              })
+            if (store.state.test) {
+              if (user) {
+                db.collection("Users").doc(user.uid).get().then((doc) => {
+                  if (doc.data().isTeacher)
+                    next()
+                  else
+                    next({ name: 'ClassPicker' })
+                })
+              }
+              else
+                next({ name: 'ClassPicker' })
             }
-            else
-              next({ name: 'ClassPicker' })
           },
           //#endregion
         },
@@ -255,8 +259,8 @@ const router = new Router({
         },
         {
           path: 'teacher',
-          name:'mm_teacher',
-          component:mm_teacher
+          name: 'mm_teacher',
+          component: mm_teacher
         }
       ]
     }
@@ -265,7 +269,8 @@ const router = new Router({
 // #region  RouterGuard Implementation to check for user Authentication
 router.beforeEach((to, from, next) => {
   //check to see if router requires auth
-  if (to.matched.some(rec => rec.meta.requiresAuth)) {
+  console.log(store)
+  if (to.matched.some(rec => rec.meta.requiresAuth) && !store.state.test) {
     // check auth state of user
     let user = firebase.auth().currentUser
     if (user) {
@@ -273,7 +278,7 @@ router.beforeEach((to, from, next) => {
       next()
     } else {
       // no user signed in, redirect to login
-      next({ name: 'Index'})
+      next({ name: 'Index' })
     }
   } else {
     next()
