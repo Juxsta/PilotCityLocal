@@ -37,6 +37,7 @@ import w_student_demographic from '@/components/profile_builder/wizard/student/w
 import matchmaking from '@/components/matchmaking/matchmaking.vue'
 import mm_employer from '@/components/matchmaking/employer/mm_employer.vue'
 import mm_teacher from '@/components/matchmaking/teacher/mm_teacher.vue'
+import wall from '@/components/matchmaking/wall/wall.vue'
 
 // import Admin from '@/pages/testing_page/Admin.vue'
 import Settings from '@/components/settings/Settings'
@@ -50,12 +51,17 @@ const router = new Router({
     {
       path: '/test',
       name: 'test',
-      component: Settings,
+      // component: Settings,
       children: [
         {
           path: 'cami',
           name: 'camitest',
-          component: camitest
+          component: Settings
+        },
+        {
+          path:'wall',
+          name:'wall',
+          component:wall
         }
       ]
     },

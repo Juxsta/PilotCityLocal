@@ -1,16 +1,17 @@
 <template>
-
+  <div>hi</div>
 </template>
 
 <script>
 import firebase from "@/firebase/init";
 export default {
+  name: "wall",
   data: {
     employers: [],
-    teachers: [],
+    teachers: []
   },
   created() {
-      var self = this
+    var self = this;
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         const db = firebase.firestore();
@@ -27,20 +28,24 @@ export default {
                   employer_data["first_name"] = name.first_name;
                   employer_data["last_name"] = name.last_name;
                   self.employers.push(doc.data());
-                  db.collection("teachers").get().then(teacher_query => {
+                  db.collection("teachers")
+                    .get()
+                    .then(teacher_query => {
                       teacher_query.forEach(doc => {
-                          var teacher_data = doc.data()
-                          db.collection("Users").doc(doc.id).get().then(name_doc => {
-                              var name = name_doc.data()
-                              teacher_data["first_name"] = name.first_name
-                              teacher_data["last_name"] = name.last_name
-                              self.teachers.push()
-                          })
-                      })
-                  })
+                        var teacher_data = doc.data();
+                        db.collection("Users")
+                          .doc(doc.id)
+                          .get()
+                          .then(name_doc => {
+                            var name = name_doc.data();
+                            teacher_data["first_name"] = name.first_name;
+                            teacher_data["last_name"] = name.last_name;
+                            self.teachers.push(teacher_data);
+                          });
+                      });
+                    });
                 });
             });
-            var promises = [];
           });
       }
     });
