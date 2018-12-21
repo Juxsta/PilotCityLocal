@@ -65,6 +65,7 @@
               :id="employer.uid"
               :key="index"
               :employer="employer"
+              :been_invited="been_invited"
               :invited="invited"
               :number="index"
               :page="page"
@@ -147,6 +148,7 @@ export default {
       results: "recommended",
       recmd: [],
       invited: [],
+      been_invited: [],
       show: null
     };
   },
@@ -367,7 +369,7 @@ export default {
         });
     },
     changeShow(name) {
-      console.log("show changede");
+      console.log("show changes");
       this.show = name;
     },
     doNewlikedCardAction(uid) {

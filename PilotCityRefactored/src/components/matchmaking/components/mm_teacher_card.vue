@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex flex-row">
-    <div class="m-auto p-auto ranking_number">{{number + page*10 + 1  }}</div>
+    <div class="m-auto p-auto ranking_number">{{number + page*10 + 1 }}</div>
     <div
       class="card container col-10 ml-0"
       :class="{'card__teacher--active':classroom.uid==active_card}"
@@ -9,16 +9,24 @@
       <div class="one d-flex flex-row">
         <h2 class="card-title">{{classroom.coursename | capitalize}}</h2>
 
-        <div class="mt-3 ml-auto">
+        <div v-if="!render" class="mt-3 ml-auto">
           <button
             @click="update_invite(),upload()"
-            @mouseenter="temp = text, text = invite?text:'Cancel'"
-            @mouseleave="text=temp"
+            @mouseenter="invite? text = 'Invite' : text = 'Cancel'"
+            @mouseleave="invite? text = 'Invite' : text = 'Invited'"
             :class="{'action-button':invite, 'action-button-pending':pending, }"
           >{{text}}</button>
         </div>
+        <div v-else class="mt-3 ml-auto">
+          <button
+            @click="update_invite(),upload()"
+            @mouseenter="render?text = 'Accept' : text = 'Cancel'"
+            @mouseleave="render?text = 'Accept' : text = 'Accepted'"
+            :class="{'action-button':invite, 'action-button-pending':pending, }"
+          >{{text2}}</button>
+        </div>
         <span id="favorite_border">
-            <i
+          <i
             class="material-icons justify-content-center pt-2 px-3"
             @click="likeThisCard"
             :id="classroom.uid"
@@ -101,8 +109,9 @@ import firebase from "@/firebase/init";
 export default {
   data() {
     return {
-      hover: false,
+      render: false,
       text: "Invite",
+      text2: "Accept",
       temp: "",
       tags: [
         "tag__skills--red",
@@ -112,7 +121,8 @@ export default {
         "tag__skills--purple",
         "tag__skills--pink",
         "tag__skills--blue"
-      ]
+      ],
+      temp_invited: null
     };
   },
 
@@ -138,55 +148,64 @@ export default {
       required: true
     },
     likedlist: {
-      required: true,
+      required: true
     }
   },
   computed: {
     invite() {
-      this.text = "Invited";
       var in_invite = this.invited.indexOf(this.classroom.uid) == -1;
-      if (in_invite) this.text = "Invite";
       return in_invite;
     },
     pending() {
       return !this.invite;
     },
-    amIliked(){
+    amIliked() {
       return _.includes(this.likedlist, this.classroom.uid);
     }
   },
   methods: {
     randColor(index) {
-      return this.tags[index%7]
+      return this.tags[index % 7];
     },
-    likeThisCard(){
-        var self = this;
-        self.$emit('newLikedCardAction', self.classroom.uid);
-        var db = firebase.firestore();
-        var user_id = firebase.auth().currentUser.uid;
-        var liked_cards = [];
+    likeThisCard() {
+      var self = this;
+      self.$emit("newLikedCardAction", self.classroom.uid);
+      var db = firebase.firestore();
+      var user_id = firebase.auth().currentUser.uid;
+      var liked_cards = [];
 
-        db.collection("employers").doc(user_id).get().then( doc => {
+      db.collection("employers")
+        .doc(user_id)
+        .get()
+        .then(doc => {
           var data = doc.data();
-          if (data &&  data["match_making"] &&  data["match_making"]["liked_cards"])
-            liked_cards = data["match_making"]["liked_cards"] ;
-          else 
-          {
+          if (
+            data &&
+            data["match_making"] &&
+            data["match_making"]["liked_cards"]
+          )
+            liked_cards = data["match_making"]["liked_cards"];
+          else {
             liked_cards = [];
-            data["match_making"] = {}
+            data["match_making"] = {};
           }
           if (!_.includes(liked_cards, this.classroom.uid))
             liked_cards.push(this.classroom.uid);
           else
-            liked_cards = _.filter( liked_cards, card => { return card != this.classroom.uid})
+            liked_cards = _.filter(liked_cards, card => {
+              return card != this.classroom.uid;
+            });
           data["match_making"]["liked_cards"] = liked_cards;
-          db.collection("employers").doc(user_id).update(data).catch(err => {
-            self.$emit('newLikedCardAction', self.classroom.uid);
-          })
+          db.collection("employers")
+            .doc(user_id)
+            .update(data)
+            .catch(err => {
+              self.$emit("newLikedCardAction", self.classroom.uid);
+            });
         });
     },
     update_invite(event) {
-      if (!this.invite) {
+      if (!this.invite || !this.invite) {
         this.invited.splice(this.invited.indexOf(this.classroom.uid), 1);
       } else {
         this.invited.push(this.classroom.uid);
@@ -212,13 +231,22 @@ export default {
       value = value.toString();
       return value.charAt(0).toUpperCase() + value.slice(1);
     }
+  },
+  created() {
+    var render = null;
+    const db = firebase.firestore();
+    var self = this;
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        if (self.teacher.invited) {
+          // check if teacher has an invited array
+          self.render = _.find(self.teacher.invited, ele => {
+            return ele == user.uid;
+          });
+        } else self.render = false;
+      }
+      return self.render;
+    });
   }
 };
 </script>
-
-<style>
-.favorite_popover{
-  justify-content: left,
-
-}
-</style>

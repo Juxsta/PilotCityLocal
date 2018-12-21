@@ -67,6 +67,7 @@
               :teacher="findbyId(loaded_teachers,classroom.teacher_uid)"
               v-for="(classroom,index) in render_class"
               :key="index"
+              :been_invited="been_invited"
               :invited="invited"
               :number="index"
               :page="page"
@@ -197,7 +198,8 @@ export default {
       loaded_classrooms: [],
       loaded_teachers: [],
       recmd: [],
-      invited: []
+      invited: [],
+      been_invited: []
     };
   },
   computed: {
