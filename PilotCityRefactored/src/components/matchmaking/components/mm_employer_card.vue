@@ -8,8 +8,7 @@
     >
       <div class="one d-flex flex-row">
         <h2 class="card-title">{{employer.company_name | capitalize}}</h2>
-
-        <div class="mt-3 ml-auto">
+        <div v-if="render" class="mt-3 ml-auto">
           <button
             @click="update_invite(),upload()"
             @mouseenter="invite? temp = text : text = 'Cancel'"
@@ -17,6 +16,14 @@
             :class="{'action-button':invite, 'action-button-pending':pending}"
           >{{text}}</button>
         </div>
+        <!-- <div v-if="!render" class="mt-3 ml-auto">
+          <button
+            @click="update_invite(),upload()"
+            @mouseenter="invite? temp = text : text = 'Cancel'"
+            @mouseleave="invite? text = 'Approve' : text = 'Approved'"
+            :class="{'action-button':got_invite, 'action-button-pending':pending}"
+          >{{text2}}</button>
+        </div> -->
         <span id="favorite_border">
           <i
             class="material-icons justify-content-center pt-2 px-3"
@@ -96,8 +103,9 @@ import firebase from "@/firebase/init";
 export default {
   data() {
     return {
-      hover: true,
+      render: true,
       text: "Invite",
+      text2: "Approve",
       tags: [
         "tag__skills--red",
         "tag__skills--green",
@@ -131,18 +139,33 @@ export default {
     },
     likedlist: {
       required: true
+    },
+    been_invited: {
+      required: true,
+      type: Array
     }
   },
   computed: {
+    got_invite() {
+      var i_am_invited = this.been_invited.indexOf(this.employer.uid) == -1;
+      // if (i_am_invited) {
+      //   this.text = "Accept";
+      //   // is invited
+      // } else {
+      //   this.text = "Accepted";
+      //   // if (hover == true) this.text = "Cancel";
+      // }
+      return i_am_invited;
+    },
     invite() {
       var not_invite = this.invited.indexOf(this.employer.uid) == -1;
-      if (not_invite) {
-        this.text = "Invite";
-        // is invited
-      } else {
-        this.text = "Invited";
-        // if (hover == true) this.text = "Cancel";
-      }
+      // if (not_invite) {
+      //   this.text = "Invite";
+      //   // is invited
+      // } else {
+      //   this.text = "Invited";
+      //   // if (hover == true) this.text = "Cancel";
+      // }
       return not_invite;
     },
     pending() {
@@ -225,7 +248,9 @@ export default {
       });
       return true;
     },
-    check_invited() {}
+    check_invited() {
+      //pull data from db
+    }
   },
   filters: {
     capitalize: function(value) {
