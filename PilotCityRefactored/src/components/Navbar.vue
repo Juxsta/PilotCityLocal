@@ -46,9 +46,9 @@ export default {
   computed: {
 	  ...mapGetters([
 		  'match_ready',
-		  'class_data',
+		  'collection',
 		  'user_data'
-	  ]),
+    ]),
     getMatch() {
       return this.$store.getters.user_data.isEmployer
         ? "mm_employer"
