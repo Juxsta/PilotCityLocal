@@ -106,8 +106,6 @@
   </div>
 </template>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDfuNr3RaCZkituTfoB7b7pR2u2rWuraWE&callback=initMap"
-async defer></script>
 <script>
 import _ from "lodash";
 import firebase from "@/firebase/init";
@@ -115,7 +113,6 @@ import mm_filter from "@/components/matchmaking/components/mm_filter.vue";
 import mm_teacher_card from "@/components/matchmaking/components/mm_teacher_card.vue";
 import GoogleMap from "@/components/map/GoogleMap";
 import { GEOCODEKEY } from "@/main";
-import "@/assets/SASS/pages/_matchmaking.scss";
 import Fuse from "fuse.js";
 import { createECDH } from "crypto";
 
@@ -327,7 +324,6 @@ export default {
           );
         }
       }
-
       return filtered_result;
     },
     map_data() {
@@ -516,7 +512,8 @@ export default {
                 .get()
                 .then(doc => {
                   // console.log(doc.data())
-                  if (doc.data().invited) self.invited = doc.data().invited;
+                  if (doc.data() && doc.data().invited)
+                    self.invited = doc.data().invited;
                 });
               self.render = true;
               self.skills = _.flattenDeep(self.skills);
@@ -606,7 +603,15 @@ export default {
 </script>
 
 
-<style >
+<style lang="scss" scoped>
+@import "@/assets/SASS/utils/_variables.scss";
+@import "@/assets/SASS/pages/_matchmaking.scss";
+$primary: $pink;
+.filter_button {
+  &:hover {
+    background-color: pink;
+  }
+}
 body {
   overflow: hidden;
 }

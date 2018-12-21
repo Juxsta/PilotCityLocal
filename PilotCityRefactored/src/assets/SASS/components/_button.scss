@@ -1,0 +1,23 @@
+@import "@/assets/SASS/utils/_variables.scss";
+
+$primary:$darkgrey !default;
+
+.main__button {
+    border-radius: 50px;
+    background-color: $primary;
+    margin: 15px 10px 15px 10px;
+    text-align: center;
+    padding-top: 7px;
+    font-family: "Raleway";
+    color: $black;
+    font-weight: 700;
+    border: solid 1px #dbdcde;
+    cursor: pointer;
+    &:focus {
+      background-color: $primary;
+      color: #ffffff;
+      outline: 0;
+      box-shadow: none;
+      -webkit-box-shadow:none;
+    }
+}

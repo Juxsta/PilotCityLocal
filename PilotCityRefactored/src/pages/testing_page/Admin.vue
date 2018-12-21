@@ -20,28 +20,40 @@ export default {
     created(){
         var self = this;
          firebase.auth().onAuthStateChanged(user => {
-             if (user)
+             if (false && "this makesure everyone in employers has a coordinate")
              {
                 const db = firebase.firestore();
                 db.collection("employers").get()
                     .then(qs => {
-                    var uid_arr  =[];
-                    qs.forEach(doc => { 
+                    var arr  =[];
+                    qs.forEach(doc => {
+                        arr.push(doc)
                     });
+                    var link = "https://maps.googleapis.com/maps/api/geocode/json?address="
+                    var address;
+                    var key = "&key=AIzaSyDfuNr3RaCZkituTfoB7b7pR2u2rWuraWE"
+                    for (let i = 0; i < arr.length; i++)
+                    {
+                        if (!arr[i].data().coordinate && arr[i].data().address)
+                        {
+
+                            console.log(arr[i].data())
+                            console.log("doesnt have coordinate");
+                            address = arr[i].data().address.street + '+' + arr[i].data().address.city + '+'
+                            + arr[i].data().address.state;
+                            address = address.split(' ').join('+');
+                            console.log(link + address + key);
+                            axios.get(link + address + key).then(ret => {
+                                db.collection("employers").doc(arr[i].id).update({ coordinate: ret.data.results[0].geometry.location}).then( ()=> {
+                                    console.log("OK")
+                                })
+                            })
+                            
+                        }
                     
-                    // for (let i = 0; i < uid_arr.length; i++){
-                    //     console.log("prosessing...." + uid_arr[i])
-                    //     db.collection("sortedClassroom").doc(uid_arr[i]).get().then(doc => {
-                    //         if (!doc.exists || (doc.data() && !Array.isArray(doc.data().result))){
-                    //             self.getMuddersResult(uid_arr[i]).then(ret => {
-                    //                 console.log("result... is" + ret);
-                    //                 db.collection("sortedClassroom").doc(uid_arr[i]).set({result: ret.data.result}).then(() => {
-                    //                     console.log(uid_arr[i] + ".....done.")
-                    //                 }).catch(err => {console.log(err.message)});
-                    //             }).catch(err => {console.log(err.message)});
-                    //         }
-                    //     })
-                    // }
+                    }
+                    
+                   
                 });
              }
 
